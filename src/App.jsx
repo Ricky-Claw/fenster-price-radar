@@ -92,7 +92,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#entwicklung">Entwicklung</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a><a href="/reports/fensterradar-mapping-audit.pdf" target="_blank" rel="noreferrer">PDF Report</a></nav>
+      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 
@@ -101,7 +101,7 @@ function App(){
         <div>
           <p className="eyebrow">Deutscher-Fenstershop · internes Tool</p>
           <h1>Fensterpreise schnell vergleichen. Sauber, diskret, nachvollziehbar.</h1>
-          <p className="lead">DFS-Listenpreise gegen Fensterblick und Fensterversand — mit Validitätswarnungen, Profil-Matching und Snapshot-Quellen.</p>
+          <p className="lead">Internes Preisradar für PVC-Fenster mit nachvollziehbaren Datenständen und sauber markierten Vergleichswerten.</p>
         </div>
         <div className="heroCard">
           <span>Letzter Datenstand</span>
@@ -136,17 +136,6 @@ function App(){
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
-      <section className="panel trendPanel" id="entwicklung">
-        <div className="panelHead">
-          <div><h2>Preisentwicklung</h2><p>Vergleich aktueller DFS-Listenpreise zur vorherigen gespeicherten Aktualisierung.</p></div>
-          <span className="historyBadge">{stats.changed} Änderungen</span>
-        </div>
-        <div className="trendList">
-          {data.filter(r=>r.weeklyChange?.dfs).slice(0,8).map(r=><div className="trendRow" key={r.key}><b>{r.brand} · {r.profile}</b><span>{r.size} · {r.glazing}</span>{changeLabel(r)}</div>)}
-          {!data.some(r=>r.weeklyChange?.dfs) && <p className="emptyTrend">Noch kein Vorwochen-Snapshot vorhanden. Ab der nächsten wöchentlichen Aktualisierung erscheinen hier Preisänderungen.</p>}
-        </div>
-      </section>
-
       <section className="panel" id="radar">
         <div className="panelHead">
           <div><h2>Preisradar</h2><p>Canonical: Brutto-Listenpreis vor Rabatt. Aktionsrabatte bleiben Metadaten.</p></div>
@@ -170,6 +159,17 @@ function App(){
           </tr>)}
         </tbody></table></div>
       </section>
+
+      <details className="panel trendPanel" id="entwicklung">
+        <summary className="panelHead trendSummary">
+          <div><h2>Preisentwicklung</h2><p>Vergleich aktueller DFS-Listenpreise zur vorherigen gespeicherten Aktualisierung.</p></div>
+          <span className="historyBadge">{stats.changed} Änderungen</span>
+        </summary>
+        <div className="trendList">
+          {data.filter(r=>r.weeklyChange?.dfs).slice(0,8).map(r=><div className="trendRow" key={r.key}><b>{r.brand} · {r.profile}</b><span>{r.size} · {r.glazing}</span>{changeLabel(r)}</div>)}
+          {!data.some(r=>r.weeklyChange?.dfs) && <p className="emptyTrend">Noch kein Vorwochen-Snapshot vorhanden. Ab der nächsten wöchentlichen Aktualisierung erscheinen hier Preisänderungen.</p>}
+        </div>
+      </details>
     </main>
 
     {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{eur(p.listTotal)}</span><small>Status: {p.status} · valid: {String(p.valid)}</small>{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
