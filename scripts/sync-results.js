@@ -1,0 +1,28 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const root = path.resolve('..', 'fenstershop-agent', 'results');
+const out = path.resolve('public', 'data');
+fs.mkdirSync(out,{recursive:true});
+function latest(prefix){ return fs.readdirSync(root).filter(n=>n.startsWith(prefix)).sort().at(-1); }
+const sources={ dfs: latest('dfs-mapped-pvc-'), fensterblick: latest('fensterblick-mapped-pvc-'), fensterversand: latest('fensterversand-mapped-pvc-') };
+const rows=[];
+for(const [provider,dir] of Object.entries(sources)){
+  if(!dir) continue;
+  const p=path.join(root,dir,'results.json');
+  const json=JSON.parse(fs.readFileSync(p,'utf8'));
+  for(const r of json.results||[]){
+    const data=r[provider]||r.dfs||r.fensterblick||r.fensterversand||{};
+    const price=data?.comparePrice?.listTotal ?? data?.listTotal ?? data?.price?.listTotal ?? null;
+    rows.push({provider, brand:r.brand||r.manufacturer||'', profile:r.profile||r.model||'', material:r.material||'Kunststoff', size:r.size||`${r.width||''}x${r.height||''}`, width:r.width||'', height:r.height||'', glazing:r.glazing||r.glass||'', opening:r.opening||r.openingType||'Dreh-Kipp', color:r.color||'Weiß/Weiß', status:data?.status||'unknown', valid:data?.comparePrice?.valid ?? false, listTotal:price, warnings:data?.warnings||[], reason:data?.reason||data?.error||'', sourceDir:dir});
+  }
+}
+const keys=new Map();
+for(const row of rows){
+  const k=[row.brand,row.profile,row.size,row.glazing,row.opening,row.color].join('|');
+  if(!keys.has(k)) keys.set(k,{key:k, brand:row.brand, profile:row.profile, material:row.material, size:row.size, glazing:row.glazing, opening:row.opening, color:row.color, providers:{}});
+  keys.get(k).providers[row.provider]=row;
+}
+const configs=[...keys.values()].map(c=>{ const prices=Object.values(c.providers).filter(p=>p.valid && typeof p.listTotal==='number').map(p=>p.listTotal); const dfs=c.providers.dfs?.valid ? c.providers.dfs.listTotal : null; const comp=Object.entries(c.providers).filter(([k,p])=>k!=='dfs' && p.valid && typeof p.listTotal==='number').map(([k,p])=>({provider:k, price:p.listTotal})).sort((a,b)=>a.price-b.price); const best=comp[0]||null; return {...c, dfsPrice:dfs, bestCompetitor:best, delta:dfs&&best? +(dfs-best.price).toFixed(2): null, deltaPct:dfs&&best? +(((dfs-best.price)/best.price)*100).toFixed(1): null, minPrice:prices.length?Math.min(...prices):null, maxPrice:prices.length?Math.max(...prices):null}; });
+const payload={generatedAt:new Date().toISOString(), sources, summary:{rows:rows.length, configs:configs.length}, configs};
+fs.writeFileSync(path.join(out,'price-radar.json'), JSON.stringify(payload,null,2));
+console.log(JSON.stringify({summary:payload.summary,sources},null,2));
