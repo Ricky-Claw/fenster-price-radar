@@ -81,7 +81,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav><a>Radar</a><a>Snapshots</a><a>Regeln</a><a>Datenqualität</a></nav>
+      <nav><a>Radar</a><a>Snapshots</a><a>Regeln</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">Mapping Audit</a><a href="/reports/fensterradar-mapping-audit.pdf" target="_blank" rel="noreferrer">PDF</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 

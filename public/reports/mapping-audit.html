@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Fensterradar v1 · Mapping Audit</title>
+<style>
+:root{--blue:#004b93;--blue2:#006fc9;--orange:#f58220;--red:#c53221;--green:#147a42;--line:#d9e4ef;--text:#12253b;--muted:#63758a}*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--text);background:#f4f7fb;line-height:1.45}.page{max-width:1060px;margin:0 auto;padding:42px 30px}.cover{background:linear-gradient(135deg,#fff,#eef6ff);border:1px solid var(--line);border-radius:28px;padding:42px;position:relative;overflow:hidden}.cover:after{content:"";position:absolute;right:-80px;top:-90px;width:300px;height:300px;background:radial-gradient(circle,#f5822040,#f5822000 65%)}.logo{display:inline-flex;align-items:center;gap:12px;font-weight:900}.mark{background:linear-gradient(135deg,var(--blue),var(--blue2));color:#fff;border-radius:12px;padding:13px 12px}.eyebrow{text-transform:uppercase;color:var(--orange);font-weight:900;font-size:13px;letter-spacing:.12em;margin-top:32px}h1{font-size:42px;line-height:1.05;margin:8px 0 14px}h2{font-size:27px;margin:34px 0 12px;border-bottom:2px solid var(--line);padding-bottom:8px}h3{font-size:19px;margin:22px 0 8px}.lead{font-size:18px;color:#4e6176;max-width:760px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.card small{display:block;color:var(--muted);font-weight:800;text-transform:uppercase;font-size:11px;letter-spacing:.08em}.card b{display:block;font-size:28px;margin-top:8px}.status{display:inline-block;border-radius:999px;padding:5px 10px;font-weight:900;font-size:12px}.ok{background:#e8f7ef;color:var(--green)}.warn{background:#fff2df;color:#9a5700}.bad{background:#fdebea;color:var(--red)}table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:12px 0 22px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid #edf2f7;vertical-align:top}th{background:#f8fbff;color:#52677f;font-size:12px;text-transform:uppercase;letter-spacing:.08em}td code{background:#eef5fb;padding:2px 5px;border-radius:5px}.note{background:#fff;border-left:5px solid var(--orange);padding:16px 18px;border-radius:12px;margin:14px 0}.recommend{background:#0f2f53;color:#fff;border-radius:22px;padding:24px;margin:26px 0}.recommend h2{border-color:#315579;margin-top:0}.recommend li{margin:8px 0}.muted{color:var(--muted)}.footer{margin-top:50px;color:var(--muted);font-size:12px}@media print{body{background:#fff}.page{padding:20px}.cover,.card,.recommend{break-inside:avoid}a{color:inherit}}
+</style>
+</head>
+<body><main class="page">
+<section class="cover">
+  <div class="logo"><span class="mark">FR</span><span>Fensterradar v1</span></div>
+  <p class="eyebrow">Interner Mapping Audit · Deutscher-Fenstershop</p>
+  <h1>Fehler, veraltete IDs und Preislogik-Befunde</h1>
+  <p class="lead">Zusammenfassung der bisher gefundenen Mapping-Probleme, Datenrisiken und Preislogik-Erkenntnisse beim Aufbau des internen Preisvergleichs gegen Fensterblick und Fensterversand.</p>
+  <p class="muted">Stand: 2026-04-27 · Quelle: Fensterradar v1, DFS/Fensterblick/Fensterversand öffentliche Konfigurator-Daten/APIs</p>
+</section>
+
+<section class="grid">
+  <div class="card"><small>Aktuelle Radar-Konfigurationen</small><b>52</b></div>
+  <div class="card"><small>Benchmark-Größen</small><b>2</b><p>1000×1500, 1300×1500</p></div>
+  <div class="card"><small>Preisregel</small><b>Liste</b><p>Brutto vor Rabatt</p></div>
+</section>
+
+<h2>1. Wichtigste Befunde</h2>
+<div class="note"><b>Kernproblem:</b> Es gibt keine zentrale, gut dokumentierte Produkt-/Preislogik. Profil-IDs, Öffnungsarten, Glasgruppen und Preisraster liegen verteilt in JSON, API-Antworten und gebündeltem Frontend-Code. Mehrere IDs waren veraltet oder shop-spezifisch verschieden.</div>
+<table><thead><tr><th>Bereich</th><th>Befund</th><th>Status</th></tr></thead><tbody>
+<tr><td>DFS Profil-IDs</td><td>Mehrere lokale Alias-IDs waren veraltet. Insbesondere Aluplast Ideal 5000/7000 und Kömmerling wurden zuerst falsch oder als nicht im Angebot erkannt.</td><td><span class="status ok">korrigiert</span></td></tr>
+<tr><td>Maßraster</td><td>DFS rundet Maße wie 950×1450 intern auf 1000×1500 und 1230×1480 auf 1300×1500. Das darf nicht als exakter Vergleich gelten.</td><td><span class="status ok">berücksichtigt</span></td></tr>
+<tr><td>Fensterblick</td><td>HTTP 200 bedeutet nicht automatisch valide Konfiguration. Fensterblick kann Maße still ändern, z.B. 1000×2100 → 1000×395.</td><td><span class="status ok">validiert</span></td></tr>
+<tr><td>Fensterversand</td><td>Drutex-Profile sind im Fensterversand PVC-Flow nicht verfügbar; Aluplast/Kömmerling/Veka sind verfügbar.</td><td><span class="status ok">markiert</span></td></tr>
+<tr><td>Discounts</td><td>Fensterblick und Fensterversand zeigen Aktionspreise/Rabatte. Für Vergleich zählt nur Listen-/Bruttopreis vor Rabatt.</td><td><span class="status ok">Policy gesetzt</span></td></tr>
+</tbody></table>
+
+<h2>2. Gefundene fehlerhafte/veraltete DFS-Mappings</h2>
+<table><thead><tr><th>Profil</th><th>Problem</th><th>Korrektur / aktueller Stand</th></tr></thead><tbody>
+<tr><td>Aluplast Ideal 5000</td><td>Alias zeigte auf veraltete/nicht vorhandene ID <code>11</code>; App zeigte fälschlich „nicht im Angebot“.</td><td>Korrekt: <code>82</code> = Ideal 5000 Classic. Jetzt valide DFS-Preise.</td></tr>
+<tr><td>Aluplast Ideal 7000</td><td>Alias zeigte auf veraltete/nicht vorhandene ID <code>13</code>; App zeigte fälschlich „nicht im Angebot“.</td><td>Korrekt: <code>135</code> = Ideal 7000 NEU. Jetzt valide DFS-Preise.</td></tr>
+<tr><td>Kömmerling 70 AD</td><td>Alias zeigte zuerst auf falsche ID <code>40</code>.</td><td>Korrekt: <code>152</code> = Kömmerling 70 AD.</td></tr>
+<tr><td>Kömmerling 88 MD</td><td>Alias zeigte zuerst auf falsche ID <code>39</code>.</td><td>Korrekt: <code>153</code> = Kömmerling 88 MD.</td></tr>
+<tr><td>Gealan S8000/S9000</td><td>Anfangs nicht im DFS-Mapping enthalten.</td><td>Korrekt: <code>87</code> = Gealan S 8000 IQ, <code>66</code> = Gealan S 9000.</td></tr>
+<tr><td>Salamander 76/82</td><td>Anfangs nicht im DFS-Mapping enthalten.</td><td>Korrekt: <code>7</code> = GreenEvo 76 3D, <code>74</code> = bluEvolution 82 MD.</td></tr>
+<tr><td>Veka 70/82</td><td>Anfangs nicht im DFS-Mapping enthalten.</td><td>Korrekt: <code>57</code> = Softline 70AD, <code>70</code> = Softline 82MD.</td></tr>
+<tr><td>Drutex Iglo EXT</td><td>Profil existiert bei DFS (<code>122</code>), ist aber nach außen öffnend und nutzt andere Öffnungslogik.</td><td>Nicht in Standard-DK-Vergleich aufnehmen, bis separate Außenöffner-Logik belegt ist.</td></tr>
+</tbody></table>
+
+<h2>3. Anbieter-Verfügbarkeit</h2>
+<table><thead><tr><th>Profilfamilie</th><th>DFS</th><th>Fensterblick</th><th>Fensterversand</th><th>Kommentar</th></tr></thead><tbody>
+<tr><td>Drutex Iglo 5 / Iglo Energy</td><td>Ja</td><td>Ja</td><td>Nein</td><td>Fensterversand PVC-Flow enthält keine Drutex-Profile.</td></tr>
+<tr><td>Drutex Iglo EXT</td><td>Ja</td><td>Ja</td><td>Nein</td><td>Sonderlogik „nach außen öffnend“ nötig.</td></tr>
+<tr><td>Aluplast Ideal 4000/5000/7000/8000</td><td>Ja</td><td>Ja</td><td>Ja</td><td>Standard-Vergleich möglich, wenn Maße exakt validiert sind.</td></tr>
+<tr><td>Gealan</td><td>Ja</td><td>Ja</td><td>Nein</td><td>Fensterversand PVC-Flow enthält kein Gealan.</td></tr>
+<tr><td>Salamander</td><td>Ja</td><td>Ja</td><td>Nein</td><td>Fensterversand PVC-Flow enthält kein Salamander.</td></tr>
+<tr><td>Kömmerling</td><td>Ja</td><td>Nicht im aktuellen FB-Mapping</td><td>Ja</td><td>2er-Vergleich DFS/FV möglich; FB prüfen, ob wirklich nicht angeboten.</td></tr>
+<tr><td>Veka</td><td>Ja</td><td>Nicht im aktuellen FB-Mapping</td><td>Ja</td><td>2er-Vergleich DFS/FV möglich; FB prüfen, ob wirklich nicht angeboten.</td></tr>
+</tbody></table>
+
+<h2>4. Preislogik DFS – bisher rekonstruiert</h2>
+<table><thead><tr><th>Baustein</th><th>Quelle</th><th>Logik</th></tr></thead><tbody>
+<tr><td>Basispreis</td><td><code>POST /konfigurator/fenster</code> mit <code>doprice=1</code></td><td>Preisraster nach Profil, Material, Öffnungsart, Fenstertyp und Maß. Rückgabe enthält passende Rasterzeilen.</td></tr>
+<tr><td>Profil</td><td><code>/json/data_window_1_profile.json</code></td><td>Enthält Profil-ID, Hersteller/Brand, Material, Startpreis, technische Angaben.</td></tr>
+<tr><td>Öffnung</td><td><code>/json/data_window_1_&lt;profileId&gt;_opentype.json</code></td><td>Öffnungstypen pro Profil/Fenstertyp. Standard-DK nutzt Open-Type 3/4; Fest nutzt 6.</td></tr>
+<tr><td>Glas</td><td><code>/json/data_window_glass_&lt;profileId&gt;.json</code></td><td>Glasgruppen: 2fach = group 1, 3fach = group 2. Preise können absolut, pro m², pro Meter oder pro Prozent berechnet werden.</td></tr>
+<tr><td>Aufpreisparser</td><td><code>new-main-app.js → parsePrice()</code></td><td>Unterstützt <code>+</code>, <code>%</code>, <code>m2</code>, <code>m</code>, <code>mw</code>, <code>mh</code>, <code>fl</code>, etc.</td></tr>
+<tr><td>Marge/Preisaufschlag</td><td><code>window.myPricePercent</code></td><td>Aktuell beobachtet: <code>90%</code>. Danach 19% MwSt. auf Ergebnis.</td></tr>
+<tr><td>Endpreis</td><td>Frontend <code>createFullPrice()</code></td><td><code>(Basis + Profil-/Glas-/Zubehör-Aufpreise) × (1 + myPricePercent) × 1.19</code>.</td></tr>
+</tbody></table>
+
+<h2>5. Bekannte Risiken / offene Punkte</h2>
+<ul>
+<li><b>DFS 2-flg/Stulp:</b> Noch nicht implementiert. Große Maße wie 2000×2000 sollten später als 2-flg/Stulp abgebildet werden.</li>
+<li><b>Außenöffner:</b> Iglo EXT/Premier haben eigene Öffnungslogik; nicht mit Standard-DK mischen.</li>
+<li><b>Farbvarianten:</b> V1 nutzt weiß/weiß. Außen Anthrazit/innen weiß braucht eigene validierte Mapping-Regeln je Anbieter.</li>
+<li><b>Zubehör:</b> Griffe, warme Kante, Abstandhalter, Sicherheit, Fensterbankanschluss etc. sind noch nicht Teil des Vergleichs.</li>
+<li><b>Fensterblick Profilauswahl:</b> Manche Profil-IDs können per API unerwartet auf ein anderes Profil fallen. Deshalb muss das zurückgegebene Profil-Label immer validiert werden.</li>
+<li><b>DFS Rastermaße:</b> DFS nutzt Raster. Für saubere Vergleiche entweder Rastermaße als Benchmark wählen oder Maße als „gerundet“ ausweisen.</li>
+</ul>
+
+<div class="recommend">
+<h2>Ricky's Empfehlung</h2>
+<ol>
+<li><b>Eine zentrale Mapping-Tabelle pflegen:</b> interne DFS-Profil-ID, Fensterblick-ID, Fensterversand-ID, Status, Label-Regex, letzte Prüfung.</li>
+<li><b>Nur validierte Profile live schalten:</b> Profil gilt erst als vergleichbar, wenn API-Label + Maße + Preis > 0 stimmen.</li>
+<li><b>Benchmark bewusst klein halten:</b> 2 Standardgrößen pro Profil + 2fach/3fach reichen für Marktposition. Details über Live-Konfigurator.</li>
+<li><b>Preislogik dokumentieren:</b> Basispreis, Glas, Farbe, Öffnung, Zubehör, Marge/MwSt. als eigene Module und Tests abbilden.</li>
+<li><b>Regressionstest wöchentlich:</b> Cron sollte nicht nur Preise ziehen, sondern auch prüfen: Profil-Label stimmt, Maße stimmen, keine 0-Preise, keine Silent-Clamps.</li>
+<li><b>2-flg/Stulp als nächster Sprint:</b> Erst danach große Maße aufnehmen. Sonst entstehen falsche Vergleiche.</li>
+<li><b>Admin-Seite „Mapping Audit“ behalten:</b> Fehlende Profile nicht verstecken, sondern intern sichtbar machen: „nicht im Angebot“, „Mapping fehlt“, „Sonderlogik nötig“.</li>
+</ol>
+</div>
+
+<h2>6. Aktuelle interne Dateien</h2>
+<table><thead><tr><th>Datei</th><th>Zweck</th></tr></thead><tbody>
+<tr><td><code>data/comparison-catalog.json</code></td><td>Aktueller Benchmark-Katalog.</td></tr>
+<tr><td><code>data/dfs/*</code></td><td>DFS Profil-/Material-/Fenstertyp-/Glas-Mapping.</td></tr>
+<tr><td><code>data/fensterblick/profile-aliases.json</code></td><td>Fensterblick Profil-Aliase.</td></tr>
+<tr><td><code>data/fensterversand/profile-aliases.json</code></td><td>Fensterversand Profil-/System-Aliase.</td></tr>
+<tr><td><code>scripts/sync-results.js</code></td><td>Merge + Qualitätsfilter für die App.</td></tr>
+<tr><td><code>api/quote.js</code></td><td>Live-Konfigurator-Endpoint für Einzelabfragen.</td></tr>
+</tbody></table>
+
+<p class="footer">Dieses Dokument ist ein Arbeitsstand, kein rechtsverbindlicher Preisnachweis. Preise und Mapping müssen regelmäßig gegen die Live-Konfiguratoren validiert werden.</p>
+</main></body></html>
