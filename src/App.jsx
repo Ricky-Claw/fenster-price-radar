@@ -10,6 +10,8 @@ const providers = [
 ];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const cls = (...a) => a.filter(Boolean).join(' ');
+const isUnavailable = p => p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
+const isIssue = p => p && !isUnavailable(p) && (p.warnings?.length || !p.valid);
 const quoteProfiles = [
   ['drutex-iglo-5-classic','Drutex · Iglo 5 Classic'],
   ['drutex-iglo-energy-classic','Drutex · Iglo Energy Classic'],
@@ -81,7 +83,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav><a>Radar</a><a>Snapshots</a><a>Regeln</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">Mapping Audit</a><a href="/reports/fensterradar-mapping-audit.pdf" target="_blank" rel="noreferrer">PDF</a></nav>
+      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a><a href="/reports/fensterradar-mapping-audit.pdf" target="_blank" rel="noreferrer">PDF Report</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 
@@ -100,7 +102,7 @@ function App(){
       </section>
 
 
-      <section className="panel quotePanel">
+      <section className="panel quotePanel" id="konfigurator">
         <div className="panelHead">
           <div><h2>Live-Konfiguration</h2><p>V1: PVC, weiß/weiß, 1-flügel, Fest oder Dreh-Kipp. Breite/Höhe frei eingeben, Preise live bei allen verfügbaren Anbietern holen.</p></div>
           <button className="download" onClick={runQuote} disabled={quoteLoading}><Calculator size={16}/> {quoteLoading?'Berechne…':'Preise berechnen'}</button>
@@ -124,7 +126,7 @@ function App(){
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
-      <section className="panel">
+      <section className="panel" id="radar">
         <div className="panelHead">
           <div><h2>Preisradar</h2><p>Canonical: Brutto-Listenpreis vor Rabatt. Aktionsrabatte bleiben Metadaten.</p></div>
           <a className="download" href="/data/price-radar.json" download><Download size={16}/> JSON</a>
@@ -142,7 +144,7 @@ function App(){
             <td><b>{row.brand} · {row.profile}</b><small>{row.size} · {row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
-            <td>{Object.values(row.providers).some(p=>p.warnings?.length||!p.valid)?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
+            <td>{Object.values(row.providers).some(isIssue)?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
           </tr>)}
         </tbody></table></div>
       </section>
