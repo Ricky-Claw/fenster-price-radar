@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { createRoot } from 'react-dom/client';
-import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator } from 'lucide-react';
+import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, Minus } from 'lucide-react';
 import './styles.css';
 
 const providers = [
@@ -35,7 +35,8 @@ function providerCell(row, id){
   const p=row.providers[id];
   if(!p) return <td className="muted">—</td>;
   if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></td>;
-  return <td className="price">{eur(p.listTotal)}</td>;
+  const ch=row.weeklyChange?.[id];
+  return <td className="price">{eur(p.listTotal)}{ch ? <small className={cls('trend', ch.delta>0?'up':ch.delta<0?'down':'flat')}>{ch.delta>0?<TrendingUp size={13}/>:ch.delta<0?<TrendingDown size={13}/>:<Minus size={13}/>} {ch.delta>0?'+':''}{eur(ch.delta)} / {ch.deltaPct}% zur Vorwoche</small> : null}</td>;
 }
 
 function App(){
@@ -76,7 +77,9 @@ function App(){
     const avg=exact.length ? exact.reduce((s,r)=>s+r.deltaPct,0)/exact.length : 0;
     const avgClass = avg <= 0 ? 'good' : avg <= 10 ? 'mid' : 'bad';
     const validDfs=data.filter(r=>r.providers.dfs?.valid).length;
-    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs};
+    const changes=data.flatMap(r=>Object.values(r.weeklyChange||{})).filter(Boolean);
+    const changed=changes.filter(c=>c.delta!==0).length;
+    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, changed};
   },[data]);
 
   if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
@@ -123,6 +126,7 @@ function App(){
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
         <div className="card"><small>Direkt vergleichbar</small><b>{stats.exact}</b><span>DFS + Wettbewerber valide</span></div>
+        <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changed}</b><span>Preisänderungen erkannt</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 

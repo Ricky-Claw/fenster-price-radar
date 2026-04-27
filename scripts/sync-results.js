@@ -3,7 +3,12 @@ import path from 'node:path';
 
 const root = path.resolve('results');
 const out = path.resolve('public', 'data');
+const historyOut = path.join(out, 'history');
 fs.mkdirSync(out, { recursive: true });
+fs.mkdirSync(historyOut, { recursive: true });
+const previousPath = path.join(out, 'price-radar.json');
+const previousPayload = fs.existsSync(previousPath) ? JSON.parse(fs.readFileSync(previousPath, 'utf8')) : null;
+const previousByKey = new Map((previousPayload?.configs || []).map(c => [c.key, c]));
 
 function latest(prefix) {
   if (!fs.existsSync(root)) return null;
@@ -88,11 +93,27 @@ const comparableConfigs = configs.filter(c => {
   const validCount = required.filter(isValidPrice).length;
   return validCount >= 2 && required.every(isCleanProvider);
 });
+for (const c of comparableConfigs) {
+  const prev = previousByKey.get(c.key);
+  c.previousGeneratedAt = previousPayload?.generatedAt || null;
+  c.weeklyChange = {};
+  for (const provider of ['dfs','fensterblick','fensterversand']) {
+    const now = c.providers[provider];
+    const old = prev?.providers?.[provider];
+    if (now?.valid && typeof now.listTotal === 'number' && old?.valid && typeof old.listTotal === 'number') {
+      const delta = +(now.listTotal - old.listTotal).toFixed(2);
+      c.weeklyChange[provider] = { previous: old.listTotal, current: now.listTotal, delta, deltaPct: old.listTotal ? +((delta / old.listTotal) * 100).toFixed(1) : null };
+    }
+  }
+}
+const generatedAt = new Date().toISOString();
 const payload = {
-  generatedAt: new Date().toISOString(),
+  generatedAt,
   sources,
   summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length },
   configs: comparableConfigs
 };
 fs.writeFileSync(path.join(out, 'price-radar.json'), JSON.stringify(payload, null, 2));
+const stamp = generatedAt.slice(0, 10);
+fs.writeFileSync(path.join(historyOut, `price-radar-${stamp}.json`), JSON.stringify(payload, null, 2));
 console.log(JSON.stringify({ summary: payload.summary, sources }, null, 2));
