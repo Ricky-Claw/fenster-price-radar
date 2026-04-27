@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-27T18:26:00.637Z",
+  "generatedAt": "2026-04-27T18:27:00.495Z",
   "sources": {
     "dfs": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z",
     "fensterblick": "fensterblick-mapped-pvc-2026-04-27T15-42-46-863Z",
@@ -86,7 +86,7 @@
       "deltaPct": -4.4,
       "minPrice": 321.06,
       "maxPrice": 335.81929700000006,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 321.06,
@@ -176,7 +176,7 @@
       "deltaPct": 0.3,
       "minPrice": 388.76489300000003,
       "maxPrice": 389.84,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 389.84,
@@ -266,7 +266,7 @@
       "deltaPct": -5.8,
       "minPrice": 363.12,
       "maxPrice": 385.28415640000003,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 363.12,
@@ -356,7 +356,7 @@
       "deltaPct": -0.3,
       "minPrice": 452.53,
       "maxPrice": 454.11343120000004,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 452.53,
@@ -446,7 +446,7 @@
       "deltaPct": 0,
       "minPrice": 396.879318,
       "maxPrice": 396.96,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 396.96,
@@ -536,7 +536,7 @@
       "deltaPct": 3.5,
       "minPrice": 449.824914,
       "maxPrice": 465.74,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 465.74,
@@ -626,7 +626,7 @@
       "deltaPct": -1.2,
       "minPrice": 449.1,
       "maxPrice": 454.5516624,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 449.1,
@@ -716,7 +716,7 @@
       "deltaPct": 2.9,
       "minPrice": 523.3809372000001,
       "maxPrice": 538.52,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 538.52,
@@ -806,7 +806,7 @@
       "deltaPct": -12.4,
       "minPrice": 260.92,
       "maxPrice": 323.68,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 260.92,
@@ -902,7 +902,7 @@
       "deltaPct": -7.7,
       "minPrice": 329.7,
       "maxPrice": 394.747454,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 329.7,
@@ -998,7 +998,7 @@
       "deltaPct": -17.8,
       "minPrice": 282.83,
       "maxPrice": 377.23,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 282.83,
@@ -1094,7 +1094,7 @@
       "deltaPct": -11.7,
       "minPrice": 372.24,
       "maxPrice": 469.61769,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 372.24,
@@ -1190,7 +1190,7 @@
       "deltaPct": -3.8,
       "minPrice": 342.54,
       "maxPrice": 357.61480078000005,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 342.54,
@@ -1286,7 +1286,7 @@
       "deltaPct": -3.7,
       "minPrice": 411.32,
       "maxPrice": 428.86124068000004,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 411.32,
@@ -1382,7 +1382,7 @@
       "deltaPct": -10.1,
       "minPrice": 371.32,
       "maxPrice": 414.953,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 371.32,
@@ -1478,7 +1478,7 @@
       "deltaPct": -8.9,
       "minPrice": 460.74,
       "maxPrice": 507.34069,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 460.74,
@@ -1574,7 +1574,7 @@
       "deltaPct": 49.8,
       "minPrice": 352.64596163,
       "maxPrice": 528.37,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 528.37,
@@ -1670,7 +1670,7 @@
       "deltaPct": 41.2,
       "minPrice": 422.90247578,
       "maxPrice": 597.15,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 597.15,
@@ -1766,7 +1766,7 @@
       "deltaPct": 40.6,
       "minPrice": 407.28125145999996,
       "maxPrice": 572.71,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 572.71,
@@ -1862,7 +1862,7 @@
       "deltaPct": 32.8,
       "minPrice": 498.614719855,
       "maxPrice": 662.12,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 662.12,
@@ -1958,7 +1958,7 @@
       "deltaPct": 15,
       "minPrice": 388.416,
       "maxPrice": 446.82,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 446.82,
@@ -2054,7 +2054,7 @@
       "deltaPct": 12.5,
       "minPrice": 397.34842215000003,
       "maxPrice": 459.483454,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 446.82,
@@ -2150,7 +2150,7 @@
       "deltaPct": 7,
       "minPrice": 452.676,
       "maxPrice": 484.33,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 484.33,
@@ -2246,7 +2246,7 @@
       "deltaPct": 5.5,
       "minPrice": 458.9094453,
       "maxPrice": 545.06369,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 484.33,
@@ -2342,7 +2342,7 @@
       "deltaPct": 2.8,
       "minPrice": 298.01070619,
       "maxPrice": 306.48,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 306.48,
@@ -2432,7 +2432,7 @@
       "deltaPct": 5,
       "minPrice": 357.38241514,
       "maxPrice": 375.26,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 375.26,
@@ -2522,7 +2522,7 @@
       "deltaPct": 4.9,
       "minPrice": 344.18137898,
       "maxPrice": 361.01,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 361.01,
@@ -2612,7 +2612,7 @@
       "deltaPct": 6.9,
       "minPrice": 421.364600615,
       "maxPrice": 450.43,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 450.43,
@@ -2702,7 +2702,7 @@
       "deltaPct": -8.2,
       "minPrice": 364.83,
       "maxPrice": 397.34842215000003,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 364.83,
@@ -2792,7 +2792,7 @@
       "deltaPct": 9.1,
       "minPrice": 397.34842215000003,
       "maxPrice": 433.61,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 433.61,
@@ -2882,7 +2882,7 @@
       "deltaPct": -6.8,
       "minPrice": 427.67,
       "maxPrice": 458.9094453,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 427.67,
@@ -2972,7 +2972,7 @@
       "deltaPct": 12.7,
       "minPrice": 458.9094453,
       "maxPrice": 517.08,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 517.08,
@@ -3062,7 +3062,7 @@
       "deltaPct": 20.4,
       "minPrice": 307.9459428,
       "maxPrice": 370.65,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 370.65,
@@ -3152,7 +3152,7 @@
       "deltaPct": 19,
       "minPrice": 369.2970168,
       "maxPrice": 439.43,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 439.43,
@@ -3242,7 +3242,7 @@
       "deltaPct": 23.9,
       "minPrice": 355.6558776,
       "maxPrice": 440.8,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 440.8,
@@ -3332,7 +3332,7 @@
       "deltaPct": 21.8,
       "minPrice": 435.4122738,
       "maxPrice": 530.22,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 530.22,
@@ -3422,7 +3422,7 @@
       "deltaPct": 13.6,
       "minPrice": 397.34842215000003,
       "maxPrice": 451.43,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 451.43,
@@ -3512,7 +3512,7 @@
       "deltaPct": 13.6,
       "minPrice": 397.34842215000003,
       "maxPrice": 451.43,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 451.43,
@@ -3602,7 +3602,7 @@
       "deltaPct": 16.7,
       "minPrice": 458.9094453,
       "maxPrice": 535.47,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 535.47,
@@ -3692,7 +3692,7 @@
       "deltaPct": 16.7,
       "minPrice": 458.9094453,
       "maxPrice": 535.47,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 535.47,
@@ -3782,7 +3782,7 @@
       "deltaPct": -14.8,
       "minPrice": 357.24,
       "maxPrice": 419.475,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 357.24,
@@ -3872,7 +3872,7 @@
       "deltaPct": -13.2,
       "minPrice": 426.02,
       "maxPrice": 490.542454,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 426.02,
@@ -3962,7 +3962,7 @@
       "deltaPct": 8.7,
       "minPrice": 483.4375,
       "maxPrice": 525.52,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 525.52,
@@ -4052,7 +4052,7 @@
       "deltaPct": 6.8,
       "minPrice": 575.82519,
       "maxPrice": 614.94,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 614.94,
@@ -4142,7 +4142,7 @@
       "deltaPct": 23.2,
       "minPrice": 328.44,
       "maxPrice": 404.76,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 404.76,
@@ -4232,7 +4232,7 @@
       "deltaPct": 18.5,
       "minPrice": 399.507454,
       "maxPrice": 473.54,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 473.54,
@@ -4322,7 +4322,7 @@
       "deltaPct": 20.2,
       "minPrice": 381.99,
       "maxPrice": 459.07,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 459.07,
@@ -4412,7 +4412,7 @@
       "deltaPct": 15.6,
       "minPrice": 474.37769,
       "maxPrice": 548.49,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 548.49,
@@ -4502,7 +4502,7 @@
       "deltaPct": 12.4,
       "minPrice": 443.394,
       "maxPrice": 498.55,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 498.55,
@@ -4592,7 +4592,7 @@
       "deltaPct": 10.3,
       "minPrice": 514.461454,
       "maxPrice": 567.33,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 567.33,
@@ -4682,7 +4682,7 @@
       "deltaPct": 9.6,
       "minPrice": 515.6865,
       "maxPrice": 565.39,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 565.39,
@@ -4772,7 +4772,7 @@
       "deltaPct": 7.7,
       "minPrice": 608.07419,
       "maxPrice": 654.8,
-      "previousGeneratedAt": "2026-04-27T17:36:36.183Z",
+      "previousGeneratedAt": "2026-04-27T18:26:00.637Z",
       "weeklyChange": {
         "dfs": {
           "previous": 654.8,

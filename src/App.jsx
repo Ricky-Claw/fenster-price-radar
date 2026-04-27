@@ -12,6 +12,12 @@ const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'curren
 const cls = (...a) => a.filter(Boolean).join(' ');
 const isUnavailable = p => p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
 const isIssue = p => p && !isUnavailable(p) && (p.warnings?.length || !p.valid);
+const changeLabel = c => {
+  const d = c?.weeklyChange?.dfs?.delta;
+  if (typeof d !== 'number') return <span className="muted">neu/kein Verlauf</span>;
+  if (d === 0) return <span className="trend flat">unverändert</span>;
+  return <span className={cls('trend', d > 0 ? 'up' : 'down')}>{d > 0 ? '+' : ''}{eur(d)} · {d > 0 ? '+' : ''}{c.weeklyChange.dfs.deltaPct}%</span>;
+};
 const quoteProfiles = [
   ['drutex-iglo-5-classic','Drutex · Iglo 5 Classic'],
   ['drutex-iglo-energy-classic','Drutex · Iglo Energy Classic'],
@@ -86,7 +92,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a><a href="/reports/fensterradar-mapping-audit.pdf" target="_blank" rel="noreferrer">PDF Report</a></nav>
+      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#entwicklung">Entwicklung</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a><a href="/reports/fensterradar-mapping-audit.pdf" target="_blank" rel="noreferrer">PDF Report</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 
@@ -130,6 +136,17 @@ function App(){
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
+      <section className="panel trendPanel" id="entwicklung">
+        <div className="panelHead">
+          <div><h2>Preisentwicklung</h2><p>Vergleich aktueller DFS-Listenpreise zur vorherigen gespeicherten Aktualisierung.</p></div>
+          <span className="historyBadge">{stats.changed} Änderungen</span>
+        </div>
+        <div className="trendList">
+          {data.filter(r=>r.weeklyChange?.dfs).slice(0,8).map(r=><div className="trendRow" key={r.key}><b>{r.brand} · {r.profile}</b><span>{r.size} · {r.glazing}</span>{changeLabel(r)}</div>)}
+          {!data.some(r=>r.weeklyChange?.dfs) && <p className="emptyTrend">Noch kein Vorwochen-Snapshot vorhanden. Ab der nächsten wöchentlichen Aktualisierung erscheinen hier Preisänderungen.</p>}
+        </div>
+      </section>
+
       <section className="panel" id="radar">
         <div className="panelHead">
           <div><h2>Preisradar</h2><p>Canonical: Brutto-Listenpreis vor Rabatt. Aktionsrabatte bleiben Metadaten.</p></div>
@@ -143,11 +160,12 @@ function App(){
           <button className={cls('toggle',onlyAction&&'on')} onClick={()=>setOnlyAction(!onlyAction)}><SlidersHorizontal size={16}/> nur vergleichbar</button>
         </div>
 
-        <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Status</th></tr></thead><tbody>
+        <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
           {filtered.map(row=><tr key={row.key} onClick={()=>setActive(row)}>
             <td><b>{row.brand} · {row.profile}</b><small>{row.size} · {row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
+            <td>{changeLabel(row)}</td>
             <td>{Object.values(row.providers).some(isIssue)?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
           </tr>)}
         </tbody></table></div>
