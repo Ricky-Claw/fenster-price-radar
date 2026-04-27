@@ -1,4 +1,4 @@
-# Fenster Price Radar
+# Fensterradar v1
 
 Interne DFS-Anwendung zum Vergleich eigener Brutto-Listenpreise gegen Fensterblick und Fensterversand.
 

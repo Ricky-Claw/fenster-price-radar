@@ -28,7 +28,7 @@ function App(){
   const [onlyAction,setOnlyAction]=useState(false);
   const [active,setActive]=useState(null);
 
-  useEffect(()=>{ fetch('/data/price-radar.json').then(r=>r.json()).then(setPayload); },[]);
+  useEffect(()=>{ fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload); },[]);
   const data=payload?.configs||[];
   const filtered=useMemo(()=>data.filter(r=>{
     const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color].join(' ').toLowerCase();
@@ -48,10 +48,10 @@ function App(){
     return {configs:data.length, exact:exact.length, cheaper, avg, validDfs};
   },[data]);
 
-  if(!payload) return <div className="loading">DFS Price Radar wird geladen…</div>;
+  if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
   return <>
     <header className="topbar">
-      <div className="brandmark"><span className="cube">DFS</span><div><b>Price Radar</b><small>Interner Wettbewerbsvergleich</small></div></div>
+      <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
       <nav><a>Radar</a><a>Snapshots</a><a>Regeln</a><a>Datenqualität</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
