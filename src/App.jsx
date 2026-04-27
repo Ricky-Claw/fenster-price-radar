@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { createRoot } from 'react-dom/client';
-import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw } from 'lucide-react';
+import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator } from 'lucide-react';
 import './styles.css';
 
 const providers = [
@@ -10,6 +10,17 @@ const providers = [
 ];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const cls = (...a) => a.filter(Boolean).join(' ');
+const quoteProfiles = [
+  ['drutex-iglo-5-classic','Drutex · Iglo 5 Classic'],
+  ['drutex-iglo-energy-classic','Drutex · Iglo Energy Classic'],
+  ['aluplast-ideal-neo-md','Aluplast · Ideal Neo MD'],
+  ['aluplast-ideal-4000','Aluplast · Ideal 4000'],
+  ['aluplast-ideal-8000','Aluplast · Ideal 8000'],
+  ['kommerling-70-ad','Kömmerling · 70 AD'],
+  ['kommerling-88-md','Kömmerling · 88 MD'],
+  ['veka-softline-70-ad','Veka · Softline 70 AD'],
+  ['veka-softline-82-md','Veka · Softline 82 MD']
+];
 
 function unique(data, key){ return [...new Set(data.map(x=>x[key]).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'de')); }
 function providerCell(row, id){
@@ -27,6 +38,17 @@ function App(){
   const [glazing,setGlazing]=useState('');
   const [onlyAction,setOnlyAction]=useState(false);
   const [active,setActive]=useState(null);
+  const [quote,setQuote]=useState({profile:'aluplast-ideal-4000',width:1000,height:1200,glazing:'3fach',opening:'Dreh-Kipp',color:'weiß'});
+  const [quoteResult,setQuoteResult]=useState(null);
+  const [quoteLoading,setQuoteLoading]=useState(false);
+  async function runQuote(){
+    setQuoteLoading(true);
+    try{
+      const params=new URLSearchParams(quote);
+      const r=await fetch(`/api/quote?${params}`,{cache:'no-store'});
+      setQuoteResult(await r.json());
+    } finally { setQuoteLoading(false); }
+  }
 
   useEffect(()=>{ fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload); },[]);
   const data=payload?.configs||[];
@@ -68,6 +90,24 @@ function App(){
           <b>{new Date(payload.generatedAt).toLocaleString('de-DE')}</b>
           <small>{payload.summary.rows} Provider-Zeilen aus {payload.summary.configs} Konfigurationen</small>
         </div>
+      </section>
+
+
+      <section className="panel quotePanel">
+        <div className="panelHead">
+          <div><h2>Live-Konfiguration</h2><p>V1: PVC, weiß/weiß, 1-flügel, Fest oder Dreh-Kipp. Breite/Höhe frei eingeben, Preise live bei allen verfügbaren Anbietern holen.</p></div>
+          <button className="download" onClick={runQuote} disabled={quoteLoading}><Calculator size={16}/> {quoteLoading?'Berechne…':'Preise berechnen'}</button>
+        </div>
+        <div className="quoteGrid">
+          <label><span>Fensterprofil</span><select value={quote.profile} onChange={e=>setQuote({...quote,profile:e.target.value})}>{quoteProfiles.map(([id,name])=><option key={id} value={id}>{name}</option>)}</select></label>
+          <label><span>Breite mm</span><input type="number" min="300" max="3000" value={quote.width} onChange={e=>setQuote({...quote,width:e.target.value})}/></label>
+          <label><span>Höhe mm</span><input type="number" min="300" max="2600" value={quote.height} onChange={e=>setQuote({...quote,height:e.target.value})}/></label>
+          <label><span>Glas</span><select value={quote.glazing} onChange={e=>setQuote({...quote,glazing:e.target.value})}><option>2fach</option><option>3fach</option></select></label>
+          <label><span>Öffnung</span><select value={quote.opening} onChange={e=>setQuote({...quote,opening:e.target.value})}><option>Dreh-Kipp</option><option>Fest</option></select></label>
+        </div>
+        {quoteResult && <div className="quoteResults">
+          {providers.map(([id,name])=>{const p=quoteResult.providers?.[id]; return <div key={id} className={cls('quoteCard',p?.valid?'':'softWarn')}><small>{name}</small><b>{p?.valid?eur(p.listTotal):'—'}</b><span>{p?.status||'nicht verfügbar'}</span>{p?.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p?.reason||p?.error?<em>{p.reason||p.error}</em>:null}</div>})}
+        </div>}
       </section>
 
       <section className="cards">
