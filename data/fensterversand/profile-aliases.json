@@ -1,0 +1,18 @@
+{
+  "Aluplast Ideal 4000": { "brandId": 14232, "profileId": 838 },
+  "Aluplast Ideal 5000": { "brandId": 14232, "profileId": 839 },
+  "Aluplast Ideal 7000": { "brandId": 14232, "profileId": 8641 },
+  "Aluplast Ideal 8000": { "brandId": 14232, "profileId": 840 },
+  "Aluplast Ideal Neo AD": { "brandId": 14232, "profileId": 14152 },
+  "Aluplast Ideal Neo MD": { "brandId": 14232, "profileId": 14153 },
+  "Aluplast Energeto Neo": { "brandId": 14232, "profileId": 14154 },
+  "Aluplast Energeto 8000": { "brandId": 14232, "profileId": 11373 },
+  "Kömmerling 70 AD": { "brandId": 14231, "profileId": 14235 },
+  "Kömmerling 76 AD": { "brandId": 14231, "profileId": 14237 },
+  "Kömmerling 76 MD": { "brandId": 14231, "profileId": 14239 },
+  "Kömmerling 88 MD": { "brandId": 14231, "profileId": 14241 },
+  "Veka Softline 70 AD": { "brandId": 17315, "profileId": 17317 },
+  "Veka Softline 76 MD": { "brandId": 17315, "profileId": 17319 },
+  "Veka Softline 82 MD": { "brandId": 17315, "profileId": 17321 },
+  "Veka Softline 82 MD Passive": { "brandId": 17315, "profileId": 17323 }
+}

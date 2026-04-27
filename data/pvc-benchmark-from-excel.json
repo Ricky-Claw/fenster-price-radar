@@ -1,0 +1,634 @@
+{
+  "configs": [
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo HS",
+      "material": "PVC",
+      "size": "4000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 76MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 82, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK"
+    }
+  ]
+}

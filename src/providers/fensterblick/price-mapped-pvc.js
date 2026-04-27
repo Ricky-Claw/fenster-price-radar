@@ -1,0 +1,54 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname=path.dirname(fileURLToPath(import.meta.url));
+const root=path.resolve(__dirname,'../../..');
+const catalog=JSON.parse(await fs.readFile(path.join(root,'data/pvc-benchmark-from-excel.json'),'utf8')).configs;
+const aliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/profile-aliases.json'),'utf8'));
+const limit=Number(process.argv.find(a=>a.startsWith('--limit='))?.split('=')[1]||30);
+const outDir=path.join(root,'results',`fensterblick-mapped-pvc-${new Date().toISOString().replace(/[:.]/g,'-')}`);
+await fs.mkdir(outDir,{recursive:true});
+const results=[];
+for(const cfg of catalog.slice(0,limit)){
+ const mapped=mapProfile(cfg);
+ if(!mapped){results.push({provider:'Fensterblick',input:cfg,status:'unmatched',reason:'No profile alias match'}); continue;}
+ const [w,h]=cfg.size.toLowerCase().split('x').map(Number);
+ try{ const priced=await price({profileId:mapped.profileId,width:w,height:h,glazing:cfg.glazing,opening:cfg.opening||'Dreh-Kipp links',color:cfg.color||'weiß'});
+  const actualDims=extractDims(priced.prices?.short_labels);
+  const dimsMatch=actualDims?.width===w && actualDims?.height===h;
+  const warn=[]; if(Number(priced.prices?.total)<=0) warn.push('zero_or_unavailable_price'); if(!dimsMatch) warn.push(`dimension_adjusted_by_configurator:${actualDims?.width}x${actualDims?.height}`);
+  results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:200,comparePrice:{listTotal:Number(priced.prices?.total),currency:'EUR',discountApplied:false,valid:Number(priced.prices?.total)>0 && dimsMatch},discountMetadata:{observedDiscountPercent:priced.discount_percent,discountedTotalObserved: priced.discount_percent ? Number((priced.prices.total*(1-priced.discount_percent)).toFixed(6)) : null},labels:priced.prices?.short_labels,actualDimensions:actualDims,configChain:priced.config_chain,refIdChain:priced.ref_id_chain,warnings:warn});
+ }catch(e){results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:'error',error:String(e.message||e)});} 
+ await new Promise(r=>setTimeout(r,900));
+}
+const outFile=path.join(outDir,'results.json');
+await fs.writeFile(outFile,JSON.stringify({generatedAt:new Date().toISOString(),pricePolicy:'comparePrice.listTotal only; discounts manual later',results},null,2));
+console.log(JSON.stringify({outFile,priced:results.filter(r=>r.status===200).length,unmatched:results.filter(r=>r.status==='unmatched').length,errors:results.filter(r=>r.status==='error').length,sample:results.slice(0,12).map(r=>({input:r.input?.profile,size:r.input?.size,mapped:r.mappedProfile,status:r.status,price:r.comparePrice?.listTotal,labels:r.labels?.map(l=>`${l.name}:${l.value}`).join(' | ')}))},null,2));
+async function price({profileId,width,height,glazing,opening,color}){
+ let j=await post('/configurations/init-configuration',{configurator_id:1,selectedIds:{material:10,profile:profileId},country:'GERMANY'});
+ const profile=j.updates.materials[j.config_chain.material].profiles[j.config_chain.profile];
+ const glazingIndex=/3fach/i.test(glazing)? findIndex(profile.glazings,/3-fach Verglasung$/i,2) : findIndex(profile.glazings,/2-fach Verglasung$/i,0);
+ if(glazingIndex!==j.config_chain.glazing) j=await step(j,'glazing',glazingIndex);
+ const openingIndex=/fest/i.test(opening)?0:findOpening(profile, /Dreh-Kipp links/i, 5);
+ if(openingIndex!==j.config_chain.opening_direction) j=await step(j,'opening_direction',openingIndex);
+ // colors: default white. anthracite outside/interior white needs exact split later.
+ if(/anthrazit/i.test(color)) j=await step(j,'color_outer',findIndex(profile.colors,/Anthrazitgrau \(AP 40\)/i,1));
+ const inputs={...j.inputs,width,height,width_opening_direction:width,vane_widths:{vane_1_width:width,vane_2_width:0,vane_3_width:0,vane_4_width:0}};
+ return post('/configurations/process-input-change',{configuration_id:j.configuration_id,configurator_id:1,config_chain:j.config_chain,ref_id_chain:j.ref_id_chain,inputs,country:'GERMANY'});
+}
+async function step(j,pos,idx){return post('/configurations/process-step-change',{change_position:pos,new_step_index:idx,configurator_id:1,config_chain:j.config_chain,configuration_id:j.configuration_id,ref_id_chain:j.ref_id_chain,inputs:j.inputs,country:'GERMANY'});}
+async function post(url,body){const r=await fetch('https://api.configurator.fensterblick.de'+url,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':'https://www.fensterblick.de','referer':'https://www.fensterblick.de/fenster-konfigurator.html'},body:JSON.stringify(body)}); if(!r.ok) throw new Error(`${url} HTTP ${r.status}`); return r.json();}
+function findIndex(arr,rx,fallback){const i=(arr||[]).findIndex(x=>rx.test(x.name||'')); return i>=0?i:fallback;}
+function findOpening(profile,rx,fallback){const vt=profile.vane_types?.[0]; const i=(vt?.opening_directions||[]).findIndex(x=>rx.test(x.name||'')); return i>=0?i:fallback;}
+function mapProfile(cfg){const hay=`${cfg.brand} ${cfg.profile}`.toLowerCase();
+ for(const [name,ids] of Object.entries(aliases)){const n=name.toLowerCase(); if(hay.includes(n)||n.includes(clean(cfg.profile))) return {name,...ids};}
+ if(/iglo\s*5\s*classic/i.test(cfg.profile)) return {name:'Drutex Iglo 5 Classic',...aliases['Drutex Iglo 5 Classic']};
+ if(/iglo\s*energy\s*classic/i.test(cfg.profile)) return {name:'Drutex Iglo Energy Classic',...aliases['Drutex Iglo Energy Classic']};
+ if(/iglo\s*energy/i.test(cfg.profile)) return {name:'Drutex Iglo Energy',...aliases['Drutex Iglo Energy']};
+ if(/ideal\s*neo\s*md/i.test(cfg.profile)) return {name:'Aluplast Ideal Neo MD',...aliases['Aluplast Ideal Neo MD']};
+ if(/ideal\s*neo\s*ad/i.test(cfg.profile)) return {name:'Aluplast Ideal Neo AD',...aliases['Aluplast Ideal Neo AD']};
+ if(/ideal\s*4000/i.test(cfg.profile)) return {name:'Aluplast Ideal 4000 Classic-Line',...aliases['Aluplast Ideal 4000 Classic-Line']};
+ if(/ideal\s*8000/i.test(cfg.profile)) return {name:'Aluplast Ideal 8000 Classic-Line',...aliases['Aluplast Ideal 8000 Classic-Line']};
+ return null;}
+function clean(p){return String(p||'').toLowerCase().replace(/,?\s*[23]fach/g,'').trim();}
+function extractDims(labels){const m=(labels||[]).find(l=>l.name==='Maße')?.value?.match(/(\d+)\s*mm\s*x\s*(\d+)\s*mm/i); return m?{width:Number(m[1]),height:Number(m[2])}:null;}

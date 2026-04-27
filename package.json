@@ -7,7 +7,11 @@
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "data:sync": "node scripts/sync-results.js"
+    "data:sync": "node scripts/sync-results.js",
+    "dfs:pvc:mapped": "node src/providers/dfs/price-mapped-pvc.js",
+    "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
+    "fv:pvc:mapped": "node src/providers/fensterversand/price-mapped-pvc.js",
+    "prices:update": "node scripts/update-prices.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

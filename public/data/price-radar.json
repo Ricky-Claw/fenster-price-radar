@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-04-27T13:16:47.441Z",
+  "generatedAt": "2026-04-27T14:17:51.490Z",
   "sources": {
-    "dfs": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z",
-    "fensterblick": "fensterblick-mapped-pvc-2026-04-27T12-57-37-219Z",
-    "fensterversand": "fensterversand-mapped-pvc-2026-04-27T12-25-37-025Z"
+    "dfs": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z",
+    "fensterblick": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z",
+    "fensterversand": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
   },
   "summary": {
-    "rows": 105,
+    "rows": 189,
     "configs": 64
   },
   "configs": [
@@ -36,7 +36,7 @@
           "listTotal": 175.3,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 175.3,
@@ -74,7 +74,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -110,7 +110,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -146,7 +146,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -182,7 +182,7 @@
           "listTotal": 232.48,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 232.48,
@@ -220,7 +220,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -256,7 +256,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -292,7 +292,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -328,7 +328,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -364,7 +364,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -400,7 +400,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -436,7 +436,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -472,7 +472,7 @@
           "listTotal": 183.78,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 183.78,
@@ -510,7 +510,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -546,7 +546,7 @@
           "listTotal": 438.34,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 438.34,
@@ -582,7 +582,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -618,7 +618,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -654,7 +654,7 @@
           "listTotal": 178.91,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 178.91,
@@ -692,7 +692,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -728,7 +728,7 @@
           "listTotal": 428.36,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 428.36,
@@ -764,7 +764,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -800,7 +800,7 @@
           "listTotal": 278.13,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 278.13,
@@ -838,7 +838,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -874,7 +874,7 @@
           "listTotal": 568.69,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 568.69,
@@ -910,7 +910,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -946,7 +946,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -982,7 +982,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1018,7 +1018,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1054,7 +1054,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1090,7 +1090,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1126,7 +1126,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1162,7 +1162,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1198,7 +1198,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1234,7 +1234,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1270,7 +1270,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1306,7 +1306,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1342,7 +1342,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1378,7 +1378,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1414,7 +1414,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1450,7 +1450,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1486,7 +1486,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1522,7 +1522,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1558,7 +1558,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1594,7 +1594,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1630,7 +1630,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1666,7 +1666,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1702,7 +1702,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1738,7 +1738,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1774,7 +1774,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1810,7 +1810,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1846,7 +1846,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1882,7 +1882,7 @@
           "listTotal": 183.78,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 183.78,
@@ -1920,7 +1920,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -1956,7 +1956,7 @@
           "listTotal": 438.34,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 438.34,
@@ -1992,7 +1992,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2028,7 +2028,7 @@
           "listTotal": 162.41,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 162.41,
@@ -2066,7 +2066,7 @@
             "dimension_rounded_to:1000x1500"
           ],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2102,7 +2102,7 @@
           "listTotal": 332.07,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": 332.07,
@@ -2138,7 +2138,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "price_row_not_found",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2174,7 +2174,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2210,7 +2210,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2246,7 +2246,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2282,7 +2282,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "profile_not_mapped",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T13-13-20-921Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
         }
       },
       "dfsPrice": null,
@@ -2318,7 +2318,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "",
-          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T12-57-37-219Z"
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
         },
         "fensterversand": {
           "provider": "fensterversand",
@@ -2336,7 +2336,7 @@
           "listTotal": null,
           "warnings": [],
           "reason": "",
-          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T12-25-37-025Z"
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,

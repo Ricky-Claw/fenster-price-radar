@@ -1,0 +1,6765 @@
+{
+  "generatedAt": "2026-04-27T14:17:51.313Z",
+  "pricePolicy": "comparePrice.listTotal only; discounts manual later",
+  "results": [
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 134.866189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 107.89295,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 421.311611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 337.049288,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 540.627436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 432.501949,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo HS",
+        "material": "PVC",
+        "size": "4000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 124.156189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 93.117141,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 388.943611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 291.707708,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 500.524436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 375.393326,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 145.576189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 116.46095,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 840,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 453.679611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 362.943688,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 840,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 580.730436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 464.584349,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 840,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 840,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Salamander",
+        "profile": "Salamander 76MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Salamander",
+        "profile": "Salamander 82, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No equivalent PVC profile in Fensterversand mapping"
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 249.106189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 186.829641,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 484.738611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 363.553958,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 626.069436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 469.552076,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 70 AD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 131.296189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 105.03695,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14235,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 70 AD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 393.703611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 314.962888,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14235,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 70 AD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 506.474436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 405.179549,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14235,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 70 AD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14235,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 88 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 171.280189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 128.460141,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14241,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 88 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 508.657611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 381.493208,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14241,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 88 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 648.917436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 486.688076,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14241,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Kömmerling 88 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14231,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14241,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 134.866189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 107.89295,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 421.311611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 337.049288,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 540.627436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 432.501949,
+        "observedDiscount": 20,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 14153,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 107.1,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 80.325,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1238,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 323.68,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 242.76,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1238,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 401.03,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 300.7725,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1238,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 14232,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 838,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1238,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 249.106189,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 186.829641,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 600,
+        "y": 600,
+        "qm": "0.360000",
+        "rm": "2.400000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 600,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 484.738611,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 363.553958,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 950,
+        "y": 1450,
+        "qm": "1.377500",
+        "rm": "4.800000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 950,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 1450,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 626.069436,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 469.552076,
+        "observedDiscount": 25,
+        "percentages": {
+          "839": "10",
+          "840": "20",
+          "846": "25",
+          "848": "25",
+          "849": "25",
+          "1969": "50",
+          "8641": "15",
+          "11373": "30",
+          "12874": "35",
+          "12875": "35",
+          "12876": "35",
+          "12877": "35",
+          "12878": "35",
+          "12879": "35",
+          "14153": "10",
+          "14154": "25",
+          "14237": "10",
+          "14239": "20",
+          "14241": "35",
+          "14284": "35",
+          "14367": "35",
+          "14368": "35",
+          "14369": "35",
+          "14370": "35",
+          "14371": "35",
+          "14372": "35",
+          "14373": "35",
+          "14374": "35",
+          "14375": "35",
+          "14376": "35",
+          "15996": "25",
+          "15997": "25",
+          "17319": "10",
+          "17321": "25",
+          "17323": "50"
+        }
+      },
+      "warnings": [],
+      "dimensions": {
+        "x": 1000,
+        "y": 2100,
+        "qm": "2.100000",
+        "rm": "6.200000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 1000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2100,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    },
+    {
+      "provider": "Fensterversand",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "mappedProfile": "Veka Softline 82 MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 0,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "discountedTotalObserved": 0,
+        "observedDiscount": 0,
+        "percentages": []
+      },
+      "warnings": [
+        "zero_or_unavailable_price"
+      ],
+      "dimensions": {
+        "x": 2000,
+        "y": 2000,
+        "qm": "4.000000",
+        "rm": "8.000000"
+      },
+      "requestConfig": {
+        "25": {
+          "a_132": {
+            "aId": 132,
+            "value": 834,
+            "isCustom": false
+          },
+          "a_2471": {
+            "aId": 2471,
+            "value": 17315,
+            "isCustom": false
+          },
+          "a_133": {
+            "aId": 133,
+            "value": 17321,
+            "isCustom": false
+          },
+          "a_136": {
+            "aId": 136,
+            "value": 844,
+            "isCustom": false
+          },
+          "a_155": {
+            "aId": 155,
+            "value": 8624,
+            "isCustom": false
+          },
+          "a_156": {
+            "aId": 156,
+            "value": 1017,
+            "isCustom": false
+          },
+          "a_157": {
+            "aId": 157,
+            "value": 1021,
+            "isCustom": false
+          },
+          "a_258": {
+            "aId": 258,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_259": {
+            "aId": 259,
+            "value": 2000,
+            "isCustom": true
+          },
+          "a_186": {
+            "aId": 186,
+            "value": 1240,
+            "isCustom": false
+          },
+          "a_187": {
+            "aId": 187,
+            "value": 1242,
+            "isCustom": false
+          },
+          "a_2119": {
+            "aId": 2119,
+            "value": 10639,
+            "isCustom": false
+          },
+          "a_188": {
+            "aId": 188,
+            "value": 1244,
+            "isCustom": false
+          },
+          "a_190": {
+            "aId": 190,
+            "value": 1251,
+            "isCustom": false
+          },
+          "a_193": {
+            "aId": 193,
+            "value": 1268,
+            "isCustom": false
+          },
+          "a_195": {
+            "aId": 195,
+            "value": 1270,
+            "isCustom": false
+          },
+          "a_718": {
+            "aId": 718,
+            "value": 3634,
+            "isCustom": false
+          },
+          "a_3100": {
+            "aId": 3100,
+            "value": 16656,
+            "isCustom": false
+          },
+          "a_297": {
+            "aId": 297,
+            "value": 1614,
+            "isCustom": false
+          },
+          "a_210": {
+            "aId": 210,
+            "value": 1315,
+            "isCustom": false
+          },
+          "a_3089": {
+            "aId": 3089,
+            "value": 16610,
+            "isCustom": false
+          }
+        },
+        "871": {
+          "a_2230": {
+            "aId": 2230,
+            "value": 11377,
+            "isCustom": false
+          }
+        }
+      }
+    }
+  ]
+}

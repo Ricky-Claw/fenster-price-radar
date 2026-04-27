@@ -1,0 +1,32 @@
+{
+  "notes": "Captured from fensterversand.com /configurator/update for Kunststofffenster productId=25. Default option IDs need mapping per profile/glazing.",
+  "productId": 25,
+  "configuration": {
+    "25": {
+      "a_132": { "aId": 132, "value": 834, "isCustom": false },
+      "a_2471": { "aId": 2471, "value": 14232, "isCustom": false },
+      "a_133": { "aId": 133, "value": 838, "isCustom": false },
+      "a_136": { "aId": 136, "value": 844, "isCustom": false },
+      "a_155": { "aId": 155, "value": 8624, "isCustom": false },
+      "a_156": { "aId": 156, "value": 1017, "isCustom": false },
+      "a_157": { "aId": 157, "value": 1020, "isCustom": false },
+      "a_258": { "aId": 258, "value": 1000, "isCustom": true },
+      "a_259": { "aId": 259, "value": 1200, "isCustom": true },
+      "a_186": { "aId": 186, "value": 1238, "isCustom": false },
+      "a_187": { "aId": 187, "value": 1242, "isCustom": false },
+      "a_2119": { "aId": 2119, "value": 10639, "isCustom": false },
+      "a_188": { "aId": 188, "value": 1244, "isCustom": false },
+      "a_190": { "aId": 190, "value": 1251, "isCustom": false },
+      "a_193": { "aId": 193, "value": 1268, "isCustom": false },
+      "a_195": { "aId": 195, "value": 1270, "isCustom": false },
+      "a_718": { "aId": 718, "value": 3634, "isCustom": false },
+      "a_3100": { "aId": 3100, "value": 16656, "isCustom": false },
+      "a_297": { "aId": 297, "value": 1614, "isCustom": false },
+      "a_210": { "aId": 210, "value": 1315, "isCustom": false },
+      "a_3089": { "aId": 3089, "value": 16610, "isCustom": false }
+    },
+    "871": {
+      "a_2230": { "aId": 2230, "value": 11377, "isCustom": false }
+    }
+  }
+}

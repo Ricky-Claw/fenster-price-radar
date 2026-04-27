@@ -1,0 +1,5151 @@
+{
+  "generatedAt": "2026-04-27T14:17:11.048Z",
+  "pricePolicy": "comparePrice.listTotal only; discounts manual later",
+  "results": [
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo 5 Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 171.85236552,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 125.452227
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo 5 Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 18,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "handle_sideways": 0,
+          "vents": 0,
+          "glazing_strip": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 31,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "handle_sideways": 1,
+          "vents": 1,
+          "glazing_strip": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo 5 Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 333.65735183000004,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 243.569867
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo 5 Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 18,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "handle_sideways": 0,
+          "vents": 0,
+          "glazing_strip": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 31,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "handle_sideways": 1,
+          "vents": 1,
+          "glazing_strip": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo 5 Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 198.57024814,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 144.956281
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo 5 Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 395 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 395
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 18,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "handle_sideways": 0,
+          "vents": 0,
+          "glazing_strip": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 31,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "handle_sideways": 1,
+          "vents": 1,
+          "glazing_strip": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x395"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo 5 Classic,2fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo 5 Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 168.3919296081,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 122.926109
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo 5 Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "415 mm x 395 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 415,
+        "height": 395
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 18,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "handle_sideways": 0,
+          "vents": 0,
+          "glazing_strip": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 31,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "handle_sideways": 1,
+          "vents": 1,
+          "glazing_strip": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:415x395"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo Energy Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 217.12501206,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 158.501259
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo Energy Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1 Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 22,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 38,
+        "vane_type": 301,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "vents": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo Energy Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 443.33907849,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 323.637527
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo Energy Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1 Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 22,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 38,
+        "vane_type": 301,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "vents": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo Energy Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 255.48892358,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 186.506914
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo Energy Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1 Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 480 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 480
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 22,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 38,
+        "vane_type": 301,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "vents": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x480"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Energy Classic, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Drutex Iglo Energy Classic",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 209.500846236,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 152.935618
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "Iglo Energy Classic",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1 Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "450 mm x 480 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 450,
+        "height": 480
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 22,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "handles_height": 0,
+          "skylight_opener": 0,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "thin_weld_v": 0,
+          "twin_fit": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "drill_protection": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 38,
+        "vane_type": 301,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "handles_height": 17791,
+          "skylight_opener": 1,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "thin_weld_v": 10771,
+          "twin_fit": 1,
+          "vents": 1,
+          "core_color": 58,
+          "seal_color": 49,
+          "handles": 1,
+          "drill_protection": 1,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:450x480"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo Ext, 2fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 166.724976026,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 121.709232
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 346.65869302525,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 253.060846
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 195.6936593415,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 142.856371
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal NEO MD, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 153.2254119586475,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 111.854551
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "415 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 415,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:415x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Drutex",
+        "profile": "Iglo HS",
+        "material": "PVC",
+        "size": "4000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 169.550564078,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 123.771912
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 352.53372557575,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 257.34962
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 199.0101970245,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 145.277444
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 155.8222148109425,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 113.750217
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "415 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 415,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:415x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 207.06889605,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 151.160294
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 8000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 11,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 134,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 21255,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 397.34842215000003,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 290.064348
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 8000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 11,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 134,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 21255,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 243.445864275,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 177.715481
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 8000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 11,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 134,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 21255,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 8000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "mappedProfile": "Aluplast Ideal 8000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 198.67421107500002,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 145.032174
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 8000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "415 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 415,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 11,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 134,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 21255,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:415x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S8000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Gealan",
+        "profile": "Gealan S9000, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Salamander",
+        "profile": "Salamander 76MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Salamander",
+        "profile": "Salamander 82, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 76, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82 MD, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 70, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Kömmerling",
+        "profile": "Kömmerling 88, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "2026-01-20"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 166.724976026,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 121.709232
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 346.65869302525,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 253.060846
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 195.6936593415,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 142.856371
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal Neo MD, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal Neo MD",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 153.2254119586475,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 111.854551
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "greenEvolution 76 AD",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "415 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "3-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 415,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 1,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 2,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "core_color": 0,
+          "vents": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 238,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 105,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "core_color": 39454,
+          "vents": 1,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:415x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 155.30135393,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 113.369988
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "600 mm x 600 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 600,
+        "height": 600
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 298.01070619,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": true
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 217.547816
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "950 mm x 1450 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 950,
+        "height": 1450
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": []
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 182.584024215,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 133.286338
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "1000 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 1000,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:1000x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Aluplast",
+        "profile": "Ideal 4000, 2fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "2fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "Ekookna"
+      },
+      "mappedProfile": "Aluplast Ideal 4000 Classic-Line",
+      "status": 200,
+      "comparePrice": {
+        "listTotal": 149.005353095,
+        "currency": "EUR",
+        "discountApplied": false,
+        "valid": false
+      },
+      "discountMetadata": {
+        "observedDiscountPercent": 0.27,
+        "discountedTotalObserved": 108.773908
+      },
+      "labels": [
+        {
+          "name": "Profil",
+          "value": "IDEAL 4000 Classic-Line",
+          "tab_index": 0
+        },
+        {
+          "name": "Typ",
+          "value": "1-Flügel",
+          "tab_index": 1
+        },
+        {
+          "name": "Öffnung",
+          "value": "Dreh-Kipp links",
+          "tab_index": 1
+        },
+        {
+          "name": "Maße",
+          "value": "415 mm x 415 mm",
+          "tab_index": 2
+        },
+        {
+          "name": "Farbe",
+          "value": "Außen: Weiss (ohne Dekorfarbe)<br />Innen: Weiss (ohne Dekorfarbe)<br />Dichtung: Schwarz",
+          "tab_index": 3
+        },
+        {
+          "name": "Glas",
+          "value": "2-fach Verglasung",
+          "tab_index": 4
+        }
+      ],
+      "actualDimensions": {
+        "width": 415,
+        "height": 415
+      },
+      "configChain": {
+        "material": 0,
+        "profile": 6,
+        "vane_type": 0,
+        "opening_direction": 5,
+        "opening_direction_top": 0,
+        "opening_direction_bottom": 0,
+        "glazing": 0,
+        "sprout_type": 0,
+        "sprout_width": 0,
+        "sprout_color": null,
+        "soundproof_glass": 0,
+        "security_glass": 0,
+        "os_glass": 0,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 0,
+        "frame_widthening_left": 0,
+        "frame_widthening_right": 0,
+        "frame_widthening_bottom": 0,
+        "color_inner": 0,
+        "color_outer": 0,
+        "sprout_pattern": 0,
+        "blind_type": 0,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": 0,
+        "blind_model": null,
+        "sill_depth": 0,
+        "sill_color": 0,
+        "sill_cap": 0,
+        "simple_unchained_step_items": {
+          "skylight_opener": 0,
+          "full_frame_reinforcement": 1,
+          "pre_drilling": 0,
+          "bench_connection": 0,
+          "thin_weld": 0,
+          "vents": 0,
+          "core_color": 0,
+          "seal_color": 0,
+          "handles": 0,
+          "handles_height": 0,
+          "safety_fittings": 1,
+          "hidden_fitting": 0,
+          "lock_monitoring": 0
+        }
+      },
+      "refIdChain": {
+        "material": 5,
+        "profile": 71314,
+        "vane_type": 259,
+        "opening_direction": 3892,
+        "opening_direction_top": 4490,
+        "opening_direction_bottom": 4490,
+        "glazing": 103,
+        "sprout_type": 187,
+        "sprout_width": 497,
+        "sprout_color": null,
+        "soundproof_glass": 175,
+        "security_glass": 745,
+        "os_glass": 745,
+        "warm_edge_color": null,
+        "pressure_compensation": null,
+        "frame_widthening_top": 351,
+        "frame_widthening_left": 351,
+        "frame_widthening_right": 351,
+        "frame_widthening_bottom": 351,
+        "color_inner": 71345,
+        "color_outer": 71345,
+        "sprout_pattern": 225,
+        "blind_type": 49,
+        "drive_type": null,
+        "drive_side": null,
+        "option_color_box_guide_rail": null,
+        "color_tambour_end_rails": null,
+        "color_box_guide_rail": null,
+        "division": null,
+        "blind_model": null,
+        "sill_depth": 78,
+        "sill_color": null,
+        "sill_cap": null,
+        "simple_unchained_step_items": {
+          "skylight_opener": 1,
+          "full_frame_reinforcement": 616,
+          "pre_drilling": 1,
+          "bench_connection": 1,
+          "thin_weld": 1,
+          "vents": 1,
+          "core_color": 39454,
+          "seal_color": 49,
+          "handles": 1,
+          "handles_height": 17791,
+          "safety_fittings": 977,
+          "hidden_fitting": 1,
+          "lock_monitoring": 1
+        }
+      },
+      "warnings": [
+        "dimension_adjusted_by_configurator:415x415"
+      ]
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "600x600",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "950x1450",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "1000x2100",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    },
+    {
+      "provider": "Fensterblick",
+      "input": {
+        "brand": "Veka",
+        "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+        "material": "PVC",
+        "size": "2000x2000",
+        "glazing": "3fach",
+        "color": "weiß",
+        "opening": "Dreh-Kipp",
+        "sourceSheet": "BRK"
+      },
+      "status": "unmatched",
+      "reason": "No profile alias match"
+    }
+  ]
+}

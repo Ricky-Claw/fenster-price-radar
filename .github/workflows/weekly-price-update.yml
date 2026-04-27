@@ -1,0 +1,41 @@
+name: Weekly price update
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Mondays 04:00 UTC = 06:00 Europe/Berlin during summer time.
+    - cron: '0 4 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run weekly provider update
+        run: npm run prices:update
+        env:
+          PRICE_LIMIT: '63'
+
+      - name: Build app
+        run: npm run build
+
+      - name: Commit updated price snapshot
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore(data): weekly price snapshot'
+          file_pattern: 'public/data/price-radar.json results/**/*.json results/**/*.csv'
