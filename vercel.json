@@ -3,7 +3,12 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "installCommand": "npm ci",
+  "functions": {
+    "api/quote.js": {
+      "includeFiles": "data/**"
+    }
+  },
   "rewrites": [
-    { "source": "/((?!data/|assets/).*)", "destination": "/index.html" }
+    { "source": "/((?!data/|assets/|api/).*)", "destination": "/index.html" }
   ]
 }
