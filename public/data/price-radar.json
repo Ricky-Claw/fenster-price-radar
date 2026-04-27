@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-04-27T15:46:44.824Z",
+  "generatedAt": "2026-04-27T17:36:36.183Z",
   "sources": {
-    "dfs": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z",
+    "dfs": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z",
     "fensterblick": "fensterblick-mapped-pvc-2026-04-27T15-42-46-863Z",
     "fensterversand": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
   },
@@ -38,7 +38,7 @@
           "listTotal": 321.06,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -113,7 +113,7 @@
           "listTotal": 389.84,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -188,7 +188,7 @@
           "listTotal": 363.12,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -263,7 +263,7 @@
           "listTotal": 452.53,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -338,7 +338,7 @@
           "listTotal": 396.96,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -413,7 +413,7 @@
           "listTotal": 465.74,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -488,7 +488,7 @@
           "listTotal": 449.1,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -563,7 +563,7 @@
           "listTotal": 538.52,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -638,7 +638,7 @@
           "listTotal": 260.92,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -713,7 +713,7 @@
           "listTotal": 329.7,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -788,7 +788,7 @@
           "listTotal": 282.83,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -863,7 +863,7 @@
           "listTotal": 372.24,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -933,12 +933,12 @@
           "glazing": "2fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 342.54,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -977,14 +977,14 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 342.54,
       "bestCompetitor": {
         "provider": "fensterversand",
         "price": 356.048
       },
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 356.048,
+      "delta": -13.51,
+      "deltaPct": -3.8,
+      "minPrice": 342.54,
       "maxPrice": 357.61480078000005
     },
     {
@@ -1008,12 +1008,12 @@
           "glazing": "3fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 411.32,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1052,14 +1052,14 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 411.32,
       "bestCompetitor": {
         "provider": "fensterversand",
         "price": 427.115454
       },
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 427.115454,
+      "delta": -15.8,
+      "deltaPct": -3.7,
+      "minPrice": 411.32,
       "maxPrice": 428.86124068000004
     },
     {
@@ -1083,12 +1083,12 @@
           "glazing": "2fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 371.32,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1127,14 +1127,14 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 371.32,
       "bestCompetitor": {
         "provider": "fensterblick",
         "price": 413.01991076
       },
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 413.01991076,
+      "delta": -41.7,
+      "deltaPct": -10.1,
+      "minPrice": 371.32,
       "maxPrice": 414.953
     },
     {
@@ -1158,12 +1158,12 @@
           "glazing": "3fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 460.74,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1202,14 +1202,14 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 460.74,
       "bestCompetitor": {
         "provider": "fensterblick",
         "price": 505.64028263
       },
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 505.64028263,
+      "delta": -44.9,
+      "deltaPct": -8.9,
+      "minPrice": 460.74,
       "maxPrice": 507.34069
     },
     {
@@ -1233,12 +1233,12 @@
           "glazing": "2fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 528.37,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1277,15 +1277,15 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 528.37,
       "bestCompetitor": {
         "provider": "fensterblick",
         "price": 352.64596163
       },
-      "delta": null,
-      "deltaPct": null,
+      "delta": 175.72,
+      "deltaPct": 49.8,
       "minPrice": 352.64596163,
-      "maxPrice": 372.232
+      "maxPrice": 528.37
     },
     {
       "key": "Aluplast|Ideal 7000, 3fach|1000x1500|3fach|Dreh-Kipp|weiß",
@@ -1308,12 +1308,12 @@
           "glazing": "3fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 597.15,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1352,15 +1352,15 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 597.15,
       "bestCompetitor": {
         "provider": "fensterblick",
         "price": 422.90247578
       },
-      "delta": null,
-      "deltaPct": null,
+      "delta": 174.25,
+      "deltaPct": 41.2,
       "minPrice": 422.90247578,
-      "maxPrice": 443.299454
+      "maxPrice": 597.15
     },
     {
       "key": "Aluplast|Ideal 7000, 2fach|1300x1500|2fach|Dreh-Kipp|weiß",
@@ -1383,12 +1383,12 @@
           "glazing": "2fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 572.71,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1427,15 +1427,15 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 572.71,
       "bestCompetitor": {
         "provider": "fensterblick",
         "price": 407.28125145999996
       },
-      "delta": null,
-      "deltaPct": null,
+      "delta": 165.43,
+      "deltaPct": 40.6,
       "minPrice": 407.28125145999996,
-      "maxPrice": 433.8145
+      "maxPrice": 572.71
     },
     {
       "key": "Aluplast|Ideal 7000, 3fach|1300x1500|3fach|Dreh-Kipp|weiß",
@@ -1458,12 +1458,12 @@
           "glazing": "3fach",
           "opening": "Dreh-Kipp",
           "color": "weiß",
-          "status": "unmatched",
-          "valid": false,
-          "listTotal": null,
+          "status": "priced",
+          "valid": true,
+          "listTotal": 662.12,
           "warnings": [],
-          "reason": "profile_id_missing",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "reason": "",
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1502,15 +1502,15 @@
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T15-44-29-818Z"
         }
       },
-      "dfsPrice": null,
+      "dfsPrice": 662.12,
       "bestCompetitor": {
         "provider": "fensterblick",
         "price": 498.614719855
       },
-      "delta": null,
-      "deltaPct": null,
+      "delta": 163.51,
+      "deltaPct": 32.8,
       "minPrice": 498.614719855,
-      "maxPrice": 526.20219
+      "maxPrice": 662.12
     },
     {
       "key": "Aluplast|Ideal 8000, 2fach|1000x1500|2fach|Dreh-Kipp|weiß",
@@ -1538,7 +1538,7 @@
           "listTotal": 446.82,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1613,7 +1613,7 @@
           "listTotal": 446.82,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1688,7 +1688,7 @@
           "listTotal": 484.33,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1763,7 +1763,7 @@
           "listTotal": 484.33,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1838,7 +1838,7 @@
           "listTotal": 306.48,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1913,7 +1913,7 @@
           "listTotal": 375.26,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -1988,7 +1988,7 @@
           "listTotal": 361.01,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2063,7 +2063,7 @@
           "listTotal": 450.43,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2138,7 +2138,7 @@
           "listTotal": 364.83,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2213,7 +2213,7 @@
           "listTotal": 433.61,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2288,7 +2288,7 @@
           "listTotal": 427.67,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2363,7 +2363,7 @@
           "listTotal": 517.08,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2438,7 +2438,7 @@
           "listTotal": 370.65,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2513,7 +2513,7 @@
           "listTotal": 439.43,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2588,7 +2588,7 @@
           "listTotal": 440.8,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2663,7 +2663,7 @@
           "listTotal": 530.22,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2738,7 +2738,7 @@
           "listTotal": 451.43,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2813,7 +2813,7 @@
           "listTotal": 451.43,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2888,7 +2888,7 @@
           "listTotal": 535.47,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -2963,7 +2963,7 @@
           "listTotal": 535.47,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3038,7 +3038,7 @@
           "listTotal": 357.24,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3113,7 +3113,7 @@
           "listTotal": 426.02,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3188,7 +3188,7 @@
           "listTotal": 525.52,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3263,7 +3263,7 @@
           "listTotal": 614.94,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3338,7 +3338,7 @@
           "listTotal": 404.76,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3413,7 +3413,7 @@
           "listTotal": 473.54,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3488,7 +3488,7 @@
           "listTotal": 459.07,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3563,7 +3563,7 @@
           "listTotal": 548.49,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3638,7 +3638,7 @@
           "listTotal": 498.55,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3713,7 +3713,7 @@
           "listTotal": 567.33,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3788,7 +3788,7 @@
           "listTotal": 565.39,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",
@@ -3863,7 +3863,7 @@
           "listTotal": 654.8,
           "warnings": [],
           "reason": "",
-          "sourceDir": "dfs-mapped-pvc-2026-04-27T15-42-43-616Z"
+          "sourceDir": "dfs-mapped-pvc-2026-04-27T17-36-32-883Z"
         },
         "fensterblick": {
           "provider": "fensterblick",

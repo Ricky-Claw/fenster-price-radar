@@ -8,7 +8,7 @@ const PROFILE_ALIASES = {
   'drutex|iglo 5 classic': 32, 'drutex|iglo 5': 31, 'drutex|iglo energy classic': 35, 'drutex|iglo energy': 34, 'drutex|iglo ext': 122, 'drutex|iglo premier': 126,
   'aluplast|ideal 4000': 12, 'aluplast|ideal 4000 classic': 12,
   'aluplast|ideal neo ad': 156, 'aluplast|ideal neo md': 130,
-  'aluplast|ideal 8000': 14, 'aluplast|ideal 7000': 13, 'aluplast|ideal 5000': 11,
+  'aluplast|ideal 8000': 14, 'aluplast|ideal 7000': 135, 'aluplast|ideal 5000': 82,
   'kommerling|kömmerling 70 ad': 152, 'kömmerling|kömmerling 70 ad': 152,
   'kommerling|kömmerling 70': 152, 'kömmerling|kömmerling 70': 152,
   'kommerling|kömmerling 88 md': 153, 'kömmerling|kömmerling 88 md': 153,
