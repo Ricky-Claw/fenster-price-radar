@@ -74,7 +74,20 @@ const configs = [...keys.values()].map(c => {
   };
 });
 
-const comparableConfigs = configs.filter(c => ['dfs','fensterblick','fensterversand'].every(k => c.providers[k]?.valid && typeof c.providers[k].listTotal === 'number'));
+function isUnavailable(p) {
+  return p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
+}
+function isValidPrice(p) {
+  return p?.valid && typeof p.listTotal === 'number' && p.listTotal > 0;
+}
+function isCleanProvider(p) {
+  return isValidPrice(p) || isUnavailable(p);
+}
+const comparableConfigs = configs.filter(c => {
+  const required = ['dfs','fensterblick','fensterversand'].map(k => c.providers[k]);
+  const validCount = required.filter(isValidPrice).length;
+  return validCount >= 2 && required.every(isCleanProvider);
+});
 const payload = {
   generatedAt: new Date().toISOString(),
   sources,
