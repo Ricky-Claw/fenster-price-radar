@@ -49,10 +49,10 @@ export default async function handler(req,res){
 function normResult(r){ return r.status==='fulfilled' ? r.value : {status:'error',valid:false,error:r.reason?.message||String(r.reason)}; }
 
 async function quoteDfs({profile,width,height,glazing,opening}){
-  if(!profile.dfs) return {status:'unmatched',valid:false,reason:'profile_not_available'};
+  if(!profile.dfs) return {status:'unmatched',valid:false,reason:'nicht_im_angebot'};
   const profiles=await json('data/dfs/data_window_1_profile.json');
   const p=profiles.find(x=>+x.id===+profile.dfs);
-  if(!p) return {status:'unmatched',valid:false,reason:'dfs_profile_missing'};
+  if(!p) return {status:'unmatched',valid:false,reason:'nicht_im_angebot'};
   const openType=openingId(opening);
   const body={doprice:1,loadPrices:openType,stulp:0,bid:+p.company_id,mid:+p.material_id,pid:+p.id,wid:1,opid:String(openType),size:{width:{},height:{}},open_ids:[openType],dv:1};
   const r=await fetch(`${DFS_BASE}/konfigurator/fenster`,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':DFS_BASE,'referer':`${DFS_BASE}/konfigurator/fenster`},body:JSON.stringify(body)});
@@ -77,10 +77,10 @@ async function dfsGlass(profileId, groupId, width, height, defPrice){
 }
 
 async function quoteFb({profile,width,height,glazing,opening,color}){
-  if(!profile.fb) return {status:'unmatched',valid:false,reason:'profile_not_available'};
+  if(!profile.fb) return {status:'unmatched',valid:false,reason:'nicht_im_angebot'};
   const aliases=await json('data/fensterblick/profile-aliases.json');
   const mapped=aliases[profile.fb];
-  if(!mapped) return {status:'unmatched',valid:false,reason:'alias_missing'};
+  if(!mapped) return {status:'unmatched',valid:false,reason:'nicht_im_angebot'};
   let j=await fbPost('/configurations/init-configuration',{configurator_id:1,selectedIds:{material:10,profile:mapped.profileId},country:'GERMANY'});
   const prof=j.updates.materials[j.config_chain.material].profiles[j.config_chain.profile];
   const glazingIndex=/2/.test(glazing)?findIndex(prof.glazings,/2-fach Verglasung$/i,0):findIndex(prof.glazings,/3-fach Verglasung$/i,2);
@@ -103,11 +103,11 @@ function findOpening(profile,rx,fallback){ const vt=profile.vane_types?.[0]; con
 function extractDims(labels){ const m=(labels||[]).find(l=>l.name==='Maße')?.value?.match(/(\d+)\s*mm\s*x\s*(\d+)\s*mm/i); return m?{width:Number(m[1]),height:Number(m[2])}:null; }
 
 async function quoteFv({profile,width,height,glazing,opening,color}){
-  if(!profile.fv) return {status:'unmatched',valid:false,reason:'profile_not_available'};
+  if(!profile.fv) return {status:'unmatched',valid:false,reason:'nicht_im_angebot'};
   const template=await json('data/fensterversand/pvc-default-payload.json');
   const aliases=await json('data/fensterversand/profile-aliases.json');
   const mapped=aliases[profile.fv];
-  if(!mapped) return {status:'unmatched',valid:false,reason:'alias_missing'};
+  if(!mapped) return {status:'unmatched',valid:false,reason:'nicht_im_angebot'};
   const p=structuredClone(template); const c=p.configuration['25'];
   c.a_132.value=834; c.a_2471.value=mapped.brandId; c.a_133.value=mapped.profileId; c.a_258.value=width; c.a_259.value=height;
   c.a_186.value=/2/.test(glazing)?1238:1240; c.a_136.value=/anthrazit/i.test(color)?849:844; c.a_157.value=fvOpening(opening);
