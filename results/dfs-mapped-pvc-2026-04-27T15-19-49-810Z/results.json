@@ -1,0 +1,1546 @@
+{
+  "summary": {
+    "total": 60,
+    "priced": 40,
+    "unmatched": 20,
+    "errors": 0
+  },
+  "results": [
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 70.279999,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 158.9,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 70.279999,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 175.41,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 82.910004,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 187.46,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 82.910004,
+        "glassAddNet": 16.224,
+        "comparePrice": {
+          "listTotal": 224.14,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 98.709999,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 223.18,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 98.709999,
+        "glassAddNet": 24.336,
+        "comparePrice": {
+          "listTotal": 278.21,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 112.919998,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 255.31,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 112.919998,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 318.47,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 2fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 114.5,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 258.88,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo AD, 3fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 156,
+        "profileName": "Ideal Neo AD 76mm ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 114.5,
+        "glassAddNet": 34.0704,
+        "comparePrice": {
+          "listTotal": 335.92,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_156.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 73.980003,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 167.27,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 73.980003,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 183.78,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 87.269997,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 197.32,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 87.269997,
+        "glassAddNet": 16.224,
+        "comparePrice": {
+          "listTotal": 234,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 103.910004,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 234.94,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 103.910004,
+        "glassAddNet": 24.336,
+        "comparePrice": {
+          "listTotal": 289.96,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 118.860001,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 268.74,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 118.860001,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 331.91,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 2fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 120.529999,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 272.52,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 120.529999,
+        "glassAddNet": 34.0704,
+        "comparePrice": {
+          "listTotal": 349.55,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 71.830002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 162.41,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 71.830002,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 178.91,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 84.730003,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 191.57,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 84.730003,
+        "glassAddNet": 16.224,
+        "comparePrice": {
+          "listTotal": 228.26,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 100.879997,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 228.09,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 100.879997,
+        "glassAddNet": 24.336,
+        "comparePrice": {
+          "listTotal": 283.11,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 115.400002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 260.92,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 115.400002,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 324.08,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 117.019997,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 264.58,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 117.019997,
+        "glassAddNet": 34.0704,
+        "comparePrice": {
+          "listTotal": 341.62,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_id_missing"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 123.010002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 278.13,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 123.010002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 278.13,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 145.100006,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 328.07,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 145.100006,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 328.07,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 172.759995,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 390.61,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 172.759995,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 390.61,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 197.619995,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 446.82,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 197.619995,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 446.82,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 200.399994,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 453.1,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "1200x1400",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-clean-v1",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 200.399994,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 453.1,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    }
+  ]
+}

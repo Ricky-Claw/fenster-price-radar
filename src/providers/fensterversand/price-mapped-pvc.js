@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '../../..');
 const template = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/pvc-default-payload.json'), 'utf8'));
-const catalog = JSON.parse(await fs.readFile(path.join(root, 'data/pvc-benchmark-from-excel.json'), 'utf8')).configs;
+const catalog = JSON.parse(await fs.readFile(path.join(root, 'data/comparison-catalog.json'), 'utf8')).configs;
 const aliases = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/profile-aliases.json'), 'utf8'));
 
 const limit = Number(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || 20);

@@ -3,7 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const __dirname=path.dirname(fileURLToPath(import.meta.url));
 const root=path.resolve(__dirname,'../../..');
-const catalog=JSON.parse(await fs.readFile(path.join(root,'data/pvc-benchmark-from-excel.json'),'utf8')).configs;
+const catalog=JSON.parse(await fs.readFile(path.join(root,'data/comparison-catalog.json'),'utf8')).configs;
 const aliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/profile-aliases.json'),'utf8'));
 const limit=Number(process.argv.find(a=>a.startsWith('--limit='))?.split('=')[1]||30);
 const outDir=path.join(root,'results',`fensterblick-mapped-pvc-${new Date().toISOString().replace(/[:.]/g,'-')}`);

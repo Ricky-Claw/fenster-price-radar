@@ -71,7 +71,7 @@ async function priceOne(c, profiles){
 const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').split('=')));
 const limit=args.limit?+args.limit:30;
 await fs.mkdir(OUT_DIR,{recursive:true});
-const catalogRaw=await readJson(path.join(ROOT,'data/pvc-benchmark-from-excel.json'));
+const catalogRaw=await readJson(path.join(ROOT,'data/comparison-catalog.json'));
 const catalog=(Array.isArray(catalogRaw)?catalogRaw:catalogRaw.configs||[]).slice(0,limit);
 const profiles=await readJson(path.join(ROOT,'data/dfs/data_window_1_profile.json'));
 const results=[];

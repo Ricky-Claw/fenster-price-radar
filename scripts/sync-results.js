@@ -74,11 +74,12 @@ const configs = [...keys.values()].map(c => {
   };
 });
 
+const comparableConfigs = configs.filter(c => ['dfs','fensterblick','fensterversand'].every(k => c.providers[k]?.valid && typeof c.providers[k].listTotal === 'number'));
 const payload = {
   generatedAt: new Date().toISOString(),
   sources,
-  summary: { rows: rows.length, configs: configs.length },
-  configs
+  summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length },
+  configs: comparableConfigs
 };
 fs.writeFileSync(path.join(out, 'price-radar.json'), JSON.stringify(payload, null, 2));
 console.log(JSON.stringify({ summary: payload.summary, sources }, null, 2));
