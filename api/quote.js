@@ -12,10 +12,15 @@ const PROFILES = [
   { id:'aluplast-ideal-neo-md', brand:'Aluplast', profile:'Ideal Neo MD', dfs:130, fb:'Aluplast Ideal Neo MD', fv:'Aluplast Ideal Neo MD' },
   { id:'aluplast-ideal-4000', brand:'Aluplast', profile:'Ideal 4000', dfs:12, fb:'Aluplast Ideal 4000 Classic-Line', fv:'Aluplast Ideal 4000' },
   { id:'aluplast-ideal-8000', brand:'Aluplast', profile:'Ideal 8000', dfs:14, fb:'Aluplast Ideal 8000 Classic-Line', fv:'Aluplast Ideal 8000' },
-  { id:'kommerling-70-ad', brand:'Kömmerling', profile:'Kömmerling 70 AD', dfs:40, fv:'Kömmerling 70 AD' },
-  { id:'kommerling-88-md', brand:'Kömmerling', profile:'Kömmerling 88 MD', dfs:39, fv:'Kömmerling 88 MD' },
-  { id:'veka-softline-70-ad', brand:'Veka', profile:'Softline 70 AD', fv:'Veka Softline 70 AD' },
-  { id:'veka-softline-82-md', brand:'Veka', profile:'Softline 82 MD', fv:'Veka Softline 82 MD' }
+  { id:'gealan-s8000', brand:'Gealan', profile:'S 8000 IQ', dfs:87, fb:'Gealan S 8000' },
+  { id:'gealan-s9000', brand:'Gealan', profile:'S 9000', dfs:66, fb:'Gealan S 9000' },
+  { id:'salamander-76-md', brand:'Salamander', profile:'GreenEvo 76 3D', dfs:7, fb:'Salamander greenEvolution 76 MD' },
+  { id:'salamander-82-md', brand:'Salamander', profile:'bluEvolution 82 MD', dfs:74, fb:'Salamander bluEvolution 82 MD Classic' },
+  { id:'veka-softline-70-ad', brand:'Veka', profile:'Softline 70 AD', dfs:57, fv:'Veka Softline 70 AD' },
+  { id:'veka-softline-76-md', brand:'Veka', profile:'Softline 76 MD', fv:'Veka Softline 76 MD' },
+  { id:'veka-softline-82-md', brand:'Veka', profile:'Softline 82 MD', dfs:70, fv:'Veka Softline 82 MD' },
+  { id:'kommerling-70-ad', brand:'Kömmerling', profile:'Kömmerling 70 AD', dfs:152, fv:'Kömmerling 70 AD' },
+  { id:'kommerling-88-md', brand:'Kömmerling', profile:'Kömmerling 88 MD', dfs:153, fv:'Kömmerling 88 MD' }
 ];
 
 let cache = {};

@@ -9,10 +9,13 @@ const PROFILE_ALIASES = {
   'aluplast|ideal 4000': 12, 'aluplast|ideal 4000 classic': 12,
   'aluplast|ideal neo ad': 156, 'aluplast|ideal neo md': 130,
   'aluplast|ideal 8000': 14, 'aluplast|ideal 7000': 13, 'aluplast|ideal 5000': 11,
-  'kommerling|kömmerling 70 ad': 40, 'kömmerling|kömmerling 70 ad': 40,
-  'kommerling|kömmerling 76 ad': 38, 'kömmerling|kömmerling 76 ad': 38,
-  'kommerling|kömmerling 76 md': 37, 'kömmerling|kömmerling 76 md': 37,
-  'kommerling|kömmerling 88 md': 39, 'kömmerling|kömmerling 88 md': 39,
+  'kommerling|kömmerling 70 ad': 152, 'kömmerling|kömmerling 70 ad': 152,
+  'kommerling|kömmerling 70': 152, 'kömmerling|kömmerling 70': 152,
+  'kommerling|kömmerling 88 md': 153, 'kömmerling|kömmerling 88 md': 153,
+  'kommerling|kömmerling 88': 153, 'kömmerling|kömmerling 88': 153,
+  'gealan|gealan s8000': 87, 'gealan|gealan s 8000': 87, 'gealan|gealan s9000': 66, 'gealan|gealan s 9000': 66,
+  'salamander|salamander 76md': 7, 'salamander|salamander 76 md': 7, 'salamander|salamander 82': 74,
+  'veka|veka 76': 57, 'veka|veka 82 md': 70, 'veka|veka 82': 70,
 };
 const OPEN_TYPE = { fest: 6, fixed: 6, 'dreh-kipp': 4, drehkipp: 4, dk: 4 };
 const GLASS_GROUP = { '2fach': 1, '2-fach': 1, 'double': 1, '3fach': 2, '3-fach': 2, 'triple': 2 };

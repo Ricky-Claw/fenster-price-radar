@@ -16,10 +16,15 @@ const quoteProfiles = [
   ['aluplast-ideal-neo-md','Aluplast · Ideal Neo MD'],
   ['aluplast-ideal-4000','Aluplast · Ideal 4000'],
   ['aluplast-ideal-8000','Aluplast · Ideal 8000'],
-  ['kommerling-70-ad','Kömmerling · 70 AD'],
-  ['kommerling-88-md','Kömmerling · 88 MD'],
+  ['gealan-s8000','Gealan · S 8000 IQ'],
+  ['gealan-s9000','Gealan · S 9000'],
+  ['salamander-76-md','Salamander · GreenEvo 76 3D'],
+  ['salamander-82-md','Salamander · bluEvolution 82 MD'],
   ['veka-softline-70-ad','Veka · Softline 70 AD'],
-  ['veka-softline-82-md','Veka · Softline 82 MD']
+  ['veka-softline-76-md','Veka · Softline 76 MD'],
+  ['veka-softline-82-md','Veka · Softline 82 MD'],
+  ['kommerling-70-ad','Kömmerling · 70 AD'],
+  ['kommerling-88-md','Kömmerling · 88 MD']
 ];
 
 function unique(data, key){ return [...new Set(data.map(x=>x[key]).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'de')); }

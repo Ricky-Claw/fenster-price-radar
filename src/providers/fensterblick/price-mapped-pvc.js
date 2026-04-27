@@ -49,6 +49,10 @@ function mapProfile(cfg){const hay=`${cfg.brand} ${cfg.profile}`.toLowerCase();
  if(/ideal\s*neo\s*ad/i.test(cfg.profile)) return {name:'Aluplast Ideal Neo AD',...aliases['Aluplast Ideal Neo AD']};
  if(/ideal\s*4000/i.test(cfg.profile)) return {name:'Aluplast Ideal 4000 Classic-Line',...aliases['Aluplast Ideal 4000 Classic-Line']};
  if(/ideal\s*8000/i.test(cfg.profile)) return {name:'Aluplast Ideal 8000 Classic-Line',...aliases['Aluplast Ideal 8000 Classic-Line']};
+ if(/gealan\s*s?\s*8000/i.test(cfg.profile)) return {name:'Gealan S 8000',...aliases['Gealan S 8000']};
+ if(/gealan\s*s?\s*9000/i.test(cfg.profile)) return {name:'Gealan S 9000',...aliases['Gealan S 9000']};
+ if(/salamander.*76/i.test(cfg.profile)) return {name:'Salamander greenEvolution 76 MD',...aliases['Salamander greenEvolution 76 MD']};
+ if(/salamander.*82/i.test(cfg.profile)) return {name:'Salamander bluEvolution 82 MD Classic',...aliases['Salamander bluEvolution 82 MD Classic']};
  return null;}
 function clean(p){return String(p||'').toLowerCase().replace(/,?\s*[23]fach/g,'').trim();}
 function extractDims(labels){const m=(labels||[]).find(l=>l.name==='Maße')?.value?.match(/(\d+)\s*mm\s*x\s*(\d+)\s*mm/i); return m?{width:Number(m[1]),height:Number(m[2])}:null;}
