@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-27T14:17:51.490Z",
+  "generatedAt": "2026-04-27T14:27:37.680Z",
   "sources": {
     "dfs": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z",
     "fensterblick": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z",
@@ -7,7 +7,7 @@
   },
   "summary": {
     "rows": 189,
-    "configs": 64
+    "configs": 63
   },
   "configs": [
     {
@@ -37,13 +37,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 171.85236552,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 175.3,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 175.3,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 171.85236552
+      },
+      "delta": 3.45,
+      "deltaPct": 2,
+      "minPrice": 171.85236552,
       "maxPrice": 175.3
     },
     {
@@ -75,14 +114,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 333.65735183000004,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 333.65735183000004
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 333.65735183000004,
+      "maxPrice": 333.65735183000004
     },
     {
       "key": "Drutex|Iglo 5 Classic,2fach|1000x2100|2fach|Dreh-Kipp|weiß",
@@ -111,6 +189,44 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 198.57024814,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x395"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -147,6 +263,44 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 168.3919296081,
+          "warnings": [
+            "dimension_adjusted_by_configurator:415x395"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo 5 Classic,2fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -183,13 +337,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 217.12501206,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 232.48,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 232.48,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 217.12501206
+      },
+      "delta": 15.35,
+      "deltaPct": 7.1,
+      "minPrice": 217.12501206,
       "maxPrice": 232.48
     },
     {
@@ -221,14 +414,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 443.33907849,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 443.33907849
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 443.33907849,
+      "maxPrice": 443.33907849
     },
     {
       "key": "Drutex|Iglo Energy Classic, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -257,6 +489,44 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 255.48892358,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x480"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -293,6 +563,44 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 209.500846236,
+          "warnings": [
+            "dimension_adjusted_by_configurator:450x480"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Energy Classic, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -329,6 +637,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -365,6 +709,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -401,6 +781,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -437,6 +853,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo Ext, 2fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -473,13 +925,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 166.724976026,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 134.866189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 183.78,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 183.78,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 134.866189
+      },
+      "delta": 48.91,
+      "deltaPct": 36.3,
+      "minPrice": 134.866189,
       "maxPrice": 183.78
     },
     {
@@ -511,14 +1002,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 346.65869302525,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 421.311611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 346.65869302525
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 346.65869302525,
+      "maxPrice": 421.311611
     },
     {
       "key": "Aluplast|Ideal NEO MD, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -547,14 +1077,55 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 195.6936593415,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 540.627436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 438.34,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 540.627436
+      },
+      "delta": -102.29,
+      "deltaPct": -18.9,
       "minPrice": 438.34,
-      "maxPrice": 438.34
+      "maxPrice": 540.627436
     },
     {
       "key": "Aluplast|Ideal NEO MD, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -583,6 +1154,46 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 153.2254119586475,
+          "warnings": [
+            "dimension_adjusted_by_configurator:415x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal NEO MD, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -619,6 +1230,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Drutex",
+          "profile": "Iglo HS",
+          "material": "PVC",
+          "size": "4000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Drutex",
+          "profile": "Iglo HS",
+          "material": "PVC",
+          "size": "4000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -655,13 +1302,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 169.550564078,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 124.156189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 178.91,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 178.91,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 124.156189
+      },
+      "delta": 54.75,
+      "deltaPct": 44.1,
+      "minPrice": 124.156189,
       "maxPrice": 178.91
     },
     {
@@ -693,14 +1379,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 352.53372557575,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 388.943611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 352.53372557575
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 352.53372557575,
+      "maxPrice": 388.943611
     },
     {
       "key": "Aluplast|Ideal 4000, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -729,14 +1454,55 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 199.0101970245,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 500.524436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 428.36,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 500.524436
+      },
+      "delta": -72.16,
+      "deltaPct": -14.4,
       "minPrice": 428.36,
-      "maxPrice": 428.36
+      "maxPrice": 500.524436
     },
     {
       "key": "Aluplast|Ideal 4000, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -765,6 +1531,46 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 155.8222148109425,
+          "warnings": [
+            "dimension_adjusted_by_configurator:415x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -801,13 +1607,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 207.06889605,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 145.576189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 278.13,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 278.13,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 145.576189
+      },
+      "delta": 132.55,
+      "deltaPct": 91.1,
+      "minPrice": 145.576189,
       "maxPrice": 278.13
     },
     {
@@ -839,14 +1684,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 397.34842215000003,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 453.679611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 397.34842215000003
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 397.34842215000003,
+      "maxPrice": 453.679611
     },
     {
       "key": "Aluplast|Ideal 8000, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -875,14 +1759,55 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 243.445864275,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 580.730436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 568.69,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 580.730436
+      },
+      "delta": -12.04,
+      "deltaPct": -2.1,
       "minPrice": 568.69,
-      "maxPrice": 568.69
+      "maxPrice": 580.730436
     },
     {
       "key": "Aluplast|Ideal 8000, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -911,6 +1836,46 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 198.67421107500002,
+          "warnings": [
+            "dimension_adjusted_by_configurator:415x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 8000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -947,6 +1912,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -983,6 +1984,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1019,6 +2056,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1055,6 +2128,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S8000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1091,6 +2200,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1127,6 +2272,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1163,6 +2344,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1199,6 +2416,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Gealan",
+          "profile": "Gealan S9000, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1235,6 +2488,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Salamander",
+          "profile": "Salamander 76MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Salamander",
+          "profile": "Salamander 76MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1271,6 +2560,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Salamander",
+          "profile": "Salamander 82, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Salamander",
+          "profile": "Salamander 82, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1307,6 +2632,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1343,6 +2704,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1379,6 +2776,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1415,6 +2848,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 76, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1451,14 +2920,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 249.106189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 249.106189
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 249.106189,
+      "maxPrice": 249.106189
     },
     {
       "key": "Veka|Veka 82 MD, 3fach|950x1450|3fach|Dreh-Kipp|weiß",
@@ -1487,14 +2995,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 484.738611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 484.738611
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 484.738611,
+      "maxPrice": 484.738611
     },
     {
       "key": "Veka|Veka 82 MD, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -1523,14 +3070,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 626.069436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 626.069436
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 626.069436,
+      "maxPrice": 626.069436
     },
     {
       "key": "Veka|Veka 82 MD, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -1559,6 +3145,44 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82 MD, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1595,14 +3219,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 131.296189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 131.296189
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 131.296189,
+      "maxPrice": 131.296189
     },
     {
       "key": "Kömmerling|Kömmerling 70, 3fach|950x1450|3fach|Dreh-Kipp|weiß",
@@ -1631,14 +3294,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 393.703611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 393.703611
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 393.703611,
+      "maxPrice": 393.703611
     },
     {
       "key": "Kömmerling|Kömmerling 70, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -1667,14 +3369,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 506.474436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 506.474436
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 506.474436,
+      "maxPrice": 506.474436
     },
     {
       "key": "Kömmerling|Kömmerling 70, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -1703,6 +3444,44 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 70, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1739,14 +3518,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 171.280189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 171.280189
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 171.280189,
+      "maxPrice": 171.280189
     },
     {
       "key": "Kömmerling|Kömmerling 88, 3fach|950x1450|3fach|Dreh-Kipp|weiß",
@@ -1775,14 +3593,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 508.657611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 508.657611
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 508.657611,
+      "maxPrice": 508.657611
     },
     {
       "key": "Kömmerling|Kömmerling 88, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -1811,14 +3668,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 648.917436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 648.917436
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 648.917436,
+      "maxPrice": 648.917436
     },
     {
       "key": "Kömmerling|Kömmerling 88, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -1847,6 +3743,44 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Kömmerling",
+          "profile": "Kömmerling 88, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -1883,13 +3817,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 166.724976026,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 134.866189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 183.78,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 183.78,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 134.866189
+      },
+      "delta": 48.91,
+      "deltaPct": 36.3,
+      "minPrice": 134.866189,
       "maxPrice": 183.78
     },
     {
@@ -1921,14 +3894,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 346.65869302525,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 421.311611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 346.65869302525
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 346.65869302525,
+      "maxPrice": 421.311611
     },
     {
       "key": "Aluplast|Ideal Neo MD, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -1957,14 +3969,55 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 195.6936593415,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 540.627436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 438.34,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 540.627436
+      },
+      "delta": -102.29,
+      "deltaPct": -18.9,
       "minPrice": 438.34,
-      "maxPrice": 438.34
+      "maxPrice": 540.627436
     },
     {
       "key": "Aluplast|Ideal Neo MD, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -1993,6 +4046,46 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 153.2254119586475,
+          "warnings": [
+            "dimension_adjusted_by_configurator:415x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal Neo MD, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -2029,13 +4122,52 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 155.30135393,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 107.1,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 162.41,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": 162.41,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 107.1
+      },
+      "delta": 55.31,
+      "deltaPct": 51.6,
+      "minPrice": 107.1,
       "maxPrice": 162.41
     },
     {
@@ -2067,14 +4199,53 @@
           ],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 298.01070619,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 323.68,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterblick",
+        "price": 298.01070619
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 298.01070619,
+      "maxPrice": 323.68
     },
     {
       "key": "Aluplast|Ideal 4000, 2fach|1000x2100|2fach|Dreh-Kipp|weiß",
@@ -2103,14 +4274,55 @@
           "warnings": [],
           "reason": "",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 182.584024215,
+          "warnings": [
+            "dimension_adjusted_by_configurator:1000x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 401.03,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": 332.07,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 401.03
+      },
+      "delta": -68.96,
+      "deltaPct": -17.2,
       "minPrice": 332.07,
-      "maxPrice": 332.07
+      "maxPrice": 401.03
     },
     {
       "key": "Aluplast|Ideal 4000, 2fach|2000x2000|2fach|Dreh-Kipp|weiß",
@@ -2139,6 +4351,46 @@
           "warnings": [],
           "reason": "price_row_not_found",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 149.005353095,
+          "warnings": [
+            "dimension_adjusted_by_configurator:415x415"
+          ],
+          "reason": "",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Aluplast",
+          "profile": "Ideal 4000, 2fach",
+          "material": "PVC",
+          "size": "2000x2000",
+          "width": "",
+          "height": "",
+          "glazing": "2fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": false,
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
@@ -2175,14 +4427,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "600x600",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 249.106189,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 249.106189
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 249.106189,
+      "maxPrice": 249.106189
     },
     {
       "key": "Veka|Veka 82/ 540x540 im Konfi, 3fach|950x1450|3fach|Dreh-Kipp|weiß",
@@ -2211,14 +4502,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "950x1450",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 484.738611,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 484.738611
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 484.738611,
+      "maxPrice": 484.738611
     },
     {
       "key": "Veka|Veka 82/ 540x540 im Konfi, 3fach|1000x2100|3fach|Dreh-Kipp|weiß",
@@ -2247,14 +4577,53 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
+        },
+        "fensterblick": {
+          "provider": "fensterblick",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": "unmatched",
+          "valid": false,
+          "listTotal": null,
+          "warnings": [],
+          "reason": "No profile alias match",
+          "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
+        },
+        "fensterversand": {
+          "provider": "fensterversand",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "1000x2100",
+          "width": "",
+          "height": "",
+          "glazing": "3fach",
+          "opening": "Dreh-Kipp",
+          "color": "weiß",
+          "status": 200,
+          "valid": true,
+          "listTotal": 626.069436,
+          "warnings": [],
+          "reason": "",
+          "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }
       },
       "dfsPrice": null,
-      "bestCompetitor": null,
+      "bestCompetitor": {
+        "provider": "fensterversand",
+        "price": 626.069436
+      },
       "delta": null,
       "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
+      "minPrice": 626.069436,
+      "maxPrice": 626.069436
     },
     {
       "key": "Veka|Veka 82/ 540x540 im Konfi, 3fach|2000x2000|3fach|Dreh-Kipp|weiß",
@@ -2283,58 +4652,42 @@
           "warnings": [],
           "reason": "profile_not_mapped",
           "sourceDir": "dfs-mapped-pvc-2026-04-27T14-16-04-527Z"
-        }
-      },
-      "dfsPrice": null,
-      "bestCompetitor": null,
-      "delta": null,
-      "deltaPct": null,
-      "minPrice": null,
-      "maxPrice": null
-    },
-    {
-      "key": "||x||Dreh-Kipp|Weiß/Weiß",
-      "brand": "",
-      "profile": "",
-      "material": "Kunststoff",
-      "size": "x",
-      "glazing": "",
-      "opening": "Dreh-Kipp",
-      "color": "Weiß/Weiß",
-      "providers": {
+        },
         "fensterblick": {
           "provider": "fensterblick",
-          "brand": "",
-          "profile": "",
-          "material": "Kunststoff",
-          "size": "x",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
           "width": "",
           "height": "",
-          "glazing": "",
+          "glazing": "3fach",
           "opening": "Dreh-Kipp",
-          "color": "Weiß/Weiß",
-          "status": "unknown",
+          "color": "weiß",
+          "status": "unmatched",
           "valid": false,
           "listTotal": null,
           "warnings": [],
-          "reason": "",
+          "reason": "No profile alias match",
           "sourceDir": "fensterblick-mapped-pvc-2026-04-27T14-16-06-375Z"
         },
         "fensterversand": {
           "provider": "fensterversand",
-          "brand": "",
-          "profile": "",
-          "material": "Kunststoff",
-          "size": "x",
+          "brand": "Veka",
+          "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+          "material": "PVC",
+          "size": "2000x2000",
           "width": "",
           "height": "",
-          "glazing": "",
+          "glazing": "3fach",
           "opening": "Dreh-Kipp",
-          "color": "Weiß/Weiß",
-          "status": "unknown",
+          "color": "weiß",
+          "status": 200,
           "valid": false,
-          "listTotal": null,
-          "warnings": [],
+          "listTotal": 0,
+          "warnings": [
+            "zero_or_unavailable_price"
+          ],
           "reason": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-04-27T14-17-11-225Z"
         }

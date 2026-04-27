@@ -23,19 +23,21 @@ for (const [provider, dir] of Object.entries(sources)) {
   if (!fs.existsSync(p)) continue;
   const json = JSON.parse(fs.readFileSync(p, 'utf8'));
   for (const r of json.results || []) {
-    const data = r[provider] || r.dfs || r.fensterblick || r.fensterversand || {};
+    const wrapped = r[provider] || r.dfs || r.fensterblick || r.fensterversand;
+    const data = wrapped || r || {};
+    const input = r.input || r || {};
     const price = data?.comparePrice?.listTotal ?? data?.listTotal ?? data?.price?.listTotal ?? null;
     rows.push({
       provider,
-      brand: r.brand || r.manufacturer || '',
-      profile: r.profile || r.model || '',
-      material: r.material || 'Kunststoff',
-      size: r.size || `${r.width || ''}x${r.height || ''}`,
-      width: r.width || '',
-      height: r.height || '',
-      glazing: r.glazing || r.glass || '',
-      opening: r.opening || r.openingType || 'Dreh-Kipp',
-      color: r.color || 'Weiß/Weiß',
+      brand: input.brand || input.manufacturer || r.brand || r.manufacturer || '',
+      profile: input.profile || input.model || r.profile || r.model || '',
+      material: input.material || r.material || 'Kunststoff',
+      size: input.size || r.size || `${input.width || r.width || ''}x${input.height || r.height || ''}`,
+      width: input.width || r.width || '',
+      height: input.height || r.height || '',
+      glazing: input.glazing || input.glass || r.glazing || r.glass || '',
+      opening: input.opening || input.openingType || r.opening || r.openingType || 'Dreh-Kipp',
+      color: input.color || r.color || 'Weiß/Weiß',
       status: data?.status || 'unknown',
       valid: data?.comparePrice?.valid ?? false,
       listTotal: price,
