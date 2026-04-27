@@ -13,6 +13,7 @@ const cls = (...a) => a.filter(Boolean).join(' ');
 const quoteProfiles = [
   ['drutex-iglo-5-classic','Drutex · Iglo 5 Classic'],
   ['drutex-iglo-energy-classic','Drutex · Iglo Energy Classic'],
+  ['drutex-iglo-ext','Drutex · Iglo EXT'],
   ['aluplast-ideal-neo-md','Aluplast · Ideal Neo MD'],
   ['aluplast-ideal-4000','Aluplast · Ideal 4000'],
   ['aluplast-ideal-8000','Aluplast · Ideal 8000'],

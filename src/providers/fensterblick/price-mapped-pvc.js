@@ -45,6 +45,7 @@ function mapProfile(cfg){const hay=`${cfg.brand} ${cfg.profile}`.toLowerCase();
  if(/iglo\s*5\s*classic/i.test(cfg.profile)) return {name:'Drutex Iglo 5 Classic',...aliases['Drutex Iglo 5 Classic']};
  if(/iglo\s*energy\s*classic/i.test(cfg.profile)) return {name:'Drutex Iglo Energy Classic',...aliases['Drutex Iglo Energy Classic']};
  if(/iglo\s*energy/i.test(cfg.profile)) return {name:'Drutex Iglo Energy',...aliases['Drutex Iglo Energy']};
+ if(/iglo\s*ext/i.test(cfg.profile)) return {name:'Drutex Iglo EXT',...aliases['Drutex Iglo EXT']};
  if(/ideal\s*neo\s*md/i.test(cfg.profile)) return {name:'Aluplast Ideal Neo MD',...aliases['Aluplast Ideal Neo MD']};
  if(/ideal\s*neo\s*ad/i.test(cfg.profile)) return {name:'Aluplast Ideal Neo AD',...aliases['Aluplast Ideal Neo AD']};
  if(/ideal\s*4000/i.test(cfg.profile)) return {name:'Aluplast Ideal 4000 Classic-Line',...aliases['Aluplast Ideal 4000 Classic-Line']};

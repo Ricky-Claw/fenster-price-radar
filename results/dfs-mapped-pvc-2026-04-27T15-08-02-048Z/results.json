@@ -1,0 +1,1566 @@
+{
+  "summary": {
+    "total": 63,
+    "priced": 38,
+    "unmatched": 1,
+    "errors": 0
+  },
+  "results": [
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 32,
+        "profileName": "Iglo 5 Classic",
+        "brandId": "6",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 77.529999,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 175.3,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_32.json"
+        }
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 32,
+        "profileName": "Iglo 5 Classic",
+        "brandId": "6",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 142,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 321.06,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_32.json"
+        }
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic,2fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 35,
+        "profileName": "Iglo Energy Classic",
+        "brandId": "6",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 95.519997,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 232.48,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_35.json"
+        }
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 35,
+        "profileName": "Iglo Energy Classic",
+        "brandId": "6",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 175.570007,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 460.13,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_35.json"
+        }
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Ext, 2fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 73.980003,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 183.78,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 118.860001,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 331.91,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 151.279999,
+        "glassAddNet": 42.588,
+        "comparePrice": {
+          "listTotal": 438.34,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal NEO MD, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo HS",
+      "material": "PVC",
+      "size": "4000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "unmatched",
+        "reason": "profile_not_mapped"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 71.830002,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 178.91,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 115.400002,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 324.08,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 146.869995,
+        "glassAddNet": 42.588,
+        "comparePrice": {
+          "listTotal": 428.36,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 123.010002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 278.13,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 197.619995,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 446.82,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 14,
+        "profileName": "Ideal 8000 ",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 251.520004,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 568.69,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_14.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 87,
+        "profileName": "Gealan S 8000 IQ",
+        "brandId": "8",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 60.709999,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 153.77,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_87.json"
+        }
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 87,
+        "profileName": "Gealan S 8000 IQ",
+        "brandId": "8",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 135.550003,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 369.64,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_87.json"
+        }
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 66,
+        "profileName": "Gealan S 9000",
+        "brandId": "8",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 79.339996,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 195.89,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_66.json"
+        }
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 66,
+        "profileName": "Gealan S 9000",
+        "brandId": "8",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 161.360001,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 428,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_66.json"
+        }
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 76MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 7,
+        "profileName": "Salamander GreenEvo 76 3D",
+        "brandId": "2",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 99.540001,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 241.57,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_7.json"
+        }
+      }
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 82, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 74,
+        "profileName": "Salamander bluEvolution 82 MD (Mitteldichtung)",
+        "brandId": "2",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 123.019997,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 278.15,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_74.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 57,
+        "profileName": "Veka Softline 70AD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 76.610001,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 189.72,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_57.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 57,
+        "profileName": "Veka Softline 70AD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 117.309998,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 328.4,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_57.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 57,
+        "profileName": "Veka Softline 70AD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 185.539993,
+        "glassAddNet": 42.588,
+        "comparePrice": {
+          "listTotal": 515.8,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_57.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 76, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 70,
+        "profileName": "Veka Softline 82MD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 92.860001,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 226.46,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_70.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 70,
+        "profileName": "Veka Softline 82MD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 158,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 420.4,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_70.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 70,
+        "profileName": "Veka Softline 82MD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 245.320007,
+        "glassAddNet": 42.588,
+        "comparePrice": {
+          "listTotal": 650.96,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_70.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 152,
+        "profileName": "Kömmerling 70 AD",
+        "brandId": "15",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 84.889999,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 208.44,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_152.json"
+        }
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 152,
+        "profileName": "Kömmerling 70 AD",
+        "brandId": "15",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 179.020004,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 467.93,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_152.json"
+        }
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 153,
+        "profileName": "Kömmerling 88 MD",
+        "brandId": "15",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 104.550003,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 252.89,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_153.json"
+        }
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 153,
+        "profileName": "Kömmerling 88 MD",
+        "brandId": "15",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 220.5,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 561.71,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_153.json"
+        }
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "2026-01-20",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 73.980003,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 183.78,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 118.860001,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 331.91,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 130,
+        "profileName": "Ideal Neo MD 76mm",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 151.279999,
+        "glassAddNet": 42.588,
+        "comparePrice": {
+          "listTotal": 438.34,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_130.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal Neo MD, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 71.830002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 162.41,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 115.400002,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 260.92,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 12,
+        "profileName": "Ideal 4000 Classic",
+        "brandId": "4",
+        "openingTypeId": 4,
+        "glassGroupId": 1,
+        "baseNet": 146.869995,
+        "glassAddNet": 0,
+        "comparePrice": {
+          "listTotal": 332.07,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_12.json"
+        }
+      }
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "Ekookna",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "600x600",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 70,
+        "profileName": "Veka Softline 82MD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 92.860001,
+        "glassAddNet": 7.3008,
+        "comparePrice": {
+          "listTotal": 226.46,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_70.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "950x1450",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 70,
+        "profileName": "Veka Softline 82MD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 158,
+        "glassAddNet": 27.9357,
+        "comparePrice": {
+          "listTotal": 420.4,
+          "currency": "EUR",
+          "valid": false
+        },
+        "warnings": [
+          "dimension_rounded_to:1000x1500"
+        ],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_70.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "1000x2100",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK",
+      "dfs": {
+        "status": "priced",
+        "provider": "dfs",
+        "profileId": 70,
+        "profileName": "Veka Softline 82MD",
+        "brandId": "7",
+        "openingTypeId": 4,
+        "glassGroupId": 2,
+        "baseNet": 245.320007,
+        "glassAddNet": 42.588,
+        "comparePrice": {
+          "listTotal": 650.96,
+          "currency": "EUR",
+          "valid": true
+        },
+        "warnings": [],
+        "source": {
+          "api": "/konfigurator/fenster",
+          "glass": "/json/data_window_glass_70.json"
+        }
+      }
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82/ 540x540 im Konfi, 3fach",
+      "material": "PVC",
+      "size": "2000x2000",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "BRK",
+      "dfs": {
+        "status": "invalid",
+        "reason": "price_row_not_found"
+      }
+    }
+  ]
+}

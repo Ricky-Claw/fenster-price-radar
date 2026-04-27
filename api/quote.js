@@ -9,6 +9,7 @@ const FB_BASE = 'https://api.configurator.fensterblick.de';
 const PROFILES = [
   { id:'drutex-iglo-5-classic', brand:'Drutex', profile:'Iglo 5 Classic', dfs:32, fb:'Drutex Iglo 5 Classic' },
   { id:'drutex-iglo-energy-classic', brand:'Drutex', profile:'Iglo Energy Classic', dfs:35, fb:'Drutex Iglo Energy Classic' },
+  { id:'drutex-iglo-ext', brand:'Drutex', profile:'Iglo EXT', dfs:122, fb:'Drutex Iglo EXT' },
   { id:'aluplast-ideal-neo-md', brand:'Aluplast', profile:'Ideal Neo MD', dfs:130, fb:'Aluplast Ideal Neo MD', fv:'Aluplast Ideal Neo MD' },
   { id:'aluplast-ideal-4000', brand:'Aluplast', profile:'Ideal 4000', dfs:12, fb:'Aluplast Ideal 4000 Classic-Line', fv:'Aluplast Ideal 4000' },
   { id:'aluplast-ideal-8000', brand:'Aluplast', profile:'Ideal 8000', dfs:14, fb:'Aluplast Ideal 8000 Classic-Line', fv:'Aluplast Ideal 8000' },

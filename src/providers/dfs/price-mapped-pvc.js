@@ -5,7 +5,7 @@ const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, 'results', `dfs-mapped-pvc-${new Date().toISOString().replace(/[:.]/g,'-')}`);
 const BASE = 'https://deutscher-fenstershop.de';
 const PROFILE_ALIASES = {
-  'drutex|iglo 5 classic': 32, 'drutex|iglo 5': 31, 'drutex|iglo energy classic': 35, 'drutex|iglo energy': 34,
+  'drutex|iglo 5 classic': 32, 'drutex|iglo 5': 31, 'drutex|iglo energy classic': 35, 'drutex|iglo energy': 34, 'drutex|iglo ext': 122, 'drutex|iglo premier': 126,
   'aluplast|ideal 4000': 12, 'aluplast|ideal 4000 classic': 12,
   'aluplast|ideal neo ad': 156, 'aluplast|ideal neo md': 130,
   'aluplast|ideal 8000': 14, 'aluplast|ideal 7000': 13, 'aluplast|ideal 5000': 11,
