@@ -71,8 +71,9 @@ function App(){
     const exact=data.filter(r=>r.dfsPrice && r.bestCompetitor);
     const cheaper=exact.filter(r=>r.delta<=0).length;
     const avg=exact.length ? exact.reduce((s,r)=>s+r.deltaPct,0)/exact.length : 0;
+    const avgClass = avg <= 0 ? 'good' : avg <= 10 ? 'mid' : 'bad';
     const validDfs=data.filter(r=>r.providers.dfs?.valid).length;
-    return {configs:data.length, exact:exact.length, cheaper, avg, validDfs};
+    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs};
   },[data]);
 
   if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
@@ -119,7 +120,7 @@ function App(){
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
         <div className="card"><small>Direkt vergleichbar</small><b>{stats.exact}</b><span>DFS + Wettbewerber valide</span></div>
-        <div className="card accent"><small>Ø Abstand</small><b>{stats.avg.toFixed(1)}%</b><span>gegen besten Wettbewerber</span></div>
+        <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
       <section className="panel">
