@@ -131,7 +131,6 @@ function App(){
       <section className="cards">
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
-        <div className="card"><small>Direkt vergleichbar</small><b>{stats.exact}</b><span>DFS + Wettbewerber valide</span></div>
         <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changed}</b><span>Preisänderungen erkannt</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
@@ -163,7 +162,7 @@ function App(){
       <details className="panel trendPanel" id="entwicklung">
         <summary className="panelHead trendSummary">
           <div><h2>Preisentwicklung</h2><p>Vergleich aktueller DFS-Listenpreise zur vorherigen gespeicherten Aktualisierung.</p></div>
-          <span className="historyBadge">{stats.changed} Änderungen</span>
+          <span className="historyBadge">{stats.changed} Änderungen <span className="chevron">⌄</span></span>
         </summary>
         <div className="trendList">
           {data.filter(r=>r.weeklyChange?.dfs).slice(0,8).map(r=><div className="trendRow" key={r.key}><b>{r.brand} · {r.profile}</b><span>{r.size} · {r.glazing}</span>{changeLabel(r)}</div>)}
