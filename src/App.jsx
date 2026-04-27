@@ -41,8 +41,7 @@ function providerCell(row, id){
   const p=row.providers[id];
   if(!p) return <td className="muted">—</td>;
   if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></td>;
-  const ch=row.weeklyChange?.[id];
-  return <td className="price">{eur(p.listTotal)}{ch ? <small className={cls('trend', ch.delta>0?'up':ch.delta<0?'down':'flat')}>{ch.delta>0?<TrendingUp size={13}/>:ch.delta<0?<TrendingDown size={13}/>:<Minus size={13}/>} {ch.delta>0?'+':''}{eur(ch.delta)} / {ch.deltaPct}% zur Vorwoche</small> : null}</td>;
+  return <td className="price">{eur(p.listTotal)}</td>;
 }
 
 function App(){

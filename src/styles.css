@@ -8,4 +8,4 @@
 .tableWrap{overflow-x:visible}
 table{table-layout:fixed;width:100%}th,td{white-space:normal;padding:13px 12px}td:first-child{min-width:0;width:27%}th:nth-child(2),td:nth-child(2),th:nth-child(3),td:nth-child(3),th:nth-child(4),td:nth-child(4){width:13%}th:nth-child(5),td:nth-child(5){width:17%}th:nth-child(6),td:nth-child(6){width:13%}.price,.pill,.delta,.quality,.trend{font-size:12px}.panel{max-width:100%}.trendSummary{cursor:pointer;user-select:none}.trendSummary::-webkit-details-marker{display:none}.historyBadge{display:inline-flex;align-items:center;gap:8px}.chevron{font-size:20px;line-height:1;transition:transform .18s ease}details[open] .chevron{transform:rotate(180deg)}
 @media(max-width:1200px){main{padding:22px}.topbar{padding:0 20px}th,td{padding:11px 9px;font-size:13px}.price,.pill,.delta,.quality,.trend{font-size:11px}.brandmark small{display:none}}
-@media(max-width:900px){.tableWrap{overflow-x:auto}table{min-width:960px}.cards{grid-template-columns:1fr}}
+@media(max-width:900px){.cards{grid-template-columns:1fr}.tableWrap{overflow-x:visible}table{min-width:0}th,td{padding:9px 6px;font-size:12px}.price,.pill,.delta,.quality,.trend{font-size:10px}}
