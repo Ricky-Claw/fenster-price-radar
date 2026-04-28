@@ -31,6 +31,20 @@ function parseAdd(price,type,w,h,current){ price=+price||0; if(!price) return 0;
 function openingId(opening){ return /fest/i.test(opening) ? 6 : 4; }
 function fvOpening(opening){ return /fest/i.test(opening) ? 1020 : 1021; }
 function glassGroup(glazing){ return /2/.test(glazing) ? 1 : 2; }
+const DFS_MATERIAL_DISCOUNTS = { '6|1': { sum: 15, date: '31.05.2026', source: 'window.material_discount: Fenster Drutex PVC' } };
+const dfsBrandDiscountCache = new Map();
+async function dfsDiscount(profile) {
+  const materialDiscount = DFS_MATERIAL_DISCOUNTS[`${profile.brand_id}|${profile.material_id}`];
+  if (!dfsBrandDiscountCache.has(profile.brand_id)) {
+    try {
+      const r = await fetch(`${DFS_BASE}/windows/company-discout?bid=${profile.brand_id}&conf=windows`, { headers: { accept: 'application/json' } });
+      const json = await r.json();
+      dfsBrandDiscountCache.set(profile.brand_id, json.discount ? JSON.parse(json.discount) : null);
+    } catch { dfsBrandDiscountCache.set(profile.brand_id, null); }
+  }
+  const brandDiscount = dfsBrandDiscountCache.get(profile.brand_id);
+  return [materialDiscount, brandDiscount].filter(d => d && +d.sum > 0).sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
+}
 
 export default async function handler(req,res){
   try{
@@ -72,8 +86,11 @@ async function quoteDfs({profile,width,height,glazing,opening}){
   let net=base+glass.add;
   net += net*0.90;
   const listTotal=money(net*1.19);
+  const discount = await dfsDiscount(p);
+  const pct = discount ? Number(discount.sum) : 0;
+  const customerTotal = pct ? money(listTotal * (1 - pct / 100)) : listTotal;
   const warnings=[]; if(+row.width!==width||+row.height!==height) warnings.push(`dimension_rounded_to:${row.width}x${row.height}`);
-  return {status:'priced',valid:warnings.length===0,listTotal,customerTotal:listTotal,currency:'EUR',warnings,discountMetadata:{observed:false,note:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'},parts:{baseNet:base,glassAddNet:money(glass.add)}};
+  return {status:'priced',valid:warnings.length===0,listTotal,customerTotal,currency:'EUR',warnings,discountMetadata:{observed:!!pct,observedDiscountPercent:pct/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:pct?`DFS-Aktionsrabatt ${pct}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'},parts:{baseNet:base,glassAddNet:money(glass.add)}};
 }
 async function dfsGlass(profileId, groupId, width, height, defPrice){
   const pid=(profileId===56||profileId===144)?37:profileId;
@@ -122,6 +139,9 @@ async function quoteFv({profile,width,height,glazing,opening,color}){
   const r=await fetch(`${FV_BASE}/configurator/update`,{method:'POST',headers:{'content-type':'application/json','accept':'application/json, text/plain, */*','origin':FV_BASE,'referer':`${FV_BASE}/?cid=25&t=fenster-kunststoff`},body:JSON.stringify({configuration:p.configuration,productId:25})});
   if(!r.ok) throw new Error(`Fensterversand HTTP ${r.status}`);
   const j=await r.json(); const total=Number(j.price?.total); const warnings=total>0?[]:['zero_or_unavailable_price'];
-  const discounted = money(Number(j.price?.discountedTotal));
-  return {status:'priced',valid:total>0,listTotal:money(total),customerTotal:discounted || money(total),currency:'EUR',warnings,discountMetadata:{observed:!!discounted && discounted !== money(total),discountedTotalObserved:discounted,observedDiscount:Number(j.price?.discount),percentages:j.price?.percentages || {},note:discounted?'Live-Rabatt/Endpreis vom Anbieter beobachtet':'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'}};
+  const percentages = j.price?.percentages || {};
+  const pct = Number(percentages[mapped.profileId] || 0);
+  const customerTotal = money(Number(j.price?.discountedTotal) || total);
+  const listTotal = pct ? money(customerTotal / (1 - pct / 100)) : money(total);
+  return {status:'priced',valid:total>0,listTotal,customerTotal,currency:'EUR',warnings,discountMetadata:{observed:!!pct,observedDiscountPercent:pct/100,discountedTotalObserved:customerTotal,observedDiscount:pct,percentages,note:pct?`Fensterversand-Profilrabatt ${pct}% aus price.percentages`:'kein Profilrabatt in price.percentages'}};
 }

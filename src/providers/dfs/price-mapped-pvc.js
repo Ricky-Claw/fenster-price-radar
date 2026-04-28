@@ -35,6 +35,23 @@ function glassGroup(c){ const s=norm(c.glazing || c.glass || '3fach'); if(s.incl
 async function readJson(p){ return JSON.parse(await fs.readFile(p,'utf8')); }
 async function fetchJson(url, opts={}){ const r=await fetch(url, opts); if(!r.ok) throw new Error(`${r.status} ${url}`); return r.json(); }
 function parseAdd(price,type,w,h,current){ price=+price||0; if(!price) return 0; switch(type){ case '%': return current*price/100; case 'm2': return price*(w/1000)*(h/1000); case 'l': case 'm': return (w/1000*2+h/1000*2)*price; case 'lm': return (w/1000+h/1000)*price; case 'mw': return price*(w/1000); case 'mh': return price*(h/1000); default: return price; } }
+const DFS_MATERIAL_DISCOUNTS = {
+  '6|1': { sum: 15, date: '31.05.2026', source: 'window.material_discount: Fenster Drutex PVC' }
+};
+const dfsBrandDiscountCache = new Map();
+async function dfsDiscount(profile) {
+  const materialDiscount = DFS_MATERIAL_DISCOUNTS[`${profile.brand_id}|${profile.material_id}`];
+  let brandDiscount = null;
+  if (!dfsBrandDiscountCache.has(profile.brand_id)) {
+    try {
+      const json = await fetchJson(`${BASE}/windows/company-discout?bid=${profile.brand_id}&conf=windows`, { headers: { accept: 'application/json' } });
+      dfsBrandDiscountCache.set(profile.brand_id, json.discount ? JSON.parse(json.discount) : null);
+    } catch { dfsBrandDiscountCache.set(profile.brand_id, null); }
+  }
+  brandDiscount = dfsBrandDiscountCache.get(profile.brand_id);
+  const candidates = [materialDiscount, brandDiscount].filter(d => d && +d.sum > 0);
+  return candidates.sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
+}
 async function priceMatrix({profile, openType, width, height}){
   const body={doprice:1,loadPrices:openType,stulp:0,bid:+profile.company_id,mid:+profile.material_id,pid:+profile.id,wid:1,opid:String(openType),size:{width:{},height:{}},open_ids:[openType],dv:1};
   const j=await fetchJson(`${BASE}/konfigurator/fenster`,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':BASE,'referer':`${BASE}/konfigurator/fenster`},body:JSON.stringify(body)});
@@ -64,8 +81,11 @@ async function priceOne(c, profiles){
   const percent=90; // window.myPricePercent on DFS configurator
   net += net*percent/100;
   const gross=+(net*1.19).toFixed(2);
+  const discount = await dfsDiscount(profile);
+  const discountPercent = discount ? +discount.sum : 0;
+  const customerTotal = discountPercent ? +(gross * (1 - discountPercent / 100)).toFixed(2) : gross;
   const warnings=[]; if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
-  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:gross,currency:'EUR'}, discountMetadata:{observed:false,note:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
+  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata:{observed:!!discountPercent,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:discountPercent?`DFS-Aktionsrabatt ${discountPercent}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
 }
 
 const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').split('=')));

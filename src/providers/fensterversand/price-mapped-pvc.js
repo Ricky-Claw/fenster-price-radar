@@ -24,11 +24,15 @@ for (const cfg of catalog.slice(0, limit)) {
     body: JSON.stringify({ configuration: payload.configuration, productId: 25 })
   });
   const json = await res.json().catch(async()=>({raw:await res.text()}));
+  const percentages = json.price?.percentages || {};
+  const profileDiscount = Number(percentages[mapped.profileId] || 0);
+  const customerTotal = Number(json.price?.discountedTotal) || Number(json.price?.total);
+  const listTotal = profileDiscount ? Number((customerTotal / (1 - profileDiscount / 100)).toFixed(2)) : Number(json.price?.total);
   results.push({
     provider:'Fensterversand', input:cfg, mappedProfile:mapped.name, status:res.status,
-    comparePrice:{ listTotal: Number(json.price?.total), currency:'EUR', discountApplied:!!Number(json.price?.discount), valid: Number(json.price?.total) > 0 },
-    customerPrice:{ total: Number(json.price?.discountedTotal) || Number(json.price?.total), currency:'EUR' },
-    discountMetadata:{ observed:!!Number(json.price?.discountedTotal) && Number(json.price?.discountedTotal)!==Number(json.price?.total), discountedTotalObserved: Number(json.price?.discountedTotal), observedDiscount: Number(json.price?.discount), percentages: json.price?.percentages || {}, note:'Live-Rabatt/Endpreis vom Anbieter beobachtet' },
+    comparePrice:{ listTotal, currency:'EUR', discountApplied:!!profileDiscount, valid: Number(json.price?.total) > 0 },
+    customerPrice:{ total: customerTotal, currency:'EUR' },
+    discountMetadata:{ observed:!!profileDiscount, observedDiscountPercent:profileDiscount/100, discountedTotalObserved: customerTotal, observedDiscount: profileDiscount, percentages, note:profileDiscount?`Fensterversand-Profilrabatt ${profileDiscount}% aus price.percentages`:'kein Profilrabatt in price.percentages' },
     warnings: Number(json.price?.total) > 0 ? [] : ['zero_or_unavailable_price'],
     dimensions: json.dimensions ? { x: json.dimensions.x, y: json.dimensions.y, qm: json.dimensions.qm, rm: json.dimensions.rm } : null,
     requestConfig: payload.configuration
