@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { createRoot } from 'react-dom/client';
-import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, Minus } from 'lucide-react';
+import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight } from 'lucide-react';
 import './styles.css';
 
 const providers = [
@@ -97,7 +97,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a></nav>
+      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#briefings">Briefings</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 
@@ -138,6 +138,30 @@ function App(){
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
         <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changed}</b><span>Preisänderungen erkannt</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
+      </section>
+
+      <section className="briefingPanel" id="briefings">
+        <div className="briefingIntro">
+          <span className="briefingKicker"><FileText size={16}/> Management Briefings</span>
+          <h2>Preislogik verstehen. Entscheidungen besser treffen.</h2>
+          <p>Zwei interne Reports erklären die DFS-Kalkulation, Wettbewerberlogiken und konkrete Verbesserungen für Geschäftsführung, Vertrieb und IT.</p>
+        </div>
+        <div className="briefingGrid">
+          <a className="briefingCard primary" href="/reports/dfs-preislogik-briefing.html" target="_blank" rel="noreferrer">
+            <div className="briefingIcon"><Calculator size={22}/></div>
+            <small>DFS Preisarchitektur</small>
+            <h3>Wie DFS Preise berechnet</h3>
+            <p>Profil, Größe, Verglasung, 90%-Kalkulationsfaktor, MwSt. und Aktionsrabatte verständlich erklärt – inklusive kritischer Schwachstellen.</p>
+            <span>Briefing öffnen <ArrowUpRight size={16}/></span>
+          </a>
+          <a className="briefingCard" href="/reports/wettbewerber-preislogik-briefing.html" target="_blank" rel="noreferrer">
+            <div className="briefingIcon"><Lightbulb size={22}/></div>
+            <small>Fensterblick & Fensterversand</small>
+            <h3>Was DFS vom Wettbewerb lernen kann</h3>
+            <p>Vergleich der Konfigurations-, Rabatt- und Preislogik mit konkreten Empfehlungen, was DFS übernehmen sollte – und was nicht.</p>
+            <span>Briefing öffnen <ArrowUpRight size={16}/></span>
+          </a>
+        </div>
       </section>
 
       <section className="panel" id="radar">

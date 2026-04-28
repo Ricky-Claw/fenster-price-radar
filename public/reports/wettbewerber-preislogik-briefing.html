@@ -1,0 +1,277 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wettbewerber Preislogik · Fensterradar</title><style>
+:root{font-family:Inter,Arial,sans-serif;color:#132236;background:#f4f7fb;--blue:#004b93;--green:#0f3d2e;--gold:#d6a84f;--line:#dbe4ee;--muted:#6d7d90}*{box-sizing:border-box}body{margin:0}.shell{max-width:1080px;margin:0 auto;padding:34px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.back{color:#0f5f3f;text-decoration:none;font-weight:900;background:#eaf5ef;padding:12px 16px;border-radius:12px}.hero{background:linear-gradient(135deg,#102016,#0f3d2e 62%,#1f7a4f);color:#fff;border-radius:28px;padding:42px;box-shadow:0 18px 50px #0f3d2e24;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;background:radial-gradient(circle,#d6a84f55,#d6a84f00 68%)}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#d7eadb;font-weight:900}.hero h1{font-size:42px;line-height:1.05;margin:10px 0 14px}.hero p{font-size:18px;max-width:760px;color:#eaf5ef}.content{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 16px 42px #003d7710}.content h1{display:none}.content h2{margin-top:34px;font-size:27px;color:#10233a;border-top:1px solid #edf2f7;padding-top:24px}.content h2:first-child{border-top:0;margin-top:0;padding-top:0}.content h3{font-size:19px;color:#0f3d2e;margin-top:26px}.content p,.content li{font-size:16px;line-height:1.7;color:#33475f}.content ul,.content ol{padding-left:24px}.content code{background:#f2f6f8;border:1px solid #dbe7dd;border-radius:7px;padding:2px 6px;color:#0f3d2e}.content pre{background:#102016;color:#eaf5ef;padding:18px;border-radius:16px;overflow:auto}.table-note{font-family:ui-monospace,monospace;background:#f8fbfe;border:1px solid #edf2f7;border-radius:10px;padding:10px;white-space:pre-wrap}.footer{margin:22px 0;color:var(--muted);font-size:13px}@media(max-width:760px){.shell{padding:18px}.hero{padding:28px}.hero h1{font-size:32px}.content{padding:22px}.top{align-items:flex-start;flex-direction:column}}
+</style></head><body><div class="shell"><div class="top"><a class="back" href="/">← Zurück zum Fensterradar</a><span class="footer">Internes Management Briefing · Fensterradar v1</span></div><section class="hero"><div class="eyebrow">Management Briefing</div><h1>Wettbewerber Preislogik</h1><p>Was DFS von Fensterblick und Fensterversand lernen kann – und was bewusst nicht übernommen werden sollte.</p></section><article class="content"><h1>Briefing: Preislogik von Fensterblick und Fensterversand – Learnings für DFS</h1>
+<p>Stand: 28.04.2026  </p>
+<p>Quelle: Fensterradar v1, Live-API-Abfragen, Anbieter-Konfigurator-Endpunkte, aktuelle Rabatt-/Preisantworten.</p>
+<h2>1. Kurzfazit</h2>
+<p>Fensterblick und Fensterversand arbeiten beide stärker mit klaren Konfigurations-APIs als DFS, aber sie lösen Preislogik unterschiedlich:</p>
+<ul>
+<li><strong>Fensterblick</strong> ist aus technischer Sicht sehr sauber im Konfigurationsfluss: Initialisierung, Schrittwechsel, Maßeingabe und Preisupdate sind klar getrennt. Die API liefert gut lesbare Labels, Konfigurationsketten, Endpreise und einen eindeutigen Rabattwert.</li>
+<li><strong>Fensterversand</strong> arbeitet mit einem großen, attributbasierten Payload-Modell. Die Preisantwort enthält `total`, `discountedTotal` und profilbezogene Rabatt-Prozente in `price.percentages`. Das ist mächtig, aber semantisch unklarer.</li>
+</ul>
+<p>Empfehlung für DFS: Fensterblicks klare Konfigurationsantworten und Fensterversands profilbezogene Rabattstaffeln übernehmen – aber in DFS mit besserer Semantik: Listenpreis, Rabatt, Rabattquelle und Kunden-Endpreis strikt getrennt.</p>
+<h2>2. Fensterblick: Wie die Logik aufgebaut ist</h2>
+<h3>2.1 Konfigurationsfluss</h3>
+<p>Fensterblick arbeitet in drei klaren Schritten:</p>
+<ol>
+<li><strong>Initialisierung</strong>  </li>
+</ol>
+<p>   <code>POST /configurations/init-configuration</code>  </p>
+<p>   Übergibt Material und Profil.</p>
+<ol>
+<li><strong>Schrittwechsel</strong>  </li>
+</ol>
+<p>   <code>POST /configurations/process-step-change</code>  </p>
+<p>   Wird genutzt für Verglasung, Öffnungsrichtung, Farbe usw.</p>
+<ol>
+<li><strong>Maß-/Preisupdate</strong>  </li>
+</ol>
+<p>   <code>POST /configurations/process-input-change</code>  </p>
+<p>   Übergibt Breite, Höhe, Flügelbreiten und aktuelle Konfigurationskette.</p>
+<p>Die API arbeitet mit:</p>
+<ul>
+<li>`config_chain`</li>
+<li>`ref_id_chain`</li>
+<li>`inputs`</li>
+<li>`prices.total`</li>
+<li>`prices.short_labels`</li>
+<li>`discount_percent`</li>
+</ul>
+<h3>2.2 Preis- und Rabattlogik</h3>
+<p>Im aktuellen Radar liefert Fensterblick bei allen gültigen Fensterblick-Treffern einen Rabatt von ca. <strong>27%</strong>.</p>
+<p>Beispiel aus Radar:</p>
+<ul>
+<li>Drutex Iglo 5 Classic, 415×500, 2-fach</li>
+<li>Listen-/Ausgangspreis: 169,16 €</li>
+<li>Kundenpreis nach Rabatt: 123,49 €</li>
+<li>Rabatt: 27%</li>
+</ul>
+<p>Die API macht den Rabatt vergleichsweise leicht auswertbar, weil <code>discount_percent</code> direkt vorhanden ist.</p>
+<h3>2.3 Stärken von Fensterblick</h3>
+<ul>
+<li><strong>Sehr klare Konfigurationskette</strong>  </li>
+</ul>
+<p>  Man kann nachvollziehen, welche Auswahl aktiv ist.</p>
+<ul>
+<li><strong>Labels direkt aus der API</strong>  </li>
+</ul>
+<p>  <code>short_labels</code> bestätigen Profil, Öffnung, Maße, Farbe und Glas. Das ist wertvoll für Angebotsprüfung.</p>
+<ul>
+<li><strong>Rabatt als eigenes Feld</strong>  </li>
+</ul>
+<p>  <code>discount_percent</code> ist besser als versteckte Rabatte in mehreren Datenquellen.</p>
+<ul>
+<li><strong>Maßprüfung möglich</strong>  </li>
+</ul>
+<p>  Die API gibt die tatsächlichen Maße zurück. Dadurch kann man erkennen, ob der Konfigurator Maße angepasst hat.</p>
+<h3>2.4 Schwächen/Risiken bei Fensterblick</h3>
+<ul>
+<li><strong>Dauerrabatt wirkt wie Standardpreis</strong>  </li>
+</ul>
+<p>  Wenn 27% dauerhaft aktiv sind, verliert der Listenpreis an Aussagekraft.</p>
+<ul>
+<li><strong>Maßanpassungen möglich</strong>  </li>
+</ul>
+<p>  Ohne Vergleich <code>requestedSize</code> vs. <code>actualSize</code> kann man falsche Vergleichspreise ziehen.</p>
+<ul>
+<li><strong>Indexbasierte Step-Auswahl</strong>  </li>
+</ul>
+<p>  Verglasung/Öffnung werden über Schrittindizes ausgewählt. Wenn sich Reihenfolgen ändern, kann Mapping brechen.</p>
+<h2>3. Fensterversand: Wie die Logik aufgebaut ist</h2>
+<h3>3.1 Konfigurationsmodell</h3>
+<p>Fensterversand nutzt für Kunststofffenster <code>productId=25</code> und sendet eine große <code>configuration</code>-Struktur an:</p>
+<p><code>POST /configurator/update</code></p>
+<p>Wichtige Attribute im Radar:</p>
+<ul>
+<li>`a_132` Material Kunststoff</li>
+<li>`a_2471` Marke/Brand</li>
+<li>`a_133` Profil</li>
+<li>`a_258` Breite</li>
+<li>`a_259` Höhe</li>
+<li>`a_186` Glas</li>
+<li>`a_136` Farbe</li>
+<li>`a_157` Öffnung</li>
+</ul>
+<p>Die Logik ist also weniger schrittbasiert, mehr ein direkter Attribut-Payload.</p>
+<h3>3.2 Preis- und Rabattlogik</h3>
+<p>Die Preisantwort enthält u.a.:</p>
+<ul>
+<li>`price.total`</li>
+<li>`price.discountedTotal`</li>
+<li>`price.discount`</li>
+<li>`price.percentages`</li>
+</ul>
+<p>Wichtig: Bei Fensterversand ist <code>discountedTotal</code> häufig identisch mit <code>total</code>. Der Rabatt steckt dann nicht zwingend in <code>discount</code>, sondern in:</p>
+<p><code>price.percentages[profileId]</code></p>
+<p>Im Fensterradar wird deshalb der Listenpreis teilweise rückwärts berechnet:</p>
+<p><code>Listenpreis = Kundenpreis / (1 - RabattProzent)</code></p>
+<p>Beobachtete Rabattstaffeln im aktuellen Radar:</p>
+<ul>
+<li>Aluplast Ideal 4000: 0%</li>
+<li>Aluplast Ideal 5000: 10%</li>
+<li>Aluplast Ideal 7000: 15%</li>
+<li>Aluplast Ideal 8000: 20%</li>
+<li>Veka 82 MD: 25%</li>
+<li>Kömmerling 88 MD: 35%</li>
+</ul>
+<h3>3.3 Stärken von Fensterversand</h3>
+<ul>
+<li><strong>Profilbezogene Rabattstaffeln</strong>  </li>
+</ul>
+<p>  Rabatte können granular pro Profil gesteuert werden.</p>
+<ul>
+<li><strong>Ein einziger Update-Endpunkt</strong>  </li>
+</ul>
+<p>  Die ganze Konfiguration wird als Payload gesendet. Das ist technisch robust für Preisupdates.</p>
+<ul>
+<li><strong>Attributmodell ist skalierbar</strong>  </li>
+</ul>
+<p>  Viele Produktoptionen können in derselben Struktur gepflegt werden.</p>
+<ul>
+<li><strong>Rabattmatrix sichtbar</strong>  </li>
+</ul>
+<p>  <code>price.percentages</code> erlaubt eine schnelle Übersicht, welche Profile rabattiert sind.</p>
+<h3>3.4 Schwächen/Risiken bei Fensterversand</h3>
+<ul>
+<li><strong>Semantik der Preisfelder ist unklar</strong>  </li>
+</ul>
+<p>  <code>total</code> und <code>discountedTotal</code> sind oft gleich. Ohne Zusatzlogik weiß man nicht, ob <code>total</code> Liste oder Endpreis ist.</p>
+<ul>
+<li><strong>Rabatt muss interpretiert werden</strong>  </li>
+</ul>
+<p>  Der eigentliche Profilrabatt sitzt in <code>percentages</code>, nicht zuverlässig in <code>discount</code>.</p>
+<ul>
+<li><strong>Attribut-IDs sind schwer lesbar</strong>  </li>
+</ul>
+<p>  <code>a_133</code>, <code>a_186</code>, <code>a_157</code> sind technisch, aber nicht management- oder vertriebsfreundlich.</p>
+<ul>
+<li><strong>Mapping-Pflege ist aufwendig</strong>  </li>
+</ul>
+<p>  Jede Option braucht eine saubere Übersetzung von ID zu Bedeutung.</p>
+<h2>4. Vergleich zu DFS</h2>
+<h3>4.1 DFS heute</h3>
+<p>DFS hat eine modulare, leistungsfähige Logik:</p>
+<ul>
+<li>Preis-Matrix je Profil/Öffnungsart/Größe</li>
+<li>Glasdaten je Profil</li>
+<li>Kalkulationsaufschlag über `myPricePercent = 90`</li>
+<li>MwSt.</li>
+<li>Rabattquellen über Material- und Brand-Discounts</li>
+</ul>
+<p>Aber: Die Logik ist verteilt und nicht als ein geschlossenes Preisobjekt sichtbar.</p>
+<h3>4.2 Was Fensterblick besser macht</h3>
+<p>Fensterblick liefert eine bessere erklärbare Antwortstruktur:</p>
+<ul>
+<li>aktive Konfiguration</li>
+<li>sichtbare Labels</li>
+<li>actual dimensions</li>
+<li>Preis</li>
+<li>Rabatt</li>
+</ul>
+<p><strong>Übernehmen:</strong> DFS sollte pro Preisberechnung eine strukturierte Antwort erzeugen, die alle Bestandteile enthält.</p>
+<h3>4.3 Was Fensterversand besser macht</h3>
+<p>Fensterversand kann profilbezogene Rabattstaffeln gut abbilden.</p>
+<p><strong>Übernehmen:</strong> DFS sollte Rabattlogik zentral und profil-/marken-/materialbezogen steuerbar machen, mit klarer Priorität.</p>
+<h3>4.4 Was DFS besser machen kann als beide</h3>
+<p>DFS kann beide Ansätze kombinieren:</p>
+<ul>
+<li>klare Fensterblick-artige Preisantwort</li>
+<li>Fensterversand-artige Rabattmatrix</li>
+<li>plus saubere DFS-interne Kalkulationslogik und Auditierbarkeit</li>
+</ul>
+<h2>5. Konkrete Empfehlungen für DFS</h2>
+<h3>Empfehlung 1: Einheitliches Pricing-Response-Objekt</h3>
+<p>Jede DFS-Konfiguration sollte intern und optional per Admin/API ein Objekt liefern:</p>
+<pre><code>{
+  &quot;requestedSize&quot;: &quot;1000x1200&quot;,
+  &quot;actualSize&quot;: &quot;1000x1200&quot;,
+  &quot;brand&quot;: &quot;Drutex&quot;,
+  &quot;profile&quot;: &quot;Iglo 5 Classic&quot;,
+  &quot;opening&quot;: &quot;Dreh-Kipp&quot;,
+  &quot;glazing&quot;: &quot;3fach&quot;,
+  &quot;basePriceNet&quot;: 123.45,
+  &quot;glassAddNet&quot;: 25.00,
+  &quot;calculationFactorPercent&quot;: 90,
+  &quot;vatPercent&quot;: 19,
+  &quot;grossListPrice&quot;: 342.51,
+  &quot;discountPercent&quot;: 15,
+  &quot;discountSource&quot;: &quot;Drutex PVC Aktion&quot;,
+  &quot;discountValidUntil&quot;: &quot;31.05.2026&quot;,
+  &quot;customerFinalPrice&quot;: 291.13,
+  &quot;warnings&quot;: []
+}</code></pre>
+<p>Das wäre für IT, Geschäftsführung und Vertrieb sofort verständlich.</p>
+<h3>Empfehlung 2: Rabattmatrix zentralisieren</h3>
+<p>Statt Rabatte aus mehreren Stellen zusammenzuziehen, sollte DFS eine zentrale Rabattmatrix haben:</p>
+<ul>
+<li>Brand</li>
+<li>Material</li>
+<li>Profil optional</li>
+<li>Fenstertyp optional</li>
+<li>Prozent</li>
+<li>Gültigkeit</li>
+<li>Priorität</li>
+<li>Quelle/Bemerkung</li>
+</ul>
+<p>Priorität z.B.:</p>
+<ol>
+<li>Profilrabatt</li>
+<li>Markenrabatt</li>
+<li>Materialrabatt</li>
+<li>globaler Rabatt</li>
+</ol>
+<h3>Empfehlung 3: Labels in Preisantwort aufnehmen</h3>
+<p>Wie Fensterblick sollte DFS maschinenlesbar und menschenlesbar zurückgeben:</p>
+<ul>
+<li>Profilname</li>
+<li>Maße</li>
+<li>Glas</li>
+<li>Öffnung</li>
+<li>Farbe</li>
+<li>Warnung bei Rundung/Anpassung</li>
+</ul>
+<p>Das reduziert Fehler in Angeboten und im Support.</p>
+<h3>Empfehlung 4: Rabatt nicht nur optisch, sondern technisch sauber trennen</h3>
+<p>Jeder Preis sollte getrennt speichern:</p>
+<ul>
+<li>Listenpreis brutto</li>
+<li>Rabattbetrag</li>
+<li>Rabattprozent</li>
+<li>Endpreis brutto</li>
+<li>Rabattgültigkeit</li>
+</ul>
+<p>Dadurch kann Vertrieb erklären: „Liste X, Aktion Y%, Kunde zahlt Z.“</p>
+<h3>Empfehlung 5: Wettbewerbsmonitor als Frühwarnsystem nutzen</h3>
+<p>Fensterradar sollte wöchentlich prüfen:</p>
+<ul>
+<li>Hat ein Wettbewerber Rabatt geändert?</li>
+<li>Ist DFS bei bestimmten Profilen nach Rabatt zu teuer?</li>
+<li>Ändert sich der Abstand bei 3-fach stärker als bei 2-fach?</li>
+<li>Gibt es Profil-/Größenbereiche, in denen DFS systematisch schlechter steht?</li>
+</ul>
+<h2>6. Was DFS konkret übernehmen sollte</h2>
+<p class="table-note">| Quelle | Übernehmen | Warum |</p>
+<p class="table-note">|---|---|---|</p>
+<p class="table-note">| Fensterblick | `short_labels`/Konfigurationsbestätigung | bessere Nachvollziehbarkeit |</p>
+<p class="table-note">| Fensterblick | explizites `discount_percent` | Rabatt einfacher auswertbar |</p>
+<p class="table-note">| Fensterblick | tatsächliche Maße in Antwort | verhindert falsche Vergleichspreise |</p>
+<p class="table-note">| Fensterversand | profilbezogene Rabattmatrix | bessere Aktionssteuerung |</p>
+<p class="table-note">| Fensterversand | einheitlicher Update-Payload | skalierbar für viele Optionen |</p>
+<p class="table-note">| DFS selbst | Matrix + Glaslogik | leistungsfähig, behalten |</p>
+<h2>7. Was DFS nicht übernehmen sollte</h2>
+<ul>
+<li>Von Fensterblick: dauerhafte hohe Rabatte ohne klare Aktionskommunikation.</li>
+<li>Von Fensterversand: unklare Semantik zwischen `total`, `discountedTotal` und `percentages`.</li>
+<li>Von beiden: Preisantworten, die ohne technische Interpretation nicht managementfähig sind.</li>
+</ul>
+<h2>8. Management-Fazit</h2>
+<p>Fensterblick ist stärker in Transparenz und Bestätigung der gewählten Konfiguration. Fensterversand ist stärker in profilbezogener Rabattsteuerung. DFS hat eine gute Basislogik, sollte aber die Preisantwort und Rabattpflege professionalisieren.</p>
+<p>Die größte Chance liegt nicht darin, Preise blind an Wettbewerber anzupassen, sondern die eigene Preisarchitektur sauber sichtbar zu machen. Dann kann DFS gezielt entscheiden, wo Marge verteidigt wird und wo Aktionen nötig sind.</p>
+<h2>9. Nächste Schritte</h2>
+<ol>
+<li>DFS Pricing-Response-Objekt definieren.</li>
+<li>Rabattmatrix konsolidieren.</li>
+<li>Admin-/Management-Ansicht für Preisbestandteile bauen.</li>
+<li>Wöchentlichen Wettbewerbsbericht aus Fensterradar erzeugen.</li>
+<li>Auffällige Profil-/Glas-/Größenkombinationen priorisiert prüfen.</li>
+</ol></article><div class="footer">Quelle: Fensterradar v1 / Live-Konfigurator-Auswertung. Nur intern verwenden.</div></div></body></html>

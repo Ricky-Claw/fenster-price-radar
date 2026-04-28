@@ -1,0 +1,200 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DFS Preislogik · Fensterradar</title><style>
+:root{font-family:Inter,Arial,sans-serif;color:#132236;background:#f4f7fb;--blue:#004b93;--green:#0f3d2e;--gold:#d6a84f;--line:#dbe4ee;--muted:#6d7d90}*{box-sizing:border-box}body{margin:0}.shell{max-width:1080px;margin:0 auto;padding:34px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.back{color:#0f5f3f;text-decoration:none;font-weight:900;background:#eaf5ef;padding:12px 16px;border-radius:12px}.hero{background:linear-gradient(135deg,#102016,#0f3d2e 62%,#1f7a4f);color:#fff;border-radius:28px;padding:42px;box-shadow:0 18px 50px #0f3d2e24;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;background:radial-gradient(circle,#d6a84f55,#d6a84f00 68%)}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#d7eadb;font-weight:900}.hero h1{font-size:42px;line-height:1.05;margin:10px 0 14px}.hero p{font-size:18px;max-width:760px;color:#eaf5ef}.content{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 16px 42px #003d7710}.content h1{display:none}.content h2{margin-top:34px;font-size:27px;color:#10233a;border-top:1px solid #edf2f7;padding-top:24px}.content h2:first-child{border-top:0;margin-top:0;padding-top:0}.content h3{font-size:19px;color:#0f3d2e;margin-top:26px}.content p,.content li{font-size:16px;line-height:1.7;color:#33475f}.content ul,.content ol{padding-left:24px}.content code{background:#f2f6f8;border:1px solid #dbe7dd;border-radius:7px;padding:2px 6px;color:#0f3d2e}.content pre{background:#102016;color:#eaf5ef;padding:18px;border-radius:16px;overflow:auto}.table-note{font-family:ui-monospace,monospace;background:#f8fbfe;border:1px solid #edf2f7;border-radius:10px;padding:10px;white-space:pre-wrap}.footer{margin:22px 0;color:var(--muted);font-size:13px}@media(max-width:760px){.shell{padding:18px}.hero{padding:28px}.hero h1{font-size:32px}.content{padding:22px}.top{align-items:flex-start;flex-direction:column}}
+</style></head><body><div class="shell"><div class="top"><a class="back" href="/">← Zurück zum Fensterradar</a><span class="footer">Internes Management Briefing · Fensterradar v1</span></div><section class="hero"><div class="eyebrow">Management Briefing</div><h1>DFS Preislogik</h1><p>Wie Profil, Größe, Verglasung, Aufschlag und Rabatte im DFS-Konfigurator zusammenspielen.</p></section><article class="content"><h1>Briefing für die Geschäftsführung: DFS-Preislogik im Fensterkonfigurator</h1>
+<p>Stand: 28.04.2026  </p>
+<p>Quelle: Live-Konfigurator/API-Auswertung aus Fensterradar v1, DFS-Konfigurator-JS, aktuelle Anbieter-Abfragen.</p>
+<h2>1. Kurzfazit</h2>
+<p>Die DFS-Preislogik ist grundsätzlich nachvollziehbar und modular aufgebaut: Profil + Größe + Öffnungsart liefern einen Basispreis; Verglasung und weitere Optionen werden als Zuschläge berechnet; anschließend werden interne Kalkulationsfaktoren, MwSt. und Aktionsrabatte angewendet.</p>
+<p>Kritisch ist aber: Die Logik ist technisch verteilt und für Management/Vertrieb schwer erklärbar. Es gibt keine einfache sichtbare Preisformel pro Profil. Rabattlogik, Basispreis-Matrix, Glaszuschläge und Aufschlagsfaktor liegen an unterschiedlichen Stellen. Dadurch entstehen Risiken bei Preispflege, Angebotskommunikation und Wettbewerbsanalyse.</p>
+<h2>2. Wie DFS Preise aktuell berechnet</h2>
+<p>Vereinfacht läuft die Berechnung so:</p>
+<ol>
+<li><strong>Profil wählen</strong>  </li>
+</ol>
+<p>   Beispiel: Drutex Iglo 5 Classic, Aluplast Ideal 4000, Kömmerling 88 MD.</p>
+<ol>
+<li><strong>Fenstertyp/Öffnungsart wählen</strong>  </li>
+</ol>
+<p>   Im Radar aktuell: einflügelig, Dreh-Kipp. Technisch wird dafür ein <code>openType</code> verwendet.</p>
+<ol>
+<li><strong>Größe prüfen</strong>  </li>
+</ol>
+<p>   DFS liefert je Profil/Öffnungsart eine Preis-Matrix. Nur Größen, die in dieser Matrix sauber vorkommen, sind wirklich exakt vergleichbar. Wenn eine Größe gerundet wird, ist sie kein sauberer Vergleich.</p>
+<ol>
+<li><strong>Basispreis aus Matrix holen</strong>  </li>
+</ol>
+<p>   Aus <code>POST /konfigurator/fenster</code> kommt pro Profil/Öffnungsart/Größe ein Basispreis.</p>
+<ol>
+<li><strong>Verglasung berechnen</strong>  </li>
+</ol>
+<p>   Pro Profil gibt es Glasdaten wie <code>data_window_glass_&lt;profileId&gt;.json</code>. 2-fach/3-fach Verglasung wird über Glasgruppen ermittelt. Der Glaszuschlag kann je nach Datensatz anders berechnet werden:</p>
+<p>   - fester Betrag</p>
+<p>   - Prozent auf aktuellen Preis</p>
+<p>   - pro m²</p>
+<p>   - pro laufendem Meter</p>
+<p>   - nach Breite/Höhe</p>
+<ol>
+<li><strong>Interner Kalkulationsfaktor</strong>  </li>
+</ol>
+<p>   Im DFS-Konfigurator ist <code>window.myPricePercent = 90</code> sichtbar. Praktisch bedeutet das: Nach Basispreis + Glaszuschlag wird ein kalkulatorischer Aufschlag von 90% angewendet.</p>
+<ol>
+<li><strong>MwSt.</strong>  </li>
+</ol>
+<p>   Danach wird mit 19% brutto gerechnet.</p>
+<ol>
+<li><strong>Aktionsrabatt / Kunden-Endpreis</strong>  </li>
+</ol>
+<p>   Danach werden Rabatte als Kundenpreis berücksichtigt. Aktuell sichtbar:</p>
+<p>   - Drutex PVC: 15% bis 31.05.2026</p>
+<p>   - Aluplast: 5% bis 31.05.2026</p>
+<p>   - Gealan: 20%</p>
+<p>   - Salamander: 25%</p>
+<p>   - Veka: 20%</p>
+<p>   - Kömmerling: 35%</p>
+<h2>3. Korrelation: Profil, Größe und Verglasung</h2>
+<h3>Profil</h3>
+<p>Das Profil bestimmt die Preisbasis und technische Grenzen. Jedes Profil hat:</p>
+<ul>
+<li>eigene Preis-Matrix</li>
+<li>eigene verfügbare Minimal-/Maximalgrößen</li>
+<li>eigene Glasdaten</li>
+<li>eigene Rabattlogik über Marke/Material</li>
+</ul>
+<p>Beispiel: Drutex Iglo 5 Classic hat andere Grenzgrößen als Aluplast Ideal 4000 oder Gealan S9000. Deshalb darf man nicht pauschal dieselben Maße über alle Profile legen, wenn man exakt vergleichen will.</p>
+<h3>Größe</h3>
+<p>Größe wirkt mehrfach:</p>
+<ul>
+<li>direkt über die Preis-Matrix</li>
+<li>indirekt über Glasfläche</li>
+<li>bei manchen Zuschlägen über m², Laufmeter, Breite oder Höhe</li>
+</ul>
+<p>Das bedeutet: Zwei Profile können bei kleinen Größen nah beieinander liegen, bei großen Größen aber stark auseinanderlaufen. Ein einzelnes Vergleichsmaß reicht für Managemententscheidungen nicht aus.</p>
+<p>Empfehlung: Für jedes Profil mindestens vier Größen betrachten:</p>
+<ul>
+<li>kleinster gemeinsamer Nenner</li>
+<li>zwei praxisnahe mittlere Größen</li>
+<li>größter gemeinsamer Nenner</li>
+</ul>
+<p>Genau das macht Fensterradar jetzt.</p>
+<h3>Verglasung</h3>
+<p>Verglasung ist kein reiner Fixpreis. Je nach Glasdatensatz kann der Zuschlag flächenabhängig oder prozentual sein. 3-fach wird bei großen Fenstern dadurch überproportional wichtiger. Für Angebotsstrategie heißt das:</p>
+<ul>
+<li>kleine Fenster: Profilpreis und Grundkalkulation dominieren stärker</li>
+<li>große Fenster: Glas-/Flächenlogik wird relevanter</li>
+<li>Preisabstände zwischen 2-fach und 3-fach sollten pro Profil überwacht werden</li>
+</ul>
+<h2>4. Vergleich zu Fensterblick</h2>
+<p>Fensterblick wirkt im Radar technisch moderner/kompakter in der Preisantwort. Die API liefert direkt:</p>
+<ul>
+<li>Konfigurationskette</li>
+<li>sichtbare Labels</li>
+<li>exakte Maße</li>
+<li>Gesamtpreis</li>
+<li>Rabatt-Prozent</li>
+</ul>
+<p>Aktuell beobachtet: Fensterblick nutzt im Radar durchgehend ca. 27% Rabatt auf den beobachteten Listenpreis.</p>
+<p>Was DFS davon lernen kann:</p>
+<ul>
+<li>Bessere Transparenz pro Antwort: Preisbestandteile, Rabatt, Endpreis, Labels zusammen ausgeben.</li>
+<li>Maße und Konfiguration als lesbare Bestätigung zurückgeben.</li>
+<li>Weniger Preislogik im Frontend verteilen.</li>
+</ul>
+<p>Kritisch bei Fensterblick:</p>
+<ul>
+<li>Auch dort kann der Konfigurator Maße anpassen. Ohne Prüfung auf exakte Maße wären Vergleiche falsch.</li>
+<li>Hoher Dauerrabatt kann den Listenpreis weniger aussagekräftig machen.</li>
+</ul>
+<h2>5. Vergleich zu Fensterversand</h2>
+<p>Fensterversand liefert Rabatte nicht immer als einfachen <code>discount</code>-Wert. In der API stehen Profilrabatte in <code>price.percentages[profileId]</code>. Gleichzeitig ist <code>total</code> oft bereits der Kundenpreis oder identisch mit <code>discountedTotal</code>. Für die Analyse muss der Listenpreis teilweise rückwärts berechnet werden.</p>
+<p>Beobachtete Rabatte im aktuellen Radar u.a.:</p>
+<ul>
+<li>Aluplast Ideal 5000: 10%</li>
+<li>Aluplast Ideal 7000: 15%</li>
+<li>Aluplast Ideal 8000: 20%</li>
+<li>Veka 82 MD: 25%</li>
+<li>Kömmerling 88 MD: 35%</li>
+</ul>
+<p>Was DFS davon lernen kann:</p>
+<ul>
+<li>Rabatte sollten technisch eindeutig als `listPrice`, `discountPercent`, `discountAmount`, `customerPrice` getrennt werden.</li>
+<li>Profilbezogene Rabattpflege ist strategisch sinnvoll, aber sie muss sichtbar und auditierbar sein.</li>
+</ul>
+<p>Kritisch bei Fensterversand:</p>
+<ul>
+<li>Die Preisantwort ist semantisch unklarer: `total`, `discountedTotal`, `discount`, `percentages` müssen interpretiert werden.</li>
+<li>Ohne Rückrechnung kann man Rabatte übersehen oder falsch darstellen.</li>
+</ul>
+<h2>6. Kritische Punkte bei DFS</h2>
+<h3>6.1 Preislogik ist zu verteilt</h3>
+<p>Basispreise, Glaszuschläge, Aufschlag, Rabatt und MwSt. sind nicht als ein klares Pricing-Modell dokumentiert. Das erschwert Kontrolle und Fehleranalyse.</p>
+<p><strong>Risiko:</strong> Vertrieb und Geschäftsführung können Preisunterschiede nicht schnell erklären.</p>
+<h3>6.2 `myPricePercent = 90` ist erklärungsbedürftig</h3>
+<p>Ein pauschaler 90%-Aufschlag ist technisch sichtbar, aber fachlich nicht transparent. Es ist unklar, ob das Marge, Kostenfaktor, Sicherheitsaufschlag oder historisch gewachsene Kalkulation ist.</p>
+<p><strong>Risiko:</strong> Schwierige Governance. Kleine Änderungen können große Auswirkungen haben.</p>
+<h3>6.3 Rabatte sitzen an mehreren Stellen</h3>
+<p>Drutex PVC kam aus <code>material_discount</code>, Aluplast aus <code>company-discout</code>, weitere Marken über Brand-Endpunkte. Das funktioniert, ist aber schwer zu auditieren.</p>
+<p><strong>Risiko:</strong> Rabattaktionen können inkonsistent gepflegt oder übersehen werden.</p>
+<h3>6.4 Glasdaten je Profil können inkonsistent sein</h3>
+<p>Frühere Prüfungen zeigten leere/unvollständige Glasgruppen bei einzelnen Profilen. Wenn Glasdaten fehlen oder falsch gepflegt sind, wird der Endpreis falsch.</p>
+<p><strong>Risiko:</strong> Fehlerhafte Angebote bei bestimmten Profil-/Glaskombinationen.</p>
+<h3>6.5 Gemeinsame Vergleichsgrößen sind nicht trivial</h3>
+<p>Die größte DFS-Größe ist nicht automatisch die größte vergleichbare Marktgröße. Anbieter haben unterschiedliche Grenzen und Rundungslogiken.</p>
+<p><strong>Risiko:</strong> Wettbewerbsvergleiche wirken korrekt, sind aber fachlich nicht vergleichbar.</p>
+<h2>7. Konkrete Verbesserungsvorschläge</h2>
+<h3>Priorität 1: Pricing-Audit-Objekt pro Konfiguration</h3>
+<p>Jede Preisberechnung sollte intern ein klares Objekt erzeugen:</p>
+<ul>
+<li>profileId / brandId / materialId</li>
+<li>requestedSize</li>
+<li>actualSize</li>
+<li>basePriceNet</li>
+<li>glassAddNet</li>
+<li>otherAddonsNet</li>
+<li>kalkulationsFaktor</li>
+<li>grossListPrice</li>
+<li>discountSource</li>
+<li>discountPercent</li>
+<li>discountValidUntil</li>
+<li>customerFinalPrice</li>
+<li>warnings</li>
+</ul>
+<p>Das würde Debugging, Managementberichte und Angebotsprüfung stark verbessern.</p>
+<h3>Priorität 2: Rabattzentrale schaffen</h3>
+<p>Rabatte sollten in einer zentralen, nachvollziehbaren Struktur gepflegt werden:</p>
+<ul>
+<li>Marke</li>
+<li>Material</li>
+<li>Profil optional</li>
+<li>Fenstertyp optional</li>
+<li>Prozent</li>
+<li>Gültigkeit</li>
+<li>Priorität</li>
+<li>Aktiv/Inaktiv</li>
+</ul>
+<p>Aktuell muss man mehrere Quellen zusammendenken.</p>
+<h3>Priorität 3: Preislogik dokumentieren</h3>
+<p>Eine interne Seite „Wie kalkuliert DFS Fensterpreise?“ mit Formel, Beispielen und Datenquellen wäre sehr wertvoll. Nicht für Kunden, sondern für Geschäftsführung, Vertrieb, IT.</p>
+<h3>Priorität 4: Automatische Preisprüfungen</h3>
+<p>Wöchentlich sollten Stichproben laufen:</p>
+<ul>
+<li>2-fach vs 3-fach je Profil</li>
+<li>klein/mittel/groß je Profil</li>
+<li>Rabatt korrekt aktiv</li>
+<li>keine gerundeten Maße</li>
+<li>keine fehlenden Glasgruppen</li>
+</ul>
+<h3>Priorität 5: Wettbewerbslogik übernehmen, aber sauberer</h3>
+<p>Von Fensterblick lernen: klare Labels und direkte Preisantwort.  </p>
+<p>Von Fensterversand lernen: profilbezogene Rabattstaffeln.  </p>
+<p>DFS sollte beides verbinden, aber mit sauberer Semantik: Liste, Rabatt, Endpreis getrennt.</p>
+<h2>8. Empfehlung für Geschäftsführung</h2>
+<p>DFS sollte die Preislogik nicht nur als technische Konfiguratorfunktion behandeln, sondern als strategisches Pricing-System. Aktuell ist sie leistungsfähig, aber zu wenig transparent. Für operative Steuerung, Wettbewerbsanalyse und margenbewusste Rabattaktionen braucht es eine klar auditierbare Preisarchitektur.</p>
+<p>Kurz gesagt: Die Berechnung funktioniert, aber sie sollte besser erklärbar, zentraler gepflegt und automatisch geprüft werden.</p>
+<h2>9. Sofortmaßnahmen</h2>
+<ol>
+<li>Fensterradar weiter als wöchentlichen Kontrollmonitor nutzen.</li>
+<li>Preisbestandteile im DFS-Konfigurator exportierbar machen.</li>
+<li>Rabattquellen konsolidieren und dokumentieren.</li>
+<li>Glasdaten je Profil prüfen.</li>
+<li>Für jedes Profil verbindliche Vergleichsgrößen definieren und regelmäßig gegen Wettbewerber validieren.</li>
+</ol></article><div class="footer">Quelle: Fensterradar v1 / Live-Konfigurator-Auswertung. Nur intern verwenden.</div></div></body></html>
