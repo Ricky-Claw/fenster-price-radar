@@ -155,7 +155,7 @@ function App(){
 
         <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
           {filtered.map(row=><tr key={row.key} onClick={()=>setActive(row)}>
-            <td><b>{row.brand} · {row.profile}</b><small>{row.size} · {row.sizeRole || 'Vergleichsgröße'} · {row.glazing} · {row.opening} · {row.color}</small></td>
+            <td><b>{row.brand} · {row.profile}</b><div className="configMeta"><span className="sizeBadge">{row.size}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
             <td>{changeLabel(row)}</td>

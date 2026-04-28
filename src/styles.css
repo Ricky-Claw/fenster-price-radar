@@ -16,3 +16,4 @@ table{table-layout:fixed;width:100%}th,td{white-space:normal;padding:13px 12px}t
 @media(max-width:820px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 .price b{font-size:13px;font-weight:900;color:#10233a}.price small{font-size:10px;line-height:1.25;white-space:normal;color:var(--muted);max-width:120px}.quoteCard span{line-height:1.35}.providerBox small{display:block;color:var(--muted);margin-top:4px}
+.configMeta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px;color:var(--muted);font-size:12px;font-weight:800}.sizeBadge{display:inline-flex;align-items:center;border-radius:999px;background:#eaf5ef;color:#0f6b3e;padding:5px 9px;font-size:13px;font-weight:950;letter-spacing:.02em}
