@@ -29,7 +29,7 @@ jobs:
       - name: Run weekly provider update
         run: npm run prices:update
         env:
-          PRICE_LIMIT: '63'
+          PRICE_LIMIT: '104'
 
       - name: Build app
         run: npm run build
@@ -38,4 +38,6 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore(data): weekly price snapshot'
-          file_pattern: 'public/data/price-radar.json results/**/*.json results/**/*.csv'
+          commit_user_name: 'Ricky-Claw'
+          commit_user_email: 'ricky@lanistasoundcraft.de'
+          file_pattern: 'public/data/price-radar.json public/data/history/*.json results/**/*.json results/**/*.csv'
