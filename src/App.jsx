@@ -170,29 +170,31 @@ function App(){
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
-      <section className="briefingPanel" id="briefings">
-        <div className="briefingIntro">
+      <details className="briefingAccordion" id="briefings">
+        <summary>
           <span className="briefingKicker"><FileText size={16}/> Management Briefings</span>
-          <h2>Preislogik verstehen. Entscheidungen besser treffen.</h2>
-          <p>Zwei interne Reports erklären die DFS-Kalkulation, Wettbewerberlogiken und konkrete Verbesserungen für Geschäftsführung, Vertrieb und IT.</p>
+          <strong>Preislogik-Briefings anzeigen</strong>
+          <small>DFS-Kalkulation, Wettbewerberlogik und konkrete Empfehlungen</small>
+        </summary>
+        <div className="briefingPanel compact">
+          <div className="briefingGrid">
+            <a className="briefingCard primary" href="/reports/dfs-preislogik-briefing.html" target="_blank" rel="noreferrer">
+              <div className="briefingIcon"><Calculator size={22}/></div>
+              <small>DFS Preisarchitektur</small>
+              <h3>Wie DFS Preise berechnet</h3>
+              <p>Profil, Größe, Verglasung, Margenrisiken, MwSt. und Aktionsrabatte verständlich erklärt.</p>
+              <span>Briefing öffnen <ArrowUpRight size={16}/></span>
+            </a>
+            <a className="briefingCard" href="/reports/wettbewerber-preislogik-briefing.html" target="_blank" rel="noreferrer">
+              <div className="briefingIcon"><Lightbulb size={22}/></div>
+              <small>Fensterblick & Fensterversand</small>
+              <h3>Was DFS vom Wettbewerb lernen kann</h3>
+              <p>Vergleich der Konfigurations-, Rabatt- und Preislogik mit konkreten Empfehlungen.</p>
+              <span>Briefing öffnen <ArrowUpRight size={16}/></span>
+            </a>
+          </div>
         </div>
-        <div className="briefingGrid">
-          <a className="briefingCard primary" href="/reports/dfs-preislogik-briefing.html" target="_blank" rel="noreferrer">
-            <div className="briefingIcon"><Calculator size={22}/></div>
-            <small>DFS Preisarchitektur</small>
-            <h3>Wie DFS Preise berechnet</h3>
-            <p>Profil, Größe, Verglasung, 90%-Kalkulationsfaktor, MwSt. und Aktionsrabatte verständlich erklärt – inklusive kritischer Schwachstellen.</p>
-            <span>Briefing öffnen <ArrowUpRight size={16}/></span>
-          </a>
-          <a className="briefingCard" href="/reports/wettbewerber-preislogik-briefing.html" target="_blank" rel="noreferrer">
-            <div className="briefingIcon"><Lightbulb size={22}/></div>
-            <small>Fensterblick & Fensterversand</small>
-            <h3>Was DFS vom Wettbewerb lernen kann</h3>
-            <p>Vergleich der Konfigurations-, Rabatt- und Preislogik mit konkreten Empfehlungen, was DFS übernehmen sollte – und was nicht.</p>
-            <span>Briefing öffnen <ArrowUpRight size={16}/></span>
-          </a>
-        </div>
-      </section>
+      </details>
 
 
       <section className="panel" id="radar">
