@@ -257,3 +257,57 @@ Wenn wir pro Konfiguration klar zeigen können, wie der Endpreis entsteht, gewin
 - mehr Vertrauen im Vertrieb
 
 Kurz: Der Konfigurator funktioniert. Jetzt sollte er als transparentes Pricing-System weiterentwickelt werden.
+
+## 14. Margenrisiko: Warum Endpreis nicht gleich Profitabilität ist
+
+Ein niedriger Kunden-Endpreis ist nicht automatisch schlecht, und ein hoher Listenpreis ist nicht automatisch profitabel. Entscheidend ist, ob nach Rabatt, Einkauf/Herstellung, Glas, Beschlägen, Versand, Zahlungsgebühren, Reklamationsrisiko und Gemeinkosten noch genug Deckungsbeitrag bleibt.
+
+Aktuell ist im Konfigurator nicht direkt sichtbar:
+
+- Herstell-/Einkaufskosten je Profil und Größe
+- Mehrkosten für 3-fach-Glas gegenüber 2-fach
+- Beschlag-/Mechanikkosten bei Dreh-Kipp gegenüber Festverglasung
+- Mehrkosten zweiflügeliger Konstruktionen
+- Versand-/Handlingkosten großer Elemente
+- erwartete Reklamations-/Servicekosten
+- Zielmarge pro Marke/Profil
+
+## 15. Einfache Rückrechnung der Marge
+
+```text
+Netto-Verkaufspreis = Kunden-Endpreis brutto / 1,19
+Deckungsbeitrag € = Netto-Verkaufspreis - variable Kosten
+Marge % = Deckungsbeitrag € / Netto-Verkaufspreis × 100
+```
+
+## 16. Zielmarge und maximal erlaubter Rabatt
+
+```text
+Mindest-Nettoverkauf = variable Kosten / (1 - Zielmarge)
+Mindest-Bruttoverkauf = Mindest-Nettoverkauf × 1,19
+Maximaler Rabatt € = Listenpreis brutto - Mindest-Bruttoverkauf
+Maximaler Rabatt % = Maximaler Rabatt € / Listenpreis brutto × 100
+```
+
+Wenn der rabattierte Kunden-Endpreis unter den Mindest-Bruttoverkauf fällt, wird die Zielmarge unterschritten.
+
+## 17. Empfehlung zur Margenkontrolle
+
+DFS sollte intern pro Konfiguration anzeigen:
+
+- Brutto-Listenpreis
+- Kunden-Endpreis nach Rabatt
+- Netto-Verkaufspreis
+- variable Kosten
+- Deckungsbeitrag in Euro
+- Deckungsbeitrag in Prozent
+- Zielmarge
+- Ampel: grün / gelb / rot
+
+Ampelvorschlag:
+
+- Grün: Marge ≥ Zielmarge
+- Gelb: Marge bis 5 Prozentpunkte unter Zielmarge
+- Rot: Marge mehr als 5 Prozentpunkte unter Zielmarge
+
+Wichtig: Diese Marge sollte nicht öffentlich sichtbar sein. Sie gehört in eine interne Admin-/Management-Ansicht.

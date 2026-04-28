@@ -61,6 +61,7 @@ function App(){
   const [quote,setQuote]=useState({profile:'aluplast-ideal-4000',width:1000,height:1200,glazing:'3fach',opening:'Dreh-Kipp',color:'weiß'});
   const [quoteResult,setQuoteResult]=useState(null);
   const [quoteLoading,setQuoteLoading]=useState(false);
+  const [margin,setMargin]=useState({gross:300,cost:170,target:30});
   async function runQuote(){
     setQuoteLoading(true);
     try{
@@ -92,6 +93,14 @@ function App(){
     const changed=changes.filter(c=>c.delta!==0).length;
     return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, changed};
   },[data]);
+
+  const marginNet = Number(margin.gross || 0) / 1.19;
+  const marginContribution = marginNet - Number(margin.cost || 0);
+  const marginPct = marginNet > 0 ? (marginContribution / marginNet) * 100 : 0;
+  const target = Number(margin.target || 0);
+  const minNet = target < 100 ? Number(margin.cost || 0) / (1 - target / 100) : 0;
+  const minGross = minNet * 1.19;
+  const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
   if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
   return <>
@@ -161,6 +170,21 @@ function App(){
             <p>Vergleich der Konfigurations-, Rabatt- und Preislogik mit konkreten Empfehlungen, was DFS übernehmen sollte – und was nicht.</p>
             <span>Briefing öffnen <ArrowUpRight size={16}/></span>
           </a>
+        </div>
+      </section>
+
+      <section className="panel marginPanel" id="margenrechner">
+        <div className="panelHead">
+          <div><h2>Margenrechner</h2><p>Interne Schnellrechnung: Was bleibt nach Rabatt und variablen Kosten vom Kunden-Endpreis übrig?</p></div>
+          <span className={cls('marginStatus', marginState)}>{marginPct.toFixed(1)}% Marge</span>
+        </div>
+        <div className="marginGrid">
+          <label><span>Kunden-Endpreis brutto</span><input type="number" value={margin.gross} onChange={e=>setMargin({...margin,gross:e.target.value})}/></label>
+          <label><span>Variable Kosten netto</span><input type="number" value={margin.cost} onChange={e=>setMargin({...margin,cost:e.target.value})}/></label>
+          <label><span>Zielmarge %</span><input type="number" value={margin.target} onChange={e=>setMargin({...margin,target:e.target.value})}/></label>
+          <div className="marginResult"><small>Netto-Verkauf</small><b>{eur(marginNet)}</b></div>
+          <div className="marginResult"><small>Deckungsbeitrag</small><b>{eur(marginContribution)}</b></div>
+          <div className="marginResult"><small>Mindestpreis brutto</small><b>{eur(minGross)}</b><span>für {target}% Zielmarge</span></div>
         </div>
       </section>
 

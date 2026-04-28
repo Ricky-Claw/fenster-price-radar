@@ -1,204 +1,313 @@
-<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DFS Konfigurator-Preislogik · Fensterradar</title><style>:root{font-family:Inter,Arial,sans-serif;color:#132236;background:#f4f7fb;--green:#0f3d2e;--gold:#d6a84f;--line:#dbe4ee;--muted:#6d7d90}*{box-sizing:border-box}body{margin:0}.shell{max-width:1080px;margin:0 auto;padding:34px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.back{color:#0f5f3f;text-decoration:none;font-weight:900;background:#eaf5ef;padding:12px 16px;border-radius:12px}.hero{background:linear-gradient(135deg,#102016,#0f3d2e 62%,#1f7a4f);color:#fff;border-radius:28px;padding:42px;box-shadow:0 18px 50px #0f3d2e24;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;background:radial-gradient(circle,#d6a84f55,#d6a84f00 68%)}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#d7eadb;font-weight:900}.hero h1{font-size:42px;line-height:1.05;margin:10px 0 14px}.hero p{font-size:18px;max-width:760px;color:#eaf5ef}.content{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 16px 42px #003d7710}.content h1{display:none}.content h2{margin-top:34px;font-size:27px;color:#10233a;border-top:1px solid #edf2f7;padding-top:24px}.content h2:first-child{border-top:0;margin-top:0;padding-top:0}.content h3{font-size:19px;color:#0f3d2e;margin-top:26px}.content p,.content li{font-size:16px;line-height:1.7;color:#33475f}.content ul,.content ol{padding-left:24px}.content code{background:#f2f6f8;border:1px solid #dbe7dd;border-radius:7px;padding:2px 6px;color:#0f3d2e}.content pre{background:#102016;color:#eaf5ef;padding:18px;border-radius:16px;overflow:auto}.footer{margin:22px 0;color:var(--muted);font-size:13px}@media(max-width:760px){.shell{padding:18px}.hero{padding:28px}.hero h1{font-size:32px}.content{padding:22px}.top{align-items:flex-start;flex-direction:column}}</style></head><body><div class="shell"><div class="top"><a class="back" href="/">← Zurück zum Fensterradar</a><span class="footer">Internes Management Briefing · DFS Innensicht</span></div><section class="hero"><div class="eyebrow">Management Briefing</div><h1>DFS Konfigurator-Preislogik</h1><p>Analyse unserer eigenen Fensterkonfigurator-Logik: Profil, Größe, Festverglasung, Dreh-Kipp, zweiflügelige Fenster, Glas, Zuschläge und Rabatte.</p></section><article class="content"><h1>Internes Briefing: Wie unser DFS-Fensterkonfigurator Preise bildet</h1>
+<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DFS Konfigurator-Preislogik · Fensterradar</title><style>:root{font-family:Inter,Arial,sans-serif;color:#132236;background:#f4f7fb;--green:#0f3d2e;--gold:#d6a84f;--line:#dbe4ee;--muted:#6d7d90}*{box-sizing:border-box}body{margin:0}.shell{max-width:1080px;margin:0 auto;padding:34px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:24px}.back{color:#0f5f3f;text-decoration:none;font-weight:900;background:#eaf5ef;padding:12px 16px;border-radius:12px}.hero{background:linear-gradient(135deg,#102016,#0f3d2e 62%,#1f7a4f);color:#fff;border-radius:28px;padding:42px;box-shadow:0 18px 50px #0f3d2e24;position:relative;overflow:hidden}.hero:after{content:"";position:absolute;right:-80px;top:-100px;width:280px;height:280px;background:radial-gradient(circle,#d6a84f55,#d6a84f00 68%)}.eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:#d7eadb;font-weight:900}.hero h1{font-size:42px;line-height:1.05;margin:10px 0 14px}.hero p{font-size:18px;max-width:760px;color:#eaf5ef}.content{margin-top:22px;background:#fff;border:1px solid var(--line);border-radius:24px;padding:34px;box-shadow:0 16px 42px #003d7710}.content h1{display:none}.content h2{margin-top:34px;font-size:27px;color:#10233a;border-top:1px solid #edf2f7;padding-top:24px}.content h2:first-child{border-top:0;margin-top:0;padding-top:0}.content h3{font-size:19px;color:#0f3d2e;margin-top:26px}.content p,.content li{font-size:16px;line-height:1.7;color:#33475f}.content ul,.content ol{padding-left:24px}.content code{background:#f2f6f8;border:1px solid #dbe7dd;border-radius:7px;padding:2px 6px;color:#0f3d2e}.content pre{background:#102016;color:#eaf5ef;padding:18px;border-radius:16px;overflow:auto}.footer{margin:22px 0;color:var(--muted);font-size:13px}@media(max-width:760px){.shell{padding:18px}.hero{padding:28px}.hero h1{font-size:32px}.content{padding:22px}.top{align-items:flex-start;flex-direction:column}}</style></head><body><div class="shell"><div class="top"><a class="back" href="/">← Zurück zum Fensterradar</a><span class="footer">Internes Management Briefing · DFS Innensicht</span></div><section class="hero"><div class="eyebrow">Management Briefing</div><h1>DFS Konfigurator-Preislogik</h1><p>Analyse unserer eigenen Fensterkonfigurator-Logik: Profil, Größe, Festverglasung, Dreh-Kipp, zweiflügelige Fenster, Glas, Zuschläge und Rabatte.</p></section><article class="content">
+
 <p>Stand: 28.04.2026  </p>
 <p>Perspektive: Deutscher-Fenstershop / eigene Konfigurator-Logik  </p>
 <p>Gegenstand: Fenster-Konfigurator, insbesondere Kunststofffenster, Festverglasung, Dreh-/Dreh-Kipp und zweiflügelige Fenster.</p>
+
 <h2>1. Management-Zusammenfassung</h2>
+
 <p>Unser Fensterkonfigurator ist kein einfacher Preislisten-Rechner. Er arbeitet wie ein modulares Kalkulationssystem: Profil, Fenstertyp, Öffnungsart, Maße, Verglasung, Farben, Dichtungen, Zubehör, interne Zuschlagslogik, MwSt. und Aktionsrabatte greifen ineinander.</p>
+
 <p>Die Grundlogik ist leistungsfähig, aber aus Sicht Geschäftsführung/Vertrieb/IT zu schwer sichtbar. Viele preisrelevante Regeln liegen verteilt in Daten-JSONs, API-Antworten und Frontend-JavaScript. Dadurch funktioniert die Kalkulation zwar operativ, ist aber schwer zu auditieren, schwer zu erklären und anfällig für stille Fehler bei Datenpflege oder Aktionen.</p>
+
 <p>Kernaussage: Wir sollten den Konfigurator nicht nur als Shop-Frontend betrachten, sondern als zentrales Pricing-System. Dafür braucht es eine transparente Preisaufschlüsselung pro Konfiguration.</p>
+
 <h2>2. Wie der Konfigurator fachlich denkt</h2>
+
 <p>Eine Fensterkonfiguration besteht aus mehreren Ebenen:</p>
-<ol>
-<li>Material, z.B. Kunststoff/PVC  </li>
-<li>Hersteller/Marke, z.B. Drutex, Aluplast, Veka, Kömmerling  </li>
-<li>Profil, z.B. Iglo 5 Classic, Ideal 4000, Softline 82 MD  </li>
-<li>Fensterform/Fenstertyp, z.B. einteilig, zweiteilig, mit Oberlicht, Rundbogen usw.  </li>
-<li>Öffnungsart je Flügel, z.B. Festverglasung, Dreh, Dreh-Kipp  </li>
-<li>Maße und Aufteilung  </li>
-<li>Verglasung und warme Kante  </li>
-<li>Farben/Dichtungen/Zubehör  </li>
-<li>Kalkulationsaufschlag, MwSt., Rabatt</li>
-</ol>
+
+<p>1. Material, z.B. Kunststoff/PVC  </p>
+<p>2. Hersteller/Marke, z.B. Drutex, Aluplast, Veka, Kömmerling  </p>
+<p>3. Profil, z.B. Iglo 5 Classic, Ideal 4000, Softline 82 MD  </p>
+<p>4. Fensterform/Fenstertyp, z.B. einteilig, zweiteilig, mit Oberlicht, Rundbogen usw.  </p>
+<p>5. Öffnungsart je Flügel, z.B. Festverglasung, Dreh, Dreh-Kipp  </p>
+<p>6. Maße und Aufteilung  </p>
+<p>7. Verglasung und warme Kante  </p>
+<p>8. Farben/Dichtungen/Zubehör  </p>
+<p>9. Kalkulationsaufschlag, MwSt., Rabatt</p>
+
 <p>Wichtig: Der Preis hängt nicht nur am Profil. Er hängt daran, welche Kombination aus Profil, Typ, Öffnung, Größe und Glas gewählt wird.</p>
+
 <h2>3. Preisbasis: Profil + Öffnungsart + Maßmatrix</h2>
-<p>Für jedes Profil gibt es Preis-Matrizen. Die API <code>POST /konfigurator/fenster</code> liefert abhängig von:</p>
-<ul>
-<li>`bid` = Hersteller/Brand</li>
-<li>`mid` = Material</li>
-<li>`pid` = Profil</li>
-<li>`wid` = Fenstertyp</li>
-<li>`open_ids` / `opid` = Öffnungsarten</li>
-<li>Breite/Höhe bzw. Aufteilungen</li>
-</ul>
+
+<p>Für jedes Profil gibt es Preis-Matrizen. Die API `POST /konfigurator/fenster` liefert abhängig von:</p>
+
+<p>- `bid` = Hersteller/Brand</p>
+<p>- `mid` = Material</p>
+<p>- `pid` = Profil</p>
+<p>- `wid` = Fenstertyp</p>
+<p>- `open_ids` / `opid` = Öffnungsarten</p>
+<p>- Breite/Höhe bzw. Aufteilungen</p>
+
 <p>Die Matrix enthält für konkrete Breite/Höhe-Kombinationen Basispreise. Wenn ein Maß nicht exakt existiert, kann der Konfigurator den nächstgrößeren Eintrag finden. Für Kundenbestellung kann das funktionieren, für Controlling und Wettbewerbsvergleich ist es aber kritisch: Gerundete Preise sind keine exakten Vergleichspreise.</p>
+
 <h2>4. Öffnungsarten: Festverglasung vs Dreh vs Dreh-Kipp</h2>
+
 <p>Die Öffnungsart verändert die Basispreis-Matrix deutlich.</p>
+
 <p>Beispiel Drutex Iglo 5 Classic bei 1000×1200 mm aus der Live-Matrix:</p>
-<ul>
-<li>Festverglasung: ca. 73,18 Basispreis</li>
-<li>Dreh links/rechts: ca. 119,42 Basispreis</li>
-<li>Dreh-Kipp: ca. 127,15 Basispreis</li>
-</ul>
+
+<p>- Festverglasung: ca. 73,18 Basispreis</p>
+<p>- Dreh links/rechts: ca. 119,42 Basispreis</p>
+<p>- Dreh-Kipp: ca. 127,15 Basispreis</p>
+
 <p>Das ist fachlich plausibel: Festverglasung ist konstruktiv einfacher, Dreh und Dreh-Kipp benötigen Beschläge, Flügelmechanik und mehr Komponenten.</p>
+
 <p>Empfehlung: In internen Reports müssen Fest, Dreh und Dreh-Kipp getrennt ausgewertet werden. Ein Profil kann bei Festverglasung sehr wettbewerbsfähig sein, bei Dreh-Kipp aber anders stehen.</p>
+
 <h2>5. Zweiflügelige Fenster und Aufteilungen</h2>
+
 <p>Bei zweiflügeligen Fenstern reicht die Gesamtbreite nicht aus. Der Konfigurator zerlegt die Gesamtgröße in Teilflächen bzw. Flügelbreiten und berechnet die Öffnungen je Flügel.</p>
+
 <p>Im JavaScript ist sichtbar:</p>
-<ul>
-<li>`windowtype.count_window` bestimmt die Anzahl Flügel/Felder.</li>
-<li>`size_width` und `size_height` speichern Aufteilungen.</li>
-<li>`getPriceByOpens` sucht pro Öffnung/Teilmaß den passenden Preis.</li>
-<li>Für mehrere Flügel werden Teilpreise addiert.</li>
-<li>Bei bestimmten zweiflügeligen Logiken wird ein Koeffizient angewendet, z.B. bei Fenstertyp 6.</li>
-</ul>
+
+<p>- `windowtype.count_window` bestimmt die Anzahl Flügel/Felder.</p>
+<p>- `size_width` und `size_height` speichern Aufteilungen.</p>
+<p>- `getPriceByOpens` sucht pro Öffnung/Teilmaß den passenden Preis.</p>
+<p>- Für mehrere Flügel werden Teilpreise addiert.</p>
+<p>- Bei bestimmten zweiflügeligen Logiken wird ein Koeffizient angewendet, z.B. bei Fenstertyp 6.</p>
+
 <p>Das bedeutet: Ein zweiflügeliges Fenster ist nicht einfach „ein großes Fenster mal Faktor X“. Es ist eine Summe aus Teilpreisen, Öffnungsarten, Aufteilung und ggf. Koeffizienten.</p>
+
 <p>Kritisch: Wenn Aufteilungen nicht sauber gespeichert oder sichtbar sind, kann Vertrieb später nicht erklären, warum zwei gleiche Gesamtmaße unterschiedliche Preise haben.</p>
+
 <h2>6. Verglasung: warum Glas stark mit Größe korreliert</h2>
-<p>Die Verglasung kommt aus profilbezogenen Glasdaten, z.B. <code>data_window_glass_&lt;profileId&gt;.json</code>.</p>
+
+<p>Die Verglasung kommt aus profilbezogenen Glasdaten, z.B. `data_window_glass_&lt;profileId&gt;.json`.</p>
+
 <p>Glaszuschläge können unterschiedlich berechnet werden:</p>
-<ul>
-<li>fester Betrag</li>
-<li>Prozent auf aktuellen Preis</li>
-<li>Preis pro m²</li>
-<li>Preis pro laufendem Meter</li>
-<li>Zuschlag nach Breite oder Höhe</li>
-</ul>
+
+<p>- fester Betrag</p>
+<p>- Prozent auf aktuellen Preis</p>
+<p>- Preis pro m²</p>
+<p>- Preis pro laufendem Meter</p>
+<p>- Zuschlag nach Breite oder Höhe</p>
+
 <p>Deshalb wächst der Unterschied zwischen 2-fach und 3-fach nicht immer linear. Bei kleinen Fenstern dominiert eher der Grundpreis. Bei großen Fenstern wirkt die Glasfläche stärker.</p>
+
 <p>Management-Relevanz: Die Marge und Wettbewerbsfähigkeit von 3-fach-Verglasung muss getrennt von 2-fach betrachtet werden. Ein Durchschnitt über alle Gläser verschleiert wichtige Effekte.</p>
+
 <h2>7. Farben, Dichtungen und Zubehör</h2>
+
 <p>Neben Profil, Größe und Glas gibt es weitere preisrelevante Ebenen:</p>
-<ul>
-<li>Farbe außen/innen</li>
-<li>Dichtungsfarbe</li>
-<li>warme Kante</li>
-<li>Sprossen</li>
-<li>Fensterbankanschluss</li>
-<li>Zubehör/Beschläge</li>
-<li>Rollladen/Extras</li>
-</ul>
+
+<p>- Farbe außen/innen</p>
+<p>- Dichtungsfarbe</p>
+<p>- warme Kante</p>
+<p>- Sprossen</p>
+<p>- Fensterbankanschluss</p>
+<p>- Zubehör/Beschläge</p>
+<p>- Rollladen/Extras</p>
+
 <p>Im JavaScript ist sichtbar, dass Dichtungen und Zubehör prozentuale oder feste Aufpreise auslösen können. Beispiel: bestimmte Dichtungsfarben können mit Prozentzuschlägen versehen werden.</p>
+
 <p>Für das aktuelle Fensterradar ist bewusst eine Standardkonfiguration gewählt: PVC, weiß/weiß, einflügelig, Dreh-Kipp bzw. definierte Vergleichslogik. Für eine vollständige DFS-Steuerung sollten später Farben und Zubehör separat überwacht werden.</p>
+
 <h2>8. Kalkulationsaufschlag und MwSt.</h2>
-<p>Im Konfigurator wird <code>window.myPricePercent = 90</code> gesetzt. Dieser Wert fließt als interner Aufschlag in die Preisbildung ein.</p>
+
+<p>Im Konfigurator wird `window.myPricePercent = 90` gesetzt. Dieser Wert fließt als interner Aufschlag in die Preisbildung ein.</p>
+
 <p>Vereinfacht:</p>
-<ol>
-<li>Basispreis aus Matrix</li>
-<li>Zuschläge aus Glas/Zubehör/Farbe usw.</li>
-<li>interner Prozentaufschlag</li>
-<li>19% MwSt.</li>
-<li>Aktionsrabatt auf den Brutto-/Endpreis</li>
-</ol>
+
+<p>1. Basispreis aus Matrix</p>
+<p>2. Zuschläge aus Glas/Zubehör/Farbe usw.</p>
+<p>3. interner Prozentaufschlag</p>
+<p>4. 19% MwSt.</p>
+<p>5. Aktionsrabatt auf den Brutto-/Endpreis</p>
+
 <p>Kritisch: Ein pauschaler Aufschlagswert ist betriebswirtschaftlich erklärungsbedürftig. Er kann historisch richtig sein, sollte aber dokumentiert werden: Welche Kosten/Marge deckt er ab? Gilt er für alle Marken/Profile gleich? Gibt es Ausnahmen?</p>
+
 <p>Im JS sind Sonderregeln sichtbar, z.B. andere Prozentwerte bei bestimmten Profilen, Marken oder sehr großen Aluplast-Konfigurationen. Das ist fachlich möglich, muss aber dokumentiert und auditierbar sein.</p>
+
 <h2>9. Rabatte und Aktionen</h2>
+
 <p>Rabatte liegen aktuell an mehreren Stellen:</p>
-<ul>
-<li>Materialrabatt, z.B. Drutex PVC 15% bis 31.05.2026</li>
-<li>Markenrabatt, z.B. Aluplast 5% bis 31.05.2026</li>
-<li>weitere Brand-Rabatte über `/windows/company-discout?bid=...&amp;conf=windows`</li>
-</ul>
+
+<p>- Materialrabatt, z.B. Drutex PVC 15% bis 31.05.2026</p>
+<p>- Markenrabatt, z.B. Aluplast 5% bis 31.05.2026</p>
+<p>- weitere Brand-Rabatte über `/windows/company-discout?bid=...&amp;conf=windows`</p>
+
 <p>Aktuelle beobachtete DFS-Rabatte im Radar:</p>
-<ul>
-<li>Drutex PVC: 15%</li>
-<li>Aluplast: 5%</li>
-<li>Gealan: 20%</li>
-<li>Salamander: 25%</li>
-<li>Veka: 20%</li>
-<li>Kömmerling: 35%</li>
-</ul>
+
+<p>- Drutex PVC: 15%</p>
+<p>- Aluplast: 5%</p>
+<p>- Gealan: 20%</p>
+<p>- Salamander: 25%</p>
+<p>- Veka: 20%</p>
+<p>- Kömmerling: 35%</p>
+
 <p>Kritisch: Rabatte funktionieren, aber sie sind nicht als zentrale Rabattmatrix sichtbar. Für Geschäftsführung wäre wichtig, jederzeit zu sehen:</p>
-<ul>
-<li>Welche Aktion läuft?</li>
-<li>Für welche Marke/Material/Profile?</li>
-<li>Bis wann?</li>
-<li>Mit welcher Priorität?</li>
-<li>Wie wirkt sie auf Marge und Wettbewerbsabstand?</li>
-</ul>
+
+<p>- Welche Aktion läuft?</p>
+<p>- Für welche Marke/Material/Profile?</p>
+<p>- Bis wann?</p>
+<p>- Mit welcher Priorität?</p>
+<p>- Wie wirkt sie auf Marge und Wettbewerbsabstand?</p>
+
 <h2>10. Was aktuell gut ist</h2>
-<ul>
-<li>Der Konfigurator kann viele komplexe Fenstertypen abbilden.</li>
-<li>Profil- und Öffnungslogik ist granular genug für echte Maßfenster.</li>
-<li>Glas und Zubehör sind modular erweiterbar.</li>
-<li>Rabatte können nach Marke/Material gesteuert werden.</li>
-<li>Die Live-Preisberechnung reagiert dynamisch auf Maße und Optionen.</li>
-</ul>
+
+<p>- Der Konfigurator kann viele komplexe Fenstertypen abbilden.</p>
+<p>- Profil- und Öffnungslogik ist granular genug für echte Maßfenster.</p>
+<p>- Glas und Zubehör sind modular erweiterbar.</p>
+<p>- Rabatte können nach Marke/Material gesteuert werden.</p>
+<p>- Die Live-Preisberechnung reagiert dynamisch auf Maße und Optionen.</p>
+
 <h2>11. Was kritisch ist</h2>
-<h3>11.1 Zu wenig erklärbare Preisaufschlüsselung</h3>
+
+<h2>11.1 Zu wenig erklärbare Preisaufschlüsselung</h2>
+
 <p>Intern sieht man nicht auf einen Blick: Basispreis, Glaszuschlag, Zubehör, Aufschlag, MwSt., Rabatt, Endpreis.</p>
-<h3>11.2 Verteilte Rabattlogik</h3>
+
+<h2>11.2 Verteilte Rabattlogik</h2>
+
 <p>Rabatte liegen in mehreren Quellen. Das erhöht Risiko für falsch laufende Aktionen.</p>
-<h3>11.3 Komplexe Mehrflügel-Logik</h3>
+
+<h2>11.3 Komplexe Mehrflügel-Logik</h2>
+
 <p>Zweiflügelige Fenster werden über Teilpreise und Aufteilungen kalkuliert. Ohne transparente Darstellung ist das schwer zu kontrollieren.</p>
-<h3>11.4 Sonderregeln im JavaScript</h3>
+
+<h2>11.4 Sonderregeln im JavaScript</h2>
+
 <p>Sonderfälle wie Profil-/Brand-Ausnahmen oder große Aluplast-Konfigurationen sind technisch sichtbar, aber nicht managementgerecht dokumentiert.</p>
-<h3>11.5 Datenqualität bei Glasdaten</h3>
+
+<h2>11.5 Datenqualität bei Glasdaten</h2>
+
 <p>Wenn Glasgruppen pro Profil fehlen oder falsch gepflegt sind, entstehen falsche Endpreise. Das muss regelmäßig geprüft werden.</p>
+
 <h2>12. Empfehlungen aus DFS-Sicht</h2>
-<h3>Empfehlung 1: Preisaufschlüsselung pro Konfiguration einführen</h3>
+
+<h2>Empfehlung 1: Preisaufschlüsselung pro Konfiguration einführen</h2>
+
 <p>Jede Konfiguration sollte intern eine verständliche Breakdown-Struktur erzeugen:</p>
-<pre><code>{
-  &quot;profile&quot;: &quot;Iglo 5 Classic&quot;,
-  &quot;windowType&quot;: &quot;Einteiliges Fenster&quot;,
-  &quot;opening&quot;: &quot;Dreh-Kipp&quot;,
-  &quot;requestedSize&quot;: &quot;1000x1200&quot;,
-  &quot;actualSize&quot;: &quot;1000x1200&quot;,
-  &quot;basePrice&quot;: 127.15,
-  &quot;glassAdd&quot;: 23.50,
-  &quot;colorAdd&quot;: 0,
-  &quot;accessoryAdd&quot;: 0,
-  &quot;calculationPercent&quot;: 90,
-  &quot;grossListPrice&quot;: 342.51,
-  &quot;discountPercent&quot;: 15,
-  &quot;discountSource&quot;: &quot;Drutex PVC Aktion&quot;,
-  &quot;customerFinalPrice&quot;: 291.13
-}</code></pre>
-<h3>Empfehlung 2: Eigene Admin-Ansicht „Preisprüfung“ bauen</h3>
+
+<p>```json</p>
+<p>{</p>
+<p>  &quot;profile&quot;: &quot;Iglo 5 Classic&quot;,</p>
+<p>  &quot;windowType&quot;: &quot;Einteiliges Fenster&quot;,</p>
+<p>  &quot;opening&quot;: &quot;Dreh-Kipp&quot;,</p>
+<p>  &quot;requestedSize&quot;: &quot;1000x1200&quot;,</p>
+<p>  &quot;actualSize&quot;: &quot;1000x1200&quot;,</p>
+<p>  &quot;basePrice&quot;: 127.15,</p>
+<p>  &quot;glassAdd&quot;: 23.50,</p>
+<p>  &quot;colorAdd&quot;: 0,</p>
+<p>  &quot;accessoryAdd&quot;: 0,</p>
+<p>  &quot;calculationPercent&quot;: 90,</p>
+<p>  &quot;grossListPrice&quot;: 342.51,</p>
+<p>  &quot;discountPercent&quot;: 15,</p>
+<p>  &quot;discountSource&quot;: &quot;Drutex PVC Aktion&quot;,</p>
+<p>  &quot;customerFinalPrice&quot;: 291.13</p>
+<p>}</p>
+<p>```</p>
+
+<h2>Empfehlung 2: Eigene Admin-Ansicht „Preisprüfung“ bauen</h2>
+
 <p>Für Geschäftsführung/Vertrieb/IT sollte es eine interne Ansicht geben:</p>
-<ul>
-<li>Eingabe Profil, Fenstertyp, Öffnung, Größe, Glas</li>
-<li>Ausgabe Preisbestandteile</li>
-<li>Warnung bei Maßrundung</li>
-<li>Anzeige aktiver Rabatt</li>
-<li>Vergleich 2-fach/3-fach</li>
-</ul>
-<h3>Empfehlung 3: Fest, Dreh und Dreh-Kipp separat monitoren</h3>
+
+<p>- Eingabe Profil, Fenstertyp, Öffnung, Größe, Glas</p>
+<p>- Ausgabe Preisbestandteile</p>
+<p>- Warnung bei Maßrundung</p>
+<p>- Anzeige aktiver Rabatt</p>
+<p>- Vergleich 2-fach/3-fach</p>
+
+<h2>Empfehlung 3: Fest, Dreh und Dreh-Kipp separat monitoren</h2>
+
 <p>Der Preisabstand zwischen Festverglasung und Dreh-Kipp ist strategisch relevant. Kunden vergleichen oft Endpreise, aber intern müssen wir wissen, wo Beschlag-/Mechanikaufschläge wirken.</p>
-<h3>Empfehlung 4: Zweiflügelige Fenster als eigene Benchmark-Kategorie aufnehmen</h3>
+
+<h2>Empfehlung 4: Zweiflügelige Fenster als eigene Benchmark-Kategorie aufnehmen</h2>
+
 <p>Fensterradar sollte als nächste Ausbaustufe nicht nur einflügelig DK betrachten, sondern zusätzlich:</p>
-<ul>
-<li>einflügelig Fest</li>
-<li>einflügelig Dreh-Kipp</li>
-<li>zweiflügelig Fest/Fest</li>
-<li>zweiflügelig DK/Fest oder DK/DK je nach DFS-Standard</li>
-</ul>
-<h3>Empfehlung 5: Rabattmatrix zentralisieren</h3>
+
+<p>- einflügelig Fest</p>
+<p>- einflügelig Dreh-Kipp</p>
+<p>- zweiflügelig Fest/Fest</p>
+<p>- zweiflügelig DK/Fest oder DK/DK je nach DFS-Standard</p>
+
+<h2>Empfehlung 5: Rabattmatrix zentralisieren</h2>
+
 <p>Alle Rabatte sollten aus einer zentralen Matrix kommen:</p>
-<ul>
-<li>Marke</li>
-<li>Material</li>
-<li>Profil optional</li>
-<li>Fenstertyp optional</li>
-<li>Prozent</li>
-<li>Gültigkeit</li>
-<li>Priorität</li>
-<li>Quelle/Bemerkung</li>
-</ul>
-<h3>Empfehlung 6: Sonderregeln dokumentieren</h3>
+
+<p>- Marke</p>
+<p>- Material</p>
+<p>- Profil optional</p>
+<p>- Fenstertyp optional</p>
+<p>- Prozent</p>
+<p>- Gültigkeit</p>
+<p>- Priorität</p>
+<p>- Quelle/Bemerkung</p>
+
+<h2>Empfehlung 6: Sonderregeln dokumentieren</h2>
+
 <p>Alle Sonderfälle im Code sollten in einer Pricing-Dokumentation stehen:</p>
-<ul>
-<li>abweichende Prozentaufschläge</li>
-<li>Profil-Hacks</li>
-<li>Größen-Sonderfälle</li>
-<li>Marken-Ausnahmen</li>
-</ul>
+
+<p>- abweichende Prozentaufschläge</p>
+<p>- Profil-Hacks</p>
+<p>- Größen-Sonderfälle</p>
+<p>- Marken-Ausnahmen</p>
+
 <h2>13. Fazit für Geschäftsführung</h2>
+
 <p>Unsere DFS-Konfiguratorlogik ist leistungsfähig, aber aktuell eher technisch gewachsen als managementfähig dokumentiert. Der wichtigste nächste Schritt ist nicht, die komplette Logik neu zu bauen, sondern sie sichtbar zu machen.</p>
+
 <p>Wenn wir pro Konfiguration klar zeigen können, wie der Endpreis entsteht, gewinnen wir:</p>
-<ul>
-<li>bessere Preissteuerung</li>
-<li>schnellere Fehleranalyse</li>
-<li>bessere Rabattkontrolle</li>
-<li>bessere Wettbewerbsfähigkeit</li>
-<li>mehr Vertrauen im Vertrieb</li>
-</ul>
-<p>Kurz: Der Konfigurator funktioniert. Jetzt sollte er als transparentes Pricing-System weiterentwickelt werden.</p></article><div class="footer">Quelle: DFS-Konfigurator/API/JS-Auswertung. Nur intern verwenden.</div></div></body></html>
+
+<p>- bessere Preissteuerung</p>
+<p>- schnellere Fehleranalyse</p>
+<p>- bessere Rabattkontrolle</p>
+<p>- bessere Wettbewerbsfähigkeit</p>
+<p>- mehr Vertrauen im Vertrieb</p>
+
+<p>Kurz: Der Konfigurator funktioniert. Jetzt sollte er als transparentes Pricing-System weiterentwickelt werden.</p>
+
+<h2>14. Margenrisiko: Warum Endpreis nicht gleich Profitabilität ist</h2>
+
+<p>Ein niedriger Kunden-Endpreis ist nicht automatisch schlecht, und ein hoher Listenpreis ist nicht automatisch profitabel. Entscheidend ist, ob nach Rabatt, Einkauf/Herstellung, Glas, Beschlägen, Versand, Zahlungsgebühren, Reklamationsrisiko und Gemeinkosten noch genug Deckungsbeitrag bleibt.</p>
+
+<p>Aktuell ist im Konfigurator nicht direkt sichtbar:</p>
+
+<p>- Herstell-/Einkaufskosten je Profil und Größe</p>
+<p>- Mehrkosten für 3-fach-Glas gegenüber 2-fach</p>
+<p>- Beschlag-/Mechanikkosten bei Dreh-Kipp gegenüber Festverglasung</p>
+<p>- Mehrkosten zweiflügeliger Konstruktionen</p>
+<p>- Versand-/Handlingkosten großer Elemente</p>
+<p>- erwartete Reklamations-/Servicekosten</p>
+<p>- Zielmarge pro Marke/Profil</p>
+
+<h2>15. Einfache Rückrechnung der Marge</h2>
+
+<p>```text</p>
+<p>Netto-Verkaufspreis = Kunden-Endpreis brutto / 1,19</p>
+<p>Deckungsbeitrag € = Netto-Verkaufspreis - variable Kosten</p>
+<p>Marge % = Deckungsbeitrag € / Netto-Verkaufspreis × 100</p>
+<p>```</p>
+
+<h2>16. Zielmarge und maximal erlaubter Rabatt</h2>
+
+<p>```text</p>
+<p>Mindest-Nettoverkauf = variable Kosten / (1 - Zielmarge)</p>
+<p>Mindest-Bruttoverkauf = Mindest-Nettoverkauf × 1,19</p>
+<p>Maximaler Rabatt € = Listenpreis brutto - Mindest-Bruttoverkauf</p>
+<p>Maximaler Rabatt % = Maximaler Rabatt € / Listenpreis brutto × 100</p>
+<p>```</p>
+
+<p>Wenn der rabattierte Kunden-Endpreis unter den Mindest-Bruttoverkauf fällt, wird die Zielmarge unterschritten.</p>
+
+<h2>17. Empfehlung zur Margenkontrolle</h2>
+
+<p>DFS sollte intern pro Konfiguration anzeigen:</p>
+
+<p>- Brutto-Listenpreis</p>
+<p>- Kunden-Endpreis nach Rabatt</p>
+<p>- Netto-Verkaufspreis</p>
+<p>- variable Kosten</p>
+<p>- Deckungsbeitrag in Euro</p>
+<p>- Deckungsbeitrag in Prozent</p>
+<p>- Zielmarge</p>
+<p>- Ampel: grün / gelb / rot</p>
+
+<p>Ampelvorschlag:</p>
+
+<p>- Grün: Marge ≥ Zielmarge</p>
+<p>- Gelb: Marge bis 5 Prozentpunkte unter Zielmarge</p>
+<p>- Rot: Marge mehr als 5 Prozentpunkte unter Zielmarge</p>
+
+<p>Wichtig: Diese Marge sollte nicht öffentlich sichtbar sein. Sie gehört in eine interne Admin-/Management-Ansicht.</p></article><div class="footer">Quelle: DFS-Konfigurator/API/JS-Auswertung. Nur intern verwenden.</div></div></body></html>
