@@ -17,7 +17,10 @@ for(const cfg of catalog.slice(0,limit)){
   const actualDims=extractDims(priced.prices?.short_labels);
   const dimsMatch=actualDims?.width===w && actualDims?.height===h;
   const warn=[]; if(Number(priced.prices?.total)<=0) warn.push('zero_or_unavailable_price'); if(!dimsMatch) warn.push(`dimension_adjusted_by_configurator:${actualDims?.width}x${actualDims?.height}`);
-  results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:200,comparePrice:{listTotal:Number(priced.prices?.total),currency:'EUR',discountApplied:false,valid:Number(priced.prices?.total)>0 && dimsMatch},discountMetadata:{observedDiscountPercent:priced.discount_percent,discountedTotalObserved: priced.discount_percent ? Number((priced.prices.total*(1-priced.discount_percent)).toFixed(6)) : null},labels:priced.prices?.short_labels,actualDimensions:actualDims,configChain:priced.config_chain,refIdChain:priced.ref_id_chain,warnings:warn});
+  const listTotal = Number(priced.prices?.total);
+  const discount = Number(priced.discount_percent || 0);
+  const discountedTotal = discount ? Number((listTotal * (1 - discount)).toFixed(2)) : null;
+  results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:200,comparePrice:{listTotal,currency:'EUR',discountApplied:!!discount,valid:listTotal>0 && dimsMatch},customerPrice:{total:discountedTotal || listTotal,currency:'EUR'},discountMetadata:{observed:!!discount,observedDiscountPercent:discount,discountedTotalObserved: discountedTotal,note:discount?'Live-Rabatt vom Anbieter beobachtet':'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'},labels:priced.prices?.short_labels,actualDimensions:actualDims,configChain:priced.config_chain,refIdChain:priced.ref_id_chain,warnings:warn});
  }catch(e){results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:'error',error:String(e.message||e)});} 
  await new Promise(r=>setTimeout(r,900));
 }

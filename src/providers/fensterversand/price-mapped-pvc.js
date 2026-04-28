@@ -26,8 +26,9 @@ for (const cfg of catalog.slice(0, limit)) {
   const json = await res.json().catch(async()=>({raw:await res.text()}));
   results.push({
     provider:'Fensterversand', input:cfg, mappedProfile:mapped.name, status:res.status,
-    comparePrice:{ listTotal: Number(json.price?.total), currency:'EUR', discountApplied:false, valid: Number(json.price?.total) > 0 },
-    discountMetadata:{ discountedTotalObserved: Number(json.price?.discountedTotal), observedDiscount: Number(json.price?.discount), percentages: json.price?.percentages || {} },
+    comparePrice:{ listTotal: Number(json.price?.total), currency:'EUR', discountApplied:!!Number(json.price?.discount), valid: Number(json.price?.total) > 0 },
+    customerPrice:{ total: Number(json.price?.discountedTotal) || Number(json.price?.total), currency:'EUR' },
+    discountMetadata:{ observed:!!Number(json.price?.discountedTotal) && Number(json.price?.discountedTotal)!==Number(json.price?.total), discountedTotalObserved: Number(json.price?.discountedTotal), observedDiscount: Number(json.price?.discount), percentages: json.price?.percentages || {}, note:'Live-Rabatt/Endpreis vom Anbieter beobachtet' },
     warnings: Number(json.price?.total) > 0 ? [] : ['zero_or_unavailable_price'],
     dimensions: json.dimensions ? { x: json.dimensions.x, y: json.dimensions.y, qm: json.dimensions.qm, rm: json.dimensions.rm } : null,
     requestConfig: payload.configuration

@@ -65,7 +65,7 @@ async function priceOne(c, profiles){
   net += net*percent/100;
   const gross=+(net*1.19).toFixed(2);
   const warnings=[]; if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
-  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
+  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:gross,currency:'EUR'}, discountMetadata:{observed:false,note:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
 }
 
 const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').split('=')));

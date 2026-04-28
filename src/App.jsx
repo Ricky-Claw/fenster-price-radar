@@ -37,11 +37,17 @@ const quoteProfiles = [
 ];
 
 function unique(data, key){ return [...new Set(data.map(x=>x[key]).filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'de')); }
+function discountText(p){
+  const meta=p?.discountMetadata || {};
+  if(!meta.observed) return 'kein Rabatt';
+  const pct = typeof meta.observedDiscountPercent === 'number' ? `${Math.round(meta.observedDiscountPercent*100)}%` : (typeof meta.observedDiscount === 'number' && meta.observedDiscount ? `${meta.observedDiscount}` : 'Rabatt');
+  return pct;
+}
 function providerCell(row, id){
   const p=row.providers[id];
   if(!p) return <td className="muted">—</td>;
   if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></td>;
-  return <td className="price">{eur(p.listTotal)}</td>;
+  return <td className="price"><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></td>;
 }
 
 function App(){
@@ -123,7 +129,7 @@ function App(){
           <label><span>Öffnung</span><select value={quote.opening} onChange={e=>setQuote({...quote,opening:e.target.value})}><option>Dreh-Kipp</option><option>Fest</option></select></label>
         </div>
         {quoteResult && <div className="quoteResults">
-          {providers.map(([id,name])=>{const p=quoteResult.providers?.[id]; return <div key={id} className={cls('quoteCard',p?.valid?'':'softWarn')}><small>{name}</small><b>{p?.valid?eur(p.listTotal):'—'}</b><span>{p?.reason === 'nicht_im_angebot' || p?.status === 'unmatched' ? 'nicht im Angebot' : (p?.status||'nicht verfügbar')}</span>{p?.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p?.reason||p?.error?<em>{p.reason === 'nicht_im_angebot' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : (p.reason||p.error)}</em>:null}</div>})}
+          {providers.map(([id,name])=>{const p=quoteResult.providers?.[id]; return <div key={id} className={cls('quoteCard',p?.valid?'':'softWarn')}><small>{name}</small><b>{p?.valid?eur(p.customerTotal ?? p.listTotal):'—'}</b>{p?.valid?<span>Endpreis Kunde · Liste {eur(p.listTotal)} · {discountText(p)}</span>:<span>{p?.reason === 'nicht_im_angebot' || p?.status === 'unmatched' ? 'nicht im Angebot' : (p?.status||'nicht verfügbar')}</span>}{p?.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p?.reason||p?.error?<em>{p.reason === 'nicht_im_angebot' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : (p.reason||p.error)}</em>:null}</div>})}
         </div>}
       </section>
 
@@ -136,7 +142,7 @@ function App(){
 
       <section className="panel" id="radar">
         <div className="panelHead">
-          <div><h2>Preisradar</h2><p>Canonical: Brutto-Listenpreis vor Rabatt. Aktionsrabatte bleiben Metadaten.</p></div>
+          <div><h2>Preisradar</h2><p>Anzeige: Kunden-Endpreis inkl. live beobachtetem Rabatt. Listenpreis und Rabatt werden je Anbieter vermerkt.</p></div>
           <a className="download" href="/data/price-radar.json" download><Download size={16}/> JSON</a>
         </div>
         <div className="filters">
@@ -149,7 +155,7 @@ function App(){
 
         <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
           {filtered.map(row=><tr key={row.key} onClick={()=>setActive(row)}>
-            <td><b>{row.brand} · {row.profile}</b><small>{row.size} · {row.glazing} · {row.opening} · {row.color}</small></td>
+            <td><b>{row.brand} · {row.profile}</b><small>{row.size} · {row.sizeRole || 'Vergleichsgröße'} · {row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
             <td>{changeLabel(row)}</td>
@@ -170,7 +176,7 @@ function App(){
       </details>
     </main>
 
-    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{eur(p.listTotal)}</span><small>Status: {p.status} · valid: {String(p.valid)}</small>{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
+    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small><small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
   </>;
 }
 

@@ -73,7 +73,7 @@ async function quoteDfs({profile,width,height,glazing,opening}){
   net += net*0.90;
   const listTotal=money(net*1.19);
   const warnings=[]; if(+row.width!==width||+row.height!==height) warnings.push(`dimension_rounded_to:${row.width}x${row.height}`);
-  return {status:'priced',valid:warnings.length===0,listTotal,currency:'EUR',warnings,parts:{baseNet:base,glassAddNet:money(glass.add)}};
+  return {status:'priced',valid:warnings.length===0,listTotal,customerTotal:listTotal,currency:'EUR',warnings,discountMetadata:{observed:false,note:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'},parts:{baseNet:base,glassAddNet:money(glass.add)}};
 }
 async function dfsGlass(profileId, groupId, width, height, defPrice){
   const pid=(profileId===56||profileId===144)?37:profileId;
@@ -100,7 +100,9 @@ async function quoteFb({profile,width,height,glazing,opening,color}){
   const dimsMatch=actual?.width===width && actual?.height===height;
   const total=Number(priced.prices?.total);
   const warnings=[]; if(!dimsMatch) warnings.push(`dimension_adjusted_by_configurator:${actual?.width}x${actual?.height}`); if(total<=0) warnings.push('zero_or_unavailable_price');
-  return {status:'priced',valid:total>0&&dimsMatch,listTotal:money(total),currency:'EUR',warnings,discountMetadata:{observedDiscountPercent:priced.discount_percent,discountedTotalObserved:priced.discount_percent?money(total*(1-priced.discount_percent)):null}};
+  const discount = Number(priced.discount_percent || 0);
+  const discounted = discount ? money(total * (1 - discount)) : null;
+  return {status:'priced',valid:total>0&&dimsMatch,listTotal:money(total),customerTotal:discounted || money(total),currency:'EUR',warnings,discountMetadata:{observed:!!discount,observedDiscountPercent:discount,discountedTotalObserved:discounted,note:discount?'Live-Rabatt vom Anbieter beobachtet':'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'}};
 }
 async function fbStep(j,pos,idx){ return fbPost('/configurations/process-step-change',{change_position:pos,new_step_index:idx,configurator_id:1,config_chain:j.config_chain,configuration_id:j.configuration_id,ref_id_chain:j.ref_id_chain,inputs:j.inputs,country:'GERMANY'}); }
 async function fbPost(url,body){ const r=await fetch(FB_BASE+url,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':'https://www.fensterblick.de','referer':'https://www.fensterblick.de/fenster-konfigurator.html'},body:JSON.stringify(body)}); if(!r.ok) throw new Error(`Fensterblick ${url} HTTP ${r.status}`); return r.json(); }
@@ -120,5 +122,6 @@ async function quoteFv({profile,width,height,glazing,opening,color}){
   const r=await fetch(`${FV_BASE}/configurator/update`,{method:'POST',headers:{'content-type':'application/json','accept':'application/json, text/plain, */*','origin':FV_BASE,'referer':`${FV_BASE}/?cid=25&t=fenster-kunststoff`},body:JSON.stringify({configuration:p.configuration,productId:25})});
   if(!r.ok) throw new Error(`Fensterversand HTTP ${r.status}`);
   const j=await r.json(); const total=Number(j.price?.total); const warnings=total>0?[]:['zero_or_unavailable_price'];
-  return {status:'priced',valid:total>0,listTotal:money(total),currency:'EUR',warnings,discountMetadata:{discountedTotalObserved:money(Number(j.price?.discountedTotal)),observedDiscount:Number(j.price?.discount)}};
+  const discounted = money(Number(j.price?.discountedTotal));
+  return {status:'priced',valid:total>0,listTotal:money(total),customerTotal:discounted || money(total),currency:'EUR',warnings,discountMetadata:{observed:!!discounted && discounted !== money(total),discountedTotalObserved:discounted,observedDiscount:Number(j.price?.discount),percentages:j.price?.percentages || {},note:discounted?'Live-Rabatt/Endpreis vom Anbieter beobachtet':'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'}};
 }

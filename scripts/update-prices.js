@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
 
-const limit = process.env.PRICE_LIMIT || '63';
+const limit = process.env.PRICE_LIMIT || '104';
 const jobs = [
   ['dfs:pvc:mapped', ['--', `--limit=${limit}`]],
   ['fb:pvc:mapped', ['--', `--limit=${limit}`]],

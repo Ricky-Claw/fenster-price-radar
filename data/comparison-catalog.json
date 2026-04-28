@@ -1,526 +1,1150 @@
 {
-  "generatedAt": "2026-04-27T15:42:42.764Z",
-  "scope": "V2 fixed-size profile radar: 1000x1500 and 1300x1500, 2fach/3fach, DK, white, standard PVC profiles",
+  "generatedAt": "2026-04-28T08:22:18.041Z",
+  "scope": "V3 4-size profile radar: 800x1000, 1000x1200, 1000x1500, 1300x1500; 2fach/3fach, DK, white, standard PVC profiles",
   "configs": [
     {
       "brand": "Drutex",
       "profile": "Iglo 5 Classic, 2fach",
       "material": "PVC",
-      "size": "1000x1500",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo 5 Classic, 2fach",
+      "material": "PVC",
+      "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo 5 Classic, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo 5 Classic, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo 5 Classic, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Drutex",
+      "profile": "Iglo Energy Classic, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo Energy Classic, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo Energy Classic, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo Energy Classic, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Drutex",
       "profile": "Iglo Energy Classic, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 4000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 4000, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 4000, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 4000, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 4000, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 5000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 5000, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 5000, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 5000, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 5000, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 7000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 7000, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 7000, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 7000, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 7000, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Aluplast",
+      "profile": "Ideal 8000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 8000, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 8000, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 8000, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Aluplast",
       "profile": "Ideal 8000, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S8000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S8000, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S8000, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S8000, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S8000, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Gealan",
+      "profile": "Gealan S9000, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S9000, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S9000, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S9000, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Gealan",
       "profile": "Gealan S9000, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 76MD, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 76MD, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 76MD, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 76MD, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 76MD, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 76MD, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 76MD, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 76MD, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 82, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 82, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 82, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Salamander",
+      "profile": "Salamander 82, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 82, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 82, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 82, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Salamander",
       "profile": "Salamander 82, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Veka",
+      "profile": "Veka 82 MD, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Veka",
       "profile": "Veka 82 MD, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Veka",
       "profile": "Veka 82 MD, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Veka",
       "profile": "Veka 82 MD, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Veka",
       "profile": "Veka 82 MD, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 70, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 70, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 70, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 70, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 70, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 2fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "800x1000",
+      "sizeRole": "kleinste vergleichbare Größe",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 2fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
+    },
+    {
+      "brand": "Kömmerling",
+      "profile": "Kömmerling 88, 3fach",
+      "material": "PVC",
+      "size": "1000x1200",
+      "sizeRole": "mittlere Größe 1",
+      "glazing": "3fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 88, 2fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 88, 3fach",
       "material": "PVC",
       "size": "1000x1500",
+      "sizeRole": "mittlere Größe 2",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 88, 2fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "2fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     },
     {
       "brand": "Kömmerling",
       "profile": "Kömmerling 88, 3fach",
       "material": "PVC",
       "size": "1300x1500",
+      "sizeRole": "große Vergleichsgröße",
       "glazing": "3fach",
       "color": "weiß",
       "opening": "Dreh-Kipp",
-      "sourceSheet": "generated-v2-profile-radar"
+      "sourceSheet": "generated-v3-4-size-profile-radar"
     }
   ]
 }
