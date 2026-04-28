@@ -68,7 +68,7 @@ Fenster putzen ohne Streifen: So werden Scheiben wirklich streifenfrei sauber
 </div>
 
 <div class="block-img col-md-12" data-type="Block" style="margin-bottom:32px;">
-  <img data-type="Images" src="/media/blog/dfs-blog-fenster-putzen-ohne-streifen-hero.webp" class="img-responsive" alt="Fenster putzen ohne Streifen mit Abzieher und Mikrofasertuch">
+  <img data-type="Images" src="/grafik/blog/dfs-blog-fenster-putzen-ohne-streifen-hero.webp" class="img-responsive" alt="Fenster putzen ohne Streifen mit Abzieher und Mikrofasertuch">
 </div>
 
 <div class="row" data-type="Block">
@@ -144,7 +144,7 @@ Fenster putzen ohne Streifen: So werden Scheiben wirklich streifenfrei sauber
 </div>
 
 <div class="block-img col-md-12" data-type="Block" style="margin-top:10px;margin-bottom:32px;">
-  <img data-type="Images" src="/media/blog/dfs-blog-fenster-putzen-ohne-streifen-vergleich.webp" class="img-responsive" alt="Vergleich von streifiger und streifenfrei geputzter Fensterscheibe">
+  <img data-type="Images" src="/grafik/blog/dfs-blog-fenster-putzen-ohne-streifen-vergleich.webp" class="img-responsive" alt="Vergleich von streifiger und streifenfrei geputzter Fensterscheibe">
 </div>
 
 <div class="row" data-type="Block">
@@ -196,8 +196,8 @@ Fenster putzen ohne Streifen: So werden Scheiben wirklich streifenfrei sauber
   <div class="col-md-12" data-type="Text">
     <h3 style="font-weight:bold;">Video-Anleitung: Fenster streifenfrei putzen</h3>
     <p>Das folgende Video zeigt ergänzend, wie Fenster praktisch gereinigt werden können. Es eignet sich gut als visuelle Unterstützung zur Schritt-für-Schritt-Anleitung.</p>
-    <div class="embed-responsive embed-responsive-16by9 m-t m-b" style="margin-bottom:30px;">
-      <iframe class="embed-responsive-item" src="https://www.youtube-nocookie.com/embed/_iqU2MkaO7Y" title="Fenster streifenfrei putzen Video-Anleitung" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    <div style="position:relative;width:100%;max-width:1100px;margin:0 auto 34px auto;padding-bottom:56.25%;height:0;overflow:hidden;background:#000;">
+      <iframe src="https://www.youtube-nocookie.com/embed/_iqU2MkaO7Y" title="Fenster streifenfrei putzen Video-Anleitung" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"></iframe>
     </div>
   </div>
 </div>
@@ -225,7 +225,7 @@ Fenster putzen ohne Streifen: So werden Scheiben wirklich streifenfrei sauber
 </div>
 
 <div class="block-img col-md-12" data-type="Block" style="margin-top:18px;margin-bottom:32px;">
-  <img data-type="Images" src="/media/blog/dfs-blog-fenster-putzen-ohne-streifen-detail-1.webp" class="img-responsive" alt="Fensterrahmen und Fensterecken gründlich reinigen für streifenfreie Scheiben">
+  <img data-type="Images" src="/grafik/blog/dfs-blog-fenster-putzen-ohne-streifen-detail-1.webp" class="img-responsive" alt="Fensterrahmen und Fensterecken gründlich reinigen für streifenfreie Scheiben">
 </div>
 
 <div class="row" data-type="Block">
