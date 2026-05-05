@@ -52,6 +52,7 @@ function providerCell(row, id){
 
 function App(){
   const [payload,setPayload]=useState(null);
+  const [tickerClosed,setTickerClosed]=useState(()=>localStorage.getItem('priceRadarTickerClosed') === '2026-05-05');
   const [q,setQ]=useState('');
   const [brand,setBrand]=useState('');
   const [profile,setProfile]=useState('');
@@ -89,9 +90,12 @@ function App(){
     const avg=exact.length ? exact.reduce((s,r)=>s+r.deltaPct,0)/exact.length : 0;
     const avgClass = avg <= 0 ? 'good' : avg <= 10 ? 'mid' : 'bad';
     const validDfs=data.filter(r=>r.providers.dfs?.valid).length;
+    const providerValid = Object.fromEntries(providers.map(([id]) => [id, data.filter(r=>r.providers[id]?.valid).length]));
     const changes=data.flatMap(r=>Object.values(r.weeklyChange||{})).filter(Boolean);
     const changed=changes.filter(c=>c.delta!==0).length;
-    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, changed};
+    const up=changes.filter(c=>c.delta>0).length;
+    const down=changes.filter(c=>c.delta<0).length;
+    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, providerValid, changed, up, down};
   },[data]);
 
   const marginGrossList = Number(margin.gross || 0);
@@ -106,6 +110,14 @@ function App(){
   const maxDiscount = marginGrossList > 0 ? Math.max(0, (1 - minGross / marginGrossList) * 100) : 0;
   const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
+  const tickerText = stats.changed
+    ? `${stats.changed} Preisänderungen zur Vorwoche: ${stats.up} teurer, ${stats.down} günstiger. DFS-Abstand aktuell Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`
+    : `Seit letzter Woche: keine Preisänderungen im Radar. Abdeckung stabil: DFS ${stats.providerValid.dfs}/${stats.configs}, Fensterblick ${stats.providerValid.fensterblick}/${stats.configs}, Fensterversand ${stats.providerValid.fensterversand}/${stats.configs}. DFS-Abstand Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`;
+  function closeTicker(){
+    localStorage.setItem('priceRadarTickerClosed', '2026-05-05');
+    setTickerClosed(true);
+  }
+
   if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
   return <>
     <header className="topbar">
@@ -115,6 +127,13 @@ function App(){
     </header>
 
     <main>
+      {!tickerClosed && <section className="weeklyTicker" role="status" aria-live="polite">
+        <div>
+          <strong>Wochen-Ticker</strong>
+          <span>{tickerText}</span>
+        </div>
+        <button type="button" onClick={closeTicker} aria-label="Wochen-Ticker ausblenden">×</button>
+      </section>}
       <section className="hero">
         <div>
           <p className="eyebrow">Deutscher-Fenstershop · internes Tool</p>
