@@ -57,3 +57,18 @@ Test:
 ```bash
 npm run test:chatbot
 ```
+
+## Ruhiges Heimspiel E-Book
+
+Das WM-/Fußball-Freebie liegt als statisches HTML/PDF unter:
+
+- Vorschau/Quelle: `public/ebooks/ruhiges-heimspiel/index.html`
+- PDF: `public/ebooks/ruhiges-heimspiel/ruhiges-heimspiel-ebook.pdf`
+- Logo: `public/ebooks/ruhiges-heimspiel/assets/fenstershop-logo.png`
+
+Lokale Checks:
+
+```bash
+npm run ebook:check
+npm run ebook:pdf
+```

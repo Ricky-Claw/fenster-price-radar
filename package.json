@@ -13,7 +13,9 @@
     "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
     "fv:pvc:mapped": "node src/providers/fensterversand/price-mapped-pvc.js",
     "prices:update": "node scripts/update-prices.js && npm run verify:prices",
-    "test:chatbot": "node tests/chatbot-smoke.mjs && node --check public/chatbot-widget.js"
+    "test:chatbot": "node tests/chatbot-smoke.mjs && node --check public/chatbot-widget.js",
+    "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js",
+    "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
