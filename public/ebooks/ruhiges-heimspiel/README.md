@@ -8,7 +8,7 @@
 
 - `index.html` – Inhalt und Seitenstruktur
 - `styles.css` – A4-/Print-Design
-- `assets/fenstershop-logo.png` – echtes Logo von `deutscher-fenstershop.de/grafik/logo/fenster-online-kaufen-logo.png`
+- `assets/fenstershop-logo.png` – freigestelltes Fenstershop-Logo aus `src/Logo-Freigestellt.png`
 - `export-pdf.js` – PDF-Export per lokal installiertem Chromium/Chrome
 - `ruhiges-heimspiel-ebook.pdf` – erzeugtes PDF
 
