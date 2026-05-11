@@ -12,11 +12,24 @@ const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'curren
 const cls = (...a) => a.filter(Boolean).join(' ');
 const isUnavailable = p => p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
 const isIssue = p => p && !isUnavailable(p) && (p.warnings?.length || !p.valid);
-const changeLabel = c => {
-  const d = c?.weeklyChange?.dfs?.delta;
+const shortProvider = id => id === 'dfs' ? 'DFS' : id === 'fensterblick' ? 'FB' : id === 'fensterversand' ? 'FV' : id;
+const changeValue = change => typeof change?.delta === 'number' ? change.delta : change?.listDelta;
+const hasPriceChange = change => typeof changeValue(change) === 'number' && changeValue(change) !== 0;
+const singleChangeLabel = (change, providerId) => {
+  const d = changeValue(change);
   if (typeof d !== 'number') return <span className="muted">neu/kein Verlauf</span>;
   if (d === 0) return <span className="trend flat">unverändert</span>;
-  return <span className={cls('trend', d > 0 ? 'up' : 'down')}>{d > 0 ? '+' : ''}{eur(d)} · {d > 0 ? '+' : ''}{c.weeklyChange.dfs.deltaPct}%</span>;
+  const pct = typeof change.deltaPct === 'number' ? change.deltaPct : change.listDeltaPct;
+  return <span className={cls('trend', d > 0 ? 'up' : 'down')}>{providerId ? `${shortProvider(providerId)} ` : ''}{d > 0 ? '+' : ''}{eur(d)}{typeof pct === 'number' ? ` · ${d > 0 ? '+' : ''}${pct}%` : ''}</span>;
+};
+const rowChangeLabel = row => {
+  const changes = providers
+    .map(([id]) => [id, row.weeklyChange?.[id]])
+    .filter(([, change]) => change);
+  const changed = changes.filter(([, change]) => hasPriceChange(change));
+  if (!changes.length) return <span className="muted">neu/kein Verlauf</span>;
+  if (!changed.length) return <span className="trend flat">unverändert</span>;
+  return <span className="changeStack">{changed.slice(0,3).map(([id, change]) => <React.Fragment key={id}>{singleChangeLabel(change, id)}</React.Fragment>)}</span>;
 };
 const quoteProfiles = [
   ['drutex-iglo-5-classic','Drutex · Iglo 5 Classic'],
@@ -52,7 +65,7 @@ function providerCell(row, id){
 
 function App(){
   const [payload,setPayload]=useState(null);
-  const [tickerClosed,setTickerClosed]=useState(()=>localStorage.getItem('priceRadarTickerClosed') === '2026-05-05');
+  const [tickerClosedStamp,setTickerClosedStamp]=useState(()=>localStorage.getItem('priceRadarTickerClosed') || '');
   const [q,setQ]=useState('');
   const [brand,setBrand]=useState('');
   const [profile,setProfile]=useState('');
@@ -92,9 +105,9 @@ function App(){
     const validDfs=data.filter(r=>r.providers.dfs?.valid).length;
     const providerValid = Object.fromEntries(providers.map(([id]) => [id, data.filter(r=>r.providers[id]?.valid).length]));
     const changes=data.flatMap(r=>Object.values(r.weeklyChange||{})).filter(Boolean);
-    const changed=changes.filter(c=>c.delta!==0).length;
-    const up=changes.filter(c=>c.delta>0).length;
-    const down=changes.filter(c=>c.delta<0).length;
+    const changed=changes.filter(hasPriceChange).length;
+    const up=changes.filter(c=>changeValue(c)>0).length;
+    const down=changes.filter(c=>changeValue(c)<0).length;
     return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, providerValid, changed, up, down};
   },[data]);
 
@@ -111,11 +124,14 @@ function App(){
   const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
   const tickerText = stats.changed
-    ? `${stats.changed} Preisänderungen zur Vorwoche: ${stats.up} teurer, ${stats.down} günstiger. DFS-Abstand aktuell Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`
+    ? `${stats.changed} Endpreis-Änderungen zur Vorwoche: ${stats.up} teurer, ${stats.down} günstiger. DFS-Abstand aktuell Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`
     : `Seit letzter Woche: keine Preisänderungen im Radar. Abdeckung stabil: DFS ${stats.providerValid.dfs}/${stats.configs}, Fensterblick ${stats.providerValid.fensterblick}/${stats.configs}, Fensterversand ${stats.providerValid.fensterversand}/${stats.configs}. DFS-Abstand Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`;
+  const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
+  const tickerClosed = tickerClosedStamp === tickerStamp;
+  const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));
   function closeTicker(){
-    localStorage.setItem('priceRadarTickerClosed', '2026-05-05');
-    setTickerClosed(true);
+    localStorage.setItem('priceRadarTickerClosed', tickerStamp);
+    setTickerClosedStamp(tickerStamp);
   }
 
   if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
@@ -234,7 +250,7 @@ function App(){
             <td><b>{row.brand} · {row.profile}</b><div className="configMeta"><span className="sizeBadge">{row.size}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
-            <td>{changeLabel(row)}</td>
+            <td>{rowChangeLabel(row)}</td>
             <td>{Object.values(row.providers).some(isIssue)?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
           </tr>)}
         </tbody></table></div>
@@ -242,12 +258,12 @@ function App(){
 
       <details className="panel trendPanel" id="entwicklung">
         <summary className="panelHead trendSummary">
-          <div><h2>Preisentwicklung</h2><p>Vergleich aktueller DFS-Listenpreise zur vorherigen gespeicherten Aktualisierung.</p></div>
+          <div><h2>Preisentwicklung</h2><p>Vergleich aktueller Kunden-Endpreise je Anbieter zur Vorwoche.</p></div>
           <span className="historyBadge">{stats.changed} Änderungen <span className="chevron">⌄</span></span>
         </summary>
         <div className="trendList">
-          {data.filter(r=>r.weeklyChange?.dfs).slice(0,8).map(r=><div className="trendRow" key={r.key}><b>{r.brand} · {r.profile}</b><span>{r.size} · {r.glazing}</span>{changeLabel(r)}</div>)}
-          {!data.some(r=>r.weeklyChange?.dfs) && <p className="emptyTrend">Noch kein Vorwochen-Snapshot vorhanden. Ab der nächsten wöchentlichen Aktualisierung erscheinen hier Preisänderungen.</p>}
+          {trendChanges.slice(0,12).map(({row,id,name,change})=><div className="trendRow" key={`${row.key}-${id}`}><b>{row.brand} · {row.profile}</b><span>{name} · {row.size} · {row.glazing}</span>{singleChangeLabel(change)}</div>)}
+          {!trendChanges.length && <p className="emptyTrend">Keine Preisänderungen zur Vorwoche gefunden oder noch kein Vorwochen-Snapshot vorhanden.</p>}
         </div>
       </details>
     </main>

@@ -7,7 +7,44 @@ const historyOut = path.join(out, 'history');
 fs.mkdirSync(out, { recursive: true });
 fs.mkdirSync(historyOut, { recursive: true });
 const previousPath = path.join(out, 'price-radar.json');
-const previousPayload = fs.existsSync(previousPath) ? JSON.parse(fs.readFileSync(previousPath, 'utf8')) : null;
+const generatedAt = new Date().toISOString();
+const currentStamp = generatedAt.slice(0, 10);
+
+function readJson(file) {
+  return JSON.parse(fs.readFileSync(file, 'utf8'));
+}
+
+function previousSnapshot() {
+  const historyCandidates = fs.existsSync(historyOut)
+    ? fs.readdirSync(historyOut)
+      .filter(n => /^price-radar-\d{4}-\d{2}-\d{2}\.json$/.test(n) && !n.includes(currentStamp))
+      .map(n => {
+        const file = path.join(historyOut, n);
+        try {
+          const payload = readJson(file);
+          return { file, label:n, payload, generatedAt:payload.generatedAt || '' };
+        } catch { return null; }
+      })
+      .filter(Boolean)
+      .filter(x => x.generatedAt && x.generatedAt < generatedAt && (x.payload.configs || []).length > 0)
+      .sort((a, b) => a.generatedAt.localeCompare(b.generatedAt))
+    : [];
+  const history = historyCandidates.at(-1);
+  if (history) return history;
+
+  if (fs.existsSync(previousPath)) {
+    try {
+      const payload = readJson(previousPath);
+      if (payload.generatedAt && !payload.generatedAt.startsWith(currentStamp) && (payload.configs || []).length > 0) {
+        return { file:previousPath, label:'price-radar.json', payload, generatedAt:payload.generatedAt };
+      }
+    } catch {}
+  }
+  return null;
+}
+
+const previous = previousSnapshot();
+const previousPayload = previous?.payload || null;
 const previousByKey = new Map((previousPayload?.configs || []).map(c => [c.key, c]));
 
 function latest(prefix) {
@@ -127,21 +164,38 @@ const comparableConfigs = configs.filter(c => {
 for (const c of comparableConfigs) {
   const prev = previousByKey.get(c.key);
   c.previousGeneratedAt = previousPayload?.generatedAt || null;
+  c.previousSnapshot = previous ? previous.label : null;
   c.weeklyChange = {};
   for (const provider of ['dfs','fensterblick','fensterversand']) {
     const now = c.providers[provider];
     const old = prev?.providers?.[provider];
-    if (now?.valid && typeof now.listTotal === 'number' && old?.valid && typeof old.listTotal === 'number') {
-      const delta = +(now.listTotal - old.listTotal).toFixed(2);
-      c.weeklyChange[provider] = { previous: old.listTotal, current: now.listTotal, delta, deltaPct: old.listTotal ? +((delta / old.listTotal) * 100).toFixed(1) : null };
+    if (now?.valid && old?.valid) {
+      const currentCustomer = typeof now.customerTotal === 'number' && Number.isFinite(now.customerTotal) ? now.customerTotal : now.listTotal;
+      const previousCustomer = typeof old.customerTotal === 'number' && Number.isFinite(old.customerTotal) ? old.customerTotal : old.listTotal;
+      const hasCustomer = typeof currentCustomer === 'number' && typeof previousCustomer === 'number';
+      const hasList = typeof now.listTotal === 'number' && typeof old.listTotal === 'number';
+      if (!hasCustomer && !hasList) continue;
+      const delta = hasCustomer ? +(currentCustomer - previousCustomer).toFixed(2) : null;
+      const listDelta = hasList ? +(now.listTotal - old.listTotal).toFixed(2) : null;
+      c.weeklyChange[provider] = {
+        basis: 'customerTotal',
+        previous: hasCustomer ? previousCustomer : null,
+        current: hasCustomer ? currentCustomer : null,
+        delta,
+        deltaPct: hasCustomer && previousCustomer ? +((delta / previousCustomer) * 100).toFixed(1) : null,
+        previousList: hasList ? old.listTotal : null,
+        currentList: hasList ? now.listTotal : null,
+        listDelta,
+        listDeltaPct: hasList && old.listTotal ? +((listDelta / old.listTotal) * 100).toFixed(1) : null
+      };
     }
   }
 }
-const generatedAt = new Date().toISOString();
 const payload = {
   generatedAt,
+  comparisonBaseline: previous ? { generatedAt: previous.generatedAt, snapshot: previous.label } : null,
   sources,
-  summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length },
+  summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length, weeklyBaselineGeneratedAt: previousPayload?.generatedAt || null },
   configs: comparableConfigs
 };
 fs.writeFileSync(path.join(out, 'price-radar.json'), JSON.stringify(payload, null, 2));
