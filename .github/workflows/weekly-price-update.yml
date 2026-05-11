@@ -2,9 +2,6 @@ name: Weekly price update
 
 on:
   workflow_dispatch:
-  schedule:
-    # Mondays 04:00 UTC = 06:00 Europe/Berlin during summer time.
-    - cron: '0 4 * * 1'
 
 permissions:
   contents: write
