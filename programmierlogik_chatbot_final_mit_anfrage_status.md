@@ -12,7 +12,7 @@ E-Mail-Adressen:
 - Technik: technik@deutscher-fenstershop.de
 - Bestellstatus / Änderungswünsche / konkrete Storno-Anfragen: bestellstatus@deutscher-fenstershop.de
 - Zahlung / Zahlungseingang / Zahlungsstatus: zahlung@deutscher-fenstershop.de
-- Bearbeitungsstand konkreter Anfragen / Anfrage-ID: anfrage@deutscher-medizinshop.de
+- Bearbeitungsstand konkreter Anfragen / Anfrage-ID: anfrage@deutscher-fenstershop.de
 
 Formulare / Links:
 - Konfigurator: https://deutscher-fenstershop.de/konfigurator/fenster
@@ -859,14 +859,14 @@ Antwortlogik:
 - Rückmeldung erfolgt in der Regel innerhalb von 48 Stunden.
 
 E-Mail-Adresse:
-anfrage@deutscher-medizinshop.de
+anfrage@deutscher-fenstershop.de
 
 Standardantwort:
 Ich habe leider keinen Zugriff auf unser Ticketsystem und kann den konkreten Bearbeitungsstand Ihrer Anfrage nicht direkt prüfen.
 
 Bitte senden Sie Ihre Frage zum Bearbeitungsstand mit Ihrer Anfrage-ID per E-Mail an:
 
-anfrage@deutscher-medizinshop.de
+anfrage@deutscher-fenstershop.de
 
 Wir melden uns in der Regel innerhalb von 48 Stunden bei Ihnen zurück.
 
@@ -1026,7 +1026,7 @@ Wenn Kunde nach Zahlung fragt:
 Wenn Kunde nach Bearbeitungsstand einer konkreten Anfrage / Anfrage-ID fragt:
 - Keine Systemauskunft.
 - Darauf hinweisen, dass der Chatbot keinen Zugriff auf das Ticketsystem hat.
-- Anfrage-ID und Frage zum Bearbeitungsstand per E-Mail an anfrage@deutscher-medizinshop.de senden.
+- Anfrage-ID und Frage zum Bearbeitungsstand per E-Mail an anfrage@deutscher-fenstershop.de senden.
 - Rückmeldung in der Regel innerhalb von 48 Stunden.
 
 Wenn Kunde nach Produktionsstatus / Bearbeitungsstand fragt:
