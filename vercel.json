@@ -6,9 +6,15 @@
   "functions": {
     "api/quote.js": {
       "includeFiles": "data/**"
+    },
+    "api/chatbot.js": {
+      "includeFiles": "programmierlogik_chatbot_final_mit_anfrage_status.md"
     }
   },
   "rewrites": [
-    { "source": "/((?!data/|assets/|api/|reports/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!data/|assets/|api/|reports/).*)",
+      "destination": "/index.html"
+    }
   ]
 }

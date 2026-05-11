@@ -12,7 +12,8 @@
     "dfs:pvc:mapped": "node src/providers/dfs/price-mapped-pvc.js",
     "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
     "fv:pvc:mapped": "node src/providers/fensterversand/price-mapped-pvc.js",
-    "prices:update": "node scripts/update-prices.js && npm run verify:prices"
+    "prices:update": "node scripts/update-prices.js && npm run verify:prices",
+    "test:chatbot": "node tests/chatbot-smoke.mjs && node --check public/chatbot-widget.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

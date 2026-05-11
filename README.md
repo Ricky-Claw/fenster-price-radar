@@ -30,3 +30,30 @@ npm run build
 - weiß/weiß
 - Einzelfenster, Fest / Dreh-Kipp normalisiert
 - 2-flg, Stulp, Oberlicht/Unterlicht und Dekorfarben später
+
+## Fenstershop Chatbot MVP
+
+Erster MVP-Slice für den Deutschen Fenstershop:
+
+- API: `POST /api/chatbot`
+- Widget: `/chatbot-widget.js`
+- Logik: `src/chatbot/fenstershopChatbot.js`
+- Wissensbasis/Regeln: `programmierlogik_chatbot_final_mit_anfrage_status.md`
+
+Snippet-Beispiel:
+
+```html
+<script
+  src="https://YOUR_DEPLOYMENT/chatbot-widget.js"
+  data-title="Fenstershop Hilfe"
+  data-api-url="https://YOUR_DEPLOYMENT"
+></script>
+```
+
+MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
+
+Test:
+
+```bash
+npm run test:chatbot
+```
