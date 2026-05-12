@@ -107,7 +107,37 @@ function ChatbotDemo({ floating=false }){
   </section>;
 }
 
+function LoginPage(){
+  const [password,setPassword]=useState('');
+  const [error,setError]=useState('');
+  const [loading,setLoading]=useState(false);
+  async function submit(e){
+    e.preventDefault();
+    setLoading(true); setError('');
+    try{
+      const r=await fetch('/api/login',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({password})});
+      if(!r.ok){ const body=await r.json().catch(()=>({})); throw new Error(body.error==='login_not_configured'?'Login ist noch nicht konfiguriert.':'Passwort stimmt nicht.'); }
+      const next=new URLSearchParams(window.location.search).get('next')||'/';
+      window.location.href=next;
+    }catch(err){setError(err.message)}finally{setLoading(false)}
+  }
+  return <main className="loginShell">
+    <section className="loginCard">
+      <div className="loginMark">FR</div>
+      <p className="eyebrow">Interner Zugang</p>
+      <h1>Fensterradar Login</h1>
+      <p className="lead">Bitte Passwort eingeben, um das interne Preisradar und Atlas zu öffnen.</p>
+      <form onSubmit={submit} className="loginForm">
+        <label><span>Passwort</span><input type="password" value={password} onChange={e=>setPassword(e.target.value)} autoFocus autoComplete="current-password" /></label>
+        {error?<small className="loginError">{error}</small>:null}
+        <button type="submit" disabled={loading||!password}>{loading?'Prüfe…':'Einloggen'}</button>
+      </form>
+    </section>
+  </main>;
+}
+
 function App(){
+  if (window.location.pathname === '/login') return <LoginPage />;
   const [payload,setPayload]=useState(null);
   const [tickerClosedStamp,setTickerClosedStamp]=useState(()=>localStorage.getItem('priceRadarTickerClosed') || '');
   const [q,setQ]=useState('');
