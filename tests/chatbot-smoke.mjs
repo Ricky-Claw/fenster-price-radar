@@ -46,7 +46,8 @@ assert.ok(answer.links.some((link) => /fensterbegriffe|profilschnitte/.test(link
 
 const llmAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
 assert.equal(llmAnswer.llm.used, true);
-assert.equal(llmAnswer.answer, 'Kurz poliert aus Atlas.');
+assert.match(llmAnswer.answer, /Kurz poliert aus Atlas\./);
+assert.match(llmAnswer.answer, /https:\/\/deutscher-fenstershop\.de\/fensterbegriffe/);
 
 const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
 assert.equal(llmGuardrail.intent, 'order_status');

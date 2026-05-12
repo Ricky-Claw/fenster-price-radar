@@ -20,7 +20,9 @@ WICHTIGE REGELN:
 - Erfinde keine Liefertermine, Bestellstatus, Zahlungsstatus, Ticketstatus oder technischen Einzelwerte.
 - Frage nicht nach Bestellnummer, Adresse, Zahlungsdaten, Fotos oder vollständigem Namen.
 - Wenn der DRAFT einen Kontakt/Link nennt, muss dieser erhalten bleiben.
-- Maximal 900 Zeichen.
+- Maximal 360 Zeichen. 2-3 kurze Sätze.
+- Verwende Sie/Ihnen, niemals du/dir.
+- Wenn ein Link/Kontakt im Draft steht, nenne ihn exakt.
 - Gib nur valides JSON zurück: {"answer":"..."}
 
 Nutzerfrage: ${message}
@@ -37,7 +39,7 @@ Wissensquellen: ${JSON.stringify(knowledge.map((chunk) => ({ title: chunk.title,
       method: 'POST',
       headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
       body: JSON.stringify({
-        model: env.FENSTERSHOP_LLM_MODEL || env.LISA_LLM_MODEL || 'kimi-k2.6',
+        model: env.FENSTERSHOP_LLM_MODEL || env.LISA_LLM_MODEL || 'moonshot-v1-8k',
         temperature: 1,
         max_tokens: 1200,
         response_format: { type: 'json_object' },
@@ -50,8 +52,8 @@ Wissensquellen: ${JSON.stringify(knowledge.map((chunk) => ({ title: chunk.title,
     const parsed = extractJson(data.choices?.[0]?.message?.content || '{}');
     let answer = String(parsed.answer || '').trim();
     if (!answer) answer = String(data.choices?.[0]?.message?.content || '').trim();
-    if (!answer || answer.length > 1400) return null;
-    return { answer, model: env.FENSTERSHOP_LLM_MODEL || env.LISA_LLM_MODEL || 'kimi-k2.6' };
+    if (!answer || answer.length > 700) return null;
+    return { answer, model: env.FENSTERSHOP_LLM_MODEL || env.LISA_LLM_MODEL || 'moonshot-v1-8k' };
   } finally {
     clearTimeout(timer);
   }

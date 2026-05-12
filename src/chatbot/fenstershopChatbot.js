@@ -34,7 +34,7 @@ function lower(value = '') {
 }
 
 function terms(value = '') {
-  return lower(value).split(/[^a-z0-9]+/).filter((term) => term.length > 2 && !STOPWORDS.has(term));
+  return lower(value).split(/[^a-z0-9]+/).filter((term) => ((term.length > 2 || ['ug','uw'].includes(term)) && !STOPWORDS.has(term)));
 }
 
 function hasAny(text, patterns) {
@@ -97,6 +97,7 @@ function sourceLinksForQuery(normalized) {
   if (/liefer|versand|spedition|avis/.test(normalized)) links.push({ label: 'Versand und Lieferzeiten', url: LINKS.delivery });
   if (/reklamation|schaden|beschadigt|transportschaden/.test(normalized)) links.push({ label: 'Reklamationsformular', url: LINKS.complaint });
   if (/konfigurator|konfigurieren|fenster konfigurieren/.test(normalized)) links.push({ label: 'Fenster-Konfigurator', url: LINKS.configurator });
+  if (/schallschutz/.test(normalized)) links.push({ label: 'Schallschutzfenster', url: 'https://deutscher-fenstershop.de/schallschutzfenster' });
   if (/begriff|uw|ug|u-wert|schallschutz|rc2|profil|technik|glas/.test(normalized)) links.push({ label: 'Fensterbegriffe', url: LINKS.glossary });
   if (/profil|schnitt|zeichnung|pvc|detail/.test(normalized)) links.push({ label: 'PVC-Profilschnitte', url: LINKS.profiles });
   if (/video|erklar/.test(normalized)) links.push({ label: 'Erklärvideos', url: LINKS.videos });
@@ -126,6 +127,27 @@ function result({ intent, answer, links = [], contacts = [], confidence = 0.95, 
     },
     llm,
   };
+}
+
+
+function cleanSnippet(text = '', query = '') {
+  const qTerms = terms(query);
+  const cleaned = String(text)
+    .replace(/(Deutscher-FensterShop|Anfrage senden|Whatsapp|Live Chat|Warenkorb|Newsletter abonnieren|Fensterkonfigurator|Türenkonfigurator)/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const sentences = cleaned.split(/(?<=[.!?])\s+/).filter((s) => s.length > 35 && s.length < 260);
+  const ranked = sentences
+    .map((sentence) => ({ sentence, score: qTerms.reduce((sum, term) => sum + (lower(sentence).includes(term) ? 1 : 0), 0) }))
+    .sort((a, b) => b.score - a.score);
+  const best = (ranked.find((row) => row.score > 0)?.sentence || sentences[0] || cleaned.slice(0, 220)).trim();
+  return `${best}${best.length > 260 ? '…' : ''}`.slice(0, 320);
+}
+
+function conciseKnowledgeAnswer(query, chunks, links) {
+  const snippet = cleanSnippet(chunks[0]?.text || '', query);
+  const link = links?.[0];
+  return `${snippet}\n\nMehr dazu: ${link?.url || chunks[0]?.url || LINKS.knowledge}`;
 }
 
 export function answerFenstershopChatbot({ message = '' } = {}) {
@@ -202,7 +224,7 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
   if (hasAny(n, [/lieferzeit/, /versandzeit/, /wie lange.*liefer/, /wann.*geliefert/, /spedition/, /tracking|sendungsverfolgung/])) {
     return result({
       intent: 'delivery_general_time', action: 'answer_with_link', sensitive,
-      answer: 'Die Lieferzeit hängt vom Produkt, Profil, Hersteller und der Ausstattung ab. Bei vielen Produkten wird die voraussichtliche Lieferzeit direkt am Produkt oder im Warenkorb angezeigt. Allgemeine Angaben sind unverbindliche Orientierungswerte.',
+      answer: `Die Lieferzeit hängt von Produkt, Profil, Hersteller und Ausstattung ab. Die voraussichtliche Lieferzeit sehen Sie am Produkt oder im Warenkorb. Mehr dazu: ${LINKS.delivery}`,
       links: [{ label: 'Versand und Lieferzeiten', url: LINKS.delivery }],
       sources: [{ title: 'Regelwerk: allgemeine Lieferzeit', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
     });
@@ -230,11 +252,10 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
   const chunks = retrieveFenstershopKnowledge(text, { limit: 2 });
   const links = sourceLinksForQuery(n);
   if (chunks.length) {
-    const excerpt = chunks.slice(0, 2).map((chunk) => chunk.text.slice(0, 420).replace(/\s+$/g, '')).join('\n\n');
     return result({
       intent: 'knowledge_rag', action: 'answer_from_knowledge', sensitive,
-      confidence: 0.72,
-      answer: `Dazu habe ich folgende interne Wissensquelle gefunden:\n\n${excerpt}…\n\nBitte beachten Sie: Bei konkreten Bestellungen, Zahlungen oder verbindlichen technischen Einzelwerten verweise ich an den passenden Kontaktweg.`,
+      confidence: 0.82,
+      answer: conciseKnowledgeAnswer(text, chunks, links),
       links,
       sources: chunks.map((chunk) => ({ title: chunk.title, url: chunk.url || 'programmierlogik_chatbot_final_mit_anfrage_status.md', type: chunk.sourceType || 'knowledge' })),
     });
@@ -250,10 +271,21 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
 }
 
 
-const LLM_SAFE_INTENTS = new Set(['knowledge_rag', 'fallback', 'delivery_general_time', 'configurator_help', 'complaint', 'empty']);
+const LLM_SAFE_INTENTS = new Set(['knowledge_rag', 'fallback']);
 
 function mustKeepGuardrailDraft(draft) {
   return !LLM_SAFE_INTENTS.has(draft.intent);
+}
+
+
+function withRequiredRefs(answer, draft) {
+  let out = String(answer || '').trim();
+  const primaryLink = draft.links?.[0]?.url;
+  if (primaryLink && !out.includes(primaryLink)) out += `\n\nMehr dazu: ${primaryLink}`;
+  for (const contact of draft.contacts || []) {
+    if (contact.value && !out.includes(contact.value)) out += `\n${contact.label}: ${contact.value}`;
+  }
+  return out;
 }
 
 function answerStillSafe(polished, draft) {
@@ -271,7 +303,7 @@ export async function answerFenstershopChatbotWithLlm({ message = '', env = proc
   try {
     const polished = await polishFenstershopAnswer({ message, draft, knowledge, env });
     if (!answerStillSafe(polished, draft)) return { ...draft, llm: { used: false, reason: 'safety_fallback' } };
-    return { ...draft, answer: polished.answer, llm: { used: true, provider: 'moonshot', model: polished.model } };
+    return { ...draft, answer: withRequiredRefs(polished.answer, draft), llm: { used: true, provider: 'moonshot', model: polished.model } };
   } catch (error) {
     return { ...draft, llm: { used: false, reason: error.message || 'llm_failed' } };
   }
