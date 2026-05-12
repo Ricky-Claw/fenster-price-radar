@@ -1,9 +1,19 @@
 const COOKIE = 'fenster_radar_session';
 const PUBLIC_FILE = /\.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|json|txt|map|woff2?)$/i;
 
+function cookieValue(header = '', name) {
+  return String(header).split(';').map((part) => part.trim()).find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1) || '';
+}
 function bytes(value) { return new TextEncoder().encode(value); }
 function b64url(buffer) {
-  return btoa(String.fromCharCode(...new Uint8Array(buffer))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/g, '');
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+  let out = '';
+  const data = new Uint8Array(buffer);
+  for (let i = 0; i < data.length; i += 3) {
+    const n = (data[i] << 16) | ((data[i + 1] || 0) << 8) | (data[i + 2] || 0);
+    out += chars[(n >>> 18) & 63] + chars[(n >>> 12) & 63] + (i + 1 < data.length ? chars[(n >>> 6) & 63] : '') + (i + 2 < data.length ? chars[n & 63] : '');
+  }
+  return out;
 }
 async function sign(value, secret) {
   const key = await crypto.subtle.importKey('raw', bytes(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
@@ -25,8 +35,8 @@ export default async function middleware(request) {
   if (path === '/login' || path.startsWith('/api/login') || path.startsWith('/api/logout') || PUBLIC_FILE.test(path)) return;
   if (path.startsWith('/api/')) return;
   const secret = process.env.FENSTER_RADAR_AUTH_SECRET || process.env.FENSTER_RADAR_PASSWORD || '';
-  const ok = await validSession(request.cookies.get(COOKIE)?.value, secret);
-  if (ok) return;
+  const session = cookieValue(request.headers.get('cookie') || '', COOKIE);
+  if (await validSession(session, secret)) return;
   url.pathname = '/login';
   url.searchParams.set('next', path);
   return Response.redirect(url, 302);
