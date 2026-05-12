@@ -145,6 +145,9 @@ function cleanSnippet(text = '', query = '') {
 }
 
 function conciseKnowledgeAnswer(query, chunks, links) {
+  const nq = lower(query);
+  if (/\bug\b|ug[-\s]?wert/.test(nq)) return `Der Ug-Wert beschreibt die Wärmedämmung der Verglasung. Für das gesamte Fenster ist der Uw-Wert entscheidend, weil er Glas, Rahmen und Randverbund berücksichtigt.\n\nMehr dazu: ${LINKS.glossary}`;
+  if (/schallschutz/.test(nq)) return `Schallschutzfenster reduzieren Außenlärm und sorgen für mehr Ruhe im Wohnraum. Wichtig sind passende Schallschutzverglasung, Rahmen und fachgerechter Einbau.\n\nMehr dazu: https://deutscher-fenstershop.de/schallschutzfenster`;
   const snippet = cleanSnippet(chunks[0]?.text || '', query);
   const link = links?.[0];
   return `${snippet}\n\nMehr dazu: ${link?.url || chunks[0]?.url || LINKS.knowledge}`;
@@ -292,7 +295,7 @@ function answerStillSafe(polished, draft) {
   const answer = String(polished?.answer || '');
   if (!answer) return false;
   for (const contact of draft.contacts || []) if (contact.value && !answer.includes(contact.value)) return false;
-  if (/in produktion|morgen versendet|zahlung ist eingegangen|lieferung erfolgt am|ticket ist/i.test(answer)) return false;
+  if (/in produktion|morgen versendet|zahlung ist eingegangen|lieferung erfolgt am|ticket ist|\bincludes\b|#seite|lärmgesetzliche/i.test(answer)) return false;
   return true;
 }
 
