@@ -64,7 +64,7 @@ function providerCell(row, id){
 }
 
 function ChatbotDemo({ floating=false }){
-  const [messages,setMessages]=useState([{role:'bot', text:'Hallo! Ich bin der Fenstershop-Hilfechat. Frag mich z. B. nach Lieferung, Reklamation, Konfigurator oder technischen Begriffen.', intent:'welcome'}]);
+  const [messages,setMessages]=useState([{role:'bot', text:'Hallo! Ich bin Atlas, der digitale Fenstershop-Assistent. Frag mich z. B. nach Lieferung, Reklamation, Konfigurator oder technischen Begriffen.', intent:'welcome'}]);
   const [input,setInput]=useState('Der Fahrer steht heute vor Ort, was tun?');
   const [loading,setLoading]=useState(false);
   async function sendMessage(example){
@@ -83,11 +83,11 @@ function ChatbotDemo({ floating=false }){
   }
   const examples=['Status meiner Bestellung 123456?','Ich habe einen Transportschaden','Was bedeutet Ug-Wert?'];
   const [open,setOpen]=useState(!floating);
-  if(floating && !open) return <button className="chatbotLauncher" type="button" onClick={()=>setOpen(true)}><MessageCircle size={22}/><span>Fenstershop Bot testen</span></button>;
+  if(floating && !open) return <button className="chatbotLauncher" type="button" onClick={()=>setOpen(true)}><MessageCircle size={22}/><span>Atlas fragen</span></button>;
   return <section className={cls('panel chatbotPanel', floating && 'floating')} id={floating ? 'chatbot-window' : 'chatbot'}>
     <div className="panelHead">
-      <div><h2><MessageCircle size={24}/> Fenstershop Chatbot testen</h2><p>Rule-first MVP: eskaliert sensible Fälle korrekt und beantwortet Wissensfragen mit Quellenlinks.</p></div>
-      <div className="botHeadActions"><span className="botBadge">Live RAG + Kimi</span>{floating?<button className="botClose" type="button" onClick={()=>setOpen(false)} aria-label="Chatbot schließen">×</button>:null}</div>
+      <div><h2><MessageCircle size={24}/> Atlas testen</h2><p>Atlas beantwortet Fenstershop-Fragen mit DFS-Wissensquellen und sicheren Eskalationsregeln.</p></div>
+      <div className="botHeadActions"><span className="botBadge">DFS Wissen live</span>{floating?<button className="botClose" type="button" onClick={()=>setOpen(false)} aria-label="Chatbot schließen">×</button>:null}</div>
     </div>
     <div className="chatbotBody">
       <div className="chatWindow" aria-live="polite">
@@ -100,7 +100,7 @@ function ChatbotDemo({ floating=false }){
       </div>
       <div className="chatExamples">{examples.map(ex=><button key={ex} type="button" onClick={()=>sendMessage(ex)}>{ex}</button>)}</div>
       <form className="chatInput" onSubmit={e=>{e.preventDefault();sendMessage();}}>
-        <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Frage an den Fenstershop Bot…" />
+        <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Frage an Atlas…" />
         <button type="submit" disabled={loading}><Send size={16}/> Senden</button>
       </form>
     </div>

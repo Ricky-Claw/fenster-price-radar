@@ -6,7 +6,7 @@ import { answerFenstershopChatbot, answerFenstershopChatbotWithLlm, retrieveFens
 
 globalThis.fetch = async (url) => {
   if (String(url).includes('api.moonshot.ai')) {
-    return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kurz poliert aus Kimi.' }) } }] }) };
+    return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kurz poliert aus Atlas.' }) } }] }) };
   }
   throw new Error(`unexpected fetch ${url}`);
 };
@@ -46,7 +46,7 @@ assert.ok(answer.links.some((link) => /fensterbegriffe|profilschnitte/.test(link
 
 const llmAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
 assert.equal(llmAnswer.llm.used, true);
-assert.equal(llmAnswer.answer, 'Kurz poliert aus Kimi.');
+assert.equal(llmAnswer.answer, 'Kurz poliert aus Atlas.');
 
 const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
 assert.equal(llmGuardrail.intent, 'order_status');
