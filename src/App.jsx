@@ -225,8 +225,6 @@ function App(){
         </div>}
       </section>
 
-      <ChatbotDemo />
-
       <section className="panel marginPanel" id="margenrechner">
         <div className="panelHead">
           <div><h2>Margenrechner</h2><p>Direkt unter dem Konfigurator: Listenpreis, Rabatt und Kosten variieren, um Zielmarge und Mindestpreis zu prüfen.</p></div>
