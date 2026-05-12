@@ -63,7 +63,7 @@ function providerCell(row, id){
   return <td className="price"><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></td>;
 }
 
-function ChatbotDemo(){
+function ChatbotDemo({ floating=false }){
   const [messages,setMessages]=useState([{role:'bot', text:'Hallo! Ich bin der Fenstershop-Hilfechat. Frag mich z. B. nach Lieferung, Reklamation, Konfigurator oder technischen Begriffen.', intent:'welcome'}]);
   const [input,setInput]=useState('Der Fahrer steht heute vor Ort, was tun?');
   const [loading,setLoading]=useState(false);
@@ -82,10 +82,12 @@ function ChatbotDemo(){
     }finally{setLoading(false);}
   }
   const examples=['Status meiner Bestellung 123456?','Ich habe einen Transportschaden','Was bedeutet Ug-Wert?'];
-  return <section className="panel chatbotPanel" id="chatbot">
+  const [open,setOpen]=useState(!floating);
+  if(floating && !open) return <button className="chatbotLauncher" type="button" onClick={()=>setOpen(true)}><MessageCircle size={22}/><span>Fenstershop Bot testen</span></button>;
+  return <section className={cls('panel chatbotPanel', floating && 'floating')} id={floating ? 'chatbot-window' : 'chatbot'}>
     <div className="panelHead">
       <div><h2><MessageCircle size={24}/> Fenstershop Chatbot testen</h2><p>Rule-first MVP: eskaliert sensible Fälle korrekt und beantwortet Wissensfragen mit Quellenlinks.</p></div>
-      <span className="botBadge">MVP Demo</span>
+      <div className="botHeadActions"><span className="botBadge">Live RAG + Kimi</span>{floating?<button className="botClose" type="button" onClick={()=>setOpen(false)} aria-label="Chatbot schließen">×</button>:null}</div>
     </div>
     <div className="chatbotBody">
       <div className="chatWindow" aria-live="polite">
@@ -311,6 +313,8 @@ function App(){
         </div>
       </details>
     </main>
+
+    <ChatbotDemo floating />
 
     {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small><small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
   </>;
