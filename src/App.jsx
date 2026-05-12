@@ -1,6 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { createRoot } from 'react-dom/client';
-import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight } from 'lucide-react';
+import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight, MessageCircle, Send } from 'lucide-react';
 import './styles.css';
 
 const providers = [
@@ -61,6 +61,48 @@ function providerCell(row, id){
   if(!p) return <td className="muted">—</td>;
   if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></td>;
   return <td className="price"><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></td>;
+}
+
+function ChatbotDemo(){
+  const [messages,setMessages]=useState([{role:'bot', text:'Hallo! Ich bin der Fenstershop-Hilfechat. Frag mich z. B. nach Lieferung, Reklamation, Konfigurator oder technischen Begriffen.', intent:'welcome'}]);
+  const [input,setInput]=useState('Der Fahrer steht heute vor Ort, was tun?');
+  const [loading,setLoading]=useState(false);
+  async function sendMessage(example){
+    const text=String(example ?? input).trim();
+    if(!text || loading) return;
+    setMessages(prev=>[...prev,{role:'user',text}]);
+    setInput('');
+    setLoading(true);
+    try{
+      const r=await fetch('/api/chatbot',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message:text})});
+      const body=await r.json();
+      setMessages(prev=>[...prev,{role:'bot',text:body.answer || 'Keine Antwort erhalten.',intent:body.intent,links:body.links||[],contacts:body.contacts||[],confidence:body.confidence}]);
+    }catch(error){
+      setMessages(prev=>[...prev,{role:'bot',text:`Bot-API nicht erreichbar: ${error.message}`,intent:'error'}]);
+    }finally{setLoading(false);}
+  }
+  const examples=['Status meiner Bestellung 123456?','Ich habe einen Transportschaden','Was bedeutet Ug-Wert?'];
+  return <section className="panel chatbotPanel" id="chatbot">
+    <div className="panelHead">
+      <div><h2><MessageCircle size={24}/> Fenstershop Chatbot testen</h2><p>Rule-first MVP: eskaliert sensible Fälle korrekt und beantwortet Wissensfragen mit Quellenlinks.</p></div>
+      <span className="botBadge">MVP Demo</span>
+    </div>
+    <div className="chatbotBody">
+      <div className="chatWindow" aria-live="polite">
+        {messages.map((m,i)=><div key={i} className={cls('chatBubble',m.role)}>
+          <p>{m.text}</p>
+          {m.intent && m.role==='bot'?<small>Intent: {m.intent}{typeof m.confidence==='number'?` · Confidence ${Math.round(m.confidence*100)}%`:''}</small>:null}
+          {m.links?.length?<div className="chatLinks">{m.links.map(link=><a key={link.url} href={link.url} target="_blank" rel="noreferrer">{link.label}</a>)}</div>:null}
+        </div>)}
+        {loading?<div className="chatBubble bot"><p>Denke kurz nach…</p></div>:null}
+      </div>
+      <div className="chatExamples">{examples.map(ex=><button key={ex} type="button" onClick={()=>sendMessage(ex)}>{ex}</button>)}</div>
+      <form className="chatInput" onSubmit={e=>{e.preventDefault();sendMessage();}}>
+        <input value={input} onChange={e=>setInput(e.target.value)} placeholder="Frage an den Fenstershop Bot…" />
+        <button type="submit" disabled={loading}><Send size={16}/> Senden</button>
+      </form>
+    </div>
+  </section>;
 }
 
 function App(){
@@ -138,7 +180,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#briefings">Briefings</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a></nav>
+      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#chatbot">Chatbot</a><a href="#briefings">Briefings</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 
@@ -180,6 +222,8 @@ function App(){
           {providers.map(([id,name])=>{const p=quoteResult.providers?.[id]; return <div key={id} className={cls('quoteCard',p?.valid?'':'softWarn')}><small>{name}</small><b>{p?.valid?eur(p.customerTotal ?? p.listTotal):'—'}</b>{p?.valid?<span>Endpreis Kunde · Liste {eur(p.listTotal)} · {discountText(p)}</span>:<span>{p?.reason === 'nicht_im_angebot' || p?.status === 'unmatched' ? 'nicht im Angebot' : (p?.status||'nicht verfügbar')}</span>}{p?.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p?.reason||p?.error?<em>{p.reason === 'nicht_im_angebot' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : (p.reason||p.error)}</em>:null}</div>})}
         </div>}
       </section>
+
+      <ChatbotDemo />
 
       <section className="panel marginPanel" id="margenrechner">
         <div className="panelHead">

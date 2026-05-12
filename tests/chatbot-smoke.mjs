@@ -1,7 +1,15 @@
 import assert from 'node:assert/strict';
 import { Readable } from 'node:stream';
 import handler from '../api/chatbot.js';
-import { answerFenstershopChatbot, retrieveFenstershopKnowledge } from '../src/chatbot/fenstershopChatbot.js';
+import { answerFenstershopChatbot, answerFenstershopChatbotWithLlm, retrieveFenstershopKnowledge } from '../src/chatbot/fenstershopChatbot.js';
+
+
+globalThis.fetch = async (url) => {
+  if (String(url).includes('api.moonshot.ai')) {
+    return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kurz poliert aus Kimi.' }) } }] }) };
+  }
+  throw new Error(`unexpected fetch ${url}`);
+};
 
 function ask(message) {
   return answerFenstershopChatbot({ message });
@@ -34,6 +42,16 @@ assert.ok(answer.links.some((link) => link.url.includes('/konfigurator/fenster')
 answer = ask('Was bedeutet Ug Wert bei Fenstern?');
 assert.ok(['knowledge_rag', 'technical_specific'].includes(answer.intent));
 assert.ok(answer.links.some((link) => /fensterbegriffe|profilschnitte/.test(link.url)));
+
+
+const llmAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
+assert.equal(llmAnswer.llm.used, true);
+assert.equal(llmAnswer.answer, 'Kurz poliert aus Kimi.');
+
+const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
+assert.equal(llmGuardrail.intent, 'order_status');
+assert.equal(llmGuardrail.llm, null);
+assert.match(llmGuardrail.answer, /keinen Zugriff/i);
 
 const chunks = retrieveFenstershopKnowledge('Lieferadresse ändern Kosten', { limit: 2 });
 assert.ok(chunks.length >= 1, 'knowledge retrieval should find chatbot md chunks');

@@ -1,6 +1,8 @@
 import { readFileSync } from 'node:fs';
+import { polishFenstershopAnswer } from './kimiClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
+const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', import.meta.url);
 
 export const CONTACTS = {
   logisticsPhone: '+49 7221 3022 157',
@@ -47,13 +49,21 @@ function hasSensitiveData(text) {
 let cachedChunks;
 function knowledgeChunks() {
   if (cachedChunks) return cachedChunks;
+  const chunks = [];
+  try {
+    const dfs = JSON.parse(readFileSync(DFS_KNOWLEDGE_FILE, 'utf8'));
+    for (const doc of dfs.documents || []) {
+      for (const chunk of doc.chunks || []) {
+        chunks.push({ title: doc.title || doc.url, text: String(chunk.content || '').replace(/\s+/g, ' '), url: doc.url, sourceType: 'dfs_website', chunkIndex: chunk.index || 0 });
+      }
+    }
+  } catch {}
   let raw = '';
   try { raw = readFileSync(KNOWLEDGE_FILE, 'utf8'); } catch { raw = ''; }
-  const chunks = [];
   let heading = 'Chatbot-Regelwerk';
   for (const block of raw.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean)) {
     if (/^(\d+\.|[A-ZÄÖÜ][A-ZÄÖÜ\s/-]{8,})/.test(block) && block.length < 120) heading = block.replace(/\n/g, ' ');
-    if (block.length >= 90) chunks.push({ title: heading, text: block.replace(/\s+/g, ' ') });
+    if (block.length >= 90) chunks.push({ title: heading, text: block.replace(/\s+/g, ' '), url: 'programmierlogik_chatbot_final_mit_anfrage_status.md', sourceType: 'rule_file' });
   }
   cachedChunks = chunks;
   return chunks;
@@ -64,12 +74,20 @@ export function retrieveFenstershopKnowledge(query, { limit = 3 } = {}) {
   if (!qTerms.length) return [];
   return knowledgeChunks()
     .map((chunk) => {
-      const hay = lower(`${chunk.title} ${chunk.text}`);
-      const score = qTerms.reduce((sum, term) => sum + (hay.includes(term) ? 1 : 0), 0);
+      const title = lower(chunk.title || '');
+      const url = lower(chunk.url || '');
+      const body = lower(chunk.text || '');
+      const score = qTerms.reduce((sum, term) => {
+        let value = 0;
+        if (body.includes(term)) value += 1;
+        if (title.includes(term)) value += 6;
+        if (url.includes(term)) value += 8;
+        return sum + value;
+      }, 0);
       return { ...chunk, score };
     })
     .filter((chunk) => chunk.score > 0)
-    .sort((a, b) => b.score - a.score || b.text.length - a.text.length)
+    .sort((a, b) => b.score - a.score || (a.chunkIndex || 0) - (b.chunkIndex || 0) || b.text.length - a.text.length)
     .slice(0, limit)
     .map(({ score, ...chunk }) => chunk);
 }
@@ -86,7 +104,7 @@ function sourceLinksForQuery(normalized) {
   return [...new Map(links.map((link) => [link.url, link])).values()].slice(0, 3);
 }
 
-function result({ intent, answer, links = [], contacts = [], confidence = 0.95, sources = [], action = 'answer', sensitive = false }) {
+function result({ intent, answer, links = [], contacts = [], confidence = 0.95, sources = [], action = 'answer', sensitive = false, llm = null }) {
   return {
     ok: true,
     intent,
@@ -106,6 +124,7 @@ function result({ intent, answer, links = [], contacts = [], confidence = 0.95, 
       noSensitiveDataRequested: true,
       sourcePolicy: 'rules_first_then_published_knowledge',
     },
+    llm,
   };
 }
 
@@ -211,13 +230,13 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
   const chunks = retrieveFenstershopKnowledge(text, { limit: 2 });
   const links = sourceLinksForQuery(n);
   if (chunks.length) {
-    const excerpt = chunks[0].text.slice(0, 520).replace(/\s+$/g, '');
+    const excerpt = chunks.slice(0, 2).map((chunk) => chunk.text.slice(0, 420).replace(/\s+$/g, '')).join('\n\n');
     return result({
       intent: 'knowledge_rag', action: 'answer_from_knowledge', sensitive,
       confidence: 0.72,
-      answer: `Dazu habe ich folgende interne Wissensquelle gefunden:\n\n${excerpt}${chunks[0].text.length > 520 ? '…' : ''}\n\nBitte beachten Sie: Bei konkreten Bestellungen, Zahlungen oder verbindlichen technischen Einzelwerten verweise ich an den passenden Kontaktweg.`,
+      answer: `Dazu habe ich folgende interne Wissensquelle gefunden:\n\n${excerpt}…\n\nBitte beachten Sie: Bei konkreten Bestellungen, Zahlungen oder verbindlichen technischen Einzelwerten verweise ich an den passenden Kontaktweg.`,
       links,
-      sources: chunks.map((chunk) => ({ title: chunk.title, url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' })),
+      sources: chunks.map((chunk) => ({ title: chunk.title, url: chunk.url || 'programmierlogik_chatbot_final_mit_anfrage_status.md', type: chunk.sourceType || 'knowledge' })),
     });
   }
 
@@ -228,4 +247,32 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
     contacts: [{ type: 'phone', label: 'Technik', value: CONTACTS.technicalPhone }],
     links: [{ label: 'Callback / Anfrage senden', url: LINKS.callback }, { label: 'Wissenswertes', url: LINKS.knowledge }],
   });
+}
+
+
+const LLM_SAFE_INTENTS = new Set(['knowledge_rag', 'fallback', 'delivery_general_time', 'configurator_help', 'complaint', 'empty']);
+
+function mustKeepGuardrailDraft(draft) {
+  return !LLM_SAFE_INTENTS.has(draft.intent);
+}
+
+function answerStillSafe(polished, draft) {
+  const answer = String(polished?.answer || '');
+  if (!answer) return false;
+  for (const contact of draft.contacts || []) if (contact.value && !answer.includes(contact.value)) return false;
+  if (/in produktion|morgen versendet|zahlung ist eingegangen|lieferung erfolgt am|ticket ist/i.test(answer)) return false;
+  return true;
+}
+
+export async function answerFenstershopChatbotWithLlm({ message = '', env = process.env } = {}) {
+  const draft = answerFenstershopChatbot({ message });
+  if (mustKeepGuardrailDraft(draft)) return draft;
+  const knowledge = retrieveFenstershopKnowledge(message, { limit: 3 });
+  try {
+    const polished = await polishFenstershopAnswer({ message, draft, knowledge, env });
+    if (!answerStillSafe(polished, draft)) return { ...draft, llm: { used: false, reason: 'safety_fallback' } };
+    return { ...draft, answer: polished.answer, llm: { used: true, provider: 'moonshot', model: polished.model } };
+  } catch (error) {
+    return { ...draft, llm: { used: false, reason: error.message || 'llm_failed' } };
+  }
 }

@@ -1,4 +1,4 @@
-import { answerFenstershopChatbot } from '../src/chatbot/fenstershopChatbot.js';
+import { answerFenstershopChatbotWithLlm } from '../src/chatbot/fenstershopChatbot.js';
 
 function sendJson(res, status, payload) {
   res.setHeader?.('content-type', 'application/json; charset=utf-8');
@@ -29,7 +29,7 @@ export default async function handler(req, res) {
   try {
     const body = await readBody(req);
     const message = body.message || body.question || body.text || '';
-    return sendJson(res, 200, answerFenstershopChatbot({ message }));
+    return sendJson(res, 200, await answerFenstershopChatbotWithLlm({ message }));
   } catch (error) {
     return sendJson(res, 400, { ok: false, error: 'invalid_request', message: error.message });
   }

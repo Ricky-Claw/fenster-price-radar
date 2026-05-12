@@ -15,7 +15,8 @@
     "prices:update": "node scripts/update-prices.js && npm run verify:prices",
     "test:chatbot": "node tests/chatbot-smoke.mjs && node --check public/chatbot-widget.js",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js",
-    "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js"
+    "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",
+    "knowledge:crawl": "node scripts/crawl-dfs-knowledge.js"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
