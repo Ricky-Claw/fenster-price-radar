@@ -31,10 +31,26 @@ function pickProfileId(c){
   return null;
 }
 function openingId(c){ const s=norm(c.opening || c.openingType || 'dreh-kipp'); if(s.includes('fest')) return 6; return 4; }
-function layoutRequest(c, openType) {
-  if (c.layout === '2flg_pfosten') return { windowTypeId:6, stulp:0, loadPrices:92, opid:'92', openIds:[3,4], mode:'combined' };
+async function layoutRequest(c, openType, profileId) {
+  if (c.layout === '2flg_pfosten') {
+    const group = await twoSashGroup(profileId, { stulp:'0', openTypes:['3','4'] });
+    if (!group) return null;
+    return { windowTypeId:6, stulp:0, loadPrices:+group, opid:String(group), openIds:[3,4], mode:'combined' };
+  }
   if (c.layout === '2flg_stulp') return { windowTypeId:6, stulp:1, loadPrices:91, opid:'91', openIds:[3,2], mode:'sum' };
   return { windowTypeId:1, stulp:0, loadPrices:openType, opid:String(openType), openIds:[openType], mode:'single' };
+}
+async function twoSashGroup(profileId, { stulp, openTypes }) {
+  const json = await fetchJson(`${BASE}/json/data_window_1_${profileId}_opentype.json?t=1.22`);
+  for (const arr of Object.values(json || {})) {
+    const groups = {};
+    for (const x of arr || []) {
+      if (String(x.window_type_id) !== '6' || String(x.stulp) !== stulp || !openTypes.includes(String(x.open_type))) continue;
+      (groups[x.group_id] ||= new Set()).add(String(x.open_type));
+    }
+    for (const [group, ops] of Object.entries(groups)) if (openTypes.every(op => ops.has(op))) return group;
+  }
+  return null;
 }
 function glassGroup(c){ const s=norm(c.glazing || c.glass || '3fach'); if(s.includes('2')) return 1; return 2; }
 async function readJson(p){ return JSON.parse(await fs.readFile(p,'utf8')); }
@@ -58,7 +74,8 @@ async function dfsDiscount(profile) {
   return candidates.sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
 }
 async function priceMatrix({profile, openType, width, height, layout}){
-  const lr = layoutRequest(layout ? { layout } : {}, openType);
+  const lr = await layoutRequest(layout ? { layout } : {}, openType, profile.id);
+  if (!lr) return { row:null, layoutRequest:null, requested:{width,height}, actual:null };
   const body={doprice:1,loadPrices:lr.loadPrices,stulp:lr.stulp,bid:+profile.company_id,mid:+profile.material_id,pid:+profile.id,wid:lr.windowTypeId,opid:lr.opid,size:{width:{},height:{}},open_ids:lr.openIds,dv:1};
   const j=await fetchJson(`${BASE}/konfigurator/fenster`,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':BASE,'referer':`${BASE}/konfigurator/fenster`},body:JSON.stringify(body)});
   const pick = list => (list || []).find(x=>+x.width===+width && +x.height===+height) || (list || []).find(x=>+x.width>=+width && +x.height>=+height);

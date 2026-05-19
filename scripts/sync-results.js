@@ -10,6 +10,13 @@ const expectedCatalogCount = (() => {
     return (Array.isArray(raw) ? raw : raw.configs || []).length;
   } catch { return 0; }
 })();
+const catalogKeys = (() => {
+  try {
+    const raw = readJson(catalogPath);
+    const configs = Array.isArray(raw) ? raw : raw.configs || [];
+    return new Set(configs.map(c => [c.brand, c.profile, c.size, c.glazing, c.opening || 'Dreh-Kipp', c.color || 'weiß', c.layout || '1flg'].join('|')));
+  } catch { return new Set(); }
+})();
 const historyOut = path.join(out, 'history');
 fs.mkdirSync(out, { recursive: true });
 fs.mkdirSync(historyOut, { recursive: true });
@@ -131,6 +138,7 @@ for (const [provider, dir] of Object.entries(sources)) {
 const keys = new Map();
 for (const row of rows) {
   const k = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color, row.layout].join('|');
+  if (catalogKeys.size && !catalogKeys.has(k)) continue;
   if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, width: row.width, height: row.height, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, providers: {} });
   keys.get(k).providers[row.provider] = row;
 }
