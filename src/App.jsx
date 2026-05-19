@@ -150,7 +150,7 @@ function App(){
   const [brand,setBrand]=useState('');
   const [profile,setProfile]=useState('');
   const [glazing,setGlazing]=useState('');
-  const [layout,setLayout]=useState('');
+  const [layout,setLayout]=useState('1flg');
   const [onlyAction,setOnlyAction]=useState(false);
   const [active,setActive]=useState(null);
   const [quote,setQuote]=useState({profile:'aluplast-ideal-4000',width:1000,height:1200,glazing:'3fach',opening:'Dreh-Kipp',color:'weiß'});
@@ -285,7 +285,7 @@ function App(){
       <section className="cards">
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
-        <div className="card"><small>Zweiflügelig</small><b>{(stats.layoutCounts?.['2flg_pfosten']||0)+(stats.layoutCounts?.['2flg_stulp']||0)}</b><span>Pfosten/Stulp Benchmarks</span></div>
+        <div className="card"><small>Zweiflügelig</small><b>{(stats.layoutCounts?.['2flg_pfosten']||0)+(stats.layoutCounts?.['2flg_stulp_dk_dreh']||0)}</b><span>Pfosten/Stulp geprüft</span></div>
         <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changed}</b><span>Preisänderungen erkannt</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
@@ -322,12 +322,12 @@ function App(){
           <div><h2>Preisradar</h2><p>Anzeige: Kunden-Endpreis inkl. live beobachtetem Rabatt. Listenpreis und Rabatt werden je Anbieter vermerkt.</p></div>
           <a className="download" href="/data/price-radar.json" download><Download size={16}/> JSON</a>
         </div>
+        <div className="layoutChooser" aria-label="Fensterbauart auswählen">{layouts.filter(([id])=>id).map(([id,label])=>{const count=stats.layoutCounts?.[id]||0; return <button key={id} type="button" className={cls('layoutChoice', layout===id&&'active')} onClick={()=>setLayout(id)}><small>{label}</small><b>{count}</b><span>{id==='1flg'?'Einflügelige Standardfenster':id==='2flg_pfosten'?'Zweiflügelig mit Mittelpfosten':'Zweiflügelig mit Stulp'}</span></button>})}</div>
         <div className="filters">
           <label className="search"><Search size={18}/><input placeholder="Suche: Marke, Profil, Größe…" value={q} onChange={e=>setQ(e.target.value)}/></label>
           <select value={brand} onChange={e=>{setBrand(e.target.value);setProfile('')}}><option value="">Alle Marken</option>{unique(data,'brand').map(x=><option key={x}>{x}</option>)}</select>
           <select value={profile} onChange={e=>setProfile(e.target.value)}><option value="">Alle Profile</option>{unique(data.filter(x=>!brand||x.brand===brand),'profile').map(x=><option key={x}>{x}</option>)}</select>
           <select value={glazing} onChange={e=>setGlazing(e.target.value)}><option value="">Alle Gläser</option>{unique(data,'glazing').map(x=><option key={x}>{x}</option>)}</select>
-          <div className="segmentFilter" role="group" aria-label="Fensterbauart filtern">{layouts.map(([id,label])=><button key={id||'all'} type="button" className={cls(layout===id&&'on')} onClick={()=>setLayout(id)}>{label}</button>)}</div>
           <button className={cls('toggle',onlyAction&&'on')} onClick={()=>setOnlyAction(!onlyAction)}><SlidersHorizontal size={16}/> nur vergleichbar</button>
         </div>
 
