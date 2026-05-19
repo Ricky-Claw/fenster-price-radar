@@ -1838,51 +1838,6 @@
       "sourceSheet": "validated-two-sash-benchmark",
       "layout": "2flg_pfosten",
       "layoutLabel": "2-flügelig mit Pfosten"
-    },
-    {
-      "brand": "Drutex",
-      "profile": "Iglo 5 Classic, 3fach",
-      "material": "PVC",
-      "size": "1000x1200",
-      "width": 1000,
-      "height": 1200,
-      "sizeRole": "2-flg Benchmark",
-      "glazing": "3fach",
-      "color": "weiß",
-      "opening": "Dreh-Kipp",
-      "sourceSheet": "validated-two-sash-benchmark",
-      "layout": "2flg_stulp",
-      "layoutLabel": "2-flügelig mit Stulp"
-    },
-    {
-      "brand": "Aluplast",
-      "profile": "Ideal 4000, 3fach",
-      "material": "PVC",
-      "size": "900x1300",
-      "width": 900,
-      "height": 1300,
-      "sizeRole": "2-flg Benchmark",
-      "glazing": "3fach",
-      "color": "weiß",
-      "opening": "Dreh-Kipp",
-      "sourceSheet": "validated-two-sash-benchmark",
-      "layout": "2flg_stulp",
-      "layoutLabel": "2-flügelig mit Stulp"
-    },
-    {
-      "brand": "Veka",
-      "profile": "Veka 82 MD, 3fach",
-      "material": "PVC",
-      "size": "900x1300",
-      "width": 900,
-      "height": 1300,
-      "sizeRole": "2-flg Benchmark",
-      "glazing": "3fach",
-      "color": "weiß",
-      "opening": "Dreh-Kipp",
-      "sourceSheet": "validated-two-sash-benchmark",
-      "layout": "2flg_stulp",
-      "layoutLabel": "2-flügelig mit Stulp"
     }
   ]
 }

@@ -3,6 +3,13 @@ import path from 'node:path';
 
 const root = path.resolve('results');
 const out = path.resolve('public', 'data');
+const catalogPath = path.resolve('data', 'comparison-catalog.json');
+const expectedCatalogCount = (() => {
+  try {
+    const raw = readJson(catalogPath);
+    return (Array.isArray(raw) ? raw : raw.configs || []).length;
+  } catch { return 0; }
+})();
 const historyOut = path.join(out, 'history');
 fs.mkdirSync(out, { recursive: true });
 fs.mkdirSync(historyOut, { recursive: true });
@@ -57,9 +64,11 @@ function latest(prefix) {
         return { name:n, count:(j.results || []).length };
       } catch { return { name:n, count:0 }; }
     })
-    .filter(x => x.count > 0)
+    .filter(x => x.count >= expectedCatalogCount)
     .sort((a,b) => a.name.localeCompare(b.name));
-  return candidates.at(-1)?.name || null;
+  const selected = candidates.at(-1)?.name || null;
+  if (!selected) throw new Error(`No complete ${prefix} result found for ${expectedCatalogCount} catalog rows. Run provider update with full limit first.`);
+  return selected;
 }
 
 const sources = {
@@ -111,6 +120,7 @@ for (const [provider, dir] of Object.entries(sources)) {
         observed: discountObserved,
         note: discountObserved ? 'live beobachteter Rabatt/Endpreis vom Anbieter' : 'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'
       },
+      equivalence: data?.equivalence || null,
       warnings: data?.warnings || [],
       reason: data?.reason || data?.error || '',
       sourceDir: dir
@@ -121,7 +131,7 @@ for (const [provider, dir] of Object.entries(sources)) {
 const keys = new Map();
 for (const row of rows) {
   const k = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color, row.layout].join('|');
-  if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, providers: {} });
+  if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, width: row.width, height: row.height, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, providers: {} });
   keys.get(k).providers[row.provider] = row;
 }
 

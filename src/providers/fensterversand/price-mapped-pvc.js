@@ -30,10 +30,11 @@ for (const cfg of catalog.slice(0, limit)) {
   const listTotal = profileDiscount ? Number((customerTotal / (1 - profileDiscount / 100)).toFixed(2)) : Number(json.price?.total);
   results.push({
     provider:'Fensterversand', input:cfg, mappedProfile:mapped.name, status:res.status,
-    comparePrice:{ listTotal, currency:'EUR', discountApplied:!!profileDiscount, valid: Number(json.price?.total) > 0 },
+    comparePrice:{ listTotal, currency:'EUR', discountApplied:!!profileDiscount, valid: Number(json.price?.total) > 0 && (cfg.layout || '1flg') === '1flg' },
     customerPrice:{ total: customerTotal, currency:'EUR' },
+    equivalence:{ layout:cfg.layout || '1flg', proof:(cfg.layout || '1flg') === '1flg' ? 'single-sash default' : 'blocked: Fensterversand response does not expose enough selected-option labels to prove Pfosten/Stulp equivalence yet' },
     discountMetadata:{ observed:!!profileDiscount, observedDiscountPercent:profileDiscount/100, discountedTotalObserved: customerTotal, observedDiscount: profileDiscount, percentages, note:profileDiscount?`Fensterversand-Profilrabatt ${profileDiscount}% aus price.percentages`:'kein Profilrabatt in price.percentages' },
-    warnings: Number(json.price?.total) > 0 ? [] : ['zero_or_unavailable_price'],
+    warnings: Number(json.price?.total) > 0 ? ((cfg.layout || '1flg') === '1flg' ? [] : ['fensterversand_two_sash_equivalence_not_proven']) : ['zero_or_unavailable_price'],
     dimensions: json.dimensions ? { x: json.dimensions.x, y: json.dimensions.y, qm: json.dimensions.qm, rm: json.dimensions.rm } : null,
     requestConfig: payload.configuration
   });

@@ -20,7 +20,10 @@ for(const cfg of catalog.slice(0,limit)){
   const listTotal = Number(priced.prices?.total);
   const discount = Number(priced.discount_percent || 0);
   const discountedTotal = discount ? Number((listTotal * (1 - discount)).toFixed(2)) : null;
-  results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:200,comparePrice:{listTotal,currency:'EUR',discountApplied:!!discount,valid:listTotal>0 && dimsMatch},customerPrice:{total:discountedTotal || listTotal,currency:'EUR'},discountMetadata:{observed:!!discount,observedDiscountPercent:discount,discountedTotalObserved: discountedTotal,note:discount?'Live-Rabatt vom Anbieter beobachtet':'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'},labels:priced.prices?.short_labels,actualDimensions:actualDims,configChain:priced.config_chain,refIdChain:priced.ref_id_chain,warnings:warn});
+  const labels = priced.prices?.short_labels || [];
+  const labelText = labels.map(l=>`${l.name}:${l.value}`).join(' | ');
+  const equivalent = (cfg.layout || '1flg') === '1flg' || (/2-Flügel/i.test(labelText) && (/Pfosten/i.test(labelText) || /Stulp/i.test(labelText)));
+  results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:200,comparePrice:{listTotal,currency:'EUR',discountApplied:!!discount,valid:listTotal>0 && dimsMatch && equivalent},customerPrice:{total:discountedTotal || listTotal,currency:'EUR'},equivalence:{layout:cfg.layout||'1flg',construction:labels.find(l=>l.name==='Typ')?.value || '',opening:labels.find(l=>l.name==='Öffnung')?.value || '',proof:labelText},discountMetadata:{observed:!!discount,observedDiscountPercent:discount,discountedTotalObserved: discountedTotal,note:discount?'Live-Rabatt vom Anbieter beobachtet':'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'},labels,actualDimensions:actualDims,configChain:priced.config_chain,refIdChain:priced.ref_id_chain,warnings: equivalent ? warn : [...warn,'fensterblick_two_sash_label_not_proven']});
  }catch(e){results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:'error',error:String(e.message||e)});} 
  await new Promise(r=>setTimeout(r,900));
 }
