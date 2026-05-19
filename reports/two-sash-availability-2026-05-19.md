@@ -4,39 +4,24 @@ Rule: do not infer 2-flg availability from 1-flg catalog rows. A 2-flg row is pu
 
 ## Published 2-flg Pfosten rows
 
-- Aluplast · Ideal 4000, 3fach · 900x1300
-  - DFS: valid, combined result bucket for window type 6 / group 5561
-  - Fensterblick: valid, `Typ:2-Flügel`, `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)`, 450/450 sash widths
-  - Fensterversand: not equivalent/proof unavailable, not used for comparison
+17 proven rows are live:
 
-- Aluplast · Ideal 5000, 3fach · 900x1300
-  - DFS: valid, combined result bucket for window type 6 / group 20910
-  - Fensterblick: valid, `Typ:2-Flügel`, `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)`, 450/450 sash widths
-  - Fensterversand: not equivalent/proof unavailable, not used for comparison
+- Drutex · Iglo 5 Classic, 3fach: 1000x1200, 1200x1600
+- Aluplast · Ideal 4000, 3fach: 900x1300, 1200x1500, 1400x1900
+- Aluplast · Ideal 5000, 3fach: 900x1300, 1200x1500, 1400x1900
+- Aluplast · Ideal 7000, 3fach: 900x1300, 1200x1500, 1400x1900
+- Aluplast · Ideal 8000, 3fach: 900x1300, 1200x1500, 1400x1900
+- Salamander · Salamander 76MD, 3fach: 1000x1200, 1100x1700, 1400x1900
 
-- Aluplast · Ideal 7000, 3fach · 900x1300
-  - DFS: valid, combined result bucket for window type 6 / group 20250
-  - Fensterblick: valid, `Typ:2-Flügel`, `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)`, 450/450 sash widths
-  - Fensterversand: not equivalent/proof unavailable, not used for comparison
+Each row passed:
 
-- Aluplast · Ideal 8000, 3fach · 900x1300
-  - DFS: valid, combined result bucket for window type 6 / group 19590
-  - Fensterblick: valid, `Typ:2-Flügel`, `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)`, 450/450 sash widths
-  - Fensterversand: not equivalent/proof unavailable, not used for comparison
-
-- Drutex · Iglo 5 Classic, 3fach · 1000x1200
-  - DFS: valid, combined result bucket for window type 6 / group 92
-  - Fensterblick: valid, `Typ:2-Flügel`, `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)`, 500/500 sash widths
-  - Fensterversand: not equivalent / not published
-
-- Salamander · Salamander 76MD, 3fach · 1000x1200
-  - DFS: valid, combined result bucket for window type 6 / group 1492
-  - Fensterblick: valid, `Typ:2-Flügel`, `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)`, 500/500 sash widths
-  - Fensterversand: not equivalent / not published
+- DFS: valid combined result bucket for `window_type_id=6` and the profile-specific Pfosten group
+- Fensterblick: valid `Typ:2-Flügel` + `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)` + equal sash widths
+- Fensterversand: not used for truth until selected-option labels can be proven
 
 ## Checked but not published
 
-These profile families were checked as 2-flg Pfosten candidates but failed the strict gate because fewer than two providers had proven equivalent rows or provider mappings/labels were unavailable:
+Small sizes failed because two-sash minimum dimensions were not valid or one provider adjusted/rejected them. Other profile families still fail the strict two-provider proof gate:
 
 - Drutex Iglo Energy Classic
 - Gealan S8000
