@@ -168,7 +168,7 @@ const configs = [...keys.values()].map(c => {
 });
 
 function isUnavailable(p) {
-  return p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
+  return p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.warnings?.includes('fensterversand_two_sash_equivalence_not_proven'));
 }
 function isValidPrice(p) {
   return p?.valid && typeof p.listTotal === 'number' && p.listTotal > 0;
