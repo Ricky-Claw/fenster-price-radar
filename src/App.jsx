@@ -8,6 +8,12 @@ const providers = [
   ['fensterblick','Fensterblick'],
   ['fensterversand','Fensterversand']
 ];
+const layouts = [
+  ['','Alle Bauarten'],
+  ['1flg','1-flügelig'],
+  ['2flg_pfosten','2-flg Pfosten'],
+  ['2flg_stulp','2-flg Stulp']
+];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const cls = (...a) => a.filter(Boolean).join(' ');
 const isUnavailable = p => p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
@@ -144,6 +150,7 @@ function App(){
   const [brand,setBrand]=useState('');
   const [profile,setProfile]=useState('');
   const [glazing,setGlazing]=useState('');
+  const [layout,setLayout]=useState('');
   const [onlyAction,setOnlyAction]=useState(false);
   const [active,setActive]=useState(null);
   const [quote,setQuote]=useState({profile:'aluplast-ideal-4000',width:1000,height:1200,glazing:'3fach',opening:'Dreh-Kipp',color:'weiß'});
@@ -162,14 +169,15 @@ function App(){
   useEffect(()=>{ fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload); },[]);
   const data=payload?.configs||[];
   const filtered=useMemo(()=>data.filter(r=>{
-    const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color].join(' ').toLowerCase();
+    const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color,r.layoutLabel].join(' ').toLowerCase();
     if(q && !hay.includes(q.toLowerCase())) return false;
     if(brand && r.brand!==brand) return false;
     if(profile && r.profile!==profile) return false;
     if(glazing && r.glazing!==glazing) return false;
+    if(layout && (r.layout || '1flg')!==layout) return false;
     if(onlyAction && r.delta===null) return false;
     return true;
-  }),[data,q,brand,profile,glazing,onlyAction]);
+  }),[data,q,brand,profile,glazing,layout,onlyAction]);
 
   const stats=useMemo(()=>{
     const exact=data.filter(r=>r.dfsPrice && r.bestCompetitor);
@@ -182,7 +190,8 @@ function App(){
     const changed=changes.filter(hasPriceChange).length;
     const up=changes.filter(c=>changeValue(c)>0).length;
     const down=changes.filter(c=>changeValue(c)<0).length;
-    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, providerValid, changed, up, down};
+    const layoutCounts = Object.fromEntries(layouts.filter(([id])=>id).map(([id]) => [id, data.filter(r=>(r.layout||'1flg')===id).length]));
+    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, providerValid, changed, up, down, layoutCounts};
   },[data]);
 
   const marginGrossList = Number(margin.gross || 0);
@@ -275,6 +284,7 @@ function App(){
       <section className="cards">
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
+        <div className="card"><small>Zweiflügelig</small><b>{(stats.layoutCounts?.['2flg_pfosten']||0)+(stats.layoutCounts?.['2flg_stulp']||0)}</b><span>Pfosten/Stulp Benchmarks</span></div>
         <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changed}</b><span>Preisänderungen erkannt</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
@@ -316,12 +326,13 @@ function App(){
           <select value={brand} onChange={e=>{setBrand(e.target.value);setProfile('')}}><option value="">Alle Marken</option>{unique(data,'brand').map(x=><option key={x}>{x}</option>)}</select>
           <select value={profile} onChange={e=>setProfile(e.target.value)}><option value="">Alle Profile</option>{unique(data.filter(x=>!brand||x.brand===brand),'profile').map(x=><option key={x}>{x}</option>)}</select>
           <select value={glazing} onChange={e=>setGlazing(e.target.value)}><option value="">Alle Gläser</option>{unique(data,'glazing').map(x=><option key={x}>{x}</option>)}</select>
+          <div className="segmentFilter" role="group" aria-label="Fensterbauart filtern">{layouts.map(([id,label])=><button key={id||'all'} type="button" className={cls(layout===id&&'on')} onClick={()=>setLayout(id)}>{label}</button>)}</div>
           <button className={cls('toggle',onlyAction&&'on')} onClick={()=>setOnlyAction(!onlyAction)}><SlidersHorizontal size={16}/> nur vergleichbar</button>
         </div>
 
         <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
           {filtered.map(row=><tr key={row.key} onClick={()=>setActive(row)}>
-            <td><b>{row.brand} · {row.profile}</b><div className="configMeta"><span className="sizeBadge">{row.size}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
+            <td><b>{row.brand} · {row.profile}</b><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
             <td>{rowChangeLabel(row)}</td>

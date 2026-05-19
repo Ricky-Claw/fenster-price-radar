@@ -31,6 +31,11 @@ function pickProfileId(c){
   return null;
 }
 function openingId(c){ const s=norm(c.opening || c.openingType || 'dreh-kipp'); if(s.includes('fest')) return 6; return 4; }
+function layoutRequest(c, openType) {
+  if (c.layout === '2flg_pfosten') return { windowTypeId:6, stulp:0, loadPrices:92, opid:'92', openIds:[3,4], mode:'combined' };
+  if (c.layout === '2flg_stulp') return { windowTypeId:6, stulp:1, loadPrices:91, opid:'91', openIds:[3,2], mode:'sum' };
+  return { windowTypeId:1, stulp:0, loadPrices:openType, opid:String(openType), openIds:[openType], mode:'single' };
+}
 function glassGroup(c){ const s=norm(c.glazing || c.glass || '3fach'); if(s.includes('2')) return 1; return 2; }
 async function readJson(p){ return JSON.parse(await fs.readFile(p,'utf8')); }
 async function fetchJson(url, opts={}){ const r=await fetch(url, opts); if(!r.ok) throw new Error(`${r.status} ${url}`); return r.json(); }
@@ -52,12 +57,22 @@ async function dfsDiscount(profile) {
   const candidates = [materialDiscount, brandDiscount].filter(d => d && +d.sum > 0);
   return candidates.sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
 }
-async function priceMatrix({profile, openType, width, height}){
-  const body={doprice:1,loadPrices:openType,stulp:0,bid:+profile.company_id,mid:+profile.material_id,pid:+profile.id,wid:1,opid:String(openType),size:{width:{},height:{}},open_ids:[openType],dv:1};
+async function priceMatrix({profile, openType, width, height, layout}){
+  const lr = layoutRequest(layout ? { layout } : {}, openType);
+  const body={doprice:1,loadPrices:lr.loadPrices,stulp:lr.stulp,bid:+profile.company_id,mid:+profile.material_id,pid:+profile.id,wid:lr.windowTypeId,opid:lr.opid,size:{width:{},height:{}},open_ids:lr.openIds,dv:1};
   const j=await fetchJson(`${BASE}/konfigurator/fenster`,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':BASE,'referer':`${BASE}/konfigurator/fenster`},body:JSON.stringify(body)});
-  const list=j.result?.[openType]||[];
-  let row=list.find(x=>+x.width===+width && +x.height===+height) || list.find(x=>+x.width>=+width && +x.height>=+height);
-  return {row, requested:{width,height}, actual: row?{width:+row.width,height:+row.height}:null};
+  const pick = list => (list || []).find(x=>+x.width===+width && +x.height===+height) || (list || []).find(x=>+x.width>=+width && +x.height>=+height);
+  if (lr.mode === 'combined') {
+    const row = pick(j.result?.[''] || j.result?.[lr.loadPrices]);
+    return {row, layoutRequest:lr, requested:{width,height}, actual: row?{width:+row.width,height:+row.height}:null};
+  }
+  if (lr.mode === 'sum') {
+    const parts = lr.openIds.map(id => pick(j.result?.[id])).filter(Boolean);
+    const row = parts.length === lr.openIds.length ? { ...parts[0], price: parts.reduce((s, x) => s + (+x.price || 0), 0) } : null;
+    return {row, layoutRequest:lr, requested:{width,height}, actual: row?{width:+row.width,height:+row.height}:null};
+  }
+  const row=pick(j.result?.[openType]);
+  return {row, layoutRequest:lr, requested:{width,height}, actual: row?{width:+row.width,height:+row.height}:null};
 }
 async function glassPrice(profileId, groupId, width, height, defPrice){
   const pid = (profileId===56||profileId===144) ? 37 : profileId;
@@ -73,7 +88,7 @@ async function priceOne(c, profiles){
   const sizeText = typeof c.size === 'string' ? c.size : '';
   const mSize = sizeText.match(/(\d+)\s*x\s*(\d+)/i);
   const width=+(c.width||c.size?.width||mSize?.[1]), height=+(c.height||c.size?.height||mSize?.[2]), openType=openingId(c), gg=glassGroup(c);
-  const m=await priceMatrix({profile,openType,width,height});
+  const m=await priceMatrix({profile,openType,width,height,layout:c.layout || '1flg'});
   if(!m.row) return {status:'invalid', reason:'price_row_not_found'};
   const def=+m.row.price;
   const gp=await glassPrice(profileId, gg, width, height, def);
@@ -85,7 +100,7 @@ async function priceOne(c, profiles){
   const discountPercent = discount ? +discount.sum : 0;
   const customerTotal = discountPercent ? +(gross * (1 - discountPercent / 100)).toFixed(2) : gross;
   const warnings=[]; if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
-  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata:{observed:!!discountPercent,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:discountPercent?`DFS-Aktionsrabatt ${discountPercent}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
+  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, layout:c.layout || '1flg', layoutRequest:m.layoutRequest, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata:{observed:!!discountPercent,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:discountPercent?`DFS-Aktionsrabatt ${discountPercent}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
 }
 
 const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').split('=')));

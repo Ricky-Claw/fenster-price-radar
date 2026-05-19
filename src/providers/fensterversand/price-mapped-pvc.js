@@ -17,7 +17,7 @@ for (const cfg of catalog.slice(0, limit)) {
   const mapped = mapProfile(cfg);
   if (!mapped) { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason:'No equivalent PVC profile in Fensterversand mapping' }); continue; }
   const [w,h] = cfg.size.toLowerCase().split('x').map(Number);
-  const payload = buildPayload({ width:w, height:h, brandId:mapped.brandId, profileId:mapped.profileId, glazing:cfg.glazing, color:cfg.color || 'weiß', opening:cfg.opening || 'Dreh-Kipp' });
+  const payload = buildPayload({ width:w, height:h, brandId:mapped.brandId, profileId:mapped.profileId, glazing:cfg.glazing, color:cfg.color || 'weiß', opening:cfg.opening || 'Dreh-Kipp', layout:cfg.layout || '1flg' });
   const res = await fetch('https://www.fensterversand.com/configurator/update', {
     method:'POST',
     headers:{'content-type':'application/json','accept':'application/json, text/plain, */*','origin':'https://www.fensterversand.com','referer':'https://www.fensterversand.com/?cid=25&t=fenster-kunststoff'},
@@ -43,7 +43,7 @@ const outFile=path.join(outDir,'results.json');
 await fs.writeFile(outFile, JSON.stringify({generatedAt:new Date().toISOString(), pricePolicy:'comparePrice.listTotal only; discounts manual later', results}, null, 2));
 console.log(JSON.stringify({outFile, matched:results.filter(r=>r.status===200).length, unmatched:results.filter(r=>r.status==='unmatched').length, sample:results.slice(0,8).map(r=>({input:r.input?.profile, size:r.input?.size, mapped:r.mappedProfile, status:r.status, price:r.comparePrice}))}, null, 2));
 
-function buildPayload({width,height,brandId,profileId,glazing,color,opening}) {
+function buildPayload({width,height,brandId,profileId,glazing,color,opening,layout='1flg'}) {
   const p = structuredClone(template);
   const c = p.configuration['25'];
   c.a_132.value = 834; // Kunststoff
@@ -53,7 +53,17 @@ function buildPayload({width,height,brandId,profileId,glazing,color,opening}) {
   c.a_259.value = height;
   c.a_186.value = glazing === '2fach' ? 1238 : 1240; // conservative standard: Ug1.1 2fach / Ug0.7 3fach
   c.a_136.value = /anthrazit/i.test(color) ? 849 : 844; // current: same inside/outside field; outside-only needs separate attr later
-  c.a_157.value = /fest/i.test(opening) ? 1020 : 1021; // default DK links
+  if (layout === '2flg_pfosten') {
+    c.a_155.value = 8625; // Zweiteilig
+    c.a_161 = c.a_161 || { aId:161, value:null, isCustom:false };
+    c.a_161.value = 1045; // DK links + DK rechts, mit Mittelpfosten
+  } else if (layout === '2flg_stulp') {
+    c.a_155.value = 8625; // Zweiteilig
+    c.a_161 = c.a_161 || { aId:161, value:null, isCustom:false };
+    c.a_161.value = 1044; // DK links + Dreh rechts, Stulp-ähnliche zweiflügelige Ausführung
+  } else {
+    c.a_157.value = /fest/i.test(opening) ? 1020 : 1021; // default DK links
+  }
   return p;
 }
 function mapProfile(cfg) {

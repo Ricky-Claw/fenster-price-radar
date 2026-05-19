@@ -58,7 +58,7 @@ function latest(prefix) {
       } catch { return { name:n, count:0 }; }
     })
     .filter(x => x.count > 0)
-    .sort((a,b) => (a.count - b.count) || a.name.localeCompare(b.name));
+    .sort((a,b) => a.name.localeCompare(b.name));
   return candidates.at(-1)?.name || null;
 }
 
@@ -99,6 +99,8 @@ for (const [provider, dir] of Object.entries(sources)) {
       height: input.height || r.height || '',
       glazing: input.glazing || input.glass || r.glazing || r.glass || '',
       opening: input.opening || input.openingType || r.opening || r.openingType || 'Dreh-Kipp',
+      layout: input.layout || r.layout || '1flg',
+      layoutLabel: input.layoutLabel || r.layoutLabel || '1-flügelig',
       color: input.color || r.color || 'Weiß/Weiß',
       status: data?.status || 'unknown',
       valid: data?.comparePrice?.valid ?? false,
@@ -118,8 +120,8 @@ for (const [provider, dir] of Object.entries(sources)) {
 
 const keys = new Map();
 for (const row of rows) {
-  const k = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color].join('|');
-  if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, glazing: row.glazing, opening: row.opening, color: row.color, providers: {} });
+  const k = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color, row.layout].join('|');
+  if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, providers: {} });
   keys.get(k).providers[row.provider] = row;
 }
 
