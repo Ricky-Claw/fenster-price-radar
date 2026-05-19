@@ -206,9 +206,8 @@ function App(){
   const maxDiscount = marginGrossList > 0 ? Math.max(0, (1 - minGross / marginGrossList) * 100) : 0;
   const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
-  const tickerText = stats.changed
-    ? `${stats.changed} Endpreis-Änderungen zur Vorwoche: ${stats.up} teurer, ${stats.down} günstiger. DFS-Abstand aktuell Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`
-    : `Seit letzter Woche: keine Preisänderungen im Radar. Abdeckung stabil: DFS ${stats.providerValid.dfs}/${stats.configs}, Fensterblick ${stats.providerValid.fensterblick}/${stats.configs}, Fensterversand ${stats.providerValid.fensterversand}/${stats.configs}. DFS-Abstand Ø ${stats.avg>0?'+':''}${stats.avg.toFixed(1)}%.`;
+  const twoSashCount = data.filter(r => (r.layout || '1flg') === '2flg_pfosten').length;
+  const tickerText = `Update: ${twoSashCount} geprüfte zweiflügelige Pfosten-Konfigurationen ergänzt · breite Größen bis 2000 mm · nur DFS/Fensterblick-vergleichbare Preise mit Proof-Gate. Datenstand ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktuell'}.`;
   const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
   const tickerClosed = tickerClosedStamp === tickerStamp;
   const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));
