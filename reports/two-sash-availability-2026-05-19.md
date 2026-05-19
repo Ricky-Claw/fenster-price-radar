@@ -2,16 +2,16 @@
 
 Rule: do not infer 2-flg availability from 1-flg catalog rows. A 2-flg row is published only when at least two providers return valid, equivalent live configurations with matching layout proof.
 
-## Published 2-flg Pfosten rows
+## Published wide 2-flg Pfosten rows
 
-17 proven rows are live:
+23 proven wide rows are live:
 
-- Drutex · Iglo 5 Classic, 3fach: 1000x1200, 1200x1600
-- Aluplast · Ideal 4000, 3fach: 900x1300, 1200x1500, 1400x1900
-- Aluplast · Ideal 5000, 3fach: 900x1300, 1200x1500, 1400x1900
-- Aluplast · Ideal 7000, 3fach: 900x1300, 1200x1500, 1400x1900
-- Aluplast · Ideal 8000, 3fach: 900x1300, 1200x1500, 1400x1900
-- Salamander · Salamander 76MD, 3fach: 1000x1200, 1100x1700, 1400x1900
+- Drutex · Iglo 5 Classic, 3fach: 1400x1200, 1600x1400, 1800x1600
+- Aluplast · Ideal 4000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
+- Aluplast · Ideal 5000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
+- Aluplast · Ideal 7000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
+- Aluplast · Ideal 8000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
+- Salamander · Salamander 76MD, 3fach: 1400x1200, 1600x1500, 1800x1700, 2000x1900
 
 Each row passed:
 
@@ -21,15 +21,9 @@ Each row passed:
 
 ## Checked but not published
 
-Small sizes failed because two-sash minimum dimensions were not valid or one provider adjusted/rejected them. Other profile families still fail the strict two-provider proof gate:
-
-- Drutex Iglo Energy Classic
-- Gealan S8000
-- Gealan S9000
-- Kömmerling 70
-- Kömmerling 88
-- Salamander 82
-- Veka 82 MD
+- Drutex Iglo 5 Classic 2000x1800 failed strict gate and was not published.
+- Smaller 2-flg sizes were removed because two-sash minimum dimensions are not representative.
+- Other profile families still fail the strict two-provider proof gate: Drutex Iglo Energy Classic, Gealan S8000/S9000, Kömmerling 70/88, Salamander 82, Veka 82 MD.
 
 ## Stulp
 
