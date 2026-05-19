@@ -37,7 +37,7 @@ async function price({profileId,width,height,glazing,opening,color,layout='1flg'
  if(glazingIndex!==j.config_chain.glazing) j=await step(j,'glazing',glazingIndex);
  if(layout !== '1flg') j=await step(j,'vane_type',1);
  const openingIndex = layout === '2flg_pfosten' ? findOpeningFromUpdates(j,/Dreh-Kipp \+ Dreh-Kipp \(Pfosten\)/i,7)
-  : layout === '2flg_stulp' ? findOpeningFromUpdates(j,/Dreh-Kipp \+ Dreh \(Stulp\)/i,8)
+  : layout === '2flg_stulp_dk_dreh' ? findOpeningFromUpdates(j,/Dreh-Kipp \+ Dreh \(Stulp\)/i,8)
   : /fest/i.test(opening)?0:findOpening(profile, /Dreh-Kipp links/i, 5);
  if(openingIndex!==j.config_chain.opening_direction) j=await step(j,'opening_direction',openingIndex);
  // colors: default white. anthracite outside/interior white needs exact split later.

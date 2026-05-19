@@ -12,7 +12,7 @@ const layouts = [
   ['','Alle Bauarten'],
   ['1flg','1-flügelig'],
   ['2flg_pfosten','2-flg Pfosten'],
-  ['2flg_stulp','2-flg Stulp']
+  ['2flg_stulp_dk_dreh','2-flg Stulp']
 ];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const cls = (...a) => a.filter(Boolean).join(' ');
@@ -206,8 +206,10 @@ function App(){
   const maxDiscount = marginGrossList > 0 ? Math.max(0, (1 - minGross / marginGrossList) * 100) : 0;
   const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
-  const twoSashCount = data.filter(r => (r.layout || '1flg') === '2flg_pfosten').length;
-  const tickerText = `Update: ${twoSashCount} geprüfte zweiflügelige Pfosten-Konfigurationen ergänzt · breite Größen bis 2000 mm · nur DFS/Fensterblick-vergleichbare Preise mit Proof-Gate. Datenstand ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktuell'}.`;
+  const twoSashCount = data.filter(r => (r.layout || '1flg').startsWith('2flg_')).length;
+  const pfostenCount = data.filter(r => (r.layout || '1flg') === '2flg_pfosten').length;
+  const stulpCount = data.filter(r => (r.layout || '1flg') === '2flg_stulp_dk_dreh').length;
+  const tickerText = `Update: ${twoSashCount} geprüfte zweiflügelige Konfigurationen ergänzt · ${pfostenCount} Pfosten + ${stulpCount} Stulp · Fensterversand-Proof integriert · breite Größen bis 2000 mm. Datenstand ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktuell'}.`;
   const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
   const tickerClosed = tickerClosedStamp === tickerStamp;
   const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));

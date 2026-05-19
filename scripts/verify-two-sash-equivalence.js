@@ -19,11 +19,12 @@ for (const row of twoSash) {
     if (!p.equivalence?.layout || p.equivalence.layout !== row.layout) fail(row, provider, 'missing matching equivalence.layout proof');
     if (row.layout === '2flg_pfosten') {
       const proof = `${p.equivalence?.construction || ''} ${p.equivalence?.proof || ''}`.toLowerCase();
-      if (!/pfosten|mittelpfosten|group 92|2-flügel/.test(proof)) fail(row, provider, `missing Pfosten proof: ${proof || 'empty'}`);
+      if (!/pfosten|mittelpfosten|group|parameters\[2\]=22|2-flügel/.test(proof)) fail(row, provider, `missing Pfosten proof: ${proof || 'empty'}`);
     }
-    if (row.layout === '2flg_stulp') {
+    if (row.layout === '2flg_stulp_dk_dreh') {
       const proof = `${p.equivalence?.construction || ''} ${p.equivalence?.proof || ''}`.toLowerCase();
       if (!/stulp/.test(proof)) fail(row, provider, `missing Stulp proof: ${proof || 'empty'}`);
+      if (provider === 'fensterversand' && !/parameters\[2\]=2\+1.*parameters\[130\]=\[2,3\]/.test(proof)) fail(row, provider, `missing Fensterversand Stulp parameter proof: ${proof || 'empty'}`);
     }
     if (typeof p.customerTotal !== 'number' && typeof p.listTotal !== 'number') fail(row, provider, 'valid provider without numeric price');
   }

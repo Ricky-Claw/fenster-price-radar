@@ -2,29 +2,22 @@
 
 Rule: do not infer 2-flg availability from 1-flg catalog rows. A 2-flg row is published only when at least two providers return valid, equivalent live configurations with matching layout proof.
 
-## Published wide 2-flg Pfosten rows
+## Published rows
 
-23 proven wide rows are live:
+- 23 proven wide 2-flg Pfosten rows
+- 19 proven wide 2-flg Stulp rows (`Dreh-Kipp + Dreh`)
+- Total: 42 two-sash rows
 
-- Drutex · Iglo 5 Classic, 3fach: 1400x1200, 1600x1400, 1800x1600
-- Aluplast · Ideal 4000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
-- Aluplast · Ideal 5000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
-- Aluplast · Ideal 7000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
-- Aluplast · Ideal 8000, 3fach: 1400x1300, 1600x1500, 1800x1700, 2000x1900
-- Salamander · Salamander 76MD, 3fach: 1400x1200, 1600x1500, 1800x1700, 2000x1900
+## Proof sources
 
-Each row passed:
+- DFS: combined result bucket for `window_type_id=6`; Pfosten uses `stulp=0`, Stulp uses `stulp=1` and profile-specific hidden combined group ids.
+- Fensterblick: labels prove `Typ:2-Flügel` plus `Dreh-Kipp + Dreh-Kipp (Pfosten)` or `Dreh-Kipp + Dreh (Stulp)` and equal sash widths.
+- Fensterversand: parameter proof integrated:
+  - Pfosten: `parameters[2]=22`, `parameters[130]=[1,1]`
+  - Stulp DK+Dreh: `parameters[2]=2+1`, `parameters[130]=[2,3]`
 
-- DFS: valid combined result bucket for `window_type_id=6` and the profile-specific Pfosten group
-- Fensterblick: valid `Typ:2-Flügel` + `Öffnung:Dreh-Kipp + Dreh-Kipp (Pfosten)` + equal sash widths
-- Fensterversand: not used for truth until selected-option labels can be proven
+## Current limitations
 
-## Checked but not published
-
-- Drutex Iglo 5 Classic 2000x1800 failed strict gate and was not published.
-- Smaller 2-flg sizes were removed because two-sash minimum dimensions are not representative.
-- Other profile families still fail the strict two-provider proof gate: Drutex Iglo Energy Classic, Gealan S8000/S9000, Kömmerling 70/88, Salamander 82, Veka 82 MD.
-
-## Stulp
-
-Stulp remains blocked. DFS and Fensterversand do not yet provide enough proven combined-unit/selected-option evidence in the current implementation. Stulp must not be shown until the equivalence proof passes.
+- Stulp is modeled as `Dreh-Kipp + Dreh` only; the mirrored `Dreh + Dreh-Kipp` variant can be added separately if desired.
+- Salamander 76MD Stulp failed the DFS combined-bucket gate and is not published.
+- Other profile families still fail the strict proof gate: Drutex Iglo Energy Classic, Gealan S8000/S9000, Kömmerling 70/88, Salamander 82, Veka 82 MD.

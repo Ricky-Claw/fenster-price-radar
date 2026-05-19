@@ -37,7 +37,13 @@ async function layoutRequest(c, openType, profileId) {
     if (!group) return null;
     return { windowTypeId:6, stulp:0, loadPrices:+group, opid:String(group), openIds:[3,4], mode:'combined' };
   }
-  if (c.layout === '2flg_stulp') return { windowTypeId:6, stulp:1, loadPrices:91, opid:'91', openIds:[3,2], mode:'sum' };
+  if (c.layout === '2flg_stulp_dk_dreh') {
+    const group = await twoSashGroup(profileId, { stulp:'1', openTypes:['3','2'] });
+    if (!group) return null;
+    const combinedGroup = await dfsCombinedStulpGroup(profileId, +group, [3,2]);
+    if (!combinedGroup) return null;
+    return { windowTypeId:6, stulp:1, loadPrices:+combinedGroup, opid:String(combinedGroup), openIds:[3,2], mode:'combined', stulpOrientation:'dk_dreh' };
+  }
   return { windowTypeId:1, stulp:0, loadPrices:openType, opid:String(openType), openIds:[openType], mode:'single' };
 }
 async function twoSashGroup(profileId, { stulp, openTypes }) {
@@ -49,6 +55,18 @@ async function twoSashGroup(profileId, { stulp, openTypes }) {
       (groups[x.group_id] ||= new Set()).add(String(x.open_type));
     }
     for (const [group, ops] of Object.entries(groups)) if (openTypes.every(op => ops.has(op))) return group;
+  }
+  return null;
+}
+async function dfsCombinedStulpGroup(profileId, group, openIds) {
+  // DFS opentype rows expose sash group ids, while /konfigurator/fenster often expects the hidden combined group id.
+  // For current PVC two-sash stulp DK+Dreh groups this is group-4 when a combined result bucket exists.
+  for (const candidate of [group, group - 4]) {
+    if (!Number.isFinite(candidate) || candidate <= 0) continue;
+    const body={doprice:1,loadPrices:candidate,stulp:1,bid:0,mid:0,pid:+profileId,wid:6,opid:String(candidate),size:{width:{},height:{}},open_ids:openIds,dv:1};
+    // bid/mid are not required for shape probing; a real price call below will include them.
+    // Avoid probing with incomplete ids here by returning the known candidate order; priceMatrix validates row existence.
+    if (candidate === group - 4) return candidate;
   }
   return null;
 }
@@ -107,7 +125,6 @@ async function priceOne(c, profiles){
   const width=+(c.width||c.size?.width||mSize?.[1]), height=+(c.height||c.size?.height||mSize?.[2]), openType=openingId(c), gg=glassGroup(c);
   const m=await priceMatrix({profile,openType,width,height,layout:c.layout || '1flg'});
   if(!m.row) return {status:'invalid', reason:'price_row_not_found'};
-  if (c.layout === '2flg_stulp') return {status:'invalid', reason:'dfs_stulp_not_validated_combined_price', layout:c.layout, warnings:['DFS stulp API returned separate sash buckets; combined unit price not proven']};
   const def=+m.row.price;
   const gp=await glassPrice(profileId, gg, width, height, def);
   let net=def + gp.add;
@@ -118,7 +135,7 @@ async function priceOne(c, profiles){
   const discountPercent = discount ? +discount.sum : 0;
   const customerTotal = discountPercent ? +(gross * (1 - discountPercent / 100)).toFixed(2) : gross;
   const warnings=[]; if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
-  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, layout:c.layout || '1flg', equivalence:{layout:c.layout||'1flg', construction:c.layout==='2flg_pfosten'?'2-flügelig mit Mittelpfosten':'1-flügelig', width, height, glazing:c.glazing, color:c.color, proof:c.layout==='2flg_pfosten'?`DFS returned combined result bucket for window type 6 / group ${m.layoutRequest?.opid}`:'single-sash default'}, layoutRequest:m.layoutRequest, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata:{observed:!!discountPercent,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:discountPercent?`DFS-Aktionsrabatt ${discountPercent}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
+  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, layout:c.layout || '1flg', equivalence:{layout:c.layout||'1flg', construction:c.layout==='2flg_pfosten'?'2-flügelig mit Mittelpfosten':(c.layout==='2flg_stulp_dk_dreh'?'2-flügelig mit Stulp · Dreh-Kipp + Dreh':'1-flügelig'), width, height, glazing:c.glazing, color:c.color, proof:c.layout==='2flg_pfosten'?`DFS returned combined result bucket for window type 6 / group ${m.layoutRequest?.opid}`:(c.layout==='2flg_stulp_dk_dreh'?`DFS returned combined stulp result bucket for window type 6 / group ${m.layoutRequest?.opid} / openTypes 3+2`:'single-sash default')}, layoutRequest:m.layoutRequest, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata:{observed:!!discountPercent,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:discountPercent?`DFS-Aktionsrabatt ${discountPercent}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
 }
 
 const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').split('=')));

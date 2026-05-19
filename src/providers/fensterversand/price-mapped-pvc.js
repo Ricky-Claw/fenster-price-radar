@@ -30,11 +30,11 @@ for (const cfg of catalog.slice(0, limit)) {
   const listTotal = profileDiscount ? Number((customerTotal / (1 - profileDiscount / 100)).toFixed(2)) : Number(json.price?.total);
   results.push({
     provider:'Fensterversand', input:cfg, mappedProfile:mapped.name, status:res.status,
-    comparePrice:{ listTotal, currency:'EUR', discountApplied:!!profileDiscount, valid: Number(json.price?.total) > 0 && (cfg.layout || '1flg') === '1flg' },
+    comparePrice:{ listTotal, currency:'EUR', discountApplied:!!profileDiscount, valid: Number(json.price?.total) > 0 && fensterversandEquivalent(cfg.layout || '1flg', json) },
     customerPrice:{ total: customerTotal, currency:'EUR' },
-    equivalence:{ layout:cfg.layout || '1flg', proof:(cfg.layout || '1flg') === '1flg' ? 'single-sash default' : 'blocked: Fensterversand response does not expose enough selected-option labels to prove Pfosten/Stulp equivalence yet' },
+    equivalence:fensterversandEquivalence(cfg.layout || '1flg', json),
     discountMetadata:{ observed:!!profileDiscount, observedDiscountPercent:profileDiscount/100, discountedTotalObserved: customerTotal, observedDiscount: profileDiscount, percentages, note:profileDiscount?`Fensterversand-Profilrabatt ${profileDiscount}% aus price.percentages`:'kein Profilrabatt in price.percentages' },
-    warnings: Number(json.price?.total) > 0 ? ((cfg.layout || '1flg') === '1flg' ? [] : ['fensterversand_two_sash_equivalence_not_proven']) : ['zero_or_unavailable_price'],
+    warnings: Number(json.price?.total) > 0 ? (fensterversandEquivalent(cfg.layout || '1flg', json) ? [] : ['fensterversand_two_sash_equivalence_not_proven']) : ['zero_or_unavailable_price'],
     dimensions: json.dimensions ? { x: json.dimensions.x, y: json.dimensions.y, qm: json.dimensions.qm, rm: json.dimensions.rm } : null,
     requestConfig: payload.configuration
   });
@@ -58,14 +58,27 @@ function buildPayload({width,height,brandId,profileId,glazing,color,opening,layo
     c.a_155.value = 8625; // Zweiteilig
     c.a_161 = c.a_161 || { aId:161, value:null, isCustom:false };
     c.a_161.value = 1045; // DK links + DK rechts, mit Mittelpfosten
-  } else if (layout === '2flg_stulp') {
+  } else if (layout === '2flg_stulp_dk_dreh') {
     c.a_155.value = 8625; // Zweiteilig
     c.a_161 = c.a_161 || { aId:161, value:null, isCustom:false };
-    c.a_161.value = 1044; // DK links + Dreh rechts, Stulp-ähnliche zweiflügelige Ausführung
+    c.a_161.value = 1044; // DK links + Dreh rechts, Stulp
   } else {
     c.a_157.value = /fest/i.test(opening) ? 1020 : 1021; // default DK links
   }
   return p;
+}
+function fensterversandParams(json) { return json.information?.parameters || {}; }
+function fensterversandEquivalent(layout, json) {
+  if (layout === '1flg') return true;
+  const p = fensterversandParams(json);
+  if (layout === '2flg_pfosten') return p['2'] === '22' && p['130'] === '[1,1]';
+  if (layout === '2flg_stulp_dk_dreh') return p['2'] === '2+1' && p['130'] === '[2,3]';
+  return false;
+}
+function fensterversandEquivalence(layout, json) {
+  const p = fensterversandParams(json);
+  const construction = layout === '2flg_pfosten' ? '2-flügelig mit Mittelpfosten' : layout === '2flg_stulp_dk_dreh' ? '2-flügelig mit Stulp · Dreh-Kipp + Dreh' : '1-flügelig';
+  return { layout, construction, proof: layout === '1flg' ? 'single-sash default' : `Fensterversand parameters proof: parameters[2]=${p['2'] || 'missing'}, parameters[130]=${p['130'] || 'missing'}` };
 }
 function mapProfile(cfg) {
   const s = `${cfg.brand} ${cfg.profile}`.toLowerCase().replace(/neo/,'neo').replace(/ö/g,'o');
