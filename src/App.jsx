@@ -21,12 +21,26 @@ const isIssue = p => p && !isUnavailable(p) && (p.warnings?.length || !p.valid);
 const shortProvider = id => id === 'dfs' ? 'DFS' : id === 'fensterblick' ? 'FB' : id === 'fensterversand' ? 'FV' : id;
 const changeValue = change => typeof change?.delta === 'number' ? change.delta : change?.listDelta;
 const hasPriceChange = change => typeof changeValue(change) === 'number' && changeValue(change) !== 0;
+const priceBasisLabel = change => change?.basis === 'customerTotal' ? 'Kundenpreis' : 'Listenpreis';
 const singleChangeLabel = (change, providerId) => {
   const d = changeValue(change);
   if (typeof d !== 'number') return <span className="muted">neu/kein Verlauf</span>;
   if (d === 0) return <span className="trend flat">unverändert</span>;
   const pct = typeof change.deltaPct === 'number' ? change.deltaPct : change.listDeltaPct;
   return <span className={cls('trend', d > 0 ? 'up' : 'down')}>{providerId ? `${shortProvider(providerId)} ` : ''}{d > 0 ? '+' : ''}{eur(d)}{typeof pct === 'number' ? ` · ${d > 0 ? '+' : ''}${pct}%` : ''}</span>;
+};
+const providerChangeLine = change => {
+  if(!change) return <small className="muted">Vorwochenvergleich nicht verfügbar</small>;
+  if(!hasPriceChange(change)) return <small className="trend flat inlineTrend">zur Vorwoche unverändert</small>;
+  return <small className="providerChange"><span>{priceBasisLabel(change)} zur Vorwoche</span>{singleChangeLabel(change)}</small>;
+};
+const changeSummary = (payload, data) => {
+  const changedRows = data.filter(row => Object.values(row.weeklyChange||{}).some(hasPriceChange)).length;
+  const changedEntries = data.flatMap(row => Object.values(row.weeklyChange||{})).filter(hasPriceChange);
+  const byProvider = providers.map(([id,name]) => [name, data.filter(row => hasPriceChange(row.weeklyChange?.[id])).length]).filter(([,count])=>count);
+  const from = payload?.comparisonBaseline?.generatedAt ? new Date(payload.comparisonBaseline.generatedAt).toLocaleDateString('de-DE') : 'Vorwoche';
+  const to = payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'heute';
+  return {from,to,changedRows,changedEntries:changedEntries.length,byProvider};
 };
 const rowChangeLabel = row => {
   const changes = providers
@@ -64,9 +78,10 @@ function discountText(p){
 }
 function providerCell(row, id){
   const p=row.providers[id];
+  const change=row.weeklyChange?.[id];
   if(!p) return <td className="muted">—</td>;
-  if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></td>;
-  return <td className="price"><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></td>;
+  if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span>{change ? providerChangeLine(change) : null}</td>;
+  return <td className="price"><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small>{providerChangeLine(change)}</td>;
 }
 
 function ChatbotDemo({ floating=false }){
@@ -188,10 +203,11 @@ function App(){
     const providerValid = Object.fromEntries(providers.map(([id]) => [id, data.filter(r=>r.providers[id]?.valid).length]));
     const changes=data.flatMap(r=>Object.values(r.weeklyChange||{})).filter(Boolean);
     const changed=changes.filter(hasPriceChange).length;
+    const changedConfigs=data.filter(r=>Object.values(r.weeklyChange||{}).some(hasPriceChange)).length;
     const up=changes.filter(c=>changeValue(c)>0).length;
     const down=changes.filter(c=>changeValue(c)<0).length;
     const layoutCounts = Object.fromEntries(layouts.filter(([id])=>id).map(([id]) => [id, data.filter(r=>(r.layout||'1flg')===id).length]));
-    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, providerValid, changed, up, down, layoutCounts};
+    return {configs:data.length, exact:exact.length, cheaper, avg, avgClass, validDfs, providerValid, changed, changedConfigs, up, down, layoutCounts};
   },[data]);
 
   const marginGrossList = Number(margin.gross || 0);
@@ -213,6 +229,7 @@ function App(){
   const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
   const tickerClosed = tickerClosedStamp === tickerStamp;
   const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));
+  const weeklySummary = changeSummary(payload, data);
   function closeTicker(){
     localStorage.setItem('priceRadarTickerClosed', tickerStamp);
     setTickerClosedStamp(tickerStamp);
@@ -286,7 +303,7 @@ function App(){
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
         <div className="card"><small>Zweiflügelig</small><b>{(stats.layoutCounts?.['2flg_pfosten']||0)+(stats.layoutCounts?.['2flg_stulp_dk_dreh']||0)}</b><span>Pfosten/Stulp geprüft</span></div>
-        <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changed}</b><span>Preisänderungen erkannt</span></div>
+        <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changedConfigs}</b><span>{stats.changed} Anbieter-Preisänderungen</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
@@ -319,9 +336,10 @@ function App(){
 
       <section className="panel" id="radar">
         <div className="panelHead">
-          <div><h2>Preisradar</h2><p>Anzeige: Kunden-Endpreis inkl. live beobachtetem Rabatt. Listenpreis und Rabatt werden je Anbieter vermerkt.</p></div>
+          <div><h2>Preisradar</h2><p>Anzeige: Kunden-Endpreis inkl. live beobachtetem Rabatt. Listenpreis, Rabatt und Wochenänderung werden je Anbieter vermerkt.</p></div>
           <a className="download" href="/data/price-radar.json" download><Download size={16}/> JSON</a>
         </div>
+        <div className="weeklySummary"><b>Wochenvergleich {weeklySummary.from} → {weeklySummary.to}</b><span>{weeklySummary.changedRows} Konfigurationen mit Preisbewegung · {weeklySummary.changedEntries} Anbieter-Änderungen</span><div>{weeklySummary.byProvider.map(([name,count])=><em key={name}>{name}: {count}</em>)}</div></div>
         <div className="layoutChooser" aria-label="Fensterbauart auswählen">{layouts.filter(([id])=>id).map(([id,label])=>{const count=stats.layoutCounts?.[id]||0; return <button key={id} type="button" className={cls('layoutChoice', layout===id&&'active')} onClick={()=>setLayout(id)}><small>{label}</small><b>{count}</b><span>{id==='1flg'?'Einflügelige Standardfenster':id==='2flg_pfosten'?'Zweiflügelig mit Mittelpfosten':'Zweiflügelig mit Stulp'}</span></button>})}</div>
         <div className="filters">
           <label className="search"><Search size={18}/><input placeholder="Suche: Marke, Profil, Größe…" value={q} onChange={e=>setQ(e.target.value)}/></label>
@@ -344,11 +362,11 @@ function App(){
 
       <details className="panel trendPanel" id="entwicklung">
         <summary className="panelHead trendSummary">
-          <div><h2>Preisentwicklung</h2><p>Vergleich aktueller Kunden-Endpreise je Anbieter zur Vorwoche.</p></div>
-          <span className="historyBadge">{stats.changed} Änderungen <span className="chevron">⌄</span></span>
+          <div><h2>Preisentwicklung</h2><p>Wochenvergleich {weeklySummary.from} → {weeklySummary.to}: aktuelle Kunden-Endpreise je Anbieter zur Vorwoche.</p></div>
+          <span className="historyBadge">{stats.changed} Anbieter-Änderungen <span className="chevron">⌄</span></span>
         </summary>
         <div className="trendList">
-          {trendChanges.slice(0,12).map(({row,id,name,change})=><div className="trendRow" key={`${row.key}-${id}`}><b>{row.brand} · {row.profile}</b><span>{name} · {row.size} · {row.glazing}</span>{singleChangeLabel(change)}</div>)}
+          {trendChanges.slice(0,24).map(({row,id,name,change})=><div className="trendRow" key={`${row.key}-${id}`}><b>{row.brand} · {row.profile}</b><span>{name} · {row.size} · {row.glazing} · vorher {eur(change.previous)} → jetzt {eur(change.current)}</span>{singleChangeLabel(change)}</div>)}
           {!trendChanges.length && <p className="emptyTrend">Keine Preisänderungen zur Vorwoche gefunden oder noch kein Vorwochen-Snapshot vorhanden.</p>}
         </div>
       </details>
@@ -356,7 +374,7 @@ function App(){
 
     <ChatbotDemo floating />
 
-    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small><small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
+    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small>{providerChangeLine(active.weeklyChange?.[id])}<small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
   </>;
 }
 
