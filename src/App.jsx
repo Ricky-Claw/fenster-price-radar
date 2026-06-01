@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { createRoot } from 'react-dom/client';
 import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight, MessageCircle, Send } from 'lucide-react';
+import { providerProfileLink, rowConfigLink } from './configLinks.js';
 import './styles.css';
 
 const providers = [
@@ -76,12 +77,14 @@ function discountText(p){
   const pct = typeof meta.observedDiscountPercent === 'number' ? `${Math.round(meta.observedDiscountPercent*100)}%` : (typeof meta.observedDiscount === 'number' && meta.observedDiscount ? `${meta.observedDiscount}` : 'Rabatt');
   return pct;
 }
+function stopRowClick(e){ e.stopPropagation(); }
 function providerCell(row, id){
   const p=row.providers[id];
   const change=row.weeklyChange?.[id];
   if(!p) return <td className="muted">—</td>;
-  if(!p.valid) return <td><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span>{change ? providerChangeLine(change) : null}</td>;
-  return <td className="price"><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small>{providerChangeLine(change)}</td>;
+  const href = providerProfileLink(row, id);
+  if(!p.valid) return <td><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></a>{change ? providerChangeLine(change) : null}</td>;
+  return <td className="price"><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></a>{providerChangeLine(change)}</td>;
 }
 
 function ChatbotDemo({ floating=false }){
@@ -385,7 +388,7 @@ function App(){
 
         <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
           {filtered.map(row=><tr key={row.key} onClick={()=>setActive(row)}>
-            <td><b>{row.brand} · {row.profile}</b><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
+            <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
             {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
             <td>{rowChangeLabel(row)}</td>
