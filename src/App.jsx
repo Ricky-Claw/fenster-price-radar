@@ -225,7 +225,7 @@ function App(){
   const twoSashCount = data.filter(r => (r.layout || '1flg').startsWith('2flg_')).length;
   const pfostenCount = data.filter(r => (r.layout || '1flg') === '2flg_pfosten').length;
   const stulpCount = data.filter(r => (r.layout || '1flg') === '2flg_stulp_dk_dreh').length;
-  const tickerText = `Update: ${twoSashCount} geprüfte zweiflügelige Konfigurationen ergänzt · ${pfostenCount} Pfosten + ${stulpCount} Stulp · Fensterversand-Proof integriert · breite Größen bis 2000 mm. Datenstand ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktuell'}.`;
+  const tickerText = `Marktcheck vom ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktuellen Lauf'}: ${stats.changedConfigs} Konfigurationen mit Preisbewegung · ${stats.changed} Anbieter-Änderungen · Datenbasis ${stats.configs} geprüfte Konfigurationen (${pfostenCount} Pfosten, ${stulpCount} Stulp).`;
   const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
   const tickerClosed = tickerClosedStamp === tickerStamp;
   const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));
