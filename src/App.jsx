@@ -222,10 +222,44 @@ function App(){
   const maxDiscount = marginGrossList > 0 ? Math.max(0, (1 - minGross / marginGrossList) * 100) : 0;
   const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
+  const weeklyProviderStats = useMemo(() => providers.map(([id, name]) => {
+    const changes = data.map(row => row.weeklyChange?.[id]).filter(hasPriceChange);
+    const deltas = changes.map(changeValue).filter(v => typeof v === 'number');
+    const pctValues = changes
+      .map(change => typeof change.deltaPct === 'number' ? change.deltaPct : change.listDeltaPct)
+      .filter(v => typeof v === 'number');
+    const pctMode = pctValues.length ? pctValues.reduce((best, value) => {
+      const count = pctValues.filter(v => Math.abs(v - value) < 0.05).length;
+      return count > best.count ? { value, count } : best;
+    }, { value: pctValues[0], count: 0 }).value : null;
+    return {
+      id,
+      name,
+      count: changes.length,
+      up: deltas.filter(v => v > 0).length,
+      down: deltas.filter(v => v < 0).length,
+      avg: deltas.length ? deltas.reduce((sum, v) => sum + v, 0) / deltas.length : 0,
+      pctMode
+    };
+  }), [data]);
+  const topWeeklyChange = useMemo(() => data
+    .flatMap(row => providers.map(([id, name]) => ({ row, id, name, change: row.weeklyChange?.[id] })))
+    .filter(x => hasPriceChange(x.change))
+    .sort((a, b) => Math.abs(changeValue(b.change)) - Math.abs(changeValue(a.change)))[0], [data]);
+
   const twoSashCount = data.filter(r => (r.layout || '1flg').startsWith('2flg_')).length;
   const pfostenCount = data.filter(r => (r.layout || '1flg') === '2flg_pfosten').length;
   const stulpCount = data.filter(r => (r.layout || '1flg') === '2flg_stulp_dk_dreh').length;
-  const tickerText = `Marktcheck vom ${payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktuellen Lauf'}: ${stats.changedConfigs} Konfigurationen mit Preisbewegung · ${stats.changed} Anbieter-Änderungen · Datenbasis ${stats.configs} geprüfte Konfigurationen (${pfostenCount} Pfosten, ${stulpCount} Stulp).`;
+  const tickerDate = payload?.generatedAt ? new Date(payload.generatedAt).toLocaleDateString('de-DE') : 'aktueller Lauf';
+  const baselineDate = payload?.comparisonBaseline?.generatedAt ? new Date(payload.comparisonBaseline.generatedAt).toLocaleDateString('de-DE') : 'Vorwoche';
+  const providerNews = weeklyProviderStats.map(stat => {
+    if (!stat.count) return `${stat.name}: stabil`;
+    const direction = stat.down && !stat.up ? 'gesunken' : stat.up && !stat.down ? 'gestiegen' : 'bewegt';
+    const pctNote = stat.pctMode && stat.id === 'fensterblick' ? `, häufig ca. +${stat.pctMode.toFixed(1).replace('.', ',')} %` : '';
+    return `${stat.name}: ${stat.count} Preise ${direction}, Ø ${stat.avg > 0 ? '+' : ''}${eur(stat.avg)}${pctNote}`;
+  }).join(' · ');
+  const topNews = topWeeklyChange ? `Größte Bewegung: ${topWeeklyChange.name} ${changeValue(topWeeklyChange.change) > 0 ? '+' : ''}${eur(changeValue(topWeeklyChange.change))} bei ${topWeeklyChange.row.profile} ${topWeeklyChange.row.size}.` : 'Keine Preisbewegungen zur Vorwoche.';
+  const tickerText = `Marktcheck ${tickerDate} gegenüber ${baselineDate}: ${stats.changed} Anbieter-Preisänderungen in ${stats.changedConfigs} Konfigurationen. ${providerNews}. ${topNews} Datenbasis: ${stats.configs} geprüfte Konfigurationen (${pfostenCount} Pfosten, ${stulpCount} Stulp).`;
   const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
   const tickerClosed = tickerClosedStamp === tickerStamp;
   const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));
