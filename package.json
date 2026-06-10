@@ -13,6 +13,8 @@
     "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
     "fv:pvc:mapped": "node src/providers/fensterversand/price-mapped-pvc.js",
     "prices:update": "node scripts/update-prices.js && npm run verify:prices",
+    "test:calendar": "node tests/action-calendar.mjs",
+    "test:app-shell": "node tests/app-shell.mjs",
     "test:links": "node tests/config-links.mjs",
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js",
