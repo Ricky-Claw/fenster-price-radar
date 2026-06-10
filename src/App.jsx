@@ -1,6 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import { createRoot } from 'react-dom/client';
-import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight, MessageCircle, Send } from 'lucide-react';
+import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight, MessageCircle, Send, CalendarDays, Megaphone, Save, Trash2, ClipboardList } from 'lucide-react';
+import { ACTION_CALENDAR, createActionComment, currentActionCalendarVersion } from './actionCalendar.js';
 import { providerProfileLink, rowConfigLink } from './configLinks.js';
 import './styles.css';
 
@@ -160,6 +161,121 @@ function LoginPage(){
   </main>;
 }
 
+function ActionCalendar(){
+  const storageKey = `actionCalendarComments:${currentActionCalendarVersion}`;
+  const [comments,setComments]=useState(()=>{
+    try { return JSON.parse(localStorage.getItem(storageKey) || '{}'); }
+    catch { return {}; }
+  });
+  const [forms,setForms]=useState(()=>Object.fromEntries(ACTION_CALENDAR.map(action=>[action.id,{author:'',channel:action.channels[0]||'Allgemein',status:'Geplant',note:''}])));
+  const statusOptions=['Geplant','In Arbeit','Erledigt','Freigabe offen','Blockiert'];
+  function persist(next){
+    setComments(next);
+    localStorage.setItem(storageKey, JSON.stringify(next));
+  }
+  function updateForm(actionId, patch){
+    setForms(prev=>({...prev,[actionId]:{...prev[actionId],...patch}}));
+  }
+  function saveComment(actionId){
+    const form=forms[actionId]||{};
+    if(!String(form.note||'').trim()) return;
+    const comment=createActionComment({actionId,...form});
+    const next={...comments,[actionId]:[comment,...(comments[actionId]||[])]};
+    persist(next);
+    updateForm(actionId,{note:''});
+  }
+  function deleteComment(actionId, commentId){
+    const next={...comments,[actionId]:(comments[actionId]||[]).filter(comment=>comment.id!==commentId)};
+    persist(next);
+  }
+  const exportedComments=encodeURIComponent(JSON.stringify({version:currentActionCalendarVersion,comments},null,2));
+  return <section className="actionCalendar" id="aktionskalender">
+    <div className="actionHero">
+      <div>
+        <p className="eyebrow">Aktionskalender 2026 · Version {currentActionCalendarVersion}</p>
+        <h2>Nach der WM wird Energieberatung zur Hauptaktion.</h2>
+        <p>Der Kalender führt die laufende Heimspiel-Kampagne sauber zu Ende und setzt danach die große Aktion <strong>Deutscher Fenstershop x Förderheld</strong> für Website, E-Mail, Social Media und Ads.</p>
+      </div>
+      <div className="actionHeroCard">
+        <CalendarDays size={26}/>
+        <b>Förderheld ab 20.07.</b>
+        <span>Große Aktion mit klaren Design Rules, Wording und Team-Log.</span>
+      </div>
+    </div>
+    <div className="actionToolbar">
+      <span><ClipboardList size={17}/> Kommentare werden lokal im Browser gespeichert und enthalten automatisch Zeitpunkt, Autor, Kanal und Status.</span>
+      <a className="download" href={`data:application/json;charset=utf-8,${exportedComments}`} download={`aktionskalender-kommentare-${currentActionCalendarVersion}.json`}><Download size={16}/> Kommentare exportieren</a>
+    </div>
+    <div className="actionList">
+      {ACTION_CALENDAR.map(action=>{
+        const form=forms[action.id]||{};
+        const actionComments=comments[action.id]||[];
+        return <article key={action.id} className={cls('actionItem',action.scale==='Große Aktion'&&'major')}>
+          <div className="actionTop">
+            <div>
+              <span className="actionPhase">{action.phase}</span>
+              <h3>{action.title}</h3>
+              <p>{action.partner} · {action.dateRange}</p>
+            </div>
+            <strong>{action.scale}</strong>
+          </div>
+          <div className="actionStory">
+            <div>
+              <small>Claim</small>
+              <b>{action.claim}</b>
+              <p>{action.story}</p>
+            </div>
+            <div>
+              <small>Angebot / Rahmen</small>
+              <p>{action.offer}</p>
+              <em>{action.timingNote}</em>
+            </div>
+          </div>
+          <div className="channelRow">{action.channels.map(channel=><span key={channel}>{channel}</span>)}</div>
+          <div className="ruleGrid">
+            <section>
+              <h4><Megaphone size={16}/> Design Rules</h4>
+              <ul>{action.designRules.map(rule=><li key={rule}>{rule}</li>)}</ul>
+            </section>
+            <section>
+              <h4>Wording: so schreiben</h4>
+              <ul>{action.wording.do.map(rule=><li key={rule}>{rule}</li>)}</ul>
+            </section>
+            <section>
+              <h4>Wording: vermeiden</h4>
+              <ul>{action.wording.dont.map(rule=><li key={rule}>{rule}</li>)}</ul>
+            </section>
+          </div>
+          <div className="deliverables">
+            {action.deliverables.map(item=><span key={item}>{item}</span>)}
+          </div>
+          <div className="commentBox">
+            <div>
+              <h4>Team-Log: wer hat was wann gemacht?</h4>
+              <p>{action.commentPrompts.join(' · ')}</p>
+            </div>
+            <div className="commentForm">
+              <input value={form.author||''} onChange={e=>updateForm(action.id,{author:e.target.value})} placeholder="Wer?" />
+              <select value={form.channel||action.channels[0]} onChange={e=>updateForm(action.id,{channel:e.target.value})}>{['Allgemein',...action.channels].map(channel=><option key={channel}>{channel}</option>)}</select>
+              <select value={form.status||'Geplant'} onChange={e=>updateForm(action.id,{status:e.target.value})}>{statusOptions.map(status=><option key={status}>{status}</option>)}</select>
+              <textarea value={form.note||''} onChange={e=>updateForm(action.id,{note:e.target.value})} placeholder="Was wurde gemacht, vorbereitet, freigegeben oder blockiert?" rows="3" />
+              <button type="button" className="download" onClick={()=>saveComment(action.id)}><Save size={16}/> Kommentar speichern</button>
+            </div>
+            <div className="commentList">
+              {actionComments.map(comment=><div className="commentEntry" key={comment.id}>
+                <div><b>{comment.author}</b><span>{new Date(comment.createdAt).toLocaleString('de-DE')} · {comment.channel} · {comment.status}</span></div>
+                <p>{comment.note}</p>
+                <button type="button" onClick={()=>deleteComment(action.id,comment.id)} aria-label="Kommentar löschen"><Trash2 size={15}/></button>
+              </div>)}
+              {!actionComments.length?<p className="emptyComment">Noch keine Einträge für diese Aktion.</p>:null}
+            </div>
+          </div>
+        </article>;
+      })}
+    </div>
+  </section>;
+}
+
 function App(){
   if (window.location.pathname === '/login') return <LoginPage />;
   const [payload,setPayload]=useState(null);
@@ -276,7 +392,7 @@ function App(){
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
-      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#chatbot">Chatbot</a><a href="#briefings">Briefings</a><a href="/reports/mapping-audit.html" target="_blank" rel="noreferrer">DFS Audit</a></nav>
+      <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#aktionskalender">Aktionskalender</a><a href="#chatbot">Chatbot</a><a href="#briefings">Briefings</a></nav>
       <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
     </header>
 
@@ -301,6 +417,7 @@ function App(){
         </div>
       </section>
 
+      <ActionCalendar />
 
       <section className="panel quotePanel" id="konfigurator">
         <div className="panelHead">
