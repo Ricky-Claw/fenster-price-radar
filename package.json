@@ -17,8 +17,9 @@
     "test:app-shell": "node tests/app-shell.mjs",
     "test:links": "node tests/config-links.mjs",
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",
-    "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js",
+    "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js && node --check tools/ebook-maker/make-ebook.mjs",
     "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",
+    "ebook:make": "node tools/ebook-maker/make-ebook.mjs",
     "knowledge:crawl": "node scripts/crawl-dfs-knowledge.js"
   },
   "dependencies": {
