@@ -23,6 +23,11 @@ const isIssue = p => p && !isUnavailable(p) && (p.warnings?.length || !p.valid);
 const shortProvider = id => id === 'dfs' ? 'DFS' : id === 'fensterblick' ? 'FB' : id === 'fensterversand' ? 'FV' : id;
 const changeValue = change => typeof change?.delta === 'number' ? change.delta : change?.listDelta;
 const hasPriceChange = change => typeof changeValue(change) === 'number' && changeValue(change) !== 0;
+const daysSince = value => {
+  const date = value ? new Date(value) : null;
+  if (!date || Number.isNaN(date.getTime())) return null;
+  return Math.floor((Date.now() - date.getTime()) / 86400000);
+};
 const priceBasisLabel = change => change?.basis === 'customerTotal' ? 'Kundenpreis' : 'Listenpreis';
 const singleChangeLabel = (change, providerId) => {
   const d = changeValue(change);
@@ -79,13 +84,22 @@ function discountText(p){
   return pct;
 }
 function stopRowClick(e){ e.stopPropagation(); }
+function cheapestProviderIds(row){
+  const priced = providers
+    .map(([id]) => ({ id, total: row.providers[id]?.customerTotal ?? row.providers[id]?.listTotal, valid: row.providers[id]?.valid }))
+    .filter(p => p.valid && typeof p.total === 'number');
+  if (!priced.length) return new Set();
+  const min = Math.min(...priced.map(p => p.total));
+  return new Set(priced.filter(p => p.total === min).map(p => p.id));
+}
 function providerCell(row, id){
   const p=row.providers[id];
   const change=row.weeklyChange?.[id];
   if(!p) return <td className="muted">—</td>;
   const href = providerProfileLink(row, id);
+  const isCheapest = cheapestProviderIds(row).has(id);
   if(!p.valid) return <td><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></a>{change ? providerChangeLine(change) : null}</td>;
-  return <td className="price"><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{eur(p.customerTotal ?? p.listTotal)}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></a>{providerChangeLine(change)}</td>;
+  return <td className={cls('price', isCheapest && 'bestPrice')}><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{eur(p.customerTotal ?? p.listTotal)}{isCheapest ? <span className="bestMarker">Billigster</span> : null}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></a>{providerChangeLine(change)}</td>;
 }
 
 function ChatbotDemo({ floating=false }){
@@ -280,6 +294,7 @@ function App(){
   if (window.location.pathname === '/login') return <LoginPage />;
   const [payload,setPayload]=useState(null);
   const [tickerClosedStamp,setTickerClosedStamp]=useState(()=>localStorage.getItem('priceRadarTickerClosed') || '');
+  const [staleClosedStamp,setStaleClosedStamp]=useState(()=>localStorage.getItem('priceRadarStaleClosed') || '');
   const [q,setQ]=useState('');
   const [brand,setBrand]=useState('');
   const [profile,setProfile]=useState('');
@@ -381,11 +396,18 @@ function App(){
   const tickerText = `Marktcheck ${tickerDate} gegenüber ${baselineDate}: ${stats.changed} Anbieter-Preisänderungen in ${stats.changedConfigs} Konfigurationen. ${providerNews}. ${topNews} Datenbasis: ${stats.configs} geprüfte Konfigurationen (${pfostenCount} Pfosten, ${stulpCount} Stulp).`;
   const tickerStamp = payload?.generatedAt?.slice(0,10) || '';
   const tickerClosed = tickerClosedStamp === tickerStamp;
+  const dataAgeDays = daysSince(payload?.generatedAt);
+  const staleBannerClosed = staleClosedStamp === tickerStamp;
+  const showStaleBanner = typeof dataAgeDays === 'number' && dataAgeDays > 7 && !staleBannerClosed;
   const trendChanges = data.flatMap(row => providers.map(([id,name]) => ({ row, id, name, change: row.weeklyChange?.[id] }))).filter(x => hasPriceChange(x.change));
   const weeklySummary = changeSummary(payload, data);
   function closeTicker(){
     localStorage.setItem('priceRadarTickerClosed', tickerStamp);
     setTickerClosedStamp(tickerStamp);
+  }
+  function closeStaleBanner(){
+    localStorage.setItem('priceRadarStaleClosed', tickerStamp);
+    setStaleClosedStamp(tickerStamp);
   }
 
   if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
@@ -397,6 +419,13 @@ function App(){
     </header>
 
     <main>
+      {showStaleBanner && <section className="weeklyTicker staleTicker" role="alert">
+        <div>
+          <strong>Daten veraltet</strong>
+          <span>Daten sind {dataAgeDays} Tage alt. Bitte aktuellen Weekly-Lauf prüfen.</span>
+        </div>
+        <button type="button" onClick={closeStaleBanner} aria-label="Hinweis zu alten Preisdaten ausblenden">×</button>
+      </section>}
       {!tickerClosed && <section className="weeklyTicker" role="status" aria-live="polite">
         <div>
           <strong>Wochen-Ticker</strong>
@@ -457,7 +486,7 @@ function App(){
         <div className="card"><small>Konfigurationen</small><b>{stats.configs}</b><span>PVC V1 Katalog</span></div>
         <div className="card"><small>DFS exakt gültig</small><b>{stats.validDfs}</b><span>ohne Rasterwarnung</span></div>
         <div className="card"><small>Zweiflügelig</small><b>{(stats.layoutCounts?.['2flg_pfosten']||0)+(stats.layoutCounts?.['2flg_stulp_dk_dreh']||0)}</b><span>Pfosten/Stulp geprüft</span></div>
-        <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changedConfigs}</b><span>{stats.changed} Anbieter-Preisänderungen</span></div>
+        <div className="card"><small>Änderungen zur Vorwoche</small><b>{stats.changedConfigs}</b><span>{stats.changed} Anbieter-Preisänderungen · ↑ {stats.up} / ↓ {stats.down}</span></div>
         <div className={cls('card','spread',stats.avgClass)}><small>DFS vs günstigster Wettbewerber</small><b>{stats.avg>0?'+':''}{stats.avg.toFixed(1)}%</b><span>{stats.avg<=0?'DFS im Schnitt günstiger/gleich':'DFS im Schnitt teurer'}</span></div>
       </section>
 
@@ -514,7 +543,7 @@ function App(){
         </tbody></table></div>
       </section>
 
-      <details className="panel trendPanel" id="entwicklung">
+      <details className="panel trendPanel" id="entwicklung" open={stats.changed > 0}>
         <summary className="panelHead trendSummary">
           <div><h2>Preisentwicklung</h2><p>Wochenvergleich {weeklySummary.from} → {weeklySummary.to}: aktuelle Kunden-Endpreise je Anbieter zur Vorwoche.</p></div>
           <span className="historyBadge">{stats.changed} Anbieter-Änderungen <span className="chevron">⌄</span></span>

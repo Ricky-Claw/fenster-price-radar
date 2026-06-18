@@ -2,6 +2,10 @@ name: Weekly price update
 
 on:
   workflow_dispatch:
+  # VPS cron is the primary Monday trigger; this workflow is a manual fallback.
+  # Actions minutes are exhausted until 2026-07-01, and two live triggers would race on main.
+  # schedule:
+  #   - cron: '17 3 * * 1'
 
 permissions:
   contents: write
@@ -37,4 +41,4 @@ jobs:
           commit_message: 'chore(data): weekly price snapshot'
           commit_user_name: 'Ricky-Claw'
           commit_user_email: 'ricky@lanistasoundcraft.de'
-          file_pattern: 'public/data/price-radar.json public/data/history/*.json results/**/*.json results/**/*.csv'
+          file_pattern: 'public/data/price-radar.json public/data/history/*.json'

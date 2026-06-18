@@ -18,11 +18,21 @@ npm run build
 
 ## Datenmodell
 
-- Quelle: `../fenstershop-agent/results/*/results.json`
-- Generiert: `public/data/price-radar.json`
+- Quelle: `data/comparison-catalog.json` + In-Repo-Provider-Skripte unter `src/providers/{dfs,fensterblick,fensterversand}/`
+- Laufdaten: `results/<provider>-mapped-pvc-<timestamp>/results.json` (gitignored)
+- Generiert: `public/data/price-radar.json` und `public/data/history/price-radar-YYYY-MM-DD.json`
 - Canonical comparison price: Brutto-Listenpreis vor Rabatt
 - Shop-Rabatte werden nicht automatisch angewendet
 - Ungültige/gerundete Konfigurationen bleiben sichtbar, aber `valid=false`
+
+## So aktualisieren sich die Preise
+
+1. `data/comparison-catalog.json` definiert die zu prüfenden PVC-Konfigurationen.
+2. `npm run prices:update` startet die Provider-Skripte für DFS, Fensterblick und Fensterversand. Sie holen Preise aus den Live-Konfigurator-JSON-APIs und schreiben vollständige Läufe nach `results/`.
+3. `scripts/sync-results.js` baut daraus `public/data/price-radar.json` und den datierten Snapshot unter `public/data/history/`. Bei unvollständigen Provider-Läufen bricht der Sync ab, bevor Public-Daten veröffentlicht werden.
+4. `scripts/verify-price-radar.js` und `scripts/verify-two-sash-equivalence.js` prüfen den Snapshot als Quality-Gate (`npm run verify:prices`).
+
+Der wöchentliche Montagslauf läuft primär als VPS-Cron auf Hostinger `nexus-host`. Die GitHub Action bleibt als manueller Fallback per `workflow_dispatch`. `results/` wird nicht committed; committed werden nur `public/data/price-radar.json` und `public/data/history/*.json`.
 
 ## V1 Scope
 
