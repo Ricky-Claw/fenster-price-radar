@@ -4,24 +4,22 @@ This runbook keeps the weekly price update on the Hostinger `nexus-host` VPS (`s
 
 ## One-Time Setup
 
-Clone the repo via SSH into `/opt/fenster-price-radar`:
+Run the one-time setup as root so `/opt/fenster-price-radar` and the cron logs are root-owned:
 
 ```bash
-sudo mkdir -p /opt
-sudo chown "$USER":"$USER" /opt
-git clone git@github.com:Ricky-Claw/fenster-price-radar.git /opt/fenster-price-radar
-cd /opt/fenster-price-radar
-npm ci
+sudo -i
+mkdir -p /opt /var/log/fenster-price-radar ~/.ssh
+chmod 700 ~/.ssh
 ```
 
 Create a passphrase-less ed25519 deploy key on the VPS:
 
 ```bash
 ssh-keygen -t ed25519 -C "fenster-price-radar@nexus-host" -f ~/.ssh/fenster-price-radar-deploy -N ""
-cat ~/.ssh/fenster-price-radar-deploy.pub
+chmod 600 ~/.ssh/fenster-price-radar-deploy
 ```
 
-Add the public key to the GitHub repo as a deploy key with write access. Configure SSH to use it for GitHub:
+Configure SSH to use the deploy key for GitHub:
 
 ```bash
 cat >> ~/.ssh/config <<'EOF'
@@ -32,7 +30,26 @@ Host github.com
   IdentitiesOnly yes
 EOF
 chmod 600 ~/.ssh/config
+```
+
+Print the public key:
+
+```bash
+cat ~/.ssh/fenster-price-radar-deploy.pub
+```
+
+Add the public key to the GitHub repo as a deploy key with write access before continuing.
+
+Verify SSH access and clone the repo via SSH after the deploy key is registered:
+
+```bash
 ssh -T git@github.com
+git clone git@github.com:Ricky-Claw/fenster-price-radar.git /opt/fenster-price-radar
+cd /opt/fenster-price-radar
+git config user.name "Ricky-Claw"
+git config user.email "ricky@lanistasoundcraft.de"
+chown -R root:root /opt/fenster-price-radar /var/log/fenster-price-radar
+npm ci
 ```
 
 Use deploy key auth only. Do not create a PAT, do not put tokens in the repo, and never store secrets in committed files.
@@ -52,13 +69,13 @@ After a green manual test, flip the cron environment to `FPR_PUSH_ENABLED=1`.
 
 ## Crontab
 
-Install this block with `crontab -e`:
+Install this block in the root crontab with `crontab -e` from the root shell above, or with `sudo crontab -e` from a normal shell. The cron runs as root, matching root ownership of `/opt/fenster-price-radar` and write access to `/var/log/fenster-price-radar`.
 
 ```cron
 CRON_TZ=Europe/Berlin
 FPR_PUSH_ENABLED=0
 
-17 3 * * 1 mkdir -p /var/log/fenster-price-radar && flock -n /tmp/fpr-weekly.lock bash -lc 'cd /opt/fenster-price-radar && bash scripts/weekly-price-radar-update.sh' >> "/var/log/fenster-price-radar/weekly-$(date +\%F).log" 2>&1
+17 3 * * 1 flock -n /tmp/fpr-weekly.lock bash -lc 'cd /opt/fenster-price-radar && bash scripts/weekly-price-radar-update.sh' >> "/var/log/fenster-price-radar/weekly-$(date +\%F).log" 2>&1
 ```
 
 `CRON_TZ=Europe/Berlin` keeps the Monday 03:17 run aligned with Berlin time across DST changes. `flock` prevents overlapping runs.

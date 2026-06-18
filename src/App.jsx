@@ -92,12 +92,12 @@ function cheapestProviderIds(row){
   const min = Math.min(...priced.map(p => p.total));
   return new Set(priced.filter(p => p.total === min).map(p => p.id));
 }
-function providerCell(row, id){
+function providerCell(row, id, cheapestIds){
   const p=row.providers[id];
   const change=row.weeklyChange?.[id];
   if(!p) return <td className="muted">—</td>;
   const href = providerProfileLink(row, id);
-  const isCheapest = cheapestProviderIds(row).has(id);
+  const isCheapest = cheapestIds.has(id);
   if(!p.valid) return <td><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><span className="pill warn">{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' || p.status === 'unmatched' ? 'nicht im Angebot' : p.status === 'priced' ? 'gerundet' : p.status}</span></a>{change ? providerChangeLine(change) : null}</td>;
   return <td className={cls('price', isCheapest && 'bestPrice')}><a className="providerLink" href={href} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{eur(p.customerTotal ?? p.listTotal)}{isCheapest ? <span className="bestMarker">Billigster</span> : null}</b><small>Liste {eur(p.listTotal)} · {discountText(p)}</small></a>{providerChangeLine(change)}</td>;
 }
@@ -291,7 +291,6 @@ function ActionCalendar(){
 }
 
 function App(){
-  if (window.location.pathname === '/login') return <LoginPage />;
   const [payload,setPayload]=useState(null);
   const [tickerClosedStamp,setTickerClosedStamp]=useState(()=>localStorage.getItem('priceRadarTickerClosed') || '');
   const [staleClosedStamp,setStaleClosedStamp]=useState(()=>localStorage.getItem('priceRadarStaleClosed') || '');
@@ -315,7 +314,11 @@ function App(){
     } finally { setQuoteLoading(false); }
   }
 
-  useEffect(()=>{ fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload); },[]);
+  useEffect(()=>{
+    const isLoginRoute = window.location.pathname === '/login';
+    if(isLoginRoute) return;
+    fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload);
+  },[]);
   const data=payload?.configs||[];
   const filtered=useMemo(()=>data.filter(r=>{
     const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color,r.layoutLabel].join(' ').toLowerCase();
@@ -410,7 +413,9 @@ function App(){
     setStaleClosedStamp(tickerStamp);
   }
 
-  if(!payload) return <div className="loading">Fensterradar v1 wird geladen…</div>;
+  const isLoginRoute = window.location.pathname === '/login';
+  if(!payload && !isLoginRoute) return <div className="loading">Fensterradar v1 wird geladen…</div>;
+  if (isLoginRoute) return <LoginPage />;
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
@@ -533,13 +538,15 @@ function App(){
         </div>
 
         <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
-          {filtered.map(row=><tr key={row.key} onClick={()=>setActive(row)}>
+          {filtered.map(row=>{
+            const cheapestIds = cheapestProviderIds(row);
+            return <tr key={row.key} onClick={()=>setActive(row)}>
             <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
-            {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id)}</React.Fragment>)}
+            {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id,cheapestIds)}</React.Fragment>)}
             <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
             <td>{rowChangeLabel(row)}</td>
             <td>{Object.values(row.providers).some(isIssue)?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
-          </tr>)}
+          </tr>})}
         </tbody></table></div>
       </section>
 

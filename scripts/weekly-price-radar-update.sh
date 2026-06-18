@@ -24,7 +24,7 @@ git add public/data/price-radar.json "public/data/history/price-radar-${STAMP}.j
 if git diff --cached --quiet; then
   echo "No price data changes to commit."
 else
-  git commit -m "chore(data): update weekly price radar"
+  git -c user.name='Ricky-Claw' -c user.email='ricky@lanistasoundcraft.de' commit -m "chore(data): update weekly price radar"
   if [ "$FPR_PUSH_ENABLED" = "1" ]; then
     git push origin main
   else
