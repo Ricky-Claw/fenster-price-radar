@@ -48,6 +48,8 @@ sudo systemctl enable --now fpr-trigger.service
 
 The same `TOKEN` value must be set as `FPR_TRIGGER_TOKEN` in the Vercel project environment so the Vercel `/api/trigger-update` function can call this service.
 
+Note: the trigger service runs the copied file at `/opt/fenster-radar-trigger/trigger-server.js`, not the repo file directly. Updating `ops/vps/trigger-server.js` requires re-copying it to `/opt/fenster-radar-trigger/` and running `systemctl restart fpr-trigger`; a plain `git pull` does not update the running button service.
+
 ## Caddy
 
 Add this site block for `srv1332950.hstgr.cloud`. Do not remove the existing `stats.schwarzwald-agent.de` block.

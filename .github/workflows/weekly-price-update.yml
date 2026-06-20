@@ -29,8 +29,6 @@ jobs:
 
       - name: Run weekly provider update
         run: npm run prices:update
-        env:
-          PRICE_LIMIT: '104'
 
       - name: Build app
         run: npm run build

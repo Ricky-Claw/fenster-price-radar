@@ -78,6 +78,27 @@ const DFS_MATERIAL_DISCOUNTS = {
   '6|1': { sum: 15, date: '31.05.2026', source: 'window.material_discount: Fenster Drutex PVC' }
 };
 const dfsBrandDiscountCache = new Map();
+function parseDmyDate(value) {
+  if (typeof value !== 'string') return null;
+  const m = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (!m) return null;
+  const day = +m[1], month = +m[2], year = +m[3];
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+  return date;
+}
+function startOfDay(date) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+}
+function annotateDiscount(discount, runDate = new Date()) {
+  if (!discount || !(+discount.sum > 0)) return null;
+  const discountValidUntil = discount.discountValidUntil || discount.date || null;
+  if (!discountValidUntil) return { ...discount, discountValidUntil, active: true };
+  const validUntilDate = parseDmyDate(discountValidUntil);
+  if (!validUntilDate) return { ...discount, discountValidUntil, active: false, inactiveReason: 'invalid_date' };
+  const active = validUntilDate >= startOfDay(runDate);
+  return { ...discount, discountValidUntil, active, inactiveReason: active ? null : 'expired' };
+}
 async function dfsDiscount(profile) {
   const materialDiscount = DFS_MATERIAL_DISCOUNTS[`${profile.brand_id}|${profile.material_id}`];
   let brandDiscount = null;
@@ -88,8 +109,9 @@ async function dfsDiscount(profile) {
     } catch { dfsBrandDiscountCache.set(profile.brand_id, null); }
   }
   brandDiscount = dfsBrandDiscountCache.get(profile.brand_id);
-  const candidates = [materialDiscount, brandDiscount].filter(d => d && +d.sum > 0);
-  return candidates.sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
+  const candidates = [materialDiscount, brandDiscount].map(d => annotateDiscount(d)).filter(Boolean);
+  const activeCandidates = candidates.filter(d => d.active);
+  return (activeCandidates.length ? activeCandidates : candidates).sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
 }
 async function priceMatrix({profile, openType, width, height, layout}){
   const lr = await layoutRequest(layout ? { layout } : {}, openType, profile.id);
@@ -132,10 +154,13 @@ async function priceOne(c, profiles){
   net += net*percent/100;
   const gross=+(net*1.19).toFixed(2);
   const discount = await dfsDiscount(profile);
-  const discountPercent = discount ? +discount.sum : 0;
+  const discountPercent = discount?.active ? +discount.sum : 0;
   const customerTotal = discountPercent ? +(gross * (1 - discountPercent / 100)).toFixed(2) : gross;
+  const discountMetadata = discountPercent
+    ? {observed:true,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount.discountValidUntil || null,note:`DFS-Aktionsrabatt ${discountPercent}% bis ${discount.discountValidUntil || 'unbekannt'}`,source:discount.source || 'company-discout'}
+    : {observed:false,observedDiscountPercent:0,discountedTotalObserved:null,discountValidUntil:discount?.discountValidUntil || null,note:discount?.inactiveReason === 'expired' ? `Rabatt abgelaufen am ${discount.discountValidUntil} — Endpreis = Liste` : (discount?.inactiveReason === 'invalid_date' ? `Rabattdatum ungültig (${discount.discountValidUntil}) — Endpreis = Liste` : 'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'),source:discount?.source || 'company-discout'};
   const warnings=[]; if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
-  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, layout:c.layout || '1flg', equivalence:{layout:c.layout||'1flg', construction:c.layout==='2flg_pfosten'?'2-flügelig mit Mittelpfosten':(c.layout==='2flg_stulp_dk_dreh'?'2-flügelig mit Stulp · Dreh-Kipp + Dreh':'1-flügelig'), width, height, glazing:c.glazing, color:c.color, proof:c.layout==='2flg_pfosten'?`DFS returned combined result bucket for window type 6 / group ${m.layoutRequest?.opid}`:(c.layout==='2flg_stulp_dk_dreh'?`DFS returned combined stulp result bucket for window type 6 / group ${m.layoutRequest?.opid} / openTypes 3+2`:'single-sash default')}, layoutRequest:m.layoutRequest, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata:{observed:!!discountPercent,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:discountPercent?`DFS-Aktionsrabatt ${discountPercent}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'}, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
+  return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, layout:c.layout || '1flg', equivalence:{layout:c.layout||'1flg', construction:c.layout==='2flg_pfosten'?'2-flügelig mit Mittelpfosten':(c.layout==='2flg_stulp_dk_dreh'?'2-flügelig mit Stulp · Dreh-Kipp + Dreh':'1-flügelig'), width, height, glazing:c.glazing, color:c.color, proof:c.layout==='2flg_pfosten'?`DFS returned combined result bucket for window type 6 / group ${m.layoutRequest?.opid}`:(c.layout==='2flg_stulp_dk_dreh'?`DFS returned combined stulp result bucket for window type 6 / group ${m.layoutRequest?.opid} / openTypes 3+2`:'single-sash default')}, layoutRequest:m.layoutRequest, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
 }
 
 const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').split('=')));

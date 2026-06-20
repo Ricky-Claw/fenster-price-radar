@@ -100,7 +100,7 @@ Run the manual dry-run test as the new user before enabling push:
 sudo -u fensterradar bash -lc 'cd /opt/fenster-price-radar && FPR_PUSH_ENABLED=0 ./scripts/weekly-price-radar-update.sh'
 ```
 
-After a green manual test, flip the cron environment to `FPR_PUSH_ENABLED=1` if weekly pushes should deploy automatically. The button-triggered service always runs with `FPR_PUSH_ENABLED=1`, so an on-demand click commits and pushes a fresh snapshot; the cron's push behavior is governed only by the value in the `fensterradar` crontab below.
+After a green manual test, the live weekly cron must run with `FPR_PUSH_ENABLED=1` so it commits, pushes, and deploys the fresh snapshot. The `FPR_PUSH_ENABLED=0` value above is only for the initial dry-run. The button-triggered service always runs with `FPR_PUSH_ENABLED=1`, so an on-demand click commits and pushes a fresh snapshot.
 
 ## Crontab
 
@@ -112,7 +112,7 @@ sudo crontab -u fensterradar -e
 
 ```cron
 CRON_TZ=Europe/Berlin
-FPR_PUSH_ENABLED=0
+FPR_PUSH_ENABLED=1
 
 17 3 * * 1 flock -n /tmp/fpr-weekly.lock bash -lc 'cd /opt/fenster-price-radar && ./scripts/weekly-price-radar-update.sh' >> "/var/log/fenster-price-radar/weekly-$(date +\%F).log" 2>&1
 ```

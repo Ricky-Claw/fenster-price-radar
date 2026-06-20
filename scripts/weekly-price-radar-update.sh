@@ -15,6 +15,7 @@ git fetch origin main
 git pull --ff-only origin main
 
 npm ci
+trap 'rc=$?; if [ "$rc" -ne 0 ]; then echo "WARN: run failed (rc=$rc), restoring working tree"; git checkout -- public/data 2>/dev/null || true; git clean -fd public/data/history 2>/dev/null || true; fi' EXIT
 npm run prices:update
 npm run build
 

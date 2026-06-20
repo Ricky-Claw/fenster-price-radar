@@ -13,6 +13,32 @@ function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
 }
 
+function parseDmyDateStamp(value) {
+  if (typeof value !== 'string') return null;
+  const m = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (!m) return null;
+  const day = +m[1], month = +m[2], year = +m[3];
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return `${m[3]}-${m[2]}-${m[1]}`;
+}
+
+function parseIsoDateStamp(value) {
+  if (typeof value !== 'string') return null;
+  const m = value.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return null;
+  const year = +m[1], month = +m[2], day = +m[3];
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (date.getUTCFullYear() !== year || date.getUTCMonth() !== month - 1 || date.getUTCDate() !== day) return null;
+  return `${m[1]}-${m[2]}-${m[3]}`;
+}
+
+function sourceDateStamp(dir) {
+  if (typeof dir !== 'string') return null;
+  const m = dir.match(/(\d{4}-\d{2}-\d{2})T/);
+  return m ? parseIsoDateStamp(m[1]) : null;
+}
+
 if (!fs.existsSync(dataPath)) fail('public/data/price-radar.json missing');
 const payload = readJson(dataPath);
 const currentStamp = payload.generatedAt?.slice(0, 10);
@@ -36,6 +62,14 @@ try {
 
 if (filteredOut > 0 && (!Array.isArray(payload.filtered) || payload.filtered.length !== filteredOut)) {
   fail(`filtered array length must equal filteredOut (${filteredOut})`);
+}
+
+for (const [provider, dir] of Object.entries(payload.sources || {})) {
+  const sourceStamp = sourceDateStamp(dir);
+  if (!sourceStamp) continue;
+  if (sourceStamp !== currentStamp) {
+    fail(`stale source: ${provider} ${dir} not from current run (generatedAt ${currentStamp})`);
+  }
 }
 
 const historyCandidates = fs.existsSync(historyDir)
@@ -72,6 +106,11 @@ for (const config of payload.configs) {
     if (row.status === 'error') fail(`${config.key} ${provider} has provider error: ${row.reason || row.error || 'unknown'}`);
     if (row.valid && typeof row.customerTotal !== 'number' && typeof row.listTotal !== 'number') {
       fail(`${config.key} ${provider} valid without numeric price`);
+    }
+    const validUntil = row.discountMetadata?.discountValidUntil;
+    const validUntilStamp = parseDmyDateStamp(validUntil);
+    if (validUntilStamp && validUntilStamp < currentStamp && typeof row.customerTotal === 'number' && typeof row.listTotal === 'number' && row.customerTotal < row.listTotal) {
+      fail(`expired discount published: ${config.key}/${provider} validUntil ${validUntil} < generatedAt ${currentStamp}`);
     }
   }
   for (const [provider, change] of Object.entries(config.weeklyChange || {})) {
