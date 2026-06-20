@@ -56,6 +56,12 @@ sudo cat /home/fensterradar/.ssh/fenster-price-radar-deploy.pub
 
 Add the public key to the GitHub repo as a deploy key with write access before continuing.
 
+Verify SSH access after the deploy key is registered:
+
+```bash
+sudo -u fensterradar ssh -T git@github.com
+```
+
 Clone the repo into `/opt/fenster-price-radar` after the deploy key is registered. If an existing root-cron checkout already exists, move it to `/opt/fenster-price-radar` instead of cloning a second copy.
 
 ```bash
@@ -66,8 +72,11 @@ sudo -u fensterradar git clone git@github.com:Ricky-Claw/fenster-price-radar.git
 For an existing checkout:
 
 ```bash
+sudo rmdir /opt/fenster-price-radar
 sudo mv /path/to/existing/fenster-price-radar /opt/fenster-price-radar
 ```
+
+If the existing checkout already lives at `/opt/fenster-price-radar`, skip the move and only fix ownership in the next step.
 
 Then set ownership, Git identity, and dependencies:
 
