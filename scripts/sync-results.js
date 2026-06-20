@@ -181,6 +181,16 @@ const comparableConfigs = configs.filter(c => {
   const validCount = required.filter(isValidPrice).length;
   return validCount >= 2 && required.every(isCleanProvider);
 });
+const comparableKeys = new Set(comparableConfigs.map(c => c.key));
+const filteredList = configs.filter(c => !comparableKeys.has(c.key)).map(c => {
+  const required = ['dfs','fensterblick','fensterversand'].map(k => c.providers[k]);
+  const validCount = required.filter(isValidPrice).length;
+  const hasDimensionWarning = required.some(p => p?.warnings?.some(w => String(w).startsWith('dimension_rounded')));
+  const reason = validCount < 2
+    ? `nur ${validCount} vergleichbarer Anbieter${hasDimensionWarning ? ' (Maß vom Anbieter angepasst)' : ''}`
+    : 'nicht vergleichbar';
+  return { brand: c.brand, profile: c.profile, size: c.size, glazing: c.glazing, layout: c.layout, validCount, reason };
+});
 for (const c of comparableConfigs) {
   const prev = previousByKey.get(c.key);
   c.previousGeneratedAt = previousPayload?.generatedAt || null;
@@ -216,7 +226,8 @@ const payload = {
   comparisonBaseline: previous ? { generatedAt: previous.generatedAt, snapshot: previous.label } : null,
   sources,
   summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length, weeklyBaselineGeneratedAt: previousPayload?.generatedAt || null },
-  configs: comparableConfigs
+  configs: comparableConfigs,
+  filtered: filteredList
 };
 fs.writeFileSync(path.join(out, 'price-radar.json'), JSON.stringify(payload, null, 2));
 const stamp = generatedAt.slice(0, 10);

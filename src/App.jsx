@@ -320,6 +320,7 @@ function App(){
     fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload);
   },[]);
   const data=payload?.configs||[];
+  const excludedConfigs = Array.isArray(payload?.filtered) ? payload.filtered : [];
   const filtered=useMemo(()=>data.filter(r=>{
     const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color,r.layoutLabel].join(' ').toLowerCase();
     if(q && !hay.includes(q.toLowerCase())) return false;
@@ -528,6 +529,10 @@ function App(){
           <a className="download" href="/data/price-radar.json" download><Download size={16}/> JSON</a>
         </div>
         <div className="weeklySummary"><b>Wochenvergleich {weeklySummary.from} → {weeklySummary.to}</b><span>{weeklySummary.changedRows} Konfigurationen mit Preisbewegung · {weeklySummary.changedEntries} Anbieter-Änderungen</span><div>{weeklySummary.byProvider.map(([name,count])=><em key={name}>{name}: {count}</em>)}</div></div>
+        {excludedConfigs.length ? <details className="filteredNotice">
+          <summary><strong><AlertTriangle size={16}/> {excludedConfigs.length} Konfigurationen aktuell nicht vergleichbar</strong><small>Aus dem Preisradar ausgeschlossen, damit keine falschen Preise angezeigt werden.</small></summary>
+          <ul>{excludedConfigs.map((item,index)=><li key={`${item.brand}-${item.profile}-${item.size}-${index}`}><span>{item.brand} · {item.profile} · {item.size}</span><em>{item.reason || 'nicht vergleichbar'}</em></li>)}</ul>
+        </details> : null}
         <div className="layoutChooser" aria-label="Fensterbauart auswählen">{layouts.filter(([id])=>id).map(([id,label])=>{const count=stats.layoutCounts?.[id]||0; return <button key={id} type="button" className={cls('layoutChoice', layout===id&&'active')} onClick={()=>setLayout(id)}><small>{label}</small><b>{count}</b><span>{id==='1flg'?'Einflügelige Standardfenster':id==='2flg_pfosten'?'Zweiflügelig mit Mittelpfosten':'Zweiflügelig mit Stulp'}</span></button>})}</div>
         <div className="filters">
           <label className="search"><Search size={18}/><input placeholder="Suche: Marke, Profil, Größe…" value={q} onChange={e=>setQ(e.target.value)}/></label>

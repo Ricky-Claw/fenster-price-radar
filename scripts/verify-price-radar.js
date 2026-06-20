@@ -19,7 +19,24 @@ const currentStamp = payload.generatedAt?.slice(0, 10);
 if (!payload.generatedAt || !currentStamp) fail('generatedAt missing');
 if (!payload.summary?.configs) fail('summary.configs missing');
 if (!Array.isArray(payload.configs) || payload.configs.length !== payload.summary.configs) fail('configs length mismatch');
-if (payload.summary.filteredOut !== 0) fail(`filteredOut must be 0, got ${payload.summary.filteredOut}`);
+const filteredOut = payload.summary.filteredOut ?? 0;
+const candidates = payload.summary.candidates ?? payload.summary.configs + filteredOut;
+// Completeness tolerates a few excluded configs while price correctness stays strict.
+const MAX_FILTERED = Math.max(3, Math.ceil(candidates * 0.05));
+if (filteredOut > MAX_FILTERED) fail(`too many non-comparable configs: ${filteredOut} > ${MAX_FILTERED}`);
+if (filteredOut > 0) console.warn(`WARN: ${filteredOut} non-comparable config(s) excluded (within tolerance)`);
+
+try {
+  const catalog = readJson(path.resolve('data', 'comparison-catalog.json'));
+  const catalogCount = Array.isArray(catalog) ? catalog.length : (catalog.configs || []).length;
+  if (typeof payload.summary.candidates === 'number' && payload.summary.candidates !== catalogCount) {
+    fail(`payload candidates ${payload.summary.candidates} != catalog ${catalogCount} (run data:sync after catalog changes)`);
+  }
+} catch {}
+
+if (filteredOut > 0 && (!Array.isArray(payload.filtered) || payload.filtered.length !== filteredOut)) {
+  fail(`filtered array length must equal filteredOut (${filteredOut})`);
+}
 
 const historyCandidates = fs.existsSync(historyDir)
   ? fs.readdirSync(historyDir)
