@@ -4,52 +4,79 @@ This runbook keeps the weekly price update on the Hostinger `nexus-host` VPS (`s
 
 ## One-Time Setup
 
-Run the one-time setup as root so `/opt/fenster-price-radar` and the cron logs are root-owned:
+Run the one-time setup from an account with `sudo`. If the dedicated user already exists, skip the `useradd` command.
 
 ```bash
-sudo -i
-mkdir -p /opt /var/log/fenster-price-radar ~/.ssh
-chmod 700 ~/.ssh
+id fensterradar >/dev/null 2>&1 || sudo useradd -r -m -d /home/fensterradar -s /usr/sbin/nologin fensterradar
+# Debian alternative:
+# id fensterradar >/dev/null 2>&1 || sudo adduser --system --group --home /home/fensterradar --shell /usr/sbin/nologin fensterradar
+sudo mkdir -p /opt/fenster-price-radar /var/log/fenster-price-radar
 ```
 
-Create a passphrase-less ed25519 deploy key on the VPS:
+Keep the deploy key under the `fensterradar` home. For a fresh key, create it as the service user:
 
 ```bash
-ssh-keygen -t ed25519 -C "fenster-price-radar@nexus-host" -f ~/.ssh/fenster-price-radar-deploy -N ""
-chmod 600 ~/.ssh/fenster-price-radar-deploy
+sudo -u fensterradar mkdir -p /home/fensterradar/.ssh && sudo chmod 700 /home/fensterradar/.ssh
+sudo -u fensterradar ssh-keygen -t ed25519 -C "fenster-price-radar@nexus-host" -f /home/fensterradar/.ssh/fenster-price-radar-deploy -N ""
+sudo chown fensterradar:fensterradar /home/fensterradar/.ssh/fenster-price-radar-deploy
+sudo chmod 600 /home/fensterradar/.ssh/fenster-price-radar-deploy
 ```
 
-Configure SSH to use the deploy key for GitHub:
+If this VPS already has the deploy key under `/root/.ssh`, move the private key and public key instead of generating a new key. The GitHub deploy key public half is unchanged:
 
 ```bash
-cat >> ~/.ssh/config <<'EOF'
+sudo -u fensterradar mkdir -p /home/fensterradar/.ssh && sudo chmod 700 /home/fensterradar/.ssh
+sudo mv /root/.ssh/fenster-price-radar-deploy /home/fensterradar/.ssh/
+sudo mv /root/.ssh/fenster-price-radar-deploy.pub /home/fensterradar/.ssh/
+sudo chown fensterradar:fensterradar /home/fensterradar/.ssh/fenster-price-radar-deploy /home/fensterradar/.ssh/fenster-price-radar-deploy.pub
+sudo chmod 600 /home/fensterradar/.ssh/fenster-price-radar-deploy
+```
+
+Configure SSH to use the deploy key for GitHub and pre-populate `known_hosts`:
+
+```bash
+sudo -u fensterradar tee /home/fensterradar/.ssh/config >/dev/null <<'EOF'
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/fenster-price-radar-deploy
+  IdentityFile /home/fensterradar/.ssh/fenster-price-radar-deploy
   IdentitiesOnly yes
 EOF
-chmod 600 ~/.ssh/config
+sudo chown fensterradar:fensterradar /home/fensterradar/.ssh/config
+sudo chmod 600 /home/fensterradar/.ssh/config
+sudo -u fensterradar bash -c 'ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts'
+sudo chmod 600 /home/fensterradar/.ssh/known_hosts
 ```
 
 Print the public key:
 
 ```bash
-cat ~/.ssh/fenster-price-radar-deploy.pub
+sudo cat /home/fensterradar/.ssh/fenster-price-radar-deploy.pub
 ```
 
 Add the public key to the GitHub repo as a deploy key with write access before continuing.
 
-Verify SSH access and clone the repo via SSH after the deploy key is registered:
+Clone the repo into `/opt/fenster-price-radar` after the deploy key is registered. If an existing root-cron checkout already exists, move it to `/opt/fenster-price-radar` instead of cloning a second copy.
 
 ```bash
-ssh -T git@github.com
-git clone git@github.com:Ricky-Claw/fenster-price-radar.git /opt/fenster-price-radar
+sudo chown fensterradar:fensterradar /opt/fenster-price-radar
+sudo -u fensterradar git clone git@github.com:Ricky-Claw/fenster-price-radar.git /opt/fenster-price-radar
+```
+
+For an existing checkout:
+
+```bash
+sudo mv /path/to/existing/fenster-price-radar /opt/fenster-price-radar
+```
+
+Then set ownership, Git identity, and dependencies:
+
+```bash
+sudo chown -R fensterradar:fensterradar /opt/fenster-price-radar /var/log/fenster-price-radar
 cd /opt/fenster-price-radar
-git config user.name "Ricky-Claw"
-git config user.email "ricky@lanistasoundcraft.de"
-chown -R root:root /opt/fenster-price-radar /var/log/fenster-price-radar
-npm ci
+sudo -u fensterradar git config user.name "Ricky-Claw"
+sudo -u fensterradar git config user.email "ricky@lanistasoundcraft.de"
+sudo -u fensterradar npm ci
 ```
 
 Use deploy key auth only. Do not create a PAT, do not put tokens in the repo, and never store secrets in committed files.
@@ -58,27 +85,67 @@ Use deploy key auth only. Do not create a PAT, do not put tokens in the repo, an
 
 The script commits locally but only pushes when `FPR_PUSH_ENABLED=1`.
 
-Start with the default dry-run gate:
+Run the manual dry-run test as the new user before enabling push:
 
 ```bash
-cd /opt/fenster-price-radar
-FPR_PUSH_ENABLED=0 bash scripts/weekly-price-radar-update.sh
+sudo -u fensterradar bash -lc 'cd /opt/fenster-price-radar && FPR_PUSH_ENABLED=0 ./scripts/weekly-price-radar-update.sh'
 ```
 
-After a green manual test, flip the cron environment to `FPR_PUSH_ENABLED=1`.
+After a green manual test, flip the cron environment to `FPR_PUSH_ENABLED=1` if weekly pushes should deploy automatically. The button-triggered service always runs with `FPR_PUSH_ENABLED=1`, so an on-demand click commits and pushes a fresh snapshot; the cron's push behavior is governed only by the value in the `fensterradar` crontab below.
 
 ## Crontab
 
-Install this block in the root crontab with `crontab -e` from the root shell above, or with `sudo crontab -e` from a normal shell. The cron runs as root, matching root ownership of `/opt/fenster-price-radar` and write access to `/var/log/fenster-price-radar`.
+Install this block in the `fensterradar` user crontab, not root:
+
+```bash
+sudo crontab -u fensterradar -e
+```
 
 ```cron
 CRON_TZ=Europe/Berlin
 FPR_PUSH_ENABLED=0
 
-17 3 * * 1 flock -n /tmp/fpr-weekly.lock bash -lc 'cd /opt/fenster-price-radar && bash scripts/weekly-price-radar-update.sh' >> "/var/log/fenster-price-radar/weekly-$(date +\%F).log" 2>&1
+17 3 * * 1 flock -n /tmp/fpr-weekly.lock bash -lc 'cd /opt/fenster-price-radar && ./scripts/weekly-price-radar-update.sh' >> "/var/log/fenster-price-radar/weekly-$(date +\%F).log" 2>&1
 ```
 
 `CRON_TZ=Europe/Berlin` keeps the Monday 03:17 run aligned with Berlin time across DST changes. `flock` prevents overlapping runs.
+
+Remove the old root cron job after installing the user cron:
+
+```bash
+sudo crontab -u root -l
+sudo crontab -u root -e
+```
+
+Delete the old `fenster-price-radar` line from root's crontab. If root's crontab only contained this job, remove the whole root crontab instead:
+
+```bash
+sudo crontab -u root -r
+```
+
+Verify root no longer lists the job:
+
+```bash
+sudo crontab -u root -l
+```
+
+Warning: if the root cron is left in place, it will grab the shared `/tmp/fpr-weekly.lock` and then fail git auth because the deploy key moved to `fensterradar`, causing the new cron to skip that week.
+
+## Verify
+
+Check the installed user crontab and confirm root no longer has the old job:
+
+```bash
+sudo crontab -u fensterradar -l
+sudo crontab -u root -l
+```
+
+If `/etc/fenster-radar/trigger.env` is installed for the on-demand button, keep it readable by the service user but not world-readable:
+
+```bash
+chown root:fensterradar /etc/fenster-radar/trigger.env
+chmod 640 /etc/fenster-radar/trigger.env
+```
 
 ## Logs
 

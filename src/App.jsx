@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import { createRoot } from 'react-dom/client';
 import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, FileText, Lightbulb, ArrowUpRight, MessageCircle, Send, CalendarDays, Megaphone, Save, Trash2, ClipboardList } from 'lucide-react';
 import { ACTION_CALENDAR, createActionComment, currentActionCalendarVersion } from './actionCalendar.js';
@@ -16,6 +16,7 @@ const layouts = [
   ['2flg_pfosten','2-flg Pfosten'],
   ['2flg_stulp_dk_dreh','2-flg Stulp']
 ];
+const UPDATE_POLL_MAX_MS = 15 * 60 * 1000;
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const cls = (...a) => a.filter(Boolean).join(' ');
 const isUnavailable = p => p && (p.status === 'unmatched' || p.reason === 'nicht_im_angebot' || p.reason === 'No profile alias match' || p.reason === 'No equivalent PVC profile in Fensterversand mapping');
@@ -305,6 +306,149 @@ function App(){
   const [quoteResult,setQuoteResult]=useState(null);
   const [quoteLoading,setQuoteLoading]=useState(false);
   const [margin,setMargin]=useState({gross:342.51,discount:15,cost:170,target:30});
+  const [updateState,setUpdateState]=useState('idle');
+  const [updateMessage,setUpdateMessage]=useState('');
+  const updatePollRef=useRef(null);
+  const updateDoneResetRef=useRef(null);
+  const updateErrorCountRef=useRef(0);
+  const updatePollStartedAtRef=useRef(null);
+  const payloadGeneratedAtRef=useRef(null);
+
+  async function loadPricePayload(){
+    const r=await fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' });
+    if(!r.ok) throw new Error('price_data_unreachable');
+    const next=await r.json();
+    setPayload(next);
+    return next;
+  }
+  function clearUpdatePoll(){
+    if(updatePollRef.current){
+      clearInterval(updatePollRef.current);
+      updatePollRef.current=null;
+    }
+    updatePollStartedAtRef.current=null;
+  }
+  function clearDoneReset(){
+    if(updateDoneResetRef.current){
+      clearTimeout(updateDoneResetRef.current);
+      updateDoneResetRef.current=null;
+    }
+  }
+  function scheduleUpdateIdleReset(){
+    clearDoneReset();
+    updateDoneResetRef.current=setTimeout(()=>{
+      setUpdateState('idle');
+      setUpdateMessage('');
+      updateDoneResetRef.current=null;
+    },6000);
+  }
+  function newerThanLoaded(nextGeneratedAt){
+    const nextMs=Date.parse(nextGeneratedAt || '');
+    const currentMs=Date.parse(payloadGeneratedAtRef.current || '');
+    return Number.isFinite(nextMs) && (!Number.isFinite(currentMs) || nextMs > currentMs);
+  }
+  async function readJson(response){
+    try { return await response.json(); }
+    catch { return {}; }
+  }
+  function updateFailureMessage(status, fallback){
+    if(status===401) return 'Bitte neu einloggen';
+    if(status===503) return 'Aktualisierung noch nicht konfiguriert';
+    if(status===502) return 'Dienst nicht erreichbar';
+    return fallback;
+  }
+  function notePollError(message='Dienst nicht erreichbar'){
+    updateErrorCountRef.current+=1;
+    if(updateErrorCountRef.current>=3){
+      clearUpdatePoll();
+      setUpdateState('error');
+      setUpdateMessage(message);
+      return;
+    }
+    setUpdateMessage(`${message} (${updateErrorCountRef.current}/3)`);
+  }
+  async function pollUpdateStatus(){
+    if(updatePollStartedAtRef.current && Date.now() - updatePollStartedAtRef.current > UPDATE_POLL_MAX_MS){
+      clearUpdatePoll();
+      setUpdateState('idle');
+      setUpdateMessage('Aktualisierung dauert länger als erwartet — später erneut prüfen');
+      return;
+    }
+    try{
+      const response=await fetch('/api/trigger-update',{method:'GET',cache:'no-store'});
+      const body=await readJson(response);
+      if(!response.ok){
+        const message=updateFailureMessage(response.status,'Dienst nicht erreichbar');
+        if(response.status===401 || response.status===503){
+          clearUpdatePoll();
+          setUpdateState('error');
+          setUpdateMessage(message);
+          return;
+        }
+        notePollError(message);
+        return;
+      }
+      updateErrorCountRef.current=0;
+      if(body?.running){
+        setUpdateState('running');
+        setUpdateMessage('Aktualisierung läuft…');
+        return;
+      }
+      clearUpdatePoll();
+      if(typeof body?.lastExit === 'number' && body.lastExit !== 0){
+        setUpdateState('error');
+        setUpdateMessage(`Letzter Lauf fehlgeschlagen (Code ${body.lastExit}) — bitte Logs prüfen`);
+        return;
+      }
+      if(newerThanLoaded(body?.dataGeneratedAt)){
+        await loadPricePayload();
+        setUpdateState('done');
+        setUpdateMessage('Preise aktualisiert');
+      }else{
+        setUpdateState('done');
+        setUpdateMessage('Lauf beendet');
+      }
+      scheduleUpdateIdleReset();
+    }catch{
+      notePollError('Dienst nicht erreichbar');
+    }
+  }
+  function startUpdatePolling(){
+    clearUpdatePoll();
+    updateErrorCountRef.current=0;
+    updatePollStartedAtRef.current=Date.now();
+    updatePollRef.current=setInterval(()=>{ pollUpdateStatus(); },20000);
+  }
+  async function handleWeeklyUpdate(){
+    if(updateState==='starting' || updateState==='running') return;
+    clearDoneReset();
+    setUpdateState('starting');
+    setUpdateMessage('Starte Aktualisierung…');
+    try{
+      const response=await fetch('/api/trigger-update',{method:'POST',cache:'no-store'});
+      const body=await readJson(response);
+      if(!response.ok){
+        clearUpdatePoll();
+        setUpdateState('error');
+        setUpdateMessage(updateFailureMessage(response.status,'Dienst nicht erreichbar'));
+        return;
+      }
+      if(body?.started || body?.running){
+        setUpdateState('running');
+        setUpdateMessage('Aktualisierung läuft…');
+        startUpdatePolling();
+        pollUpdateStatus();
+        return;
+      }
+      setUpdateState('done');
+      setUpdateMessage(body?.reason ? String(body.reason) : 'Lauf beendet');
+      scheduleUpdateIdleReset();
+    }catch{
+      clearUpdatePoll();
+      setUpdateState('error');
+      setUpdateMessage('Dienst nicht erreichbar');
+    }
+  }
   async function runQuote(){
     setQuoteLoading(true);
     try{
@@ -315,10 +459,15 @@ function App(){
   }
 
   useEffect(()=>{
+    payloadGeneratedAtRef.current=payload?.generatedAt || null;
+  },[payload?.generatedAt]);
+
+  useEffect(()=>{
     const isLoginRoute = window.location.pathname === '/login';
     if(isLoginRoute) return;
-    fetch(`/data/price-radar.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.json()).then(setPayload);
+    loadPricePayload();
   },[]);
+  useEffect(()=>()=>{ clearUpdatePoll(); clearDoneReset(); },[]);
   const data=payload?.configs||[];
   const excludedConfigs = Array.isArray(payload?.filtered) ? payload.filtered : [];
   const filtered=useMemo(()=>data.filter(r=>{
@@ -415,13 +564,20 @@ function App(){
   }
 
   const isLoginRoute = window.location.pathname === '/login';
+  const updateBusy = updateState === 'starting' || updateState === 'running';
   if(!payload && !isLoginRoute) return <div className="loading">Fensterradar v1 wird geladen…</div>;
   if (isLoginRoute) return <LoginPage />;
   return <>
     <header className="topbar">
       <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar v1</b><small>Interner Wettbewerbsvergleich</small></div></div>
       <nav className="topnav"><a href="#radar" className="active">Preisradar</a><a href="#aktionskalender">Aktionskalender</a><a href="#chatbot">Chatbot</a><a href="#briefings">Briefings</a></nav>
-      <button className="ghost"><RefreshCw size={16}/> Weekly Update</button>
+      <div className="updateControl">
+        <button type="button" className={cls('ghost','updateButton',updateBusy && 'isRunning')} onClick={handleWeeklyUpdate} disabled={updateBusy} aria-busy={updateBusy}>
+          <RefreshCw className={updateBusy ? 'spin' : ''} size={16}/>
+          {updateBusy ? 'Aktualisierung läuft…' : updateState === 'done' ? 'Aktualisiert ✓' : 'Weekly Update'}
+        </button>
+        {updateMessage?<small className={cls('updateStatus',updateState)} role="status" aria-live="polite">{updateMessage}</small>:null}
+      </div>
     </header>
 
     <main>

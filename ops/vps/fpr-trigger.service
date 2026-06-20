@@ -1,0 +1,25 @@
+[Unit]
+Description=Fensterradar on-demand price-update trigger
+After=network.target
+
+[Service]
+Type=simple
+EnvironmentFile=/etc/fenster-radar/trigger.env
+ExecStart=/usr/bin/node /opt/fenster-radar-trigger/trigger-server.js
+Restart=on-failure
+RestartSec=3
+User=fensterradar
+Group=fensterradar
+WorkingDirectory=/opt/fenster-price-radar
+NoNewPrivileges=true
+LimitNPROC=128
+LimitNOFILE=512
+ProtectSystem=full
+# Must stay false: the service user's home holds the deploy key, SSH known_hosts, and npm cache required by the scrape.
+ProtectHome=false
+PrivateDevices=true
+# Must stay false so this service shares /tmp/fpr-weekly.lock with the cron.
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target
