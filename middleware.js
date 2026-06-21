@@ -28,15 +28,41 @@ async function validSession(cookie, secret) {
   if (!Number.isFinite(expires) || expires < Math.floor(Date.now() / 1000)) return false;
   return parts[2] === await sign(payload, secret);
 }
+function canonicalPath(p) {
+  let out = String(p || '');
+  for (let i = 0; i < 3; i += 1) {
+    try {
+      const decoded = decodeURIComponent(out);
+      if (decoded === out) break;
+      out = decoded;
+    } catch {
+      break;
+    }
+  }
+  out = out.replace(/\\/g, '/').replace(/\/{2,}/g, '/');
+  const segments = [];
+  for (const segment of out.split('/')) {
+    if (!segment || segment === '.') continue;
+    if (segment === '..') {
+      segments.pop();
+      continue;
+    }
+    segments.push(segment);
+  }
+  return `/${segments.join('/')}`.toLowerCase();
+}
 
 export default async function middleware(request) {
   const url = new URL(request.url);
   const path = url.pathname;
-  if (path === '/login' || path.startsWith('/api/login') || path.startsWith('/api/logout') || PUBLIC_FILE.test(path)) return;
+  const cpath = canonicalPath(path);
+  const isData = cpath.startsWith('/data/');
+  if (path === '/login' || path.startsWith('/api/login') || path.startsWith('/api/logout') || (!isData && PUBLIC_FILE.test(cpath))) return;
   if (path.startsWith('/api/')) return;
   const secret = process.env.FENSTER_RADAR_AUTH_SECRET || process.env.FENSTER_RADAR_PASSWORD || '';
   const session = cookieValue(request.headers.get('cookie') || '', COOKIE);
   if (await validSession(session, secret)) return;
+  if (isData) return new Response('Unauthorized', { status: 401 });
   url.pathname = '/login';
   url.searchParams.set('next', path);
   return Response.redirect(url, 302);
