@@ -74,10 +74,76 @@ function glassGroup(c){ const s=norm(c.glazing || c.glass || '3fach'); if(s.incl
 async function readJson(p){ return JSON.parse(await fs.readFile(p,'utf8')); }
 async function fetchJson(url, opts={}){ const r=await fetch(url, opts); if(!r.ok) throw new Error(`${r.status} ${url}`); return r.json(); }
 function parseAdd(price,type,w,h,current){ price=+price||0; if(!price) return 0; switch(type){ case '%': return current*price/100; case 'm2': return price*(w/1000)*(h/1000); case 'l': case 'm': return (w/1000*2+h/1000*2)*price; case 'lm': return (w/1000+h/1000)*price; case 'mw': return price*(w/1000); case 'mh': return price*(h/1000); default: return price; } }
-const DFS_MATERIAL_DISCOUNTS = {
-  '6|1': { sum: 15, date: '31.05.2026', source: 'window.material_discount: Fenster Drutex PVC' }
-};
+const DFS_DEFAULT_PRICE_PERCENT = 90;
+let dfsConfiguratorCache = null;
+let dfsDiscountScrapeFailed = false;
 const dfsBrandDiscountCache = new Map();
+async function dfsConfiguratorValues() {
+  if (!dfsConfiguratorCache) dfsConfiguratorCache = fetchDfsConfiguratorValues();
+  return dfsConfiguratorCache;
+}
+async function fetchDfsConfiguratorValues() {
+  try {
+    const r = await fetch(`${BASE}/konfigurator/fenster`, { headers:{ 'user-agent':'Mozilla/5.0 FensterRadar/1.0', accept:'text/html' } });
+    if (!r.ok) throw new Error(`${r.status} ${BASE}/konfigurator/fenster`);
+    const parsed = parseDfsConfiguratorHtml(await r.text());
+    dfsDiscountScrapeFailed = false;
+    return parsed;
+  } catch {
+    dfsDiscountScrapeFailed = true;
+    return { myPricePercent: DFS_DEFAULT_PRICE_PERCENT, materialDiscounts: new Map() };
+  }
+}
+function parseDfsConfiguratorHtml(html) {
+  const priceMatch = html.match(/myPricePercent\s*=\s*parseFloat\('([\d.]+)'\)/);
+  const myPricePercent = Number(priceMatch?.[1]);
+  return {
+    myPricePercent: Number.isFinite(myPricePercent) ? myPricePercent : DFS_DEFAULT_PRICE_PERCENT,
+    materialDiscounts: parseDfsMaterialDiscounts(html)
+  };
+}
+function parseDfsMaterialDiscounts(html) {
+  const materialJson = extractBalancedObject(html, /material_discount\s*=/);
+  const campaigns = JSON.parse(materialJson);
+  const discounts = new Map();
+  for (const campaign of Object.values(campaigns || {})) {
+    if (!campaign || String(campaign.status) !== '1') continue;
+    const brandId = campaign.brand_id == null ? '' : String(campaign.brand_id);
+    const materialId = campaign.material_id == null ? '' : String(campaign.material_id);
+    const sum = Number(campaign.sum);
+    if (!brandId || !materialId || !(sum > 0)) continue;
+    const name = String(campaign.name || '').trim();
+    discounts.set(`${brandId}|${materialId}`, { sum, date: campaign.date || dmyFromDateEnd(campaign.date_end), source: name ? `window.material_discount: ${name}` : 'window.material_discount', status: String(campaign.status) });
+  }
+  return discounts;
+}
+function extractBalancedObject(text, assignmentPattern) {
+  const assignment = assignmentPattern.exec(text);
+  if (!assignment) throw new Error('material_discount assignment not found');
+  const open = text.indexOf('{', assignment.index + assignment[0].length);
+  if (open < 0) throw new Error('material_discount object not found');
+  let depth = 0, inString = false, quote = '', escaped = false;
+  for (let i = open; i < text.length; i++) {
+    const ch = text[i];
+    if (inString) {
+      if (escaped) { escaped = false; continue; }
+      if (ch === '\\') { escaped = true; continue; }
+      if (ch === quote) { inString = false; quote = ''; }
+      continue;
+    }
+    if (ch === '"' || ch === "'") { inString = true; quote = ch; continue; }
+    if (ch === '{') depth++;
+    else if (ch === '}') {
+      depth--;
+      if (depth === 0) return text.slice(open, i + 1);
+    }
+  }
+  throw new Error('material_discount object is not balanced');
+}
+function dmyFromDateEnd(value) {
+  const m = typeof value === 'string' ? value.match(/^(\d{4})-(\d{2})-(\d{2})/) : null;
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : null;
+}
 function parseDmyDate(value) {
   if (typeof value !== 'string') return null;
   const m = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
@@ -100,7 +166,8 @@ function annotateDiscount(discount, runDate = new Date()) {
   return { ...discount, discountValidUntil, active, inactiveReason: active ? null : 'expired' };
 }
 async function dfsDiscount(profile) {
-  const materialDiscount = DFS_MATERIAL_DISCOUNTS[`${profile.brand_id}|${profile.material_id}`];
+  const { materialDiscounts } = await dfsConfiguratorValues();
+  const materialDiscount = materialDiscounts.get(`${profile.brand_id}|${profile.material_id}`);
   let brandDiscount = null;
   if (!dfsBrandDiscountCache.has(profile.brand_id)) {
     try {
@@ -150,7 +217,8 @@ async function priceOne(c, profiles){
   const def=+m.row.price;
   const gp=await glassPrice(profileId, gg, width, height, def);
   let net=def + gp.add;
-  const percent=90; // window.myPricePercent on DFS configurator
+  const { myPricePercent } = await dfsConfiguratorValues();
+  const percent=myPricePercent; // window.myPricePercent on DFS configurator
   net += net*percent/100;
   const gross=+(net*1.19).toFixed(2);
   const discount = await dfsDiscount(profile);
@@ -159,7 +227,7 @@ async function priceOne(c, profiles){
   const discountMetadata = discountPercent
     ? {observed:true,observedDiscountPercent:discountPercent/100,discountedTotalObserved:customerTotal,discountValidUntil:discount.discountValidUntil || null,note:`DFS-Aktionsrabatt ${discountPercent}% bis ${discount.discountValidUntil || 'unbekannt'}`,source:discount.source || 'company-discout'}
     : {observed:false,observedDiscountPercent:0,discountedTotalObserved:null,discountValidUntil:discount?.discountValidUntil || null,note:discount?.inactiveReason === 'expired' ? `Rabatt abgelaufen am ${discount.discountValidUntil} — Endpreis = Liste` : (discount?.inactiveReason === 'invalid_date' ? `Rabattdatum ungültig (${discount.discountValidUntil}) — Endpreis = Liste` : 'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'),source:discount?.source || 'company-discout'};
-  const warnings=[]; if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
+  const warnings=[]; if(dfsDiscountScrapeFailed) warnings.push('dfs_discount_scrape_failed'); if(m.actual.width!==width||m.actual.height!==height) warnings.push(`dimension_rounded_to:${m.actual.width}x${m.actual.height}`);
   return {status:'priced', provider:'dfs', profileId, profileName:profile.name, brandId:profile.brand_id, openingTypeId:openType, layout:c.layout || '1flg', equivalence:{layout:c.layout||'1flg', construction:c.layout==='2flg_pfosten'?'2-flügelig mit Mittelpfosten':(c.layout==='2flg_stulp_dk_dreh'?'2-flügelig mit Stulp · Dreh-Kipp + Dreh':'1-flügelig'), width, height, glazing:c.glazing, color:c.color, proof:c.layout==='2flg_pfosten'?`DFS returned combined result bucket for window type 6 / group ${m.layoutRequest?.opid}`:(c.layout==='2flg_stulp_dk_dreh'?`DFS returned combined stulp result bucket for window type 6 / group ${m.layoutRequest?.opid} / openTypes 3+2`:'single-sash default')}, layoutRequest:m.layoutRequest, glassGroupId:gg, baseNet:def, glassAddNet:+gp.add.toFixed(6), comparePrice:{listTotal:gross,currency:'EUR',valid:warnings.length===0}, customerPrice:{total:customerTotal,currency:'EUR'}, discountMetadata, warnings, source:{api:'/konfigurator/fenster', glass:`/json/data_window_glass_${profileId}.json`}};
 }
 
