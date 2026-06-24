@@ -17,6 +17,8 @@ for(const cfg of catalog.slice(0,limit)){
   const actualDims=extractDims(priced.prices?.short_labels);
   const dimsMatch=actualDims?.width===w && actualDims?.height===h;
   const warn=[]; if(Number(priced.prices?.total)<=0) warn.push('zero_or_unavailable_price'); if(!dimsMatch) warn.push(`dimension_adjusted_by_configurator:${actualDims?.width}x${actualDims?.height}`);
+  // ponytail: FB klemmt out-of-range Maße auf eine andere Größe -> Größe schlicht nicht im Angebot, kein valider Vergleich.
+  if(!dimsMatch){ results.push({provider:'Fensterblick',input:cfg,mappedProfile:mapped.name,status:'unmatched',reason:'nicht_im_angebot',note:`Größe ${w}x${h} nicht konfigurierbar (Anbieter würde ${actualDims?.width}x${actualDims?.height} liefern)`,warnings:warn}); continue; }
   const listTotal = Number(priced.prices?.total);
   const discount = Number(priced.discount_percent || 0);
   const discountedTotal = discount ? Number((listTotal * (1 - discount)).toFixed(2)) : null;
