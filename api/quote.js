@@ -31,10 +31,88 @@ function parseAdd(price,type,w,h,current){ price=+price||0; if(!price) return 0;
 function openingId(opening){ return /fest/i.test(opening) ? 6 : 4; }
 function fvOpening(opening){ return /fest/i.test(opening) ? 1020 : 1021; }
 function glassGroup(glazing){ return /2/.test(glazing) ? 1 : 2; }
-const DFS_MATERIAL_DISCOUNTS = { '6|1': { sum: 15, date: '31.05.2026', source: 'window.material_discount: Fenster Drutex PVC' } };
+// DFS-Rabatt + Aufschlag LIVE von der Konfigurator-Seite scrapen (kein Hardcode, respektiert Aktionsdaten + Ablauf)
+const DFS_DEFAULT_PRICE_PERCENT = 90;
+let dfsConfiguratorCache = null;
+let dfsDiscountScrapeFailed = false;
 const dfsBrandDiscountCache = new Map();
+function dfsConfiguratorValues() {
+  if (!dfsConfiguratorCache) dfsConfiguratorCache = fetchDfsConfiguratorValues();
+  return dfsConfiguratorCache;
+}
+async function fetchDfsConfiguratorValues() {
+  try {
+    const r = await fetch(`${DFS_BASE}/konfigurator/fenster`, { headers:{ 'user-agent':'Mozilla/5.0 FensterRadar/1.0', accept:'text/html' } });
+    if (!r.ok) throw new Error(`${r.status} konfigurator`);
+    const html = await r.text();
+    const priceMatch = html.match(/myPricePercent\s*=\s*parseFloat\('([\d.]+)'\)/);
+    const myPricePercent = Number(priceMatch?.[1]);
+    dfsDiscountScrapeFailed = false;
+    return { myPricePercent: Number.isFinite(myPricePercent) ? myPricePercent : DFS_DEFAULT_PRICE_PERCENT, materialDiscounts: parseDfsMaterialDiscounts(html) };
+  } catch {
+    dfsDiscountScrapeFailed = true;
+    return { myPricePercent: DFS_DEFAULT_PRICE_PERCENT, materialDiscounts: new Map() };
+  }
+}
+function parseDfsMaterialDiscounts(html) {
+  const discounts = new Map();
+  const campaigns = JSON.parse(extractBalancedObject(html, /material_discount\s*=/));
+  for (const c of Object.values(campaigns || {})) {
+    if (!c || String(c.status) !== '1') continue;
+    const brandId = c.brand_id == null ? '' : String(c.brand_id);
+    const materialId = c.material_id == null ? '' : String(c.material_id);
+    const sum = Number(c.sum);
+    if (!brandId || !materialId || !(sum > 0)) continue;
+    const name = String(c.name || '').trim();
+    discounts.set(`${brandId}|${materialId}`, { sum, date: c.date || dmyFromDateEnd(c.date_end), source: name ? `window.material_discount: ${name}` : 'window.material_discount' });
+  }
+  return discounts;
+}
+function extractBalancedObject(text, assignmentPattern) {
+  const assignment = assignmentPattern.exec(text);
+  if (!assignment) throw new Error('material_discount not found');
+  const open = text.indexOf('{', assignment.index + assignment[0].length);
+  if (open < 0) throw new Error('material_discount object not found');
+  let depth = 0, inString = false, quote = '', escaped = false;
+  for (let i = open; i < text.length; i++) {
+    const ch = text[i];
+    if (inString) {
+      if (escaped) { escaped = false; continue; }
+      if (ch === '\\') { escaped = true; continue; }
+      if (ch === quote) { inString = false; quote = ''; }
+      continue;
+    }
+    if (ch === '"' || ch === "'") { inString = true; quote = ch; continue; }
+    if (ch === '{') depth++;
+    else if (ch === '}') { depth--; if (depth === 0) return text.slice(open, i + 1); }
+  }
+  throw new Error('material_discount not balanced');
+}
+function dmyFromDateEnd(value) {
+  const m = typeof value === 'string' ? value.match(/^(\d{4})-(\d{2})-(\d{2})/) : null;
+  return m ? `${m[3]}.${m[2]}.${m[1]}` : null;
+}
+function parseDmyDate(value) {
+  if (typeof value !== 'string') return null;
+  const m = value.trim().match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+  if (!m) return null;
+  const day = +m[1], month = +m[2], year = +m[3];
+  const date = new Date(year, month - 1, day);
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) return null;
+  return date;
+}
+function startOfDay(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate()); }
+function annotateDiscount(discount, runDate = new Date()) {
+  if (!discount || !(+discount.sum > 0)) return null;
+  const discountValidUntil = discount.discountValidUntil || discount.date || null;
+  if (!discountValidUntil) return { ...discount, discountValidUntil, active: true };
+  const validUntilDate = parseDmyDate(discountValidUntil);
+  if (!validUntilDate) return { ...discount, discountValidUntil, active: false };
+  return { ...discount, discountValidUntil, active: validUntilDate >= startOfDay(runDate) };
+}
 async function dfsDiscount(profile) {
-  const materialDiscount = DFS_MATERIAL_DISCOUNTS[`${profile.brand_id}|${profile.material_id}`];
+  const { materialDiscounts } = await dfsConfiguratorValues();
+  const materialDiscount = materialDiscounts.get(`${profile.brand_id}|${profile.material_id}`);
   if (!dfsBrandDiscountCache.has(profile.brand_id)) {
     try {
       const r = await fetch(`${DFS_BASE}/windows/company-discout?bid=${profile.brand_id}&conf=windows`, { headers: { accept: 'application/json' } });
@@ -43,7 +121,9 @@ async function dfsDiscount(profile) {
     } catch { dfsBrandDiscountCache.set(profile.brand_id, null); }
   }
   const brandDiscount = dfsBrandDiscountCache.get(profile.brand_id);
-  return [materialDiscount, brandDiscount].filter(d => d && +d.sum > 0).sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
+  const candidates = [materialDiscount, brandDiscount].map(d => annotateDiscount(d)).filter(Boolean);
+  const active = candidates.filter(d => d.active);
+  return (active.length ? active : candidates).sort((a,b)=>(+b.sum)-(+a.sum))[0] || null;
 }
 
 export default async function handler(req,res){
@@ -84,13 +164,15 @@ async function quoteDfs({profile,width,height,glazing,opening}){
   const base=+row.price;
   const glass=await dfsGlass(profile.dfs, glassGroup(glazing), width, height, base);
   let net=base+glass.add;
-  net += net*0.90;
+  const { myPricePercent } = await dfsConfiguratorValues();
+  net += net*(myPricePercent/100);
   const listTotal=money(net*1.19);
   const discount = await dfsDiscount(p);
   const pct = discount ? Number(discount.sum) : 0;
   const customerTotal = pct ? money(listTotal * (1 - pct / 100)) : listTotal;
-  const warnings=[]; if(+row.width!==width||+row.height!==height) warnings.push(`dimension_rounded_to:${row.width}x${row.height}`);
-  return {status:'priced',valid:warnings.length===0,listTotal,customerTotal,currency:'EUR',warnings,discountMetadata:{observed:!!pct,observedDiscountPercent:pct/100,discountedTotalObserved:customerTotal,discountValidUntil:discount?.date || null,note:pct?`DFS-Aktionsrabatt ${pct}% bis ${discount?.date || 'unbekannt'}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'},parts:{baseNet:base,glassAddNet:money(glass.add)}};
+  const validUntil = discount?.discountValidUntil || discount?.date || null;
+  const warnings=[]; if(dfsDiscountScrapeFailed) warnings.push('dfs_discount_scrape_failed'); if(+row.width!==width||+row.height!==height) warnings.push(`dimension_rounded_to:${row.width}x${row.height}`);
+  return {status:'priced',valid:warnings.length===0,listTotal,customerTotal,currency:'EUR',warnings,discountMetadata:{observed:!!pct,observedDiscountPercent:pct/100,discountedTotalObserved:customerTotal,discountValidUntil:validUntil,note:pct?`DFS-Aktionsrabatt ${pct}%${validUntil?` bis ${validUntil}`:''}`:'kein Live-Rabatt beobachtet; Endpreis = Listenpreis',source:discount?.source || 'company-discout'},parts:{baseNet:base,glassAddNet:money(glass.add)}};
 }
 async function dfsGlass(profileId, groupId, width, height, defPrice){
   const pid=(profileId===56||profileId===144)?37:profileId;
