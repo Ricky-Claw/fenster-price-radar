@@ -344,8 +344,9 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
 
 #radar .tableWrap{overflow-x:auto;background:var(--dfs-color-white);-webkit-overflow-scrolling:touch}
 #radar table{min-width:980px;table-layout:fixed}
+#radar .tableWrap{overflow:visible}
 #radar thead th{
-  top:64px;
+  top:74px;
   background:var(--dfs-color-bg-soft);
   color:var(--dfs-color-blue);
   border-bottom:1px solid var(--dfs-color-line);
