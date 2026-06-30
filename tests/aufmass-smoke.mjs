@@ -1,0 +1,243 @@
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { Readable } from 'node:stream';
+import handler from '../api/aufmass.js';
+import { extractWindows } from '../src/aufmass/extractWindows.js';
+import { normalizeWindow, normalizeWindowList } from '../src/aufmass/normalizeWindows.js';
+
+function response() {
+  return {
+    statusCode: null,
+    headers: {},
+    body: '',
+    setHeader(key, value) { this.headers[key.toLowerCase()] = value; },
+    writeHead(status, headers = {}) { this.statusCode = status; Object.assign(this.headers, headers); },
+    end(chunk = '') { this.body += chunk; },
+    status(status) { this.statusCode = status; return this; },
+    json(payload) { this.body += JSON.stringify(payload); return this; },
+  };
+}
+
+const normalized = normalizeWindowList([
+  {
+    raum: 'Wohnzimmer',
+    breiteMm: '1200',
+    hoeheMm: '1400',
+    anzahl: '2',
+    oeffnungsart: 'drehkipp',
+    verglasung: '2-fach',
+    farbe: 'Anthrazit',
+    extra: 'strip me',
+  },
+  {
+    breiteMm: 50,
+    hoeheMm: 2601,
+    anzahl: 999,
+    oeffnungsart: 'schiebe',
+    verglasung: 'vierfach',
+  },
+  {},
+]);
+
+assert.equal(normalized[0].breiteMm, 1200);
+assert.equal(normalized[0].oeffnungsart, 'Dreh-Kipp');
+assert.equal(normalized[0].verglasung, '2fach');
+assert.equal(normalized[0].needsReview, false);
+assert.equal(Object.hasOwn(normalized[0], 'extra'), false);
+
+assert.equal(normalized[1].breiteMm, 300);
+assert.equal(normalized[1].hoeheMm, 2600);
+assert.equal(normalized[1].anzahl, 500);
+assert.equal(normalized[1].oeffnungsart, 'Dreh-Kipp');
+assert.equal(normalized[1].verglasung, '3fach');
+assert.equal(normalized[1].needsReview, true);
+assert.deepEqual(normalized[1].reviewReasons, [
+  'breite_geklemmt',
+  'hoehe_geklemmt',
+  'anzahl_geklemmt',
+  'oeffnungsart_unklar',
+  'verglasung_unklar',
+]);
+
+assert.deepEqual(normalized[2], {
+  raum: '',
+  breiteMm: 0,
+  hoeheMm: 0,
+  anzahl: 1,
+  oeffnungsart: 'Dreh-Kipp',
+  material: '',
+  verglasung: '3fach',
+  farbe: 'Weiß',
+  notiz: '',
+  needsReview: true,
+  reviewReasons: ['breite_unklar', 'hoehe_unklar'],
+});
+assert.deepEqual(normalizeWindowList({}), []);
+
+assert.equal(normalizeWindow({ breiteMm: '120 cm', hoeheMm: '1400' }).breiteMm, 1200);
+assert.equal(normalizeWindow({ breiteMm: '1,20 m', hoeheMm: '1400' }).breiteMm, 1200);
+assert.equal(normalizeWindow({ breiteMm: '1200 mm', hoeheMm: '1400' }).breiteMm, 1200);
+
+const capped = normalizeWindow({
+  breiteMm: 1200,
+  hoeheMm: 1400,
+  raum: 'r'.repeat(1000),
+  material: 'm'.repeat(1000),
+  farbe: 'f'.repeat(1000),
+  notiz: 'n'.repeat(1000),
+});
+assert.equal(capped.raum.length, 200);
+assert.equal(capped.material.length, 200);
+assert.equal(capped.farbe.length, 100);
+assert.equal(capped.notiz.length, 500);
+
+const zeroCount = normalizeWindow({ breiteMm: 1200, hoeheMm: 1400, anzahl: 0 });
+assert.equal(zeroCount.anzahl, 1);
+assert.equal(zeroCount.needsReview, true);
+assert.ok(zeroCount.reviewReasons.includes('anzahl_unklar'));
+
+const rangeCount = normalizeWindow({ anzahl: '2-3' });
+assert.equal(rangeCount.anzahl, 2);
+assert.equal(rangeCount.needsReview, true);
+assert.ok(rangeCount.reviewReasons.includes('anzahl_unklar'));
+
+const cleanStringCount = normalizeWindow({ anzahl: '3' });
+assert.equal(cleanStringCount.anzahl, 3);
+assert.ok(!cleanStringCount.reviewReasons.includes('anzahl_unklar'));
+
+const cleanNumberCount = normalizeWindow({ anzahl: 3 });
+assert.equal(cleanNumberCount.anzahl, 3);
+assert.ok(!cleanNumberCount.reviewReasons.includes('anzahl_unklar'));
+
+const llmResult = await extractWindows({
+  transcript: 'Wohnzimmer 120 auf 140',
+  env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' },
+  fetchImpl: async () => ({
+    ok: true,
+    json: async () => ({ choices: [{ message: { content: JSON.stringify({ windows: [{ raum: 'Wohnzimmer', breiteMm: 1200 }] }) } }] }),
+  }),
+});
+assert.equal(llmResult.model, 'kimi-test');
+assert.deepEqual(llmResult.windows, [{ raum: 'Wohnzimmer', breiteMm: 1200 }]);
+
+const fencedResult = await extractWindows({
+  transcript: 'Bad fix 60 auf 40',
+  env: { KIMI_API_KEY: 'test' },
+  fetchImpl: async () => ({
+    ok: true,
+    json: async () => ({ choices: [{ message: { content: '```json\n{"windows":[{"raum":"Bad"}]}\n```' } }] }),
+  }),
+});
+assert.deepEqual(fencedResult.windows, [{ raum: 'Bad' }]);
+
+const proseResult = await extractWindows({
+  transcript: 'Flur 100 auf 120',
+  env: { KIMI_API_KEY: 'test' },
+  fetchImpl: async () => ({
+    ok: true,
+    json: async () => ({ choices: [{ message: { content: 'Hier ist das JSON:\n{"windows":[{"raum":"Flur"}]}' } }] }),
+  }),
+});
+assert.deepEqual(proseResult.windows, [{ raum: 'Flur' }]);
+
+const originalConsoleError = console.error;
+const loggedErrors = [];
+console.error = (...args) => { loggedErrors.push(args); };
+try {
+  const throwingResult = await extractWindows({
+    transcript: 'kaputt',
+    env: { KIMI_API_KEY: 'test' },
+    fetchImpl: async () => { throw new Error('network'); },
+  });
+  assert.equal(throwingResult, null);
+} finally {
+  console.error = originalConsoleError;
+}
+assert.equal(loggedErrors.length, 1);
+assert.equal(loggedErrors[0][0], '[aufmass] extractWindows failed');
+
+const failedResult = await extractWindows({
+  transcript: 'kaputt',
+  env: { KIMI_API_KEY: 'test' },
+  fetchImpl: async () => ({ ok: false, status: 500, json: async () => ({}) }),
+});
+assert.equal(failedResult, null);
+
+const hadFetch = Object.hasOwn(globalThis, 'fetch');
+const originalFetch = globalThis.fetch;
+const previousKey = process.env.KIMI_API_KEY;
+try {
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('api.moonshot.ai')) {
+      return {
+        ok: true,
+        json: async () => ({ choices: [{ message: { content: JSON.stringify({ windows: [{ raum: 'Kueche', breiteMm: 1200, hoeheMm: 1300 }] }) } }] }),
+      };
+    }
+    throw new Error(`unexpected fetch ${url}`);
+  };
+  process.env.KIMI_API_KEY = 'test';
+
+  const req = Readable.from([Buffer.from(JSON.stringify({ transcript: 'Kueche 120 auf 130' }))]);
+  req.method = 'POST';
+  const res = response();
+  await handler(req, res);
+  const body = JSON.parse(res.body);
+  assert.equal(res.statusCode, 200);
+  assert.equal(body.ok, true);
+  assert.equal(body.source, 'llm');
+  assert.equal(body.meta.transcriptChars, 'Kueche 120 auf 130'.length);
+  assert.equal(body.meta.transcriptTruncated, false);
+  assert.equal(body.meta.windowCount, 1);
+  assert.equal(body.meta.uncertainCount, 0);
+  assert.equal(body.meta.model, 'moonshot-v1-8k');
+
+  const emptyReq = Readable.from([Buffer.from(JSON.stringify({ transcript: '  ' }))]);
+  emptyReq.method = 'POST';
+  const emptyRes = response();
+  await handler(emptyReq, emptyRes);
+  const emptyBody = JSON.parse(emptyRes.body);
+  assert.equal(emptyRes.statusCode, 400);
+  assert.equal(emptyBody.error, 'empty_transcript');
+} finally {
+  if (hadFetch) globalThis.fetch = originalFetch;
+  else delete globalThis.fetch;
+
+  if (previousKey === undefined) delete process.env.KIMI_API_KEY;
+  else process.env.KIMI_API_KEY = previousKey;
+}
+
+const badJsonReq = Readable.from([Buffer.from('{"transcript":')]);
+badJsonReq.method = 'POST';
+const badJsonRes = response();
+await handler(badJsonReq, badJsonRes);
+const badJsonBody = JSON.parse(badJsonRes.body);
+assert.equal(badJsonRes.statusCode, 400);
+assert.equal(badJsonBody.error, 'invalid_json');
+
+const oversizedReq = Readable.from([Buffer.alloc(65537, 'a')]);
+oversizedReq.method = 'POST';
+const oversizedRes = response();
+await handler(oversizedReq, oversizedRes);
+const oversizedBody = JSON.parse(oversizedRes.body);
+assert.notEqual(oversizedRes.statusCode, 200);
+assert.ok([400, 413].includes(oversizedRes.statusCode));
+assert.equal(oversizedBody.error, 'request_too_large');
+
+const oversizedStringReq = { method: 'POST', body: JSON.stringify({ transcript: 'x'.repeat(70000) }) };
+const oversizedStringRes = response();
+await handler(oversizedStringReq, oversizedStringRes);
+assert.equal(oversizedStringRes.statusCode, 413);
+
+const oversizedObjectReq = { method: 'POST', body: { transcript: 'x'.repeat(70000) } };
+const oversizedObjectRes = response();
+await handler(oversizedObjectReq, oversizedObjectRes);
+assert.equal(oversizedObjectRes.statusCode, 413);
+
+const middleware = await readFile(new URL('../middleware.js', import.meta.url), 'utf8');
+assert.match(middleware, /cpath === ['"]\/aufmass\.html['"]/);
+const publicFileMatch = middleware.match(/const PUBLIC_FILE = ([^\n]+)/);
+assert.ok(publicFileMatch);
+assert.doesNotMatch(publicFileMatch[1], /html/);
+
+console.log('aufmass-smoke ok');

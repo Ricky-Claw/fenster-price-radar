@@ -13,7 +13,7 @@
   },
   "rewrites": [
     {
-      "source": "/((?!data/|assets/|api/|reports/|ebooks/).*)",
+      "source": "/((?!data/|assets/|api/|reports/|ebooks/|aufmass\\.html).*)",
       "destination": "/index.html"
     }
   ]

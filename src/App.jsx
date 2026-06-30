@@ -612,6 +612,7 @@ function App(){
         <button type="button" className={activeView==='margenrechner' ? 'active' : ''} onClick={()=>selectView('margenrechner')}>Margenrechner</button>
         <button type="button" className={activeView==='entwicklung' ? 'active' : ''} onClick={()=>selectView('entwicklung')}>Preisentwicklung</button>
         <a href="#aktionskalender" className={activeView==='aktionskalender' ? 'active' : ''} onClick={event=>{event.preventDefault();selectView('aktionskalender');}}>Aktionskalender</a>
+        <a href="/aufmass.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Aufmaß per Sprache</a>
       </nav>
     </header>
     {menuOpen ? <button type="button" className="menuBackdrop" aria-label="Ansichtsmenü schließen" onClick={()=>setMenuOpen(false)} /> : null}

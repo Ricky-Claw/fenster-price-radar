@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fenster per Sprache aufnehmen</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --accent: #004b93;
+        --accent-dark: #003668;
+        --ink: #18212f;
+        --muted: #667085;
+        --line: #d7dde8;
+        --soft: #f4f7fb;
+        --danger: #b42318;
+        --danger-bg: #fef3f2;
+        --warn: #b54708;
+        --warn-bg: #fffaeb;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: #f7f9fc;
+        color: var(--ink);
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        line-height: 1.45;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 28px));
+        margin: 0 auto;
+        padding: 28px 0 40px;
+      }
+
+      header {
+        border-bottom: 4px solid var(--accent);
+        padding-bottom: 18px;
+        margin-bottom: 22px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(28px, 4vw, 44px);
+        line-height: 1.08;
+        letter-spacing: 0;
+      }
+
+      .subtitle {
+        margin: 0;
+        color: var(--muted);
+        max-width: 820px;
+        font-size: 17px;
+      }
+
+      .print-heading {
+        display: none;
+      }
+
+      .input-area,
+      .results {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+        box-shadow: 0 10px 28px rgba(24, 33, 47, 0.06);
+      }
+
+      .input-area {
+        margin-bottom: 18px;
+      }
+
+      label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      textarea {
+        width: 100%;
+        min-height: 180px;
+        resize: vertical;
+        border: 1px solid #b9c2d0;
+        border-radius: 8px;
+        padding: 14px;
+        font: inherit;
+        color: var(--ink);
+        background: #fff;
+      }
+
+      textarea:focus,
+      input:focus,
+      select:focus {
+        outline: 3px solid rgba(0, 75, 147, 0.18);
+        border-color: var(--accent);
+      }
+
+      .actions,
+      .table-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin-top: 14px;
+      }
+
+      button {
+        min-height: 40px;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        padding: 9px 13px;
+        font: inherit;
+        font-weight: 700;
+        color: #fff;
+        background: var(--accent);
+        cursor: pointer;
+      }
+
+      button:hover:not(:disabled) {
+        background: var(--accent-dark);
+      }
+
+      button.secondary {
+        color: var(--accent);
+        background: #fff;
+      }
+
+      button.danger {
+        border-color: #d92d20;
+        color: #b42318;
+        background: #fff;
+        white-space: nowrap;
+      }
+
+      button:disabled {
+        border-color: #c7cdd8;
+        color: #7c8492;
+        background: #eef1f5;
+        cursor: not-allowed;
+      }
+
+      .stub-note {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .banner {
+        display: none;
+        margin: 0 0 14px;
+        border-radius: 8px;
+        padding: 11px 13px;
+        font-weight: 700;
+      }
+
+      .banner.error {
+        color: var(--danger);
+        background: var(--danger-bg);
+        border: 1px solid #fecdca;
+      }
+
+      .banner.warning {
+        color: var(--warn);
+        background: var(--warn-bg);
+        border: 1px solid #fedf89;
+      }
+
+      .banner.visible {
+        display: block;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1040px;
+        background: #fff;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: var(--soft);
+        font-size: 13px;
+        color: #344054;
+      }
+
+      tbody tr.needs-review {
+        border-left: 5px solid #f79009;
+      }
+
+      input,
+      select {
+        width: 100%;
+        min-width: 72px;
+        border: 1px solid #c4ccda;
+        border-radius: 6px;
+        padding: 8px;
+        font: inherit;
+        background: #fff;
+      }
+
+      input[type="number"] {
+        min-width: 86px;
+      }
+
+      .review-cell {
+        min-width: 76px;
+      }
+
+      .badge {
+        display: inline-block;
+        border: 1px solid #f79009;
+        border-radius: 999px;
+        padding: 3px 8px;
+        color: #93370d;
+        background: #fffaeb;
+        font-size: 12px;
+        font-weight: 800;
+      }
+
+      .print-value {
+        display: none;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          width: min(100% - 18px, 1180px);
+          padding-top: 18px;
+        }
+
+        .input-area,
+        .results {
+          padding: 13px;
+        }
+
+        h1 {
+          font-size: 30px;
+        }
+      }
+
+      @media print {
+        body {
+          background: #fff;
+          color: #000;
+          font-size: 11pt;
+        }
+
+        main {
+          width: 100%;
+          padding: 0;
+        }
+
+        header,
+        .input-area,
+        .actions,
+        .table-actions,
+        .banner,
+        button,
+        .subtitle {
+          display: none !important;
+        }
+
+        .print-heading {
+          display: block;
+          margin: 0 0 14px;
+          font-size: 18pt;
+        }
+
+        .results {
+          border: 0;
+          box-shadow: none;
+          padding: 0;
+        }
+
+        .table-wrap {
+          overflow: visible;
+          border: 0;
+        }
+
+        table {
+          min-width: 0;
+          border-collapse: collapse;
+          font-size: 9pt;
+        }
+
+        th,
+        td {
+          border: 1px solid #777;
+          padding: 5px;
+        }
+
+        tbody tr.needs-review {
+          border-left: 0;
+        }
+
+        .field-control {
+          display: none !important;
+        }
+
+        .print-value {
+          display: inline;
+          color: #000;
+        }
+
+        .badge {
+          border: 0;
+          border-radius: 0;
+          padding: 0;
+          color: #000;
+          background: transparent;
+          font-weight: 700;
+        }
+
+        .remove-cell {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Fenster per Sprache aufnehmen</h1>
+        <p class="subtitle">Am Handy auf die Mikrofon-Taste der Tastatur tippen und die Fensterliste einsprechen, dann "In Fensterliste umwandeln".</p>
+      </header>
+
+      <h2 class="print-heading">Aufmaßliste Fenster</h2>
+
+      <section class="input-area" aria-label="Transkript erfassen">
+        <label for="transcript">Diktiertes Aufmaß</label>
+        <textarea id="transcript" placeholder="z.B. Wohnzimmer zwei Fenster ca. 1,20 auf 1,40 Dreh-Kipp weiss Kunststoff dreifach; Bad eins fest 60 auf 40 ..."></textarea>
+        <div class="actions">
+          <button id="convert" type="button">In Fensterliste umwandeln</button>
+        </div>
+      </section>
+
+      <section class="results" aria-label="Fensterliste bearbeiten">
+        <div id="errorBanner" class="banner error" role="alert"></div>
+        <div id="warningBanner" class="banner warning" role="status"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Raum</th>
+                <th>Breite (mm)</th>
+                <th>Hoehe (mm)</th>
+                <th>Anzahl</th>
+                <th>Oeffnungsart</th>
+                <th>Material</th>
+                <th>Verglasung</th>
+                <th>Farbe</th>
+                <th>Notiz</th>
+                <th class="remove-cell">Entfernen</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+
+        <div class="table-actions">
+          <button id="addRow" class="secondary" type="button">Zeile hinzufuegen</button>
+          <button id="saveJson" type="button">Speichern (JSON)</button>
+          <button id="printPage" class="secondary" type="button">Drucken</button>
+          <button id="ticket" type="button" disabled>Absenden / Als Ticket senden</button>
+          <span class="stub-note">(bald verfuegbar)</span>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      (function () {
+        // Must match ENUM_OEFFNUNG/ENUM_VERGLASUNG in src/aufmass/normalizeWindows.js.
+        var openingValues = ['Dreh', 'Kipp', 'Dreh-Kipp', 'Fest'];
+        var glazingValues = ['2fach', '3fach'];
+        var rowsEl = document.getElementById('rows');
+        var transcriptEl = document.getElementById('transcript');
+        var convertBtn = document.getElementById('convert');
+        var addRowBtn = document.getElementById('addRow');
+        var saveBtn = document.getElementById('saveJson');
+        var printBtn = document.getElementById('printPage');
+        var errorBanner = document.getElementById('errorBanner');
+        var warningBanner = document.getElementById('warningBanner');
+
+        function emptyWindow() {
+          return {
+            raum: '',
+            breiteMm: 0,
+            hoeheMm: 0,
+            anzahl: 1,
+            oeffnungsart: 'Dreh-Kipp',
+            material: '',
+            verglasung: '3fach',
+            farbe: 'Weiß',
+            notiz: '',
+            needsReview: false,
+            reviewReasons: [],
+          };
+        }
+
+        function showBanner(element, message) {
+          element.textContent = message;
+          element.classList.add('visible');
+        }
+
+        function hideBanners() {
+          errorBanner.classList.remove('visible');
+          warningBanner.classList.remove('visible');
+          errorBanner.textContent = '';
+          warningBanner.textContent = '';
+        }
+
+        function makePrintValue(control, initialValue) {
+          var span = document.createElement('span');
+          span.className = 'print-value';
+          span.textContent = String(initialValue || '');
+          control.addEventListener('input', function () {
+            span.textContent = control.value;
+          });
+          control.addEventListener('change', function () {
+            span.textContent = control.value;
+          });
+          return span;
+        }
+
+        function appendTextInput(row, key, value, inputType) {
+          var cell = document.createElement('td');
+          var input = document.createElement('input');
+          input.className = 'field-control';
+          input.dataset.field = key;
+          input.type = inputType || 'text';
+          if (inputType === 'number') input.min = '0';
+          input.value = value == null ? '' : String(value);
+          cell.appendChild(input);
+          cell.appendChild(makePrintValue(input, input.value));
+          row.appendChild(cell);
+        }
+
+        function appendSelect(row, key, value, options) {
+          var cell = document.createElement('td');
+          var select = document.createElement('select');
+          select.className = 'field-control';
+          select.dataset.field = key;
+          options.forEach(function (optionValue) {
+            var option = document.createElement('option');
+            option.value = optionValue;
+            option.textContent = optionValue;
+            select.appendChild(option);
+          });
+          select.value = options.indexOf(value) >= 0 ? value : options[0];
+          cell.appendChild(select);
+          cell.appendChild(makePrintValue(select, select.value));
+          row.appendChild(cell);
+        }
+
+        function appendStatus(row, item) {
+          var cell = document.createElement('td');
+          cell.className = 'review-cell';
+          if (item.needsReview) {
+            var badge = document.createElement('span');
+            badge.className = 'badge';
+            badge.textContent = 'pruefen';
+            badge.title = Array.isArray(item.reviewReasons) ? item.reviewReasons.join(', ') : '';
+            cell.appendChild(badge);
+          }
+          row.appendChild(cell);
+        }
+
+        function appendRemove(row) {
+          var cell = document.createElement('td');
+          cell.className = 'remove-cell';
+          var button = document.createElement('button');
+          button.className = 'danger';
+          button.type = 'button';
+          button.textContent = 'x entfernen';
+          button.addEventListener('click', function () {
+            row.remove();
+          });
+          cell.appendChild(button);
+          row.appendChild(cell);
+        }
+
+        function appendRow(item) {
+          var data = Object.assign(emptyWindow(), item || {});
+          data.reviewReasons = Array.isArray(data.reviewReasons) ? data.reviewReasons : [];
+          var row = document.createElement('tr');
+          row.dataset.needsReview = data.needsReview ? 'true' : 'false';
+          row.dataset.reviewReasons = JSON.stringify(data.reviewReasons);
+          if (data.needsReview) row.classList.add('needs-review');
+          appendStatus(row, data);
+          appendTextInput(row, 'raum', data.raum);
+          appendTextInput(row, 'breiteMm', data.breiteMm, 'number');
+          appendTextInput(row, 'hoeheMm', data.hoeheMm, 'number');
+          appendTextInput(row, 'anzahl', data.anzahl, 'number');
+          appendSelect(row, 'oeffnungsart', data.oeffnungsart, openingValues);
+          appendTextInput(row, 'material', data.material);
+          appendSelect(row, 'verglasung', data.verglasung, glazingValues);
+          appendTextInput(row, 'farbe', data.farbe);
+          appendTextInput(row, 'notiz', data.notiz);
+          appendRemove(row);
+          rowsEl.appendChild(row);
+        }
+
+        function renderRows(windows) {
+          rowsEl.textContent = '';
+          (windows || []).forEach(appendRow);
+          if (!rowsEl.children.length) appendRow(emptyWindow());
+        }
+
+        function intValue(row, field, fallback) {
+          var input = row.querySelector('[data-field="' + field + '"]');
+          var value = Number.parseInt(input ? input.value : '', 10);
+          return Number.isFinite(value) ? value : fallback;
+        }
+
+        function textValue(row, field) {
+          var input = row.querySelector('[data-field="' + field + '"]');
+          return input ? input.value : '';
+        }
+
+        function needsReview(row) {
+          return row.dataset.needsReview === 'true';
+        }
+
+        function reviewReasons(row) {
+          try {
+            var reasons = JSON.parse(row.dataset.reviewReasons || '[]');
+            return Array.isArray(reasons) ? reasons : [];
+          } catch (error) {
+            return [];
+          }
+        }
+
+        function currentRows() {
+          return Array.prototype.map.call(rowsEl.querySelectorAll('tr'), function (row) {
+            return {
+              raum: textValue(row, 'raum'),
+              breiteMm: intValue(row, 'breiteMm', 0),
+              hoeheMm: intValue(row, 'hoeheMm', 0),
+              anzahl: intValue(row, 'anzahl', 1),
+              oeffnungsart: textValue(row, 'oeffnungsart'),
+              material: textValue(row, 'material'),
+              verglasung: textValue(row, 'verglasung'),
+              farbe: textValue(row, 'farbe'),
+              notiz: textValue(row, 'notiz'),
+              needsReview: needsReview(row),
+              reviewReasons: reviewReasons(row),
+            };
+          });
+        }
+
+        async function convertTranscript() {
+          hideBanners();
+          var transcript = transcriptEl.value.trim();
+          if (!transcript) {
+            showBanner(errorBanner, 'Bitte zuerst die Fensterliste eindiktieren oder einfuegen. Danach erneut versuchen.');
+            return;
+          }
+          convertBtn.disabled = true;
+          convertBtn.textContent = 'Wird umgewandelt...';
+          try {
+            var response = await fetch('/api/aufmass', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ transcript: transcript }),
+            });
+            var payload = await response.json().catch(function () {
+              return null;
+            });
+            if (!response.ok || !payload || payload.ok !== true) {
+              throw new Error((payload && payload.message) || 'Die Fensterliste konnte nicht umgewandelt werden.');
+            }
+            renderRows(payload.windows || []);
+            if (payload.source === 'empty') {
+              showBanner(warningBanner, 'KI nicht erreichbar oder nichts erkannt — bitte Angaben unten manuell ergaenzen.');
+            }
+          } catch (error) {
+            showBanner(errorBanner, String(error && error.message ? error.message : error) + ' Bitte Verbindung pruefen und erneut versuchen.');
+          } finally {
+            convertBtn.disabled = false;
+            convertBtn.textContent = 'In Fensterliste umwandeln';
+          }
+        }
+
+        function saveJson() {
+          var blob = new Blob([JSON.stringify(currentRows(), null, 2)], { type: 'application/json' });
+          var url = URL.createObjectURL(blob);
+          var anchor = document.createElement('a');
+          anchor.href = url;
+          anchor.download = 'aufmassliste.json';
+          document.body.appendChild(anchor);
+          anchor.click();
+          anchor.remove();
+          URL.revokeObjectURL(url);
+        }
+
+        convertBtn.addEventListener('click', convertTranscript);
+        addRowBtn.addEventListener('click', function () {
+          appendRow(emptyWindow());
+        });
+        saveBtn.addEventListener('click', saveJson);
+        printBtn.addEventListener('click', function () {
+          window.print();
+        });
+
+        renderRows([]);
+      }());
+    </script>
+  </body>
+</html>

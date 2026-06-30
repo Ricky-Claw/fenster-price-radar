@@ -57,7 +57,7 @@ export default async function middleware(request) {
   const path = url.pathname;
   const cpath = canonicalPath(path);
   const isData = cpath.startsWith('/data/');
-  if (path === '/login' || path.startsWith('/api/login') || path.startsWith('/api/logout') || (!isData && PUBLIC_FILE.test(cpath))) return;
+  if (path === '/login' || path.startsWith('/api/login') || path.startsWith('/api/logout') || cpath === '/aufmass.html' || (!isData && PUBLIC_FILE.test(cpath))) return;
   if (path.startsWith('/api/')) return;
   const secret = process.env.FENSTER_RADAR_AUTH_SECRET || process.env.FENSTER_RADAR_PASSWORD || '';
   const session = cookieValue(request.headers.get('cookie') || '', COOKIE);
