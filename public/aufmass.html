@@ -143,6 +143,52 @@
         cursor: not-allowed;
       }
 
+      .speech-controls {
+        margin-top: 10px;
+      }
+
+      .speech-status {
+        min-height: 20px;
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      #micBtn.recording {
+        border-color: #d92d20;
+        color: #fff;
+        background: #d92d20;
+      }
+
+      #micBtn.recording:hover:not(:disabled) {
+        background: #b42318;
+      }
+
+      #micBtn.recording::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        margin-right: 7px;
+        border-radius: 999px;
+        background: #fff;
+        animation: micPulse 1s ease-in-out infinite;
+        vertical-align: 1px;
+      }
+
+      @keyframes micPulse {
+        0%,
+        100% {
+          opacity: 0.45;
+          transform: scale(0.85);
+        }
+
+        50% {
+          opacity: 1;
+          transform: scale(1.15);
+        }
+      }
+
       .stub-note {
         color: var(--muted);
         font-size: 14px;
@@ -269,6 +315,7 @@
         .input-area,
         .actions,
         .table-actions,
+        .speech-controls,
         .banner,
         button,
         .subtitle {
@@ -336,7 +383,7 @@
     <main>
       <header>
         <h1>Fenster per Sprache aufnehmen</h1>
-        <p class="subtitle">Am Handy auf die Mikrofon-Taste der Tastatur tippen und die Fensterliste einsprechen, dann "In Fensterliste umwandeln".</p>
+        <p class="subtitle">Auf "🎤 Sprachaufnahme" tippen und die Fensterliste einsprechen (oder die Mikrofon-Taste der Handy-Tastatur nutzen), dann "In Fensterliste umwandeln".</p>
       </header>
 
       <h2 class="print-heading">Aufmaßliste Fenster</h2>
@@ -344,6 +391,10 @@
       <section class="input-area" aria-label="Transkript erfassen">
         <label for="transcript">Diktiertes Aufmaß</label>
         <textarea id="transcript" placeholder="z.B. Wohnzimmer zwei Fenster ca. 1,20 auf 1,40 Dreh-Kipp weiss Kunststoff dreifach; Bad eins fest 60 auf 40 ..."></textarea>
+        <div id="speechControls" class="speech-controls">
+          <button id="micBtn" class="secondary" type="button" aria-label="Sprachaufnahme starten" aria-pressed="false" hidden>🎤 Sprachaufnahme starten</button>
+          <div id="micStatus" class="speech-status" aria-live="polite"></div>
+        </div>
         <div class="actions">
           <button id="convert" type="button">In Fensterliste umwandeln</button>
         </div>
@@ -392,11 +443,16 @@
         var rowsEl = document.getElementById('rows');
         var transcriptEl = document.getElementById('transcript');
         var convertBtn = document.getElementById('convert');
+        var micBtn = document.getElementById('micBtn');
+        var micStatus = document.getElementById('micStatus');
         var addRowBtn = document.getElementById('addRow');
         var saveBtn = document.getElementById('saveJson');
         var printBtn = document.getElementById('printPage');
         var errorBanner = document.getElementById('errorBanner');
         var warningBanner = document.getElementById('warningBanner');
+        var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+        var recognition = null;
+        var recording = false;
 
         function emptyWindow() {
           return {
@@ -565,6 +621,100 @@
           });
         }
 
+        function appendTranscript(text) {
+          var finalText = String(text || '').trim();
+          if (!finalText) return;
+          var existingText = transcriptEl.value;
+          var spacer = existingText && !/\s$/.test(existingText) ? ' ' : '';
+          transcriptEl.value = existingText + spacer + finalText;
+        }
+
+        function setMicIdle() {
+          recording = false;
+          micBtn.classList.remove('recording');
+          micBtn.textContent = '🎤 Sprachaufnahme starten';
+          micBtn.setAttribute('aria-label', 'Sprachaufnahme starten');
+          micBtn.setAttribute('aria-pressed', 'false');
+          micStatus.textContent = '';
+        }
+
+        function setMicRecording() {
+          micBtn.classList.add('recording');
+          micBtn.textContent = '⏹ Aufnahme stoppen';
+          micBtn.setAttribute('aria-label', 'Aufnahme stoppen');
+          micBtn.setAttribute('aria-pressed', 'true');
+        }
+
+        function setupSpeechRecognition() {
+          if (!SR) {
+            micStatus.textContent = 'Sprachaufnahme in diesem Browser nicht verfuegbar — bitte die Mikrofon-Taste der Tastatur nutzen.';
+            return;
+          }
+
+          recognition = new SR();
+          recognition.lang = 'de-DE';
+          recognition.continuous = true;
+          recognition.interimResults = true;
+          micBtn.hidden = false;
+
+          micBtn.addEventListener('click', function () {
+            if (recording) {
+              recognition.stop();
+              return;
+            }
+
+            recording = true;
+            setMicRecording();
+            try {
+              recognition.start();
+            } catch (error) {
+              setMicIdle();
+            }
+          });
+
+          recognition.onresult = function (event) {
+            var interimText = '';
+            var hasFinal = false;
+            for (var i = event.resultIndex; i < event.results.length; i += 1) {
+              var result = event.results[i];
+              var transcript = result[0] && result[0].transcript ? result[0].transcript : '';
+              if (result.isFinal) {
+                appendTranscript(transcript);
+                hasFinal = true;
+              } else {
+                interimText += transcript;
+              }
+            }
+
+            if (hasFinal) {
+              micStatus.textContent = '';
+            } else if (interimText.trim()) {
+              micStatus.textContent = '… hört zu: ' + interimText.trim();
+            } else {
+              micStatus.textContent = '';
+            }
+          };
+
+          recognition.onerror = function (event) {
+            var errorName = event && event.error ? event.error : '';
+            if (errorName === 'not-allowed' || errorName === 'service-not-allowed') {
+              showBanner(errorBanner, 'Mikrofon-Zugriff nicht erlaubt. Bitte im Browser erlauben oder die Tastatur-Mikrofon-Taste nutzen.');
+              setMicIdle();
+              return;
+            }
+            if (errorName === 'no-speech' || errorName === 'aborted') {
+              setMicIdle();
+              return;
+            }
+            showBanner(errorBanner, 'Sprachaufnahme unterbrochen. Bitte erneut versuchen.');
+            setMicIdle();
+          };
+
+          recognition.onend = function () {
+            setMicIdle();
+          };
+        }
+
         async function convertTranscript() {
           hideBanners();
           var transcript = transcriptEl.value.trim();
@@ -610,6 +760,7 @@
           URL.revokeObjectURL(url);
         }
 
+        setupSpeechRecognition();
         convertBtn.addEventListener('click', convertTranscript);
         addRowBtn.addEventListener('click', function () {
           appendRow(emptyWindow());
