@@ -54,6 +54,16 @@ const fieldsLiteral = aufmassHtml.match(/var FIELDS = \[([\s\S]*?)\];/);
 assert.ok(fieldsLiteral, 'public/aufmass.html must define inline FIELDS');
 const browserFieldKeys = Array.from(fieldsLiteral[1].matchAll(/key:\s*['"]([^'"]+)['"]/g), (match) => match[1]);
 assert.deepEqual(browserFieldKeys, AUFMASS_FIELD_KEYS);
+assert.match(aufmassHtml, /id="summarySection"/);
+assert.match(aufmassHtml, /id="summaryText"/);
+assert.match(aufmassHtml, /id="confirmSummary"/);
+assert.match(aufmassHtml, /id="rejectSummary"/);
+const convertTranscriptBody = aufmassHtml.match(/async function convertTranscript\(\) \{([\s\S]*?)\n        \}/);
+assert.ok(convertTranscriptBody, 'public/aufmass.html must define convertTranscript');
+assert.match(convertTranscriptBody[1], /^\s*if \(recording && recognition\) \{[\s\S]*?recognition\.stop\(\);/);
+assert.match(convertTranscriptBody[1], /hideBanners\(\);\s*hideSummary\(\);\s*var transcript = transcriptEl\.value\.trim\(\);/);
+assert.match(aufmassHtml, /confirmSummaryBtn\.addEventListener\('click'/);
+assert.match(aufmassHtml, /rejectSummaryBtn\.addEventListener\('click'/);
 
 assert.equal(normalized[1].breiteMm, 300);
 assert.equal(normalized[1].hoeheMm, 2600);
@@ -146,26 +156,43 @@ assert.ok(!defaultHinge.reviewReasons.includes('anschlag_unklar'));
 const unclearHinge = normalizeWindow({ anschlag: 'quatsch' });
 assert.ok(unclearHinge.reviewReasons.includes('anschlag_unklar'));
 
+let llmRequestBody = null;
 const llmResult = await extractWindows({
   transcript: 'Wohnzimmer 120 auf 140',
   env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' },
-  fetchImpl: async () => ({
-    ok: true,
-    json: async () => ({ choices: [{ message: { content: JSON.stringify({ windows: [{ raum: 'Wohnzimmer', breiteMm: 1200 }] }) } }] }),
-  }),
+  fetchImpl: async (_url, options) => {
+    llmRequestBody = JSON.parse(options.body);
+    return {
+      ok: true,
+      json: async () => ({
+        choices: [{
+          message: {
+            content: JSON.stringify({
+              windows: [{ raum: 'Wohnzimmer', breiteMm: 1200 }],
+              zusammenfassung: 'Ein Fenster im Wohnzimmer mit 120 x 140 cm.',
+            }),
+          },
+        }],
+      }),
+    };
+  },
 });
+assert.match(llmRequestBody.messages[0].content, /zusammenfassung/);
+assert.equal(llmRequestBody.max_tokens, 2500);
 assert.equal(llmResult.model, 'kimi-test');
 assert.deepEqual(llmResult.windows, [{ raum: 'Wohnzimmer', breiteMm: 1200 }]);
+assert.equal(llmResult.summary, 'Ein Fenster im Wohnzimmer mit 120 x 140 cm.');
 
 const fencedResult = await extractWindows({
   transcript: 'Bad fix 60 auf 40',
   env: { KIMI_API_KEY: 'test' },
   fetchImpl: async () => ({
     ok: true,
-    json: async () => ({ choices: [{ message: { content: '```json\n{"windows":[{"raum":"Bad"}]}\n```' } }] }),
+    json: async () => ({ choices: [{ message: { content: '```json\n{"windows":[{"raum":"Bad"}],"zusammenfassung":123}\n```' } }] }),
   }),
 });
 assert.deepEqual(fencedResult.windows, [{ raum: 'Bad' }]);
+assert.equal(fencedResult.summary, '');
 
 const proseResult = await extractWindows({
   transcript: 'Flur 100 auf 120',
@@ -176,6 +203,7 @@ const proseResult = await extractWindows({
   }),
 });
 assert.deepEqual(proseResult.windows, [{ raum: 'Flur' }]);
+assert.equal(proseResult.summary, '');
 
 const originalConsoleError = console.error;
 const loggedErrors = [];
@@ -208,7 +236,16 @@ try {
     if (String(url).includes('api.moonshot.ai')) {
       return {
         ok: true,
-        json: async () => ({ choices: [{ message: { content: JSON.stringify({ windows: [{ raum: 'Kueche', breiteMm: 1200, hoeheMm: 1300 }] }) } }] }),
+        json: async () => ({
+          choices: [{
+            message: {
+              content: JSON.stringify({
+                windows: [{ raum: 'Kueche', breiteMm: 1200, hoeheMm: 1300 }],
+                zusammenfassung: 'Ein Fenster in der Kueche mit 120 x 130 cm.',
+              }),
+            },
+          }],
+        }),
       };
     }
     throw new Error(`unexpected fetch ${url}`);
@@ -223,6 +260,7 @@ try {
   assert.equal(res.statusCode, 200);
   assert.equal(body.ok, true);
   assert.equal(body.source, 'llm');
+  assert.equal(body.summary, 'Ein Fenster in der Kueche mit 120 x 130 cm.');
   assert.equal(body.meta.transcriptChars, 'Kueche 120 auf 130'.length);
   assert.equal(body.meta.transcriptTruncated, false);
   assert.equal(body.meta.windowCount, 1);

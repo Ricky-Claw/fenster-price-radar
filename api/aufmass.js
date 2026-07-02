@@ -105,6 +105,7 @@ export default async function handler(req, res) {
     return sendJson(res, 200, {
       ok: true,
       source: raw ? 'llm' : 'empty',
+      summary: raw?.summary || '',
       windows,
       meta: {
         transcriptChars: transcript.length,

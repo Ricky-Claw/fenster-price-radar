@@ -80,6 +80,11 @@
         margin-bottom: 8px;
       }
 
+      .summary-label {
+        margin: 0 0 8px;
+        font-weight: 700;
+      }
+
       textarea {
         width: 100%;
         min-height: 180px;
@@ -319,6 +324,7 @@
         }
 
         header,
+        #summarySection,
         .input-area,
         .actions,
         .table-actions,
@@ -407,6 +413,15 @@
         </div>
       </section>
 
+      <section id="summarySection" class="input-area" hidden aria-label="Zusammenfassung bestaetigen" tabindex="-1">
+        <p class="summary-label">Verstanden — bitte kurz bestätigen:</p>
+        <p id="summaryText"></p>
+        <div class="actions">
+          <button id="confirmSummary" type="button">✓ Bestätigen, Liste anzeigen</button>
+          <button id="rejectSummary" class="secondary" type="button">↩ Nochmal diktieren</button>
+        </div>
+      </section>
+
       <section class="results" aria-label="Fensterliste bearbeiten">
         <div id="errorBanner" class="banner error" role="alert"></div>
         <div id="warningBanner" class="banner warning" role="status"></div>
@@ -460,9 +475,14 @@
         var savePdfBtn = document.getElementById('savePdf');
         var errorBanner = document.getElementById('errorBanner');
         var warningBanner = document.getElementById('warningBanner');
+        var summarySection = document.getElementById('summarySection');
+        var summaryTextEl = document.getElementById('summaryText');
+        var confirmSummaryBtn = document.getElementById('confirmSummary');
+        var rejectSummaryBtn = document.getElementById('rejectSummary');
         var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
         var recognition = null;
         var recording = false;
+        var pendingWindows = null;
 
         function renderHeader() {
           headerRow.textContent = '';
@@ -508,6 +528,12 @@
           warningBanner.classList.remove('visible');
           errorBanner.textContent = '';
           warningBanner.textContent = '';
+        }
+
+        function hideSummary() {
+          summarySection.hidden = true;
+          summaryTextEl.textContent = '';
+          pendingWindows = null;
         }
 
         function makePrintValue(control, initialValue) {
@@ -740,7 +766,11 @@
         }
 
         async function convertTranscript() {
+          if (recording && recognition) {
+            try { recognition.stop(); } catch (error) { /* ignore */ }
+          }
           hideBanners();
+          hideSummary();
           var transcript = transcriptEl.value.trim();
           if (!transcript) {
             showBanner(errorBanner, 'Bitte zuerst die Fensterliste eindiktieren oder einfuegen. Danach erneut versuchen.');
@@ -760,9 +790,18 @@
             if (!response.ok || !payload || payload.ok !== true) {
               throw new Error((payload && payload.message) || 'Die Fensterliste konnte nicht umgewandelt werden.');
             }
-            renderRows(payload.windows || []);
-            if (payload.source === 'empty') {
-              showBanner(warningBanner, 'KI war zu langsam oder hat nichts erkannt — bitte erneut versuchen oder die Angaben unten manuell ergaenzen.');
+            var windows = payload.windows || [];
+            var summaryTextValue = typeof payload.summary === 'string' ? payload.summary.trim() : '';
+            if (payload.source === 'llm' && summaryTextValue) {
+              pendingWindows = windows;
+              summaryTextEl.textContent = summaryTextValue;
+              summarySection.hidden = false;
+              summarySection.focus();
+            } else {
+              renderRows(windows);
+              if (payload.source === 'empty') {
+                showBanner(warningBanner, 'KI war zu langsam oder hat nichts erkannt — bitte erneut versuchen oder die Angaben unten manuell ergaenzen.');
+              }
             }
           } catch (error) {
             showBanner(errorBanner, String(error && error.message ? error.message : error) + ' Bitte Verbindung pruefen und erneut versuchen.');
@@ -808,6 +847,14 @@
         renderHeader();
         setupSpeechRecognition();
         convertBtn.addEventListener('click', convertTranscript);
+        confirmSummaryBtn.addEventListener('click', function () {
+          renderRows(pendingWindows || []);
+          hideSummary();
+        });
+        rejectSummaryBtn.addEventListener('click', function () {
+          hideSummary();
+          transcriptEl.focus();
+        });
         addRowBtn.addEventListener('click', function () {
           appendRow(emptyWindow());
         });
