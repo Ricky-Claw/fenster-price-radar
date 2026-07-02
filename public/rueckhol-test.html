@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fensterradar · Rückhol-Test</title>
+<style>
+  :root {
+    --accent: #004b93; --accent-dark: #003668; --ink: #18212f;
+    --muted: #667085; --line: #d7dde8; --soft: #f4f7fb;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f7f9fc; color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  header { border-bottom: 4px solid var(--accent); background: #fff; }
+  .bar { width: min(1120px, calc(100% - 32px)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+  .brand { font-weight: 800; font-size: 20px; color: var(--accent); }
+  .brand span { color: var(--ink); font-weight: 700; }
+  nav a { margin-left: 18px; color: var(--muted); text-decoration: none; font-weight: 600; font-size: 15px; }
+  main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; padding: 40px 0 80px; }
+  h1 { font-size: clamp(28px, 4vw, 44px); line-height: 1.1; margin: 0 0 12px; }
+  .lead { font-size: 18px; color: var(--muted); max-width: 640px; }
+  .cta { display: inline-block; margin-top: 20px; background: var(--accent); color: #fff; padding: 13px 22px; border-radius: 10px; text-decoration: none; font-weight: 700; }
+  .table { margin-top: 40px; background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: center; }
+  .row:last-child { border-bottom: 0; }
+  .row.head { background: var(--soft); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+  .price { font-weight: 800; font-variant-numeric: tabular-nums; }
+  .best { color: var(--accent); }
+  .hint { margin-top: 28px; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 14px 16px; font-size: 14px; color: var(--muted); }
+  .filler { height: 700px; }
+  footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand">Fenster<span>radar</span></div>
+    <nav><a href="#">Preisvergleich</a><a href="#">Aufmaß</a><a href="#">Ratgeber</a><a href="#">Anfrage</a></nav>
+  </div>
+</header>
+
+<main>
+  <h1>Fensterpreise vergleichen, bevor Sie kaufen.</h1>
+  <p class="lead">Testseite für die Rückhol-Automatik. Bewegen Sie die Maus zum oberen Rand (Ausstieg),
+    warten Sie kurz, oder scrollen Sie — je nach Kampagne erscheint das Rückhol-Popup im Fensterradar-Design.</p>
+  <a class="cta" href="#">Jetzt Preise vergleichen</a>
+
+  <div class="hint">
+    <strong>Einbau:</strong> Diese Seite lädt <code>cre.js</code> mit <code>data-cre-site="fensterradar"</code>.
+    Legen Sie im Rückhol-Dashboard eine Kampagne für die Seite <code>fensterradar</code> an — oder rufen Sie
+    im Browser <code>window.CRE.trigger('&lt;id&gt;')</code> auf.
+  </div>
+
+  <div class="table">
+    <div class="row head"><span>Anbieter</span><span>Kunststoff</span><span>Holz</span><span>Alu</span></div>
+    <div class="row"><span>Deutscher Fenstershop</span><span class="price best">312 €</span><span class="price">548 €</span><span class="price">690 €</span></div>
+    <div class="row"><span>Fensterblick</span><span class="price">339 €</span><span class="price">571 €</span><span class="price">712 €</span></div>
+    <div class="row"><span>Fensterversand</span><span class="price">351 €</span><span class="price">560 €</span><span class="price">705 €</span></div>
+  </div>
+
+  <div class="filler"></div>
+  <p class="lead">Weit unten – gut zum Testen von <code>scroll_depth</code>.</p>
+</main>
+<footer><div class="bar">Fensterradar · Testseite für die Rückhol-Automatik</div></footer>
+
+<!-- Rückhol-Automatik: cre.js vom Conversion-Rescue-Server. Lokal: localhost:8080. -->
+<script async src="http://localhost:8080/cre.js" data-cre-site="fensterradar" data-cre-api="http://localhost:8080"></script>
+</body>
+</html>
