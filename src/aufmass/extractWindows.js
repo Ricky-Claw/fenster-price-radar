@@ -64,10 +64,13 @@ export async function extractWindows({ transcript, env = process.env, fetchImpl 
   const model = env.FENSTERSHOP_LLM_MODEL || 'moonshot-v1-8k';
   if (!apiKey || typeof fetchImpl !== 'function') return null;
 
-  const prompt = `Du bist Aufmaß-Assistent für einen deutschen Fensterhändler. Wandle das frei gesprochene/diktierte Handwerker-Transkript in eine strukturierte Fensterliste um. Gib AUSSCHLIESSLICH gültiges JSON zurück, exakt in der Form {"windows":[ ... ]} — kein Fließtext, keine Markdown-Codeblöcke.
+  const prompt = `Du bist Aufmaß-Assistent für einen deutschen Fensterhändler. Wandle das frei gesprochene/diktierte Handwerker-Transkript in eine strukturierte Fensterliste um. Gib AUSSCHLIESSLICH gültiges JSON zurück, exakt in der Form {"windows":[ ... ],"zusammenfassung":"..."} — kein Fließtext, keine Markdown-Codeblöcke.
 
 Pro Fenster diese Felder (alle Schlüssel immer ausgeben):
 ${promptFieldList()}
+
+Zusätzlich immer ausgeben:
+- zusammenfassung (string): Kurzer, zusammenhängender, natürlicher deutscher Absatz mit 2-5 Sätzen, der die verstandene Fensterliste in normaler Sprache wiedergibt, damit der Kunde sie schnell lesen und bestätigen kann, bevor daraus eine strukturierte Liste wird. Beispiel: "Sie haben 2 Fenster im Wohnzimmer mit 120 x 140 cm, Dreh-Kipp, weiß, Kunststoff, dreifach verglast, sowie ein festverglastes Fenster im Bad mit 60 x 40 cm genannt." Wenn nichts verstanden wurde, kurz auf Deutsch sagen, dass keine eindeutige Fensterliste erkannt wurde, statt Felder aufzulisten.
 
 Regeln:
 - Maße immer ganze Millimeter-Zahlen. Wenn Breite ODER Höhe nicht eindeutig erkennbar: Wert 0 setzen und Grund in notiz vermerken.
@@ -86,7 +89,7 @@ Transkript:
       body: JSON.stringify({
         model,
         temperature: 0.2,
-        max_tokens: 2000,
+        max_tokens: 2500,
         response_format: { type: 'json_object' },
         messages: [{ role: 'user', content: prompt }],
       }),
@@ -96,7 +99,8 @@ Transkript:
     const data = await response.json();
     const parsed = extractJson(data.choices?.[0]?.message?.content || '{}');
     if (!Array.isArray(parsed?.windows)) return null;
-    return { windows: parsed.windows, model };
+    const summary = typeof parsed.zusammenfassung === 'string' ? parsed.zusammenfassung.trim().slice(0, 4000) : '';
+    return { windows: parsed.windows, model, summary };
   } catch (error) {
     console.error('[aufmass] extractWindows failed', error);
     return null;
