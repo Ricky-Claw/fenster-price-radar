@@ -1,16 +1,29 @@
 // portable module: no imports from radar internals. In the DFS repo, move to lib/aufmass/.
 
-export const ENUM_OEFFNUNG = Object.freeze(['Dreh', 'Kipp', 'Dreh-Kipp', 'Fest']);
-export const ENUM_VERGLASUNG = Object.freeze(['2fach', '3fach']);
-export const BREITE_MM_RANGE = Object.freeze({ min: 300, max: 3000 });
-export const HOEHE_MM_RANGE = Object.freeze({ min: 300, max: 2600 });
-export const ANZAHL_RANGE = Object.freeze({ min: 1, max: 500 });
+import { AUFMASS_FIELDS } from './schema.js';
+
+const FIELD_BY_KEY = Object.freeze(Object.fromEntries(AUFMASS_FIELDS.map((field) => [field.key, field])));
+
+export const ENUM_OEFFNUNG = Object.freeze([...FIELD_BY_KEY.oeffnungsart.options]);
+export const ENUM_ANSCHLAG = Object.freeze([...FIELD_BY_KEY.anschlag.options]);
+export const ENUM_VERGLASUNG = Object.freeze([...FIELD_BY_KEY.verglasung.options]);
+export const BREITE_MM_RANGE = Object.freeze({ min: FIELD_BY_KEY.breiteMm.min, max: FIELD_BY_KEY.breiteMm.max });
+export const HOEHE_MM_RANGE = Object.freeze({ min: FIELD_BY_KEY.hoeheMm.min, max: FIELD_BY_KEY.hoeheMm.max });
+export const ANZAHL_RANGE = Object.freeze({ min: FIELD_BY_KEY.anzahl.min, max: FIELD_BY_KEY.anzahl.max });
 export const MAX_WINDOWS = 200;
 export const TRANSCRIPT_MAX = 6000;
 
-const DEFAULT_OEFFNUNG = 'Dreh-Kipp';
-const DEFAULT_VERGLASUNG = '3fach';
-const DEFAULT_FARBE = 'Weiß';
+const REVIEW_REASON_ORDER = Object.freeze([
+  'breite_unklar',
+  'breite_geklemmt',
+  'hoehe_unklar',
+  'hoehe_geklemmt',
+  'anzahl_unklar',
+  'anzahl_geklemmt',
+  'oeffnungsart_unklar',
+  'anschlag_unklar',
+  'verglasung_unklar',
+]);
 
 function aliasKey(value) {
   return String(value || '').toLowerCase().replace(/[\s-]+/g, '');
@@ -54,57 +67,50 @@ function clamp(value, range) {
   return value;
 }
 
-function snapOeffnungsart(value, reviewReasons) {
-  const present = value !== undefined && value !== null && String(value).trim() !== '';
-  if (!present) return DEFAULT_OEFFNUNG;
-  const key = aliasKey(value);
-  const aliases = {
-    dk: 'Dreh-Kipp',
-    drehkipp: 'Dreh-Kipp',
-    festverglast: 'Fest',
-    fix: 'Fest',
-  };
-  const snapped = aliases[key] || ENUM_OEFFNUNG.find((item) => aliasKey(item) === key);
-  if (snapped) return snapped;
-  reviewReasons.push('oeffnungsart_unklar');
-  return DEFAULT_OEFFNUNG;
+function sortReviewReasons(reviewReasons) {
+  return [...reviewReasons].sort((left, right) => {
+    const leftIndex = REVIEW_REASON_ORDER.indexOf(left);
+    const rightIndex = REVIEW_REASON_ORDER.indexOf(right);
+    const safeLeft = leftIndex === -1 ? REVIEW_REASON_ORDER.length : leftIndex;
+    const safeRight = rightIndex === -1 ? REVIEW_REASON_ORDER.length : rightIndex;
+    return safeLeft - safeRight;
+  });
 }
 
-function snapVerglasung(value, reviewReasons) {
-  const present = value !== undefined && value !== null && String(value).trim() !== '';
-  if (!present) return DEFAULT_VERGLASUNG;
-  const key = aliasKey(value);
-  const aliases = {
-    zweifach: '2fach',
-    '2fach': '2fach',
-    dreifach: '3fach',
-    '3fach': '3fach',
-  };
-  const snapped = aliases[key] || ENUM_VERGLASUNG.find((item) => aliasKey(item) === key);
-  if (snapped) return snapped;
-  reviewReasons.push('verglasung_unklar');
-  return DEFAULT_VERGLASUNG;
+function normalizeText(rawValue, field) {
+  return String(rawValue || field.default).slice(0, field.maxLen);
 }
 
-function normalizeDimension(rawValue, range, unclearReason, clampedReason, reviewReasons) {
+function snapEnum(value, field, reviewReasons) {
+  const present = value !== undefined && value !== null && String(value).trim() !== '';
+  if (!present) return field.default;
+  const key = aliasKey(value);
+  const aliases = field.aliases || {};
+  const snapped = aliases[key] || field.options.find((item) => aliasKey(item) === key);
+  if (snapped) return snapped;
+  reviewReasons.push(`${field.reasonKey}_unklar`);
+  return field.default;
+}
+
+function normalizeDimension(rawValue, field, reviewReasons) {
   const value = parseDimensionMm(rawValue);
   if (!value) {
-    reviewReasons.push(unclearReason);
+    reviewReasons.push(`${field.reasonKey}_unklar`);
     return 0;
   }
-  const clamped = clamp(value, range);
-  if (clamped !== value) reviewReasons.push(clampedReason);
+  const clamped = clamp(value, field);
+  if (clamped !== value) reviewReasons.push(`${field.reasonKey}_geklemmt`);
   return clamped;
 }
 
-function normalizeAnzahl(rawValue, reviewReasons) {
+function normalizeAnzahl(rawValue, field, reviewReasons) {
   const present = rawValue !== undefined && rawValue !== null && String(rawValue).trim() !== '';
   if (typeof rawValue === 'string' && present && !/^\d+$/.test(rawValue.trim())) {
     reviewReasons.push('anzahl_unklar');
     const match = rawValue.match(/\d+/);
     const value = match ? Number.parseInt(match[0], 10) || 0 : 1;
     if (!value) return 1;
-    const clamped = clamp(value, ANZAHL_RANGE);
+    const clamped = clamp(value, field);
     if (clamped !== value) reviewReasons.push('anzahl_geklemmt');
     return clamped;
   }
@@ -114,33 +120,32 @@ function normalizeAnzahl(rawValue, reviewReasons) {
     if (present) reviewReasons.push('anzahl_unklar');
     return 1;
   }
-  const clamped = clamp(value, ANZAHL_RANGE);
+  const clamped = clamp(value, field);
   if (clamped !== value) reviewReasons.push('anzahl_geklemmt');
   return clamped;
+}
+
+function normalizeField(input, field, reviewReasons) {
+  if (field.type === 'text') return normalizeText(input[field.key], field);
+  if (field.type === 'count') return normalizeAnzahl(input[field.key], field, reviewReasons);
+  if (field.type === 'dimension') return normalizeDimension(input[field.key], field, reviewReasons);
+  if (field.type === 'enum') return snapEnum(input[field.key], field, reviewReasons);
+  return undefined;
 }
 
 export function normalizeWindow(rawObj) {
   const input = rawObj && typeof rawObj === 'object' ? rawObj : {};
   const reviewReasons = [];
-  const breiteMm = normalizeDimension(input.breiteMm, BREITE_MM_RANGE, 'breite_unklar', 'breite_geklemmt', reviewReasons);
-  const hoeheMm = normalizeDimension(input.hoeheMm, HOEHE_MM_RANGE, 'hoehe_unklar', 'hoehe_geklemmt', reviewReasons);
-  const anzahl = normalizeAnzahl(input.anzahl, reviewReasons);
-  const oeffnungsart = snapOeffnungsart(input.oeffnungsart, reviewReasons);
-  const verglasung = snapVerglasung(input.verglasung, reviewReasons);
+  const normalized = {};
 
-  return {
-    raum: String(input.raum || '').slice(0, 200),
-    breiteMm,
-    hoeheMm,
-    anzahl,
-    oeffnungsart,
-    material: String(input.material || '').slice(0, 200),
-    verglasung,
-    farbe: String(input.farbe || DEFAULT_FARBE).slice(0, 100),
-    notiz: String(input.notiz || '').slice(0, 500),
-    needsReview: reviewReasons.length > 0,
-    reviewReasons,
-  };
+  for (const field of AUFMASS_FIELDS) {
+    normalized[field.key] = normalizeField(input, field, reviewReasons);
+  }
+
+  const sortedReviewReasons = sortReviewReasons(reviewReasons);
+  normalized.needsReview = sortedReviewReasons.length > 0;
+  normalized.reviewReasons = sortedReviewReasons;
+  return normalized;
 }
 
 export function normalizeWindowList(rawList) {

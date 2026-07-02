@@ -1,6 +1,43 @@
 // portable module: no imports from radar internals. In the DFS repo, move to lib/aufmass/.
 
+import { AUFMASS_FIELDS } from './schema.js';
+
 const KIMI_URL = 'https://api.moonshot.ai/v1/chat/completions';
+
+const FIELD_DESCRIPTIONS = Object.freeze({
+  raum: 'Raum/Position. Kürzel/Dialekt ausschreiben ("Wohnzi"->"Wohnzimmer", "Schlafzi"->"Schlafzimmer", "Bad", "Küche"). "" wenn nicht genannt.',
+  anzahl: 'Stückzahl. "zwei mal"/"3 Stück" -> anzahl erhöhen, NICHT duplizieren.',
+  breiteMm: 'Breite in Millimetern. "1,20 m" / "ein Meter zwanzig" / "120 cm" -> 1200.',
+  hoeheMm: 'Höhe in Millimetern, gleiche Umrechnung.',
+  oeffnungsart: '"DK"/"dreh kipp"/"drehkipp"->"Dreh-Kipp"; "festverglast"/"fix"->"Fest".',
+  anschlag: '"DIN links"/"DIN rechts" nur wenn eindeutig genannt, sonst "—".',
+  material: 'Freier deutscher String, z.B. "Kunststoff","Kunststoff-Aluminium","Aluminium","Holz". "PVC"->"Kunststoff". "" wenn nicht genannt.',
+  verglasung: '"zweifach"->"2fach", "dreifach"->"3fach".',
+  farbe: 'Freier deutscher String, z.B. "Weiß","Anthrazit".',
+  notiz: 'Wörtliche Restinfo oder Unklarheit, sonst "".',
+});
+
+function quoteList(values) {
+  return values.map((value) => `"${value}"`).join(',');
+}
+
+function fieldPromptLine(field) {
+  const description = FIELD_DESCRIPTIONS[field.key] || field.label;
+  if (field.type === 'dimension') {
+    return `- ${field.key} (ganze Zahl): ${description} Immer ganze Millimeter-Zahlen.`;
+  }
+  if (field.type === 'count') {
+    return `- ${field.key} (ganze Zahl): ${description} Standard ${field.default}.`;
+  }
+  if (field.type === 'enum') {
+    return `- ${field.key}: ${description} Genau einer von ${quoteList(field.options)}. Standard "${field.default}".`;
+  }
+  return `- ${field.key} (string): ${description} Standard "${field.default}".`;
+}
+
+function promptFieldList() {
+  return AUFMASS_FIELDS.map(fieldPromptLine).join('\n');
+}
 
 function kimiApiKey(env = process.env) {
   return env.KIMI_API_KEY || env.MOONSHOT_API_KEY || '';
@@ -29,16 +66,8 @@ export async function extractWindows({ transcript, env = process.env, fetchImpl 
 
   const prompt = `Du bist Aufmaß-Assistent für einen deutschen Fensterhändler. Wandle das frei gesprochene/diktierte Handwerker-Transkript in eine strukturierte Fensterliste um. Gib AUSSCHLIESSLICH gültiges JSON zurück, exakt in der Form {"windows":[ ... ]} — kein Fließtext, keine Markdown-Codeblöcke.
 
-Pro Fenster diese Felder:
-- raum (string): Raum/Position. Kürzel/Dialekt ausschreiben ("Wohnzi"->"Wohnzimmer", "Schlafzi"->"Schlafzimmer", "Bad", "Küche"). "" wenn nicht genannt.
-- breiteMm (ganze Zahl): Breite in Millimetern. "1,20 m" / "ein Meter zwanzig" / "120 cm" -> 1200.
-- hoeheMm (ganze Zahl): Höhe in Millimetern, gleiche Umrechnung.
-- anzahl (ganze Zahl): Stückzahl, Standard 1. "zwei mal"/"3 Stück" -> anzahl erhöhen, NICHT duplizieren.
-- oeffnungsart: genau einer von "Dreh","Kipp","Dreh-Kipp","Fest". "DK"/"dreh kipp"/"drehkipp"->"Dreh-Kipp"; "festverglast"/"fix"->"Fest". Standard "Dreh-Kipp".
-- material (string): z.B. "Kunststoff","Kunststoff-Aluminium","Aluminium","Holz". "PVC"->"Kunststoff". "" wenn nicht genannt.
-- verglasung: "2fach" oder "3fach". "zweifach"->"2fach". Standard "3fach".
-- farbe (string): z.B. "Weiß","Anthrazit". Standard "Weiß".
-- notiz (string): wörtliche Restinfo oder Unklarheit, sonst "".
+Pro Fenster diese Felder (alle Schlüssel immer ausgeben):
+${promptFieldList()}
 
 Regeln:
 - Maße immer ganze Millimeter-Zahlen. Wenn Breite ODER Höhe nicht eindeutig erkennbar: Wert 0 setzen und Grund in notiz vermerken.

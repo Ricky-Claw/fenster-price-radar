@@ -3,6 +3,7 @@ import { readFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import handler from '../api/aufmass.js';
 import { extractWindows } from '../src/aufmass/extractWindows.js';
+import { AUFMASS_FIELD_KEYS } from '../src/aufmass/schema.js';
 import { normalizeWindow, normalizeWindowList } from '../src/aufmass/normalizeWindows.js';
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
@@ -46,6 +47,14 @@ assert.equal(normalized[0].verglasung, '2fach');
 assert.equal(normalized[0].needsReview, false);
 assert.equal(Object.hasOwn(normalized[0], 'extra'), false);
 
+assert.deepEqual(AUFMASS_FIELD_KEYS, ['raum', 'anzahl', 'breiteMm', 'hoeheMm', 'oeffnungsart', 'anschlag', 'material', 'verglasung', 'farbe', 'notiz']);
+
+const aufmassHtml = await readFile(new URL('../public/aufmass.html', import.meta.url), 'utf8');
+const fieldsLiteral = aufmassHtml.match(/var FIELDS = \[([\s\S]*?)\];/);
+assert.ok(fieldsLiteral, 'public/aufmass.html must define inline FIELDS');
+const browserFieldKeys = Array.from(fieldsLiteral[1].matchAll(/key:\s*['"]([^'"]+)['"]/g), (match) => match[1]);
+assert.deepEqual(browserFieldKeys, AUFMASS_FIELD_KEYS);
+
 assert.equal(normalized[1].breiteMm, 300);
 assert.equal(normalized[1].hoeheMm, 2600);
 assert.equal(normalized[1].anzahl, 500);
@@ -62,10 +71,11 @@ assert.deepEqual(normalized[1].reviewReasons, [
 
 assert.deepEqual(normalized[2], {
   raum: '',
+  anzahl: 1,
   breiteMm: 0,
   hoeheMm: 0,
-  anzahl: 1,
   oeffnungsart: 'Dreh-Kipp',
+  anschlag: '—',
   material: '',
   verglasung: '3fach',
   farbe: 'Weiß',
@@ -125,6 +135,16 @@ assert.ok(!cleanStringCount.reviewReasons.includes('anzahl_unklar'));
 const cleanNumberCount = normalizeWindow({ anzahl: 3 });
 assert.equal(cleanNumberCount.anzahl, 3);
 assert.ok(!cleanNumberCount.reviewReasons.includes('anzahl_unklar'));
+
+const leftHinge = normalizeWindow({ oeffnungsart: 'DK', anschlag: 'links' });
+assert.equal(leftHinge.anschlag, 'DIN links');
+
+const defaultHinge = normalizeWindow({});
+assert.equal(defaultHinge.anschlag, '—');
+assert.ok(!defaultHinge.reviewReasons.includes('anschlag_unklar'));
+
+const unclearHinge = normalizeWindow({ anschlag: 'quatsch' });
+assert.ok(unclearHinge.reviewReasons.includes('anschlag_unklar'));
 
 const llmResult = await extractWindows({
   transcript: 'Wohnzimmer 120 auf 140',

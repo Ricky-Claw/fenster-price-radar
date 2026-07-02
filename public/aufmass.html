@@ -416,19 +416,7 @@
         <div class="table-wrap">
           <table>
             <thead>
-              <tr>
-                <th>Status</th>
-                <th>Raum</th>
-                <th>Breite (mm)</th>
-                <th>Hoehe (mm)</th>
-                <th>Anzahl</th>
-                <th>Oeffnungsart</th>
-                <th>Material</th>
-                <th>Verglasung</th>
-                <th>Farbe</th>
-                <th>Notiz</th>
-                <th class="remove-cell">Entfernen</th>
-              </tr>
+              <tr id="headerRow"></tr>
             </thead>
             <tbody id="rows"></tbody>
           </table>
@@ -446,9 +434,19 @@
 
     <script>
       (function () {
-        // Must match ENUM_OEFFNUNG/ENUM_VERGLASUNG in src/aufmass/normalizeWindows.js.
-        var openingValues = ['Dreh', 'Kipp', 'Dreh-Kipp', 'Fest'];
-        var glazingValues = ['2fach', '3fach'];
+        var FIELDS = [
+          { key: 'raum', label: 'Raum', control: 'text', default: '' },
+          { key: 'anzahl', label: 'Anzahl', control: 'number', default: 1 },
+          { key: 'breiteMm', label: 'Breite (mm)', control: 'number', default: 0 },
+          { key: 'hoeheMm', label: 'Höhe (mm)', control: 'number', default: 0 },
+          { key: 'oeffnungsart', label: 'Öffnungsart', control: 'select', options: ['Dreh', 'Kipp', 'Dreh-Kipp', 'Fest'], default: 'Dreh-Kipp' },
+          { key: 'anschlag', label: 'Anschlag', control: 'select', options: ['DIN links', 'DIN rechts', '—'], default: '—' },
+          { key: 'material', label: 'Material', control: 'text', default: '' },
+          { key: 'verglasung', label: 'Verglasung', control: 'select', options: ['2fach', '3fach'], default: '3fach' },
+          { key: 'farbe', label: 'Farbe', control: 'text', default: 'Weiß' },
+          { key: 'notiz', label: 'Notiz', control: 'text', default: '' },
+        ];
+        var headerRow = document.getElementById('headerRow');
         var rowsEl = document.getElementById('rows');
         var transcriptEl = document.getElementById('transcript');
         var convertBtn = document.getElementById('convert');
@@ -463,20 +461,38 @@
         var recognition = null;
         var recording = false;
 
+        function renderHeader() {
+          headerRow.textContent = '';
+          var statusHeader = document.createElement('th');
+          statusHeader.textContent = 'Status';
+          headerRow.appendChild(statusHeader);
+          FIELDS.forEach(function (field) {
+            var header = document.createElement('th');
+            header.textContent = field.label;
+            headerRow.appendChild(header);
+          });
+          var removeHeader = document.createElement('th');
+          removeHeader.className = 'remove-cell';
+          removeHeader.textContent = 'Entfernen';
+          headerRow.appendChild(removeHeader);
+        }
+
+        function fieldDefault(field) {
+          if (field.key === 'anzahl') return 1;
+          if (field.control === 'number') return 0;
+          if (Object.prototype.hasOwnProperty.call(field, 'default')) return field.default;
+          if (field.control === 'select') return (field.options || [])[0] || '';
+          return '';
+        }
+
         function emptyWindow() {
-          return {
-            raum: '',
-            breiteMm: 0,
-            hoeheMm: 0,
-            anzahl: 1,
-            oeffnungsart: 'Dreh-Kipp',
-            material: '',
-            verglasung: '3fach',
-            farbe: 'Weiß',
-            notiz: '',
-            needsReview: false,
-            reviewReasons: [],
-          };
+          var item = {};
+          FIELDS.forEach(function (field) {
+            item[field.key] = fieldDefault(field);
+          });
+          item.needsReview = false;
+          item.reviewReasons = [];
+          return item;
         }
 
         function showBanner(element, message) {
@@ -569,15 +585,13 @@
           row.dataset.reviewReasons = JSON.stringify(data.reviewReasons);
           if (data.needsReview) row.classList.add('needs-review');
           appendStatus(row, data);
-          appendTextInput(row, 'raum', data.raum);
-          appendTextInput(row, 'breiteMm', data.breiteMm, 'number');
-          appendTextInput(row, 'hoeheMm', data.hoeheMm, 'number');
-          appendTextInput(row, 'anzahl', data.anzahl, 'number');
-          appendSelect(row, 'oeffnungsart', data.oeffnungsart, openingValues);
-          appendTextInput(row, 'material', data.material);
-          appendSelect(row, 'verglasung', data.verglasung, glazingValues);
-          appendTextInput(row, 'farbe', data.farbe);
-          appendTextInput(row, 'notiz', data.notiz);
+          FIELDS.forEach(function (field) {
+            if (field.control === 'select') {
+              appendSelect(row, field.key, data[field.key], field.options || []);
+              return;
+            }
+            appendTextInput(row, field.key, data[field.key], field.control === 'number' ? 'number' : 'text');
+          });
           appendRemove(row);
           rowsEl.appendChild(row);
         }
@@ -614,19 +628,17 @@
 
         function currentRows() {
           return Array.prototype.map.call(rowsEl.querySelectorAll('tr'), function (row) {
-            return {
-              raum: textValue(row, 'raum'),
-              breiteMm: intValue(row, 'breiteMm', 0),
-              hoeheMm: intValue(row, 'hoeheMm', 0),
-              anzahl: intValue(row, 'anzahl', 1),
-              oeffnungsart: textValue(row, 'oeffnungsart'),
-              material: textValue(row, 'material'),
-              verglasung: textValue(row, 'verglasung'),
-              farbe: textValue(row, 'farbe'),
-              notiz: textValue(row, 'notiz'),
-              needsReview: needsReview(row),
-              reviewReasons: reviewReasons(row),
-            };
+            var item = {};
+            FIELDS.forEach(function (field) {
+              if (field.control === 'number') {
+                item[field.key] = intValue(row, field.key, field.key === 'anzahl' ? 1 : 0);
+                return;
+              }
+              item[field.key] = textValue(row, field.key);
+            });
+            item.needsReview = needsReview(row);
+            item.reviewReasons = reviewReasons(row);
+            return item;
           });
         }
 
@@ -769,6 +781,7 @@
           URL.revokeObjectURL(url);
         }
 
+        renderHeader();
         setupSpeechRecognition();
         convertBtn.addEventListener('click', convertTranscript);
         addRowBtn.addEventListener('click', function () {
