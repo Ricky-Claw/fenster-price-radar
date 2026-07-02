@@ -2,6 +2,7 @@ import { extractWindows } from '../src/aufmass/extractWindows.js';
 import { normalizeWindowList, TRANSCRIPT_MAX } from '../src/aufmass/normalizeWindows.js';
 
 const BODY_MAX_BYTES = 65536;
+const ALLOW_ORIGIN = process.env.AUFMASS_ALLOW_ORIGIN || '';
 
 function sendJson(res, status, payload) {
   res.setHeader?.('content-type', 'application/json; charset=utf-8');
@@ -34,10 +35,12 @@ async function readBody(req) {
 }
 
 export default async function handler(req, res) {
-  res.setHeader?.('access-control-allow-origin', '*');
+  if (ALLOW_ORIGIN) res.setHeader?.('access-control-allow-origin', ALLOW_ORIGIN);
   if (req.method === 'OPTIONS') {
-    res.setHeader?.('access-control-allow-methods', 'POST,GET,OPTIONS');
-    res.setHeader?.('access-control-allow-headers', 'content-type');
+    if (ALLOW_ORIGIN) {
+      res.setHeader?.('access-control-allow-methods', 'POST,GET,OPTIONS');
+      res.setHeader?.('access-control-allow-headers', 'content-type');
+    }
     return sendJson(res, 204, '');
   }
   if (req.method === 'GET') return sendJson(res, 200, { ok: true, service: 'aufmass' });

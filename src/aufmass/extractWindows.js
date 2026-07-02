@@ -49,7 +49,7 @@ Transkript:
 """${String(transcript || '')}"""`;
 
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_LLM_TIMEOUT_MS) || 12000);
+  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_LLM_TIMEOUT_MS) || 25000);
   try {
     const response = await fetchImpl(KIMI_URL, {
       method: 'POST',

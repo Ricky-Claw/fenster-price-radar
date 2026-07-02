@@ -218,6 +218,13 @@
         display: block;
       }
 
+      .review-note {
+        margin: 0 0 12px;
+        color: var(--warn);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
       .table-wrap {
         overflow-x: auto;
         border: 1px solid var(--line);
@@ -403,6 +410,8 @@
       <section class="results" aria-label="Fensterliste bearbeiten">
         <div id="errorBanner" class="banner error" role="alert"></div>
         <div id="warningBanner" class="banner warning" role="status"></div>
+
+        <p class="review-note">⚠️ Bitte alle Werte gegenprüfen — die KI kann sich auch bei nicht als „prüfen" markierten Zeilen verschätzen (besonders Maße).</p>
 
         <div class="table-wrap">
           <table>
@@ -738,7 +747,7 @@
             }
             renderRows(payload.windows || []);
             if (payload.source === 'empty') {
-              showBanner(warningBanner, 'KI nicht erreichbar oder nichts erkannt — bitte Angaben unten manuell ergaenzen.');
+              showBanner(warningBanner, 'KI war zu langsam oder hat nichts erkannt — bitte erneut versuchen oder die Angaben unten manuell ergaenzen.');
             }
           } catch (error) {
             showBanner(errorBanner, String(error && error.message ? error.message : error) + ' Bitte Verbindung pruefen und erneut versuchen.');
