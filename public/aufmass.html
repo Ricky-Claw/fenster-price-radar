@@ -426,8 +426,10 @@
           <button id="addRow" class="secondary" type="button">Zeile hinzufuegen</button>
           <button id="saveJson" type="button">Speichern (JSON)</button>
           <button id="printPage" class="secondary" type="button">Drucken</button>
+          <button id="savePdf" class="secondary" type="button">Als PDF speichern</button>
           <button id="ticket" type="button" disabled>Absenden / Als Ticket senden</button>
           <span class="stub-note">(bald verfuegbar)</span>
+          <span class="stub-note">Tipp: Im Druck-Dialog "Als PDF speichern" als Ziel wählen.</span>
         </div>
       </section>
     </main>
@@ -455,6 +457,7 @@
         var addRowBtn = document.getElementById('addRow');
         var saveBtn = document.getElementById('saveJson');
         var printBtn = document.getElementById('printPage');
+        var savePdfBtn = document.getElementById('savePdf');
         var errorBanner = document.getElementById('errorBanner');
         var warningBanner = document.getElementById('warningBanner');
         var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -781,6 +784,27 @@
           URL.revokeObjectURL(url);
         }
 
+        function printList(filenameMode) {
+          var previousTitle = document.title;
+          var now = new Date();
+          var yyyy = String(now.getFullYear());
+          var mm = String(now.getMonth() + 1).padStart(2, '0');
+          var dd = String(now.getDate()).padStart(2, '0');
+          var restored = false;
+          var hasAfterPrint = 'onafterprint' in window;
+          function restoreTitle() {
+            if (restored) return;
+            restored = true;
+            document.title = previousTitle;
+            if (hasAfterPrint) window.removeEventListener('afterprint', restoreTitle);
+          }
+
+          document.title = 'Aufmassliste-' + yyyy + '-' + mm + '-' + dd;
+          if (hasAfterPrint) window.addEventListener('afterprint', restoreTitle, { once: true });
+          window.print();
+          setTimeout(restoreTitle, 1000);
+        }
+
         renderHeader();
         setupSpeechRecognition();
         convertBtn.addEventListener('click', convertTranscript);
@@ -789,7 +813,10 @@
         });
         saveBtn.addEventListener('click', saveJson);
         printBtn.addEventListener('click', function () {
-          window.print();
+          printList('print');
+        });
+        savePdfBtn.addEventListener('click', function () {
+          printList('pdf');
         });
 
         renderRows([]);
