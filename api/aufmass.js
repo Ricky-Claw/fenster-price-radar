@@ -1,8 +1,14 @@
 import { extractWindows } from '../src/aufmass/extractWindows.js';
 import { normalizeWindowList, TRANSCRIPT_MAX } from '../src/aufmass/normalizeWindows.js';
+import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
 const BODY_MAX_BYTES = 65536;
 const ALLOW_ORIGIN = process.env.AUFMASS_ALLOW_ORIGIN || '';
+const rateLimiter = createRateLimiter({
+  windowMs: Number(process.env.AUFMASS_RL_WINDOW_MS) || 60000,
+  maxPerKey: Number(process.env.AUFMASS_RL_MAX_PER_IP) || 8,
+  maxGlobal: Number(process.env.AUFMASS_RL_MAX_GLOBAL) || 60,
+});
 
 function sendJson(res, status, payload) {
   res.setHeader?.('content-type', 'application/json; charset=utf-8');
@@ -34,6 +40,32 @@ async function readBody(req) {
   return raw.trim() ? JSON.parse(raw) : {};
 }
 
+function firstHeaderValue(value) {
+  if (Array.isArray(value)) return value[0];
+  return value;
+}
+
+function clientIp(req) {
+  const headers = req?.headers || {};
+  const vercelForwardedFor = firstHeaderValue(headers['x-vercel-forwarded-for']);
+  if (typeof vercelForwardedFor === 'string') {
+    const firstVercelForwardedIp = vercelForwardedFor.split(',')[0]?.trim();
+    if (firstVercelForwardedIp) return firstVercelForwardedIp;
+  }
+
+  const realIp = firstHeaderValue(headers['x-real-ip']);
+  if (typeof realIp === 'string' && realIp.trim()) return realIp.trim();
+
+  const forwardedFor = firstHeaderValue(headers['x-forwarded-for']);
+  if (typeof forwardedFor === 'string') {
+    const forwardedIps = forwardedFor.split(',');
+    const lastForwardedIp = forwardedIps[forwardedIps.length - 1]?.trim();
+    if (lastForwardedIp) return lastForwardedIp;
+  }
+
+  return 'unknown';
+}
+
 export default async function handler(req, res) {
   if (ALLOW_ORIGIN) res.setHeader?.('access-control-allow-origin', ALLOW_ORIGIN);
   if (req.method === 'OPTIONS') {
@@ -45,6 +77,15 @@ export default async function handler(req, res) {
   }
   if (req.method === 'GET') return sendJson(res, 200, { ok: true, service: 'aufmass' });
   if (req.method !== 'POST') return sendJson(res, 405, { ok: false, error: 'method_not_allowed' });
+  const rl = rateLimiter.check(clientIp(req));
+  if (!rl.allowed) {
+    res.setHeader?.('retry-after', String(rl.retryAfterSeconds));
+    return sendJson(res, 429, {
+      ok: false,
+      error: 'rate_limited',
+      message: 'Zu viele Anfragen. Bitte kurz warten und erneut versuchen.',
+    });
+  }
   try {
     const body = await readBody(req);
     let transcript = String(body.transcript || body.text || '').trim();

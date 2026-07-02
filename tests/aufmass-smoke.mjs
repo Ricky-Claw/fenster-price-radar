@@ -4,6 +4,7 @@ import { Readable } from 'node:stream';
 import handler from '../api/aufmass.js';
 import { extractWindows } from '../src/aufmass/extractWindows.js';
 import { normalizeWindow, normalizeWindowList } from '../src/aufmass/normalizeWindows.js';
+import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
 function response() {
   return {
@@ -77,6 +78,22 @@ assert.deepEqual(normalizeWindowList({}), []);
 assert.equal(normalizeWindow({ breiteMm: '120 cm', hoeheMm: '1400' }).breiteMm, 1200);
 assert.equal(normalizeWindow({ breiteMm: '1,20 m', hoeheMm: '1400' }).breiteMm, 1200);
 assert.equal(normalizeWindow({ breiteMm: '1200 mm', hoeheMm: '1400' }).breiteMm, 1200);
+
+let t = 1000;
+const rl = createRateLimiter({ windowMs: 1000, maxPerKey: 2, maxGlobal: 3, now: () => t });
+assert.equal(rl.check('A').allowed, true);
+assert.equal(rl.check('A').allowed, true);
+const a3 = rl.check('A');
+assert.equal(a3.allowed, false);
+assert.equal(a3.scope, 'key');
+assert.ok(a3.retryAfterSeconds >= 1);
+assert.equal(rl.check('B').allowed, true);
+const c = rl.check('C');
+assert.equal(c.allowed, false);
+assert.equal(c.scope, 'global');
+t += 1001;
+assert.equal(rl.check('A').allowed, true);
+console.log('aufmass-rate-limit ok');
 
 const capped = normalizeWindow({
   breiteMm: 1200,
