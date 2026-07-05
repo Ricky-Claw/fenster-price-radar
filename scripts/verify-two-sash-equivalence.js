@@ -3,7 +3,8 @@ import path from 'node:path';
 
 const dataPath = path.resolve('public', 'data', 'price-radar.json');
 const payload = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-const twoSash = payload.configs.filter(c => (c.layout || '1flg') !== '1flg');
+// Balkontuer ist ein eigener Produkttyp (einfluegelig, eigene Min-Anbieter-Regel in sync-results.js), keine 2-Fluegel-Fenster-Konstruktion.
+const twoSash = payload.configs.filter(c => (c.layout || '1flg') !== '1flg' && c.productType !== 'balkontuer');
 const failures = [];
 
 function fail(row, provider, message) {

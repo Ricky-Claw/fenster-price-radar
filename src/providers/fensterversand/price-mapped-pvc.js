@@ -14,6 +14,7 @@ await fs.mkdir(outDir, { recursive: true });
 
 const results = [];
 for (const cfg of catalog.slice(0, limit)) {
+  if (cfg.productType === 'balkontuer') { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason:'nicht_im_angebot' }); continue; }
   const mapped = mapProfile(cfg);
   if (!mapped) { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason:'No equivalent PVC profile in Fensterversand mapping' }); continue; }
   const [w,h] = cfg.size.toLowerCase().split('x').map(Number);

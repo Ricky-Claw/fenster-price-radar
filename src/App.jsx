@@ -15,8 +15,10 @@ const layouts = [
   ['','Alle Bauarten'],
   ['1flg','1-flügelig'],
   ['2flg_pfosten','2-flg Pfosten'],
-  ['2flg_stulp_dk_dreh','2-flg Stulp']
+  ['2flg_stulp_dk_dreh','2-flg Stulp'],
+  ['balkontuer','Balkontür']
 ];
+const LAYOUT_TILE_HINT = {'1flg':'Einflügelige Standardfenster','2flg_pfosten':'Zweiflügelig mit Mittelpfosten','2flg_stulp_dk_dreh':'Zweiflügelig mit Stulp','balkontuer':'Bislang nur bei Fensterblick verifiziert'};
 const UPDATE_POLL_MAX_MS = 15 * 60 * 1000;
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const formatPercent = value => Number(value || 0).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
@@ -665,7 +667,7 @@ function App(){
             <select value={glazing} onChange={e=>setGlazing(e.target.value)}><option value="">Alle Gläser</option>{unique(data,'glazing').map(x=><option key={x}>{x}</option>)}</select>
             <button className={cls('toggle',onlyAction&&'on')} onClick={()=>setOnlyAction(!onlyAction)}><SlidersHorizontal size={16}/> nur vergleichbar</button>
           </div>
-          <div className="layoutChooser" aria-label="Fensterbauart auswählen">{layouts.filter(([id])=>id).map(([id,label])=>{const count=stats.layoutCounts?.[id]||0; return <button key={id} type="button" className={cls('layoutChoice', layout===id&&'active')} onClick={()=>setLayout(id)}><small>{label}</small><b>{count}</b><span>{id==='1flg'?'Einflügelige Standardfenster':id==='2flg_pfosten'?'Zweiflügelig mit Mittelpfosten':'Zweiflügelig mit Stulp'}</span></button>})}</div>
+          <div className="layoutChooser" aria-label="Fensterbauart auswählen">{layouts.filter(([id])=>id).map(([id,label])=>{const count=stats.layoutCounts?.[id]||0; return <button key={id} type="button" className={cls('layoutChoice', layout===id&&'active')} onClick={()=>setLayout(id)}><small>{label}</small><b>{count}</b><span>{LAYOUT_TILE_HINT[id]||''}</span></button>})}</div>
           <div className="kpiStrip" aria-label="Preisradar Kennzahlen">
             <span><b>{stats.configs}</b> Konfigurationen</span>
             <span><b>{filtered.length}</b> sichtbar</span>

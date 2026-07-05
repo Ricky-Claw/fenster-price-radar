@@ -207,6 +207,8 @@ async function glassPrice(profileId, groupId, width, height, defPrice){
   return {item:null, add:0};
 }
 async function priceOne(c, profiles){
+  // Balkontür-Preisformel (Aufschlag/Glas/Beschlag) noch nicht verifiziert -> ehrlich nicht im Angebot statt geraten.
+  if(c.productType==='balkontuer') return {status:'unmatched', reason:'nicht_im_angebot'};
   const profileId=pickProfileId(c); if(!profileId) return {status:'unmatched', reason:'profile_not_mapped'};
   const profile=profiles.find(p=>+p.id===+profileId); if(!profile) return {status:'unmatched', reason:'profile_id_missing'};
   const sizeText = typeof c.size === 'string' ? c.size : '';

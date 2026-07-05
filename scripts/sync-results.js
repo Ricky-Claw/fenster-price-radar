@@ -117,6 +117,7 @@ for (const [provider, dir] of Object.entries(sources)) {
       opening: input.opening || input.openingType || r.opening || r.openingType || 'Dreh-Kipp',
       layout: input.layout || r.layout || '1flg',
       layoutLabel: input.layoutLabel || r.layoutLabel || '1-flügelig',
+      productType: input.productType || r.productType || 'fenster',
       color: input.color || r.color || 'Weiß/Weiß',
       status: data?.status || 'unknown',
       valid: data?.comparePrice?.valid ?? false,
@@ -139,7 +140,7 @@ const keys = new Map();
 for (const row of rows) {
   const k = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color, row.layout].join('|');
   if (catalogKeys.size && !catalogKeys.has(k)) continue;
-  if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, width: row.width, height: row.height, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, providers: {} });
+  if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, width: row.width, height: row.height, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, productType: row.productType, providers: {} });
   keys.get(k).providers[row.provider] = row;
 }
 
@@ -179,14 +180,17 @@ function isCleanProvider(p) {
 const comparableConfigs = configs.filter(c => {
   const required = ['dfs','fensterblick','fensterversand'].map(k => c.providers[k]);
   const validCount = required.filter(isValidPrice).length;
-  return validCount >= 2 && required.every(isCleanProvider);
+  // Balkontür ist neu und bislang nur bei einem Anbieter preislich verifiziert -> min. 1 statt 2, solange die anderen sauber "nicht im Angebot" melden.
+  const minValid = c.productType === 'balkontuer' ? 1 : 2;
+  return validCount >= minValid && required.every(isCleanProvider);
 });
 const comparableKeys = new Set(comparableConfigs.map(c => c.key));
 const filteredList = configs.filter(c => !comparableKeys.has(c.key)).map(c => {
   const required = ['dfs','fensterblick','fensterversand'].map(k => c.providers[k]);
   const validCount = required.filter(isValidPrice).length;
   const hasDimensionWarning = required.some(p => p?.warnings?.some(w => String(w).startsWith('dimension_rounded')));
-  const reason = validCount < 2
+  const minValid = c.productType === 'balkontuer' ? 1 : 2;
+  const reason = validCount < minValid
     ? `nur ${validCount} vergleichbarer Anbieter${hasDimensionWarning ? ' (Maß vom Anbieter angepasst)' : ''}`
     : 'nicht vergleichbar';
   return { brand: c.brand, profile: c.profile, size: c.size, glazing: c.glazing, layout: c.layout, validCount, reason };
