@@ -5,6 +5,9 @@ import { answerFenstershopChatbot, answerFenstershopChatbotWithLlm, retrieveFens
 
 
 globalThis.fetch = async (url) => {
+  if (String(url).includes('integrate.api.nvidia.com')) {
+    return { ok: true, json: async () => ({ choices: [{ message: { content: 'Nemotron-Antwort direkt aus Atlas.' } }] }) };
+  }
   if (String(url).includes('api.moonshot.ai')) {
     return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kurz poliert aus Atlas.' }) } }] }) };
   }
@@ -46,8 +49,30 @@ assert.ok(answer.links.some((link) => /fensterbegriffe|profilschnitte/.test(link
 
 const llmAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
 assert.equal(llmAnswer.llm.used, true);
+assert.equal(llmAnswer.llm.provider, 'moonshot');
 assert.match(llmAnswer.answer, /Kurz poliert aus Atlas\./);
 assert.match(llmAnswer.answer, /https:\/\/deutscher-fenstershop\.de\/fensterbegriffe/);
+
+const nemotronAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
+assert.equal(nemotronAnswer.llm.used, true);
+assert.equal(nemotronAnswer.llm.provider, 'nemotron');
+assert.match(nemotronAnswer.answer, /Nemotron-Antwort direkt aus Atlas\./);
+
+const originalFetch = globalThis.fetch;
+globalThis.fetch = async (url) => {
+  if (String(url).includes('integrate.api.nvidia.com')) return { ok: false, status: 500 };
+  if (String(url).includes('api.moonshot.ai')) return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kimi rettet die Antwort.' }) } }] }) };
+  throw new Error(`unexpected fetch ${url}`);
+};
+const fallbackAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
+assert.equal(fallbackAnswer.llm.used, true);
+assert.equal(fallbackAnswer.llm.provider, 'moonshot');
+assert.match(fallbackAnswer.answer, /Kimi rettet die Antwort\./);
+globalThis.fetch = originalFetch;
+
+const noProviderAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: {} });
+assert.equal(noProviderAnswer.llm.used, false);
+assert.equal(noProviderAnswer.llm.reason, 'all_providers_failed_or_unconfigured');
 
 const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
 assert.equal(llmGuardrail.intent, 'order_status');

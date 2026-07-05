@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { polishFenstershopAnswer } from './kimiClient.js';
+import { polishFenstershopAnswerNemotron } from './nemotronClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
 const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', import.meta.url);
@@ -299,15 +300,24 @@ function answerStillSafe(polished, draft) {
   return true;
 }
 
+const LLM_PROVIDERS = [
+  { name: 'nemotron', polish: polishFenstershopAnswerNemotron },
+  { name: 'moonshot', polish: polishFenstershopAnswer },
+];
+
 export async function answerFenstershopChatbotWithLlm({ message = '', env = process.env } = {}) {
   const draft = answerFenstershopChatbot({ message });
   if (mustKeepGuardrailDraft(draft)) return draft;
   const knowledge = retrieveFenstershopKnowledge(message, { limit: 3 });
-  try {
-    const polished = await polishFenstershopAnswer({ message, draft, knowledge, env });
-    if (!answerStillSafe(polished, draft)) return { ...draft, llm: { used: false, reason: 'safety_fallback' } };
-    return { ...draft, answer: withRequiredRefs(polished.answer, draft), llm: { used: true, provider: 'moonshot', model: polished.model } };
-  } catch (error) {
-    return { ...draft, llm: { used: false, reason: error.message || 'llm_failed' } };
+  for (const provider of LLM_PROVIDERS) {
+    let polished;
+    try {
+      polished = await provider.polish({ message, draft, knowledge, env });
+    } catch {
+      continue;
+    }
+    if (!polished || !answerStillSafe(polished, draft)) continue;
+    return { ...draft, answer: withRequiredRefs(polished.answer, draft), llm: { used: true, provider: provider.name, model: polished.model } };
   }
+  return { ...draft, llm: { used: false, reason: 'all_providers_failed_or_unconfigured' } };
 }
