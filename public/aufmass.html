@@ -80,7 +80,8 @@
         font-size: 17px;
       }
 
-      .print-heading {
+      .print-doc,
+      .print-footer {
         display: none;
       }
 
@@ -95,6 +96,44 @@
 
       .input-area {
         margin-bottom: 18px;
+      }
+
+      .doc-settings {
+        margin-bottom: 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 12px;
+        background: #fff;
+      }
+
+      .doc-settings summary {
+        color: var(--accent);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .doc-settings-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .doc-settings label {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .doc-settings textarea {
+        min-height: 0;
+      }
+
+      .doc-wide {
+        grid-column: 1 / -1;
       }
 
       label {
@@ -393,6 +432,7 @@
         header,
         #summarySection,
         .input-area,
+        .doc-settings,
         .actions,
         .table-actions,
         .submit-note,
@@ -405,10 +445,37 @@
           display: none !important;
         }
 
-        .print-heading {
+        .print-doc {
           display: block;
           margin: 0 0 14px;
-          font-size: 18pt;
+        }
+
+        .print-title {
+          margin: 4px 0;
+          font-size: 20pt;
+        }
+
+        .print-company {
+          color: #000;
+          font-size: 10pt;
+          white-space: pre-line;
+        }
+
+        .print-meta {
+          display: flex;
+          gap: 16px;
+          color: #000;
+          font-size: 10pt;
+        }
+
+        .print-footer {
+          display: block;
+          margin-top: 14px;
+          border-top: 1px solid #777;
+          padding-top: 8px;
+          color: #000;
+          font-size: 9pt;
+          white-space: pre-line;
         }
 
         .review-note {
@@ -479,7 +546,11 @@
         <p class="subtitle">Auf "🎤 Sprachaufnahme" tippen und die Fensterliste einsprechen (oder die Mikrofon-Taste der Handy-Tastatur nutzen), dann "In Fensterliste umwandeln".</p>
       </header>
 
-      <h2 class="print-heading">Aufmaßliste Fenster</h2>
+      <div class="print-doc">
+        <div class="print-company" id="printCompany"></div>
+        <h2 class="print-title" id="printTitle"></h2>
+        <div class="print-meta"><span id="printDate"></span><span id="printRef"></span></div>
+      </div>
 
       <section class="input-area" aria-label="Transkript erfassen">
         <label for="transcript">Diktiertes Aufmaß</label>
@@ -503,6 +574,17 @@
       </section>
 
       <section class="results" aria-label="Fensterliste bearbeiten">
+        <details class="doc-settings">
+          <summary>📄 Dokument-Kopf bearbeiten (Titel, Firma, Fußzeile)</summary>
+          <div class="doc-settings-grid">
+            <label>Titel<input id="docTitle" type="text" value="Aufmaßliste"></label>
+            <label>Datum<input id="docDate" type="text"></label>
+            <label>Referenz / Nr.<input id="docRef" type="text" placeholder="optional"></label>
+            <label class="doc-wide">Firma / Anschrift<textarea id="docCompany" rows="3" placeholder="Firmenname&#10;Straße Nr.&#10;PLZ Ort&#10;Telefon / E-Mail"></textarea></label>
+            <label class="doc-wide">Fußzeile<textarea id="docFooter" rows="2"></textarea></label>
+          </div>
+        </details>
+
         <div id="errorBanner" class="banner error" role="alert"></div>
         <div id="warningBanner" class="banner warning" role="status"></div>
         <div id="successBanner" class="banner success" role="status"></div>
@@ -536,12 +618,15 @@
           <button id="ticket" type="button">Absenden / Anfrage senden</button>
           <span class="stub-note">Tipp: Im Druck-Dialog "Als PDF speichern" als Ziel wählen.</span>
         </div>
+
+        <div class="print-footer" id="printFooter"></div>
       </section>
     </main>
 
     <script>
       (function () {
         var DRAFT_KEY = 'aufmass_draft_v1';
+        var DOC_KEY = 'aufmass_doc_v1';
         var FIELDS = [
           { key: 'raum', label: 'Raum', control: 'text', default: '' },
           { key: 'anzahl', label: 'Anzahl', control: 'number', default: 1 },
@@ -575,11 +660,84 @@
         var rejectSummaryBtn = document.getElementById('rejectSummary');
         var draftNote = document.getElementById('draftNote');
         var discardDraftBtn = document.getElementById('discardDraft');
+        var docTitle = document.getElementById('docTitle');
+        var docDate = document.getElementById('docDate');
+        var docRef = document.getElementById('docRef');
+        var docCompany = document.getElementById('docCompany');
+        var docFooter = document.getElementById('docFooter');
+        var printCompany = document.getElementById('printCompany');
+        var printTitle = document.getElementById('printTitle');
+        var printDate = document.getElementById('printDate');
+        var printRef = document.getElementById('printRef');
+        var printFooter = document.getElementById('printFooter');
         var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
         var recognition = null;
         var recording = false;
         var pendingWindows = null;
         var saveTimer;
+        var docSaveTimer;
+
+        function todayGerman() {
+          var now = new Date();
+          var dd = String(now.getDate()).padStart(2, '0');
+          var mm = String(now.getMonth() + 1).padStart(2, '0');
+          var yyyy = String(now.getFullYear());
+          return dd + '.' + mm + '.' + yyyy;
+        }
+
+        function loadDocSettings() {
+          try {
+            var raw = localStorage.getItem(DOC_KEY);
+            if (!raw) return null;
+            var settings = JSON.parse(raw);
+            return (settings && typeof settings === 'object') ? settings : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function saveDocSettings() {
+          try {
+            localStorage.setItem(DOC_KEY, JSON.stringify({
+              title: docTitle.value,
+              date: docDate.value,
+              ref: docRef.value,
+              company: docCompany.value,
+              footer: docFooter.value,
+            }));
+          } catch (e) { /* private mode / quota — ignore */ }
+        }
+
+        function scheduleDocSave() {
+          clearTimeout(docSaveTimer);
+          docSaveTimer = setTimeout(saveDocSettings, 400);
+        }
+
+        function syncDocPreview() {
+          printTitle.textContent = docTitle.value;
+          printCompany.textContent = docCompany.value;
+          printDate.textContent = docDate.value ? ('Datum: ' + docDate.value) : '';
+          printRef.textContent = docRef.value ? ('Referenz: ' + docRef.value) : '';
+          printFooter.textContent = docFooter.value;
+        }
+
+        function initDocSettings() {
+          var saved = loadDocSettings();
+          if (saved) {
+            docTitle.value = typeof saved.title === 'string' ? saved.title : '';
+            docDate.value = typeof saved.date === 'string' ? saved.date : '';
+            docRef.value = typeof saved.ref === 'string' ? saved.ref : '';
+            docCompany.value = typeof saved.company === 'string' ? saved.company : '';
+            docFooter.value = typeof saved.footer === 'string' ? saved.footer : '';
+          } else {
+            docTitle.value = 'Aufmaßliste';
+            docDate.value = todayGerman();
+            docRef.value = '';
+            docCompany.value = '';
+            docFooter.value = 'Alle Maße sind vom Kunden vor Bestellung zu prüfen.';
+          }
+          syncDocPreview();
+        }
 
         function saveDraft() {
           var draft = { transcript: transcriptEl.value, rows: currentRows(), submitNote: submitNoteEl.value, savedAt: Date.now() };
@@ -1037,6 +1195,7 @@
         }
 
         function printList(filenameMode) {
+          syncDocPreview();
           var previousTitle = document.title;
           var now = new Date();
           var yyyy = String(now.getFullYear());
@@ -1058,7 +1217,14 @@
         }
 
         renderHeader();
+        initDocSettings();
         setupSpeechRecognition();
+        [docTitle, docDate, docRef, docCompany, docFooter].forEach(function (field) {
+          field.addEventListener('input', function () {
+            syncDocPreview();
+            scheduleDocSave();
+          });
+        });
         transcriptEl.addEventListener('input', scheduleSave);
         submitNoteEl.addEventListener('input', scheduleSave);
         rowsEl.addEventListener('input', scheduleSave);
