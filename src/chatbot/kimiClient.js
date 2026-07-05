@@ -1,3 +1,5 @@
+import { LLM_ANSWER_RULES } from './llmPromptRules.js';
+
 const KIMI_URL = 'https://api.moonshot.ai/v1/chat/completions';
 
 function kimiApiKey(env = process.env) {
@@ -15,14 +17,7 @@ export async function polishFenstershopAnswer({ message, draft, knowledge = [], 
   if (!apiKey || typeof fetchImpl !== 'function') return null;
   const prompt = `Du bist der Hilfechat vom Deutschen Fenstershop. Formuliere eine kurze, freundliche deutsche Antwort.
 
-WICHTIGE REGELN:
-- Nutze ausschließlich den DRAFT und die WISSENSQUELLEN.
-- Erfinde keine Liefertermine, Bestellstatus, Zahlungsstatus, Ticketstatus oder technischen Einzelwerte.
-- Frage nicht nach Bestellnummer, Adresse, Zahlungsdaten, Fotos oder vollständigem Namen.
-- Wenn der DRAFT einen Kontakt/Link nennt, muss dieser erhalten bleiben.
-- Maximal 360 Zeichen. 2-3 kurze Sätze.
-- Verwende Sie/Ihnen, niemals du/dir.
-- Wenn ein Link/Kontakt im Draft steht, nenne ihn exakt.
+${LLM_ANSWER_RULES}
 - Gib nur valides JSON zurück: {"answer":"..."}
 
 Nutzerfrage: ${message}
