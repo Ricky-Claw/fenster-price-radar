@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rückhol-Automatik · Test-Seite</title>
+<style>
+  :root { --bg:#f4f7fb; --ink:#18212f; --muted:#667085; --line:#d7dde8; --blue:#004b93; --blue-dark:#003668; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  header { background: #fff; border-bottom: 3px solid var(--blue); }
+  .bar { width: min(1000px, calc(100% - 32px)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+  .brand { font-weight: 800; font-size: 20px; color: var(--blue); }
+  main { width: min(1000px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 80px; }
+  h1 { font-size: clamp(24px, 5vw, 38px); line-height: 1.15; margin: 0 0 10px; }
+  .lead { font-size: 17px; color: var(--muted); max-width: 620px; margin: 0 0 8px; }
+
+  .panel { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 24px 0; box-shadow: 0 10px 30px rgba(20,40,60,.05); }
+  .panel h2 { margin: 0 0 4px; font-size: 16px; }
+  .panel .hint { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
+  .btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .trig { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; cursor: pointer; font: inherit; text-align: left; min-height: 56px; transition: border-color .15s, background .15s, transform .08s; }
+  .trig:hover { border-color: var(--blue); background: #f7fafd; }
+  .trig:active { transform: translateY(1px); }
+  .trig b { font-size: 15px; font-weight: 700; }
+  .trig span { font-size: 12.5px; color: var(--muted); }
+  .empty { color: var(--muted); font-size: 14px; }
+
+  .filler { height: 60vh; display: grid; place-items: center; color: #aab4c2; font-size: 14px; border: 1px dashed var(--line); border-radius: 14px; margin-top: 24px; }
+  footer { border-top: 1px solid var(--line); }
+  footer .bar { color: var(--muted); font-size: 13px; }
+  @media (max-width: 600px) { main { padding: 20px 0 70px; } .panel { padding: 16px; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar"><div class="brand">Fenster<span style="color:var(--ink)">radar</span></div><nav style="color:var(--muted);font-size:14px">Test-Seite</nav></div>
+</header>
+
+<main>
+  <h1>Fensterpreise vergleichen, bevor Sie kaufen.</h1>
+  <p class="lead">Test-Seite für die Rückhol-Automatik. Tippen Sie unten einen Popup-Typ an — das echte Popup erscheint und ist voll bedienbar (auch auf dem Handy).</p>
+
+  <div class="panel">
+    <h2>Popup live testen</h2>
+    <p class="hint">Jeder Knopf zeigt das echte Popup. Wenn Sie es bedienen (E-Mail eintragen, Code kopieren …), wird das als echte Auswertung gezählt — sichtbar im Dashboard unter „Auswertung“, Seite <b>demo</b>.</p>
+    <div class="btns" id="btns"><span class="empty">Lade Popups …</span></div>
+  </div>
+
+  <div class="filler">weiter unten — gut zum Testen des „Scroll-Tiefe“-Auslösers am Desktop</div>
+</main>
+
+<footer><div class="bar">Fensterradar · Test-Seite für die Rückhol-Automatik</div></footer>
+
+<script async src="../cre.js" data-cre-site="demo" data-cre-api=""></script>
+<script>
+  var LABELS = { newsletter: 'Newsletter', contact: 'Kontakt', coupon: 'Gutschein', url: 'Link', pdf: 'PDF' };
+
+  function apiBase() {
+    // gleicher Ursprung + Pfad wie cre.js (funktioniert auch hinter dem /rueckhol-Proxy)
+    var s = document.querySelector('script[src*="cre.js"]');
+    return (s && s.getAttribute('src') || '../cre.js').replace(/\/cre\.js.*$/, '');
+  }
+
+  function buildButtons(campaigns) {
+    var box = document.getElementById('btns');
+    if (!campaigns.length) {
+      box.innerHTML = '<span class="empty">Noch keine Kampagne für die Seite „demo“ angelegt. Im Dashboard eine anlegen (Seiten-Kennung: demo) — dann erscheint sie hier.</span>';
+      return;
+    }
+    box.innerHTML = '';
+    campaigns.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'trig';
+      b.innerHTML = '<b>' + (LABELS[c.action_type] || c.action_type) + '</b><span>' + (c.name || '') + '</span>';
+      b.addEventListener('click', function () {
+        if (window.CRE && window.CRE.trigger) window.CRE.trigger(c.id);
+      });
+      box.appendChild(b);
+    });
+  }
+
+  function load() {
+    fetch(apiBase() + '/api/config?siteId=demo', { credentials: 'omit' })
+      .then(function (r) { return r.json(); })
+      .then(function (d) { buildButtons((d && d.campaigns) || []); })
+      .catch(function () {
+        document.getElementById('btns').innerHTML = '<span class="empty">Server nicht erreichbar.</span>';
+      });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
+  else load();
+</script>
+</body>
+</html>

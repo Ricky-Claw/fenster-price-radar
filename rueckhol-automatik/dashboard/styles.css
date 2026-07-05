@@ -108,6 +108,40 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
 @media (max-width: 1180px) { .workspace { grid-template-columns: 260px minmax(0, 1fr); } .col-preview { grid-column: 1 / -1; } }
 @media (max-width: 820px) { .workspace { grid-template-columns: 1fr; } }
 
+/* ---- mobile (phone) ---- */
+@media (max-width: 720px) {
+  /* Topbar: alle Steuerelemente erreichbar statt rechts abgeschnitten.
+     Row 1: Marke + „+ Neue". Row 2: Tabs (voll). Row 3: Seite + Einbau-Code. */
+  .topbar { flex-wrap: wrap; gap: 10px; padding: 10px 14px; }
+  .spacer { display: none; }
+  .brand { order: 1; flex: 1 1 auto; font-size: 16px; min-width: 0; }
+  .brand small { display: none; }
+  #btnNew { order: 2; flex: 0 0 auto; }
+  .tabs { order: 3; flex: 1 1 100%; }
+  .tabs button { flex: 1; text-align: center; }
+  .field-site { order: 4; flex: 1 1 auto; }
+  .field-site select { width: 100%; min-width: 0; }
+  #btnEmbed { order: 5; flex: 0 0 auto; }
+
+  /* Touch-Ziele + kein iOS-Zoom beim Fokus (font-size >= 16) */
+  .btn { min-height: 44px; }
+  select, input[type="text"], input[type="url"], input[type="number"], textarea { font-size: 16px; min-height: 44px; }
+  .toggle .track { width: 46px; height: 26px; }
+  .toggle input:checked + .track::after { transform: translateX(20px); }
+
+  .wrap { padding: 14px 12px 90px; }
+  .howto { padding: 12px 14px; margin-bottom: 14px; }
+  .workspace { gap: 14px; }
+
+  /* Vorschau fliesst mit statt sticky (Topbar ist hier hoeher) + kompakter */
+  .col-preview { position: static; }
+  .stage { height: 400px; margin: 12px; }
+
+  .empty { padding: 22px 14px; }
+  .editor-body { padding: 4px 14px 14px; }
+  .editor-head, .list-head, .preview-head { padding: 12px 14px; }
+}
+
 .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
 .col-list, .col-editor, .col-preview { min-width: 0; }
 .col-preview { position: sticky; top: 78px; }
