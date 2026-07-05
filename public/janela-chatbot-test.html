@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Janela — Testseite Seiten-Kontext</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#18212f; --muted:#667089; --line:#d7dde8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  header { background: #fff; border-bottom: 1px solid var(--line); padding: 24px; }
+  header h1 { margin: 0 0 6px; font-size: 24px; }
+  header p { margin: 0; color: var(--muted); max-width: 760px; }
+  main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .card .label { padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 700; font-size: 14px; }
+  .card .label small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
+  .card iframe { display: block; width: 100%; height: 520px; border: 0; background: repeating-linear-gradient(45deg, #fbfcfe, #fbfcfe 10px, #f2f4f8 10px, #f2f4f8 20px); }
+</style>
+</head>
+<body>
+<header>
+  <p style="margin:0 0 10px;font-weight:700;color:#004b93;text-transform:uppercase;font-size:12px;letter-spacing:.04em">Testseite — nicht für Kunden verlinken</p>
+  <h1>Janela — Seiten-Kontext im Chatbot</h1>
+  <p>Jede Kachel simuliert eine andere Shop-Seite über <code>data-page</code>. Begrüßung und Vorschlags-Chips passen sich automatisch an — die Antwortlogik im Hintergrund ist für alle Seiten identisch.</p>
+</header>
+<main>
+  <div class="grid" id="cards"></div>
+</main>
+<script>
+  var CONTEXTS = [
+    { label: 'Startseite (Standard)', page: '/' },
+    { label: 'Konfigurator', page: '/konfigurator/fenster' },
+    { label: 'Versand & Lieferzeiten', page: '/fenster#versand-und-lieferzeiten' },
+    { label: 'Reklamation', page: '/system/reklamation' },
+    { label: 'Kontakt / Anfrage', page: '/callback' },
+    { label: 'Wissenswertes', page: '/wissenswertes' }
+  ];
+  var origin = location.origin;
+  var grid = document.getElementById('cards');
+  CONTEXTS.forEach(function (ctx) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    var label = document.createElement('div');
+    label.className = 'label';
+    label.textContent = ctx.label;
+    var small = document.createElement('small');
+    small.textContent = ctx.page;
+    label.appendChild(small);
+    var iframe = document.createElement('iframe');
+    iframe.srcdoc = '<script src="' + origin + '/chatbot-widget.js" data-api-url="' + origin + '" data-page="' + ctx.page + '"><' + '/script>';
+    card.appendChild(label);
+    card.appendChild(iframe);
+    grid.appendChild(card);
+  });
+</script>
+</body>
+</html>

@@ -52,7 +52,7 @@
   ],
   "rewrites": [
     {
-      "source": "/((?!data/|assets/|api/|reports/|ebooks/|aufmass\\.html|rueckhol-test\\.html).*)",
+      "source": "/((?!data/|assets/|api/|reports/|ebooks/|aufmass\\.html|rueckhol-test\\.html|rueckhol-popups-test\\.html|janela-chatbot-test\\.html).*)",
       "destination": "/index.html"
     }
   ]
