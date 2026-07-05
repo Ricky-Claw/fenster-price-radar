@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     res.setHeader?.('access-control-allow-headers', 'content-type');
     return sendJson(res, 204, '');
   }
-  if (req.method === 'GET') return sendJson(res, 200, { ok: true, service: 'fenstershop-chatbot', mode: 'rule-first-rag-mvp' });
+  if (req.method === 'GET') return sendJson(res, 200, { ok: true, service: 'janela', mode: 'rule-first-rag-mvp' });
   if (req.method !== 'POST') return sendJson(res, 405, { ok: false, error: 'method_not_allowed' });
   try {
     const body = await readBody(req);

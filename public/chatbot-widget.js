@@ -3,7 +3,7 @@
   const scriptUrl = currentScript?.src ? new URL(currentScript.src, window.location.href) : new URL(window.location.href);
   const apiBase = (currentScript?.dataset.apiUrl || scriptUrl.origin).replace(/\/$/, '');
   const endpoint = `${apiBase}/api/chatbot`;
-  const title = currentScript?.dataset.title || 'Fenstershop Hilfe';
+  const title = currentScript?.dataset.title || 'Janela';
   const accent = currentScript?.dataset.accent || '#004b93';
   const sessionKey = 'dfs_chatbot_session';
   if (!localStorage.getItem(sessionKey)) localStorage.setItem(sessionKey, crypto.randomUUID?.() || String(Date.now()));
