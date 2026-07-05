@@ -97,6 +97,14 @@
         background: #fff;
       }
 
+      textarea.field-control {
+        min-width: 160px;
+        min-height: 40px;
+        padding: 8px;
+        border-radius: 6px;
+        border-color: #c4ccda;
+      }
+
       textarea:focus,
       input:focus,
       select:focus {
@@ -239,7 +247,7 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 1040px;
+        min-width: 1180px;
         background: #fff;
       }
 
@@ -270,6 +278,10 @@
         padding: 8px;
         font: inherit;
         background: #fff;
+      }
+
+      select {
+        min-width: 118px;
       }
 
       input[type="number"] {
@@ -461,7 +473,7 @@
           { key: 'material', label: 'Material', control: 'text', default: '' },
           { key: 'verglasung', label: 'Verglasung', control: 'select', options: ['2fach', '3fach'], default: '3fach' },
           { key: 'farbe', label: 'Farbe', control: 'text', default: 'Weiß' },
-          { key: 'notiz', label: 'Notiz', control: 'text', default: '' },
+          { key: 'notiz', label: 'Notiz', control: 'textarea', default: '' },
         ];
         var headerRow = document.getElementById('headerRow');
         var rowsEl = document.getElementById('rows');
@@ -562,6 +574,22 @@
           row.appendChild(cell);
         }
 
+        function appendTextarea(row, key, value) {
+          var cell = document.createElement('td');
+          var textarea = document.createElement('textarea');
+          textarea.className = 'field-control';
+          textarea.dataset.field = key;
+          textarea.rows = 1;
+          textarea.value = value == null ? '' : String(value);
+          textarea.title = textarea.value;
+          textarea.addEventListener('input', function () {
+            textarea.title = textarea.value;
+          });
+          cell.appendChild(textarea);
+          cell.appendChild(makePrintValue(textarea, textarea.value));
+          row.appendChild(cell);
+        }
+
         function appendSelect(row, key, value, options) {
           var cell = document.createElement('td');
           var select = document.createElement('select');
@@ -617,6 +645,10 @@
           FIELDS.forEach(function (field) {
             if (field.control === 'select') {
               appendSelect(row, field.key, data[field.key], field.options || []);
+              return;
+            }
+            if (field.control === 'textarea') {
+              appendTextarea(row, field.key, data[field.key]);
               return;
             }
             appendTextInput(row, field.key, data[field.key], field.control === 'number' ? 'number' : 'text');
