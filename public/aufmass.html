@@ -43,6 +43,18 @@
         margin-bottom: 22px;
       }
 
+      .back-link {
+        display: inline-block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 14px;
+        text-decoration: none;
+      }
+
+      .back-link:hover {
+        text-decoration: underline;
+      }
+
       h1 {
         margin: 0 0 8px;
         font-size: clamp(28px, 4vw, 44px);
@@ -407,6 +419,7 @@
   <body>
     <main>
       <header>
+        <a href="/" class="back-link">← Zurück</a>
         <h1>Fenster per Sprache aufnehmen</h1>
         <p class="subtitle">Auf "🎤 Sprachaufnahme" tippen und die Fensterliste einsprechen (oder die Mikrofon-Taste der Handy-Tastatur nutzen), dann "In Fensterliste umwandeln".</p>
       </header>
