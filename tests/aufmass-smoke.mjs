@@ -391,9 +391,37 @@ assert.match(nemotronPrimaryUrl, /^https:\/\/integrate\.api\.nvidia\.com/);
 assert.equal(nemotronPrimaryBody.model, 'nemotron-test');
 assert.equal(nemotronPrimaryBody.stream, false);
 assert.equal(Object.hasOwn(nemotronPrimaryBody, 'response_format'), false);
+assert.deepEqual(nemotronPrimaryBody.messages[0], { role: 'system', content: 'detailed thinking off' });
+assert.equal(nemotronPrimaryBody.messages[1].role, 'user');
+assert.match(nemotronPrimaryBody.messages[1].content, /zusammenfassung/);
+assert.equal(nemotronPrimaryBody.max_tokens, 2500);
 assert.deepEqual(nemotronPrimaryResult.windows, [{ raum: 'Bad', breiteMm: 600, hoeheMm: 400 }]);
 assert.equal(nemotronPrimaryResult.summary, 'Ein Fenster im Bad.');
 assert.equal(nemotronPrimaryResult.provider, 'NEMOTRON');
+
+let nemotronThinkingOnBody = null;
+const nemotronThinkingOnResult = await extractWindows({
+  transcript: 'Bad fest 60 auf 40',
+  env: { NVIDIA_API_KEY: 'nvidia-test', FENSTERSHOP_NEMOTRON_THINKING: 'on' },
+  fetchImpl: async (_url, options) => {
+    nemotronThinkingOnBody = JSON.parse(options.body);
+    return {
+      ok: true,
+      json: async () => ({
+        choices: [{
+          message: {
+            content: '{"windows":[{"raum":"Bad"}],"zusammenfassung":"Ein Fenster im Bad."}',
+          },
+        }],
+      }),
+    };
+  },
+});
+assert.deepEqual(nemotronThinkingOnBody.messages[0], { role: 'system', content: 'detailed thinking on' });
+assert.equal(nemotronThinkingOnBody.messages[1].role, 'user');
+assert.match(nemotronThinkingOnBody.messages[1].content, /zusammenfassung/);
+assert.equal(nemotronThinkingOnBody.max_tokens, 4000);
+assert.deepEqual(nemotronThinkingOnResult.windows, [{ raum: 'Bad' }]);
 
 const fallbackConsoleError = console.error;
 const fallbackLoggedErrors = [];

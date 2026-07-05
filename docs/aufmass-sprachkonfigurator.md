@@ -33,6 +33,7 @@ Eingaben werden **lokal automatisch gespeichert** (überleben Neuladen/Netzausfa
 |---|---|
 | `NVIDIA_API_KEY` | KI-Zugang für NVIDIA Nemotron; aktiviert Nemotron als primäre KI. Ungesetzt = Kimi wie bisher |
 | `FENSTERSHOP_NEMOTRON_MODEL`, `FENSTERSHOP_NEMOTRON_TIMEOUT_MS` | Nemotron-Modell/Timeout (optional) |
+| `FENSTERSHOP_NEMOTRON_THINKING` | Nemotron-Reasoning an/aus (Default `off` = schneller/günstiger; `on` für mehr Genauigkeit) |
 | `KIMI_API_KEY` **oder** `MOONSHOT_API_KEY` | Fallback-KI-Zugang für Moonshot Kimi. Wenn kein `NVIDIA_API_KEY` gesetzt ist, wird Kimi direkt genutzt |
 | `AUFMASS_TICKET_WEBHOOK` | Ziel-URL fürs Absenden (CMS/Ticket). Ungesetzt = „erfasst (Testphase)", kein echter Versand |
 | `AUFMASS_ALLOW_ORIGIN` | CORS-Origin, falls die Seite mal fremd-domainig eingebettet wird (sonst same-origin) |

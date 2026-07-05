@@ -82,6 +82,7 @@ function providerConfigs(env = process.env) {
   const nemotronKey = env.NVIDIA_API_KEY || '';
   if (nemotronKey) {
     const model = env.FENSTERSHOP_NEMOTRON_MODEL || NEMOTRON_DEFAULT_MODEL;
+    const nemotronThinking = (env.FENSTERSHOP_NEMOTRON_THINKING || 'off').toLowerCase() === 'on';
     providers.push({
       name: 'NEMOTRON',
       url: NEMOTRON_URL,
@@ -93,9 +94,12 @@ function providerConfigs(env = process.env) {
           model,
           temperature: 0.2,
           top_p: 0.95,
-          max_tokens: 4000,
+          max_tokens: nemotronThinking ? 4000 : 2500,
           stream: false,
-          messages: [{ role: 'user', content: prompt }],
+          messages: [
+            { role: 'system', content: nemotronThinking ? 'detailed thinking on' : 'detailed thinking off' },
+            { role: 'user', content: prompt },
+          ],
         };
       },
     });
