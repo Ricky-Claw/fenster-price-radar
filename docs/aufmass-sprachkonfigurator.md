@@ -21,7 +21,7 @@ Eingaben werden **lokal automatisch gespeichert** (überleben Neuladen/Netzausfa
 ## Technik (kurz)
 
 - **Frontend:** eine statische Seite `public/aufmass.html` (Vanilla JS, kein Framework).
-- **KI-Extraktion:** Moonshot **Kimi** (`moonshot-v1-8k`) über `api/aufmass.js` → `src/aufmass/extractWindows.js`.
+- **KI-Extraktion:** Primär NVIDIA **Nemotron** (`nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`) über NVIDIA API; automatischer Fallback auf Moonshot **Kimi** (`moonshot-v1-8k`) über `api/aufmass.js` → `src/aufmass/extractWindows.js`.
 - **Feld-Schema (Single Source of Truth):** `src/aufmass/schema.js` treibt Normalizer (`normalizeWindows.js`), KI-Prompt und Tabelle. Format ändern = hier + inline `FIELDS` in der HTML (Drift-Guard-Test sichert Sync).
 - **Absenden:** `api/aufmass-submit.js` — nimmt die Liste an, vergibt Referenz `AUF-…`, leitet an Webhook weiter (siehe Env).
 - **Rate-Limiting:** In-Memory pro-IP + global (`src/aufmass/rateLimit.js`).
@@ -31,10 +31,12 @@ Eingaben werden **lokal automatisch gespeichert** (überleben Neuladen/Netzausfa
 
 | Variable | Zweck |
 |---|---|
-| `KIMI_API_KEY` **oder** `MOONSHOT_API_KEY` | KI-Zugang (gleicher Key wie der Chatbot) — **Pflicht**, sonst keine Umwandlung |
+| `NVIDIA_API_KEY` | KI-Zugang für NVIDIA Nemotron; aktiviert Nemotron als primäre KI. Ungesetzt = Kimi wie bisher |
+| `FENSTERSHOP_NEMOTRON_MODEL`, `FENSTERSHOP_NEMOTRON_TIMEOUT_MS` | Nemotron-Modell/Timeout (optional) |
+| `KIMI_API_KEY` **oder** `MOONSHOT_API_KEY` | Fallback-KI-Zugang für Moonshot Kimi. Wenn kein `NVIDIA_API_KEY` gesetzt ist, wird Kimi direkt genutzt |
 | `AUFMASS_TICKET_WEBHOOK` | Ziel-URL fürs Absenden (CMS/Ticket). Ungesetzt = „erfasst (Testphase)", kein echter Versand |
 | `AUFMASS_ALLOW_ORIGIN` | CORS-Origin, falls die Seite mal fremd-domainig eingebettet wird (sonst same-origin) |
-| `FENSTERSHOP_LLM_MODEL`, `FENSTERSHOP_LLM_TIMEOUT_MS` | KI-Modell/Timeout (optional) |
+| `FENSTERSHOP_LLM_MODEL`, `FENSTERSHOP_LLM_TIMEOUT_MS` | Kimi-Fallback-Modell/Timeout (optional) |
 | `AUFMASS_RL_*`, `AUFMASS_SUBMIT_RL_*` | Rate-Limit-Feintuning (optional) |
 
 ### Test / Build

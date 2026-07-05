@@ -2,7 +2,10 @@
 
 import { AUFMASS_FIELDS } from './schema.js';
 
+const NEMOTRON_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
 const KIMI_URL = 'https://api.moonshot.ai/v1/chat/completions';
+const NEMOTRON_DEFAULT_MODEL = 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning';
+const KIMI_DEFAULT_MODEL = 'moonshot-v1-8k';
 
 const FIELD_DESCRIPTIONS = Object.freeze({
   raum: 'Raum/Position. Kürzel/Dialekt ausschreiben ("Wohnzi"->"Wohnzimmer", "Schlafzi"->"Schlafzimmer", "Bad", "Küche"). "" wenn nicht genannt.',
@@ -43,6 +46,14 @@ function kimiApiKey(env = process.env) {
   return env.KIMI_API_KEY || env.MOONSHOT_API_KEY || '';
 }
 
+function stripReasoning(text = '') {
+  return String(text || '')
+    .replace(/<think\b[^>]*>[\s\S]*?<\/think>/gi, '')
+    .replace(/```json\s*/gi, '')
+    .replace(/```\s*/g, '')
+    .trim();
+}
+
 function extractJson(text = '') {
   const raw = String(text || '').trim();
   if (!raw) return null;
@@ -59,10 +70,56 @@ function extractJson(text = '') {
   }
 }
 
+function providerConfigs(env = process.env) {
+  const providers = [];
+  const nemotronKey = env.NVIDIA_API_KEY || '';
+  if (nemotronKey) {
+    const model = env.FENSTERSHOP_NEMOTRON_MODEL || NEMOTRON_DEFAULT_MODEL;
+    providers.push({
+      name: 'NEMOTRON',
+      url: NEMOTRON_URL,
+      key: nemotronKey,
+      model,
+      timeoutMs: Number(env.FENSTERSHOP_NEMOTRON_TIMEOUT_MS) || 30000,
+      body(prompt) {
+        return {
+          model,
+          temperature: 0.2,
+          top_p: 0.95,
+          max_tokens: 4000,
+          stream: false,
+          messages: [{ role: 'user', content: prompt }],
+        };
+      },
+    });
+  }
+
+  const kimiKey = kimiApiKey(env);
+  if (kimiKey) {
+    const model = env.FENSTERSHOP_LLM_MODEL || KIMI_DEFAULT_MODEL;
+    providers.push({
+      name: 'KIMI',
+      url: KIMI_URL,
+      key: kimiKey,
+      model,
+      timeoutMs: Number(env.FENSTERSHOP_LLM_TIMEOUT_MS) || 25000,
+      body(prompt) {
+        return {
+          model,
+          temperature: 0.2,
+          max_tokens: 2500,
+          response_format: { type: 'json_object' },
+          messages: [{ role: 'user', content: prompt }],
+        };
+      },
+    });
+  }
+  return providers;
+}
+
 export async function extractWindows({ transcript, env = process.env, fetchImpl = globalThis.fetch } = {}) {
-  const apiKey = kimiApiKey(env);
-  const model = env.FENSTERSHOP_LLM_MODEL || 'moonshot-v1-8k';
-  if (!apiKey || typeof fetchImpl !== 'function') return null;
+  const providers = providerConfigs(env);
+  if (providers.length === 0 || typeof fetchImpl !== 'function') return null;
 
   const prompt = `Du bist Aufmaß-Assistent für einen deutschen Fensterhändler. Wandle das frei gesprochene/diktierte Handwerker-Transkript in eine strukturierte Fensterliste um. Gib AUSSCHLIESSLICH gültiges JSON zurück, exakt in der Form {"windows":[ ... ],"zusammenfassung":"..."} — kein Fließtext, keine Markdown-Codeblöcke.
 
@@ -80,31 +137,34 @@ Regeln:
 Transkript:
 """${String(transcript || '')}"""`;
 
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_LLM_TIMEOUT_MS) || 25000);
-  try {
-    const response = await fetchImpl(KIMI_URL, {
-      method: 'POST',
-      headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
-      body: JSON.stringify({
-        model,
-        temperature: 0.2,
-        max_tokens: 2500,
-        response_format: { type: 'json_object' },
-        messages: [{ role: 'user', content: prompt }],
-      }),
-      signal: controller.signal,
-    });
-    if (!response.ok) return null;
-    const data = await response.json();
-    const parsed = extractJson(data.choices?.[0]?.message?.content || '{}');
-    if (!Array.isArray(parsed?.windows)) return null;
-    const summary = typeof parsed.zusammenfassung === 'string' ? parsed.zusammenfassung.trim().slice(0, 4000) : '';
-    return { windows: parsed.windows, model, summary };
-  } catch (error) {
-    console.error('[aufmass] extractWindows failed', error);
-    return null;
-  } finally {
-    clearTimeout(timer);
+  for (const provider of providers) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), provider.timeoutMs);
+    try {
+      const response = await fetchImpl(provider.url, {
+        method: 'POST',
+        headers: { authorization: `Bearer ${provider.key}`, 'content-type': 'application/json' },
+        body: JSON.stringify(provider.body(prompt)),
+        signal: controller.signal,
+      });
+      if (!response.ok) {
+        throw Object.assign(new Error(`${provider.name.toLowerCase()}_failed_${response.status}`), { status: response.status });
+      }
+      const data = await response.json();
+      const content = data.choices?.[0]?.message?.content || '';
+      const parsed = extractJson(stripReasoning(content));
+      if (!Array.isArray(parsed?.windows)) throw new Error(`${provider.name.toLowerCase()}_invalid_windows`);
+      const summary = typeof parsed.zusammenfassung === 'string' ? parsed.zusammenfassung.trim().slice(0, 4000) : '';
+      return { windows: parsed.windows, model: provider.model, summary, provider: provider.name };
+    } catch (error) {
+      if (Object.hasOwn(error || {}, 'status')) {
+        console.error(`[aufmass] ${provider.name} failed`, error.status);
+      } else {
+        console.error(`[aufmass] ${provider.name} failed`, error);
+      }
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  return null;
 }

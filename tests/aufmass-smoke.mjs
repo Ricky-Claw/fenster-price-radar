@@ -275,6 +275,85 @@ const proseResult = await extractWindows({
 assert.deepEqual(proseResult.windows, [{ raum: 'Flur' }]);
 assert.equal(proseResult.summary, '');
 
+let nemotronPrimaryUrl = '';
+let nemotronPrimaryBody = null;
+const nemotronPrimaryResult = await extractWindows({
+  transcript: 'Bad fest 60 auf 40',
+  env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test', FENSTERSHOP_NEMOTRON_MODEL: 'nemotron-test' },
+  fetchImpl: async (url, options) => {
+    nemotronPrimaryUrl = String(url);
+    nemotronPrimaryBody = JSON.parse(options.body);
+    return {
+      ok: true,
+      json: async () => ({
+        choices: [{
+          message: {
+            content: '<think>{"draft":true}</think>\n{"windows":[{"raum":"Bad","breiteMm":600,"hoeheMm":400}],"zusammenfassung":"Ein Fenster im Bad."}',
+          },
+        }],
+      }),
+    };
+  },
+});
+assert.match(nemotronPrimaryUrl, /^https:\/\/integrate\.api\.nvidia\.com/);
+assert.equal(nemotronPrimaryBody.model, 'nemotron-test');
+assert.equal(nemotronPrimaryBody.stream, false);
+assert.equal(Object.hasOwn(nemotronPrimaryBody, 'response_format'), false);
+assert.deepEqual(nemotronPrimaryResult.windows, [{ raum: 'Bad', breiteMm: 600, hoeheMm: 400 }]);
+assert.equal(nemotronPrimaryResult.summary, 'Ein Fenster im Bad.');
+assert.equal(nemotronPrimaryResult.provider, 'NEMOTRON');
+
+const fallbackConsoleError = console.error;
+const fallbackLoggedErrors = [];
+console.error = (...args) => { fallbackLoggedErrors.push(args); };
+let fallbackResult;
+const fallbackUrls = [];
+try {
+  fallbackResult = await extractWindows({
+    transcript: 'Kueche 100 auf 120',
+    env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test', FENSTERSHOP_LLM_MODEL: 'kimi-fallback-test' },
+    fetchImpl: async (url) => {
+      fallbackUrls.push(String(url));
+      if (String(url).includes('nvidia.com')) {
+        return { ok: false, status: 500, json: async () => ({}) };
+      }
+      return {
+        ok: true,
+        json: async () => ({
+          choices: [{
+            message: {
+              content: JSON.stringify({
+                windows: [{ raum: 'Kueche', breiteMm: 1000, hoeheMm: 1200 }],
+                zusammenfassung: 'Ein Fenster in der Kueche.',
+              }),
+            },
+          }],
+        }),
+      };
+    },
+  });
+} finally {
+  console.error = fallbackConsoleError;
+}
+assert.match(fallbackUrls[0], /integrate\.api\.nvidia\.com/);
+assert.match(fallbackUrls[1], /api\.moonshot\.ai/);
+assert.deepEqual(fallbackResult.windows, [{ raum: 'Kueche', breiteMm: 1000, hoeheMm: 1200 }]);
+assert.equal(fallbackResult.summary, 'Ein Fenster in der Kueche.');
+assert.equal(fallbackResult.model, 'kimi-fallback-test');
+assert.equal(fallbackResult.provider, 'KIMI');
+assert.equal(fallbackLoggedErrors.length, 1);
+assert.equal(fallbackLoggedErrors[0][0], '[aufmass] NEMOTRON failed');
+assert.equal(fallbackLoggedErrors[0][1], 500);
+
+let noKeyFetchCalled = false;
+const noKeyResult = await extractWindows({
+  transcript: 'Bad fest 60 auf 40',
+  env: {},
+  fetchImpl: async () => { noKeyFetchCalled = true; },
+});
+assert.equal(noKeyResult, null);
+assert.equal(noKeyFetchCalled, false);
+
 const originalConsoleError = console.error;
 const loggedErrors = [];
 console.error = (...args) => { loggedErrors.push(args); };
@@ -289,18 +368,29 @@ try {
   console.error = originalConsoleError;
 }
 assert.equal(loggedErrors.length, 1);
-assert.equal(loggedErrors[0][0], '[aufmass] extractWindows failed');
+assert.equal(loggedErrors[0][0], '[aufmass] KIMI failed');
 
-const failedResult = await extractWindows({
-  transcript: 'kaputt',
-  env: { KIMI_API_KEY: 'test' },
-  fetchImpl: async () => ({ ok: false, status: 500, json: async () => ({}) }),
-});
+const failedLoggedErrors = [];
+console.error = (...args) => { failedLoggedErrors.push(args); };
+let failedResult;
+try {
+  failedResult = await extractWindows({
+    transcript: 'kaputt',
+    env: { KIMI_API_KEY: 'test' },
+    fetchImpl: async () => ({ ok: false, status: 500, json: async () => ({}) }),
+  });
+} finally {
+  console.error = originalConsoleError;
+}
 assert.equal(failedResult, null);
+assert.equal(failedLoggedErrors.length, 1);
+assert.equal(failedLoggedErrors[0][0], '[aufmass] KIMI failed');
+assert.equal(failedLoggedErrors[0][1], 500);
 
 const hadFetch = Object.hasOwn(globalThis, 'fetch');
 const originalFetch = globalThis.fetch;
 const previousKey = process.env.KIMI_API_KEY;
+const previousNvidiaKey = process.env.NVIDIA_API_KEY;
 try {
   globalThis.fetch = async (url) => {
     if (String(url).includes('api.moonshot.ai')) {
@@ -320,6 +410,7 @@ try {
     }
     throw new Error(`unexpected fetch ${url}`);
   };
+  delete process.env.NVIDIA_API_KEY;
   process.env.KIMI_API_KEY = 'test';
 
   const req = Readable.from([Buffer.from(JSON.stringify({ transcript: 'Kueche 120 auf 130' }))]);
@@ -350,6 +441,9 @@ try {
 
   if (previousKey === undefined) delete process.env.KIMI_API_KEY;
   else process.env.KIMI_API_KEY = previousKey;
+
+  if (previousNvidiaKey === undefined) delete process.env.NVIDIA_API_KEY;
+  else process.env.NVIDIA_API_KEY = previousNvidiaKey;
 }
 
 const badJsonReq = Readable.from([Buffer.from('{"transcript":')]);
