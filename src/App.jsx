@@ -586,7 +586,18 @@ function App(){
   if (isLoginRoute) return <LoginPage />;
   return <>
     <header className="topbar">
-      <div className="brandmark"><span className="cube">FR</span><div><b>Fensterradar</b><small>DFS Preisradar</small></div></div>
+      <button type="button" className="brandmark brandHome" aria-label="Zur Startseite" onClick={()=>{selectView('radar');window.scrollTo({top:0,behavior:'smooth'});}}>
+        <svg className="radarLogo" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <defs><linearGradient id="frLogo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#0a5f8f"/><stop offset="1" stopColor="#003A66"/></linearGradient></defs>
+          <rect x="2.5" y="2.5" width="35" height="35" rx="9" fill="url(#frLogo)"/>
+          <rect x="11" y="11" width="18" height="18" rx="2" fill="none" stroke="#eaf6ff" strokeWidth="2"/>
+          <line x1="20" y1="11" x2="20" y2="29" stroke="#eaf6ff" strokeWidth="2"/>
+          <line x1="11" y1="20" x2="29" y2="20" stroke="#eaf6ff" strokeWidth="2"/>
+          <path d="M20 20 L20 11 A9 9 0 0 1 27.9 15.5 Z" fill="#F47C26" opacity="0.9"/>
+          <circle cx="20" cy="20" r="1.9" fill="#F47C26"/>
+        </svg>
+        <div><b>Fensterradar</b><small>Preisvergleich</small></div>
+      </button>
       <div className="topbarActions">
         <div className={cls('freshnessBadge', freshnessTone)} title={`Datenstand: ${dataGeneratedLabel}`}>
           <span>Datenstand</span>
@@ -621,7 +632,6 @@ function App(){
       {activeView === 'radar' && <>
         <section className="viewIntro radarIntro">
           <div>
-            <p className="eyebrow">Deutscher-Fenstershop · internes Tool</p>
             <h1>Preisradar</h1>
             <p className="lead">Kunden-Endpreise, Rabatte und Wochenänderungen im direkten Anbieter-Vergleich.</p>
           </div>
@@ -691,9 +701,13 @@ function App(){
           <label><span>Glas</span><select value={quote.glazing} onChange={e=>setQuote({...quote,glazing:e.target.value})}><option>2fach</option><option>3fach</option></select></label>
           <label><span>Öffnung</span><select value={quote.opening} onChange={e=>setQuote({...quote,opening:e.target.value})}><option>Dreh-Kipp</option><option>Fest</option></select></label>
         </div>
-        {quoteResult && <div className="quoteResults">
-          {providers.map(([id,name])=>{const p=quoteResult.providers?.[id]; return <div key={id} className={cls('quoteCard',p?.valid?'':'softWarn')}><small>{name}</small><b>{p?.valid?eur(p.customerTotal ?? p.listTotal):'—'}</b>{p?.valid?<span>Endpreis Kunde · Liste {eur(p.listTotal)} · {discountText(p)}</span>:<span>{p?.reason === 'nicht_im_angebot' || p?.status === 'unmatched' ? 'nicht im Angebot' : (p?.status||'nicht verfügbar')}</span>}{p?.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p?.reason||p?.error?<em>{p.reason === 'nicht_im_angebot' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : (p.reason||p.error)}</em>:null}</div>})}
-        </div>}
+        {quoteResult && (()=>{
+          const ql=quoteProfiles.find(([qid])=>qid===quote.profile);
+          const [qBrand='',qProfile='']=(ql?.[1]||'').split(' · ');
+          const quoteRow={brand:qBrand.trim(),profile:qProfile.trim(),width:Number(quote.width),height:Number(quote.height),glazing:quote.glazing,opening:quote.opening,layout:'1flg',providers:quoteResult.providers};
+          return <div className="quoteResults">
+          {providers.map(([id,name])=>{const p=quoteResult.providers?.[id]; return <div key={id} className={cls('quoteCard',p?.valid?'':'softWarn')}><small>{name}</small><b>{p?.valid?eur(p.customerTotal ?? p.listTotal):'—'}</b>{p?.valid?<span>Endpreis Kunde · Liste {eur(p.listTotal)} · {discountText(p)}</span>:<span>{p?.reason === 'nicht_im_angebot' || p?.status === 'unmatched' ? 'nicht im Angebot' : (p?.status||'nicht verfügbar')}</span>}{p?.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p?.reason||p?.error?<em>{p.reason === 'nicht_im_angebot' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : (p.reason||p.error)}</em>:null}{p?.valid?<a className="quoteViewLink" href={providerProfileLink(quoteRow,id)} target="_blank" rel="noreferrer">→ beim Anbieter ansehen</a>:null}</div>})}
+        </div>;})()}
       </section>}
 
       {activeView === 'margenrechner' && <section className="panel marginPanel" id="margenrechner">
@@ -729,6 +743,10 @@ function App(){
         </div>
       </details>}
     </main>
+
+    <footer className="siteFooter">
+      Persönliches Werkzeug zur privaten Nutzung — reiner Preisvergleich. Steht in keiner Verbindung zu den genannten Anbietern oder Firmen und gehört zu keiner von ihnen. Alle Marken-, Produkt- und Firmennamen sind Eigentum ihrer jeweiligen Inhaber und dienen nur der Kennzeichnung.
+    </footer>
 
     {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small>{providerChangeLine(active.weeklyChange?.[id])}<small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
   </>;
