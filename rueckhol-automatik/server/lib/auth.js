@@ -64,7 +64,11 @@ function createGuards(adminToken) {
 
   // Gates the campaign/analytics JSON APIs. Widget-facing routes
   // (config/events/submit/cre.js) stay open — they have their own origin+rate-limit gate.
+  // no-store on every response (even the pass-through): this app can sit behind
+  // a CDN/proxy (e.g. a Vercel rewrite), and a cached authenticated response
+  // served back to a different, unauthenticated visitor would leak the dashboard.
   function requireDashboardAuth(req, res, next) {
+    res.set('cache-control', 'no-store');
     if (hasCredential(req)) { next(); return; }
     res.status(401).json({ error: 'login_required' });
   }
@@ -73,6 +77,7 @@ function createGuards(adminToken) {
   // instead of a bare 401 JSON. Relative so it works whether this app sits at a
   // domain root or is proxied under a path prefix (e.g. Vercel rewrite to /rueckhol/*).
   function requireDashboardPage(req, res, next) {
+    res.set('cache-control', 'no-store');
     if (hasCredential(req)) { next(); return; }
     res.redirect('../login');
   }

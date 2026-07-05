@@ -131,6 +131,7 @@ function createApp(options = {}) {
   });
 
   app.get('/login', (req, res) => {
+    res.set('cache-control', 'no-store');
     res.type('text/html; charset=utf-8').send(`
       <!doctype html>
       <html lang="de">
@@ -163,6 +164,7 @@ function createApp(options = {}) {
   });
 
   app.post('/api/login', (req, res) => {
+    res.set('cache-control', 'no-store');
     if (!isConfigured()) { res.status(503).json({ error: 'login_not_configured' }); return; }
     if (!checkPassword(req.body && req.body.password)) { res.status(401).json({ error: 'invalid_password' }); return; }
     res.set('set-cookie', sessionCookie());
@@ -170,6 +172,7 @@ function createApp(options = {}) {
   });
 
   app.post('/api/logout', (req, res) => {
+    res.set('cache-control', 'no-store');
     res.set('set-cookie', 'rueckhol_session=; Path=/; Max-Age=0');
     res.json({ ok: true });
   });
