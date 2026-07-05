@@ -49,7 +49,7 @@
     small.textContent = ctx.page;
     label.appendChild(small);
     var iframe = document.createElement('iframe');
-    iframe.srcdoc = '<script src="' + origin + '/chatbot-widget.js" data-api-url="' + origin + '" data-page="' + ctx.page + '"><' + '/script>';
+    iframe.srcdoc = '<!doctype html><html><head></head><body><script src="' + origin + '/chatbot-widget.js" data-api-url="' + origin + '" data-page="' + ctx.page + '"><' + '/script></body></html>';
     card.appendChild(label);
     card.appendChild(iframe);
     grid.appendChild(card);
