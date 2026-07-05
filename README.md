@@ -65,6 +65,8 @@ Snippet-Beispiel:
 
 MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
 
+LLM-Polierung: primär NVIDIA Nemotron (`NVIDIA_API_KEY`, Modell via `FENSTERSHOP_NEMOTRON_MODEL`), Fallback Kimi/Moonshot (`KIMI_API_KEY`). Ohne Keys bleibt die reine Regelantwort bestehen.
+
 Test:
 
 ```bash
