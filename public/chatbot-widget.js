@@ -24,7 +24,7 @@
     const p = String(path || '').toLowerCase();
     return PAGE_CONTEXTS.find((c) => c.match.test(p)) || DEFAULT_CONTEXT;
   }
-  const pageContext = contextForPath(currentScript?.dataset.page || window.location.pathname);
+  const pageContext = contextForPath(currentScript?.dataset.page || (window.location.pathname + window.location.hash));
 
   const style = document.createElement('style');
   style.textContent = `
