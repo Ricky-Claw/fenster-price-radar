@@ -20,6 +20,13 @@ const layouts = [
 ];
 const LAYOUT_TILE_HINT = {'1flg':'Einflügelige Standardfenster','2flg_pfosten':'Zweiflügelig mit Mittelpfosten','2flg_stulp_dk_dreh':'Zweiflügelig mit Stulp','balkontuer':'Bislang nur bei Fensterblick verifiziert'};
 const UPDATE_POLL_MAX_MS = 15 * 60 * 1000;
+// Bump this id when there's a new "what's new" banner to show again.
+const LATEST_UPDATE_ID = '2026-07-05-alu-balkontuer';
+const LATEST_UPDATE_ITEMS = [
+  'Aluminium-Fenster und Balkontür sind jetzt eigene Vergleichstypen',
+  'Preisentwicklung: 3-Monats-Diagramm je Anbieter',
+  'Stichproben-Verifizierung sichtbar direkt im Wochenvergleich'
+];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const formatPercent = value => Number(value || 0).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
 const cls = (...a) => a.filter(Boolean).join(' ');
@@ -267,6 +274,7 @@ function App(){
   const [payload,setPayload]=useState(null);
   const [trendIndex,setTrendIndex]=useState(null);
   const [staleClosedStamp,setStaleClosedStamp]=useState(()=>localStorage.getItem('priceRadarStaleClosed') || '');
+  const [updateBannerClosed,setUpdateBannerClosed]=useState(()=>localStorage.getItem('priceRadarUpdateSeen') === LATEST_UPDATE_ID);
   const [q,setQ]=useState('');
   const [brand,setBrand]=useState('');
   const [profile,setProfile]=useState('');
@@ -517,6 +525,10 @@ function App(){
     localStorage.setItem('priceRadarStaleClosed', tickerStamp);
     setStaleClosedStamp(tickerStamp);
   }
+  function closeUpdateBanner(){
+    localStorage.setItem('priceRadarUpdateSeen', LATEST_UPDATE_ID);
+    setUpdateBannerClosed(true);
+  }
   function selectView(view){
     setActiveView(view);
     setMenuOpen(false);
@@ -652,6 +664,15 @@ function App(){
           <small>{weeklyRangeText}</small>
           {payload?.verification && <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>}
         </section>
+        {!updateBannerClosed && <section className="dfsAlert" role="status">
+          <div>
+            <strong>Neu in diesem Update</strong>
+            <ul className="updateBannerList">
+              {LATEST_UPDATE_ITEMS.map(item => <li key={item}>{item}</li>)}
+            </ul>
+          </div>
+          <button type="button" onClick={closeUpdateBanner} aria-label="Update-Hinweis ausblenden">×</button>
+        </section>}
         {showStaleBanner && <section className="dfsAlert warning" role="alert">
           <div>
             <strong>Daten veraltet</strong>

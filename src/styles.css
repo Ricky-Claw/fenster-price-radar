@@ -215,7 +215,9 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
 .dfsAlert div{display:grid;gap:var(--dfs-sp-1)}
 .dfsAlert strong{color:var(--dfs-color-black)}
 .dfsAlert span{color:var(--dfs-color-text);font-weight:700}
-.dfsAlert button{width:34px;height:34px;padding:0;justify-content:center;background:var(--dfs-color-bg-soft);color:var(--dfs-color-blue);font-size:20px}
+.dfsAlert button{width:34px;height:34px;padding:0;justify-content:center;background:var(--dfs-color-bg-soft);color:var(--dfs-color-blue);font-size:20px;flex:none}
+.updateBannerList{margin:0;padding-left:1.1em;display:grid;gap:2px}
+.updateBannerList li{color:var(--dfs-color-text);font-weight:700;font-size:14px}
 .weeklyChangeBanner{
   display:flex;
   align-items:center;
