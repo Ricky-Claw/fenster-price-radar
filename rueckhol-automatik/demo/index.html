@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Demo-Shop — Conversion Rescue Test</title>
+<style>
+  :root { --bg:#faf7f1; --ink:#1b1b1b; --muted:#6b5a47; --accent:#0d4a3c; }
+  * { box-sizing:border-box }
+  body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--ink); background:var(--bg); line-height:1.5 }
+  header { display:flex; align-items:center; justify-content:space-between; padding:18px 24px; border-bottom:1px solid #e6e2da }
+  .brand { font-weight:800; font-size:20px; color:var(--accent) }
+  nav a { margin-left:18px; color:var(--muted); text-decoration:none; font-weight:600 }
+  main { max-width:900px; margin:0 auto; padding:48px 24px }
+  h1 { font-size:38px; line-height:1.1; margin:0 0 12px }
+  .lead { font-size:18px; color:var(--muted); max-width:620px }
+  .cta { display:inline-block; margin-top:22px; background:var(--accent); color:#fff; padding:14px 22px; border-radius:12px; text-decoration:none; font-weight:700 }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:18px; margin-top:48px }
+  .card { background:#fff; border:1px solid #e6e2da; border-radius:16px; padding:20px }
+  .card h3 { margin:0 0 6px }
+  .card p { margin:0; color:var(--muted); font-size:14px }
+  .filler { height:900px }
+  footer { padding:32px 24px; color:var(--muted); border-top:1px solid #e6e2da; text-align:center }
+  .hint { background:#fff8ec; border:1px solid #f0d9b0; border-radius:12px; padding:14px 16px; margin-top:28px; font-size:14px; color:#5e4a2e }
+</style>
+</head>
+<body>
+<header>
+  <span class="brand">Demo-Shop</span>
+  <nav><a href="#">Produkte</a><a href="#">Über uns</a><a href="#">Kontakt</a></nav>
+</header>
+<main>
+  <h1>Handgemachte Keramik, direkt aus der Werkstatt.</h1>
+  <p class="lead">Eine echte Testseite für das Conversion-Rescue-Widget. Bewege die Maus zum oberen Rand (Exit-Intent), bleib 30 s inaktiv, oder scrolle — je nach Kampagne springt das Rückhol-Popup an.</p>
+  <a class="cta" href="#">Jetzt stöbern</a>
+
+  <div class="hint">
+    <strong>Testen:</strong> Diese Seite lädt <code>/cre.js</code> mit <code>data-cre-site="demo"</code>.
+    Lege im Dashboard eine Kampagne für Site <code>demo</code> an — oder ruf im Browser
+    <code>window.CRE.trigger('&lt;campaignId&gt;')</code> auf, um ein Popup sofort zu zeigen.
+  </div>
+
+  <div class="grid">
+    <div class="card"><h3>Vase „Tanne"</h3><p>Steinzeug, handglasiert. 39 €</p></div>
+    <div class="card"><h3>Becher-Set</h3><p>Vier Becher, je anders. 48 €</p></div>
+    <div class="card"><h3>Schale groß</h3><p>Für Obst oder Deko. 34 €</p></div>
+    <div class="card"><h3>Teller-Serie</h3><p>Sechs Teller, matt. 72 €</p></div>
+  </div>
+
+  <div class="filler"></div>
+  <p class="lead">Weit unten — gut zum Testen von <code>scroll_depth</code>.</p>
+</main>
+<footer>Demo-Shop · nur zu Testzwecken für Conversion Rescue</footer>
+
+<!-- Conversion Rescue widget (same-origin: data-cre-api leer → leitet Host aus script.src ab) -->
+<script async src="../cre.js" data-cre-site="demo" data-cre-api=""></script>
+</body>
+</html>

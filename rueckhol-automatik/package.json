@@ -1,0 +1,17 @@
+{
+  "name": "conversion-rescue",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Standalone Conversion Rescue widget product with Express, SQLite, dashboard, and embeddable popup script.",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "file:vendor/better-sqlite3",
+    "express": "file:vendor/express"
+  }
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rückhol-Automatik · Alle Popups</title>
+<style>
+  :root { --bg:#f7f9fc; --ink:#18212f; --muted:#667085; --line:#d7dde8; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
+  header { background: #fff; border-bottom: 1px solid var(--line); padding: 24px; }
+  header h1 { margin: 0 0 6px; font-size: 24px; }
+  header p { margin: 0; color: var(--muted); max-width: 760px; }
+  main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+  h2 { font-size: 15px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 40px 0 16px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  .card .label { padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 700; font-size: 14px; }
+  .card .stage { position: relative; height: 520px; overflow: auto; background: repeating-linear-gradient(45deg, #fbfcfe, #fbfcfe 10px, #f2f4f8 10px, #f2f4f8 20px); }
+  .note { background: #fff; border: 1px solid var(--line); border-left: 4px solid #0d4a3c; border-radius: 10px; padding: 16px 18px; margin-top: 8px; font-size: 14px; color: var(--muted); }
+  .note strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<header>
+  <h1>Rückhol-Automatik — alle Popup-Varianten</h1>
+  <p>Design-Galerie für den Testlauf: jede Aktion und jedes Design-Preset nebeneinander, ohne dass Trigger/Cooldown/Live-Tracking dazwischenfunken. Gerendert mit <code>window.CRE.preview()</code> — derselbe Code, der auch im echten Popup läuft.</p>
+  <div class="note">
+    <strong>Design ist frei anpassbar</strong> (Farben, Schrift, Ecken-Radius, Logo, Position: mittig/Ecke/Balken — pro Kampagne einzeln, siehe <code>server/lib/theme.js</code>). Alex passt das Design ans jeweilige CD der Kundenseite an, bevor eine Kampagne live geht — die 3 Presets hier (Harbor/Clay/Noon) sind nur Ausgangspunkte, keine Endversion.
+  </div>
+</header>
+<main>
+  <h2>Aktionen (Standard-Design)</h2>
+  <div class="grid" id="aktionen"></div>
+
+  <h2>Design-Presets (gleiche Aktion, anderes CD)</h2>
+  <div class="grid" id="designs"></div>
+</main>
+
+<script>
+  var AKTIONEN = [
+    { label: 'Newsletter', headline: 'Bevor Sie gehen: Preisalarm sichern', body: 'Wir sagen Ihnen Bescheid, sobald Fensterpreise fallen.', cta_label: 'Preisalarm aktivieren', action_type: 'newsletter', action_config: { placeholder: 'ihre@email.de', consentLabel: 'Ich möchte den Preisalarm per E-Mail erhalten.' } },
+    { label: 'Kontakt', headline: 'Fragen zu Ihrem Fenster?', body: 'Hinterlassen Sie eine Nachricht, wir melden uns kurzfristig.', cta_label: 'Nachricht senden', action_type: 'contact', action_config: { consentLabel: 'Ich stimme der Kontaktaufnahme zu.' } },
+    { label: 'Gutschein', headline: 'Warten Sie — 5% extra für Sie', body: 'Nutzen Sie diesen Code beim nächsten Angebot.', cta_label: 'Code kopieren', action_type: 'coupon', action_config: { code: 'RADAR5' } },
+    { label: 'Link/URL', headline: 'Noch unsicher?', body: 'Lesen Sie unseren Ratgeber zur Fensterauswahl.', cta_label: 'Ratgeber öffnen', action_type: 'url', action_config: { url: 'https://example.com/ratgeber', newTab: true } },
+    { label: 'PDF-Download', headline: 'Unsere Checkliste zum Mitnehmen', body: 'Alle Fragen, die Sie Ihrem Fensterbauer stellen sollten.', cta_label: 'PDF herunterladen', action_type: 'pdf', action_config: { pdfUrl: 'https://example.com/checkliste.pdf' } }
+  ];
+
+  var THEMES = [
+    { label: 'Harbor (Default)', theme: { name: 'Harbor', position: 'center', colors: { accent: '#14532d', accent_text: '#f8fafc', text: '#0f172a', muted: '#475569', surface: '#fffcf7', border: '#d9e3d7', backdrop: 'rgba(15,23,42,0.55)' }, font_family: '"Instrument Sans", "Segoe UI", sans-serif', radius: 18 } },
+    { label: 'Clay (Ecke)', theme: { name: 'Clay', position: 'corner', colors: { accent: '#9a3412', accent_text: '#fff7ed', text: '#1c1917', muted: '#57534e', surface: '#fffaf5', border: '#f3d8c1', backdrop: 'rgba(28,25,23,0.55)' }, font_family: '"IBM Plex Sans", "Segoe UI", sans-serif', radius: 22 } },
+    { label: 'Noon (Balken)', theme: { name: 'Noon', position: 'bar', colors: { accent: '#1d4ed8', accent_text: '#eff6ff', text: '#0f172a', muted: '#334155', surface: '#f8fbff', border: '#bfdbfe', backdrop: 'rgba(15,23,42,0.4)' }, font_family: '"Avenir Next", "Helvetica Neue", sans-serif', radius: 14 } }
+  ];
+
+  function card(container, labelText) {
+    var card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = '<div class="label"></div><div class="stage"></div>';
+    card.querySelector('.label').textContent = labelText;
+    container.appendChild(card);
+    return card.querySelector('.stage');
+  }
+
+  function render() {
+    var aktionenGrid = document.getElementById('aktionen');
+    AKTIONEN.forEach(function (a) {
+      var stage = card(aktionenGrid, 'Aktion: ' + a.label);
+      window.CRE.preview(stage, { id: 'mock-' + a.action_type, headline: a.headline, body: a.body, cta_label: a.cta_label, action_type: a.action_type, action_config: a.action_config, theme: {} });
+    });
+
+    var designGrid = document.getElementById('designs');
+    THEMES.forEach(function (t) {
+      var stage = card(designGrid, 'Design: ' + t.label);
+      window.CRE.preview(stage, { id: 'mock-theme-' + t.theme.name, headline: 'Bevor Sie gehen: Preisalarm sichern', body: 'Wir sagen Ihnen Bescheid, sobald Fensterpreise fallen.', cta_label: 'Preisalarm aktivieren', action_type: 'newsletter', action_config: { placeholder: 'ihre@email.de', consentLabel: 'Ich möchte den Preisalarm per E-Mail erhalten.' }, theme: t.theme });
+    });
+  }
+
+  if (window.CRE && window.CRE.preview) render();
+  else window.addEventListener('load', function () { setTimeout(render, 50); });
+</script>
+<script async src="../cre.js" data-cre-site="mock" data-cre-api=""></script>
+</body>
+</html>

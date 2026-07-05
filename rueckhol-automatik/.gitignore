@@ -1,0 +1,10 @@
+node_modules/
+reference/
+data/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+demo/assets/
+demo/quittung-index.html
+.DS_Store
+demo/fensterradar-test.html

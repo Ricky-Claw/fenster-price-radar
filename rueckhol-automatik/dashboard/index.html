@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rückhol-Automatik · Steuerung</title>
+<link rel="preconnect" href="https://rsms.me">
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="dot"></span> Rückhol-Automatik <small>Steuerung</small></div>
+  <div class="tabs">
+    <button type="button" aria-pressed="true" data-view="campaigns">Kampagnen</button>
+    <button type="button" aria-pressed="false" data-view="analytics">Auswertung</button>
+  </div>
+  <div class="spacer"></div>
+  <label class="field-site">Seite
+    <select id="siteSelect" aria-label="Seite auswählen"></select>
+  </label>
+  <button class="btn" id="btnEmbed" type="button">Einbau-Code</button>
+  <button class="btn btn-primary" id="btnNew" type="button">+ Neue Kampagne</button>
+</header>
+
+<main class="wrap">
+  <details class="howto">
+    <summary>So funktioniert's — kurze Anleitung</summary>
+    <ol>
+      <li><strong>Kampagne wählen oder anlegen.</strong> Links in der Liste anklicken, oder oben „+ Neue Kampagne".</li>
+      <li><strong>Einstellen, wann's erscheint</strong> (z. B. beim Verlassen der Seite) <strong>und was drinsteht</strong> — Überschrift, Text, Button, was beim Klick passiert (Link, PDF, Rabattcode, Newsletter, Kontakt).</li>
+      <li><strong>Design anpassen</strong> — Farben, Ecken, Logo, Position. Rechts sehen Sie sofort die Live-Vorschau, genau wie es später beim Besucher aussieht.</li>
+      <li><strong>Speichern</strong> nicht vergessen (Knopf unten rechts im Editor).</li>
+      <li><strong>Einbau-Code</strong> oben rechts kopieren und einmal auf Ihrer Seite einfügen — danach läuft alles automatisch.</li>
+      <li>Unter <strong>„Auswertung"</strong> sehen Sie, wie oft ein Popup gezeigt und wie oft es genutzt wurde.</li>
+    </ol>
+  </details>
+
+  <!-- ===== Kampagnen ===== -->
+  <section id="view-campaigns" class="workspace">
+    <!-- list -->
+    <div class="panel col-list">
+      <div class="list-head"><h2>Kampagnen</h2><span id="listCount" class="badge">0</span></div>
+      <div class="list-body" id="list"></div>
+    </div>
+
+    <!-- editor -->
+    <div class="panel col-editor" id="editorPanel">
+      <div class="editor-head">
+        <h2 id="editorTitle">Kampagne</h2>
+        <button class="btn btn-ghost btn-sm" id="btnDuplicate" type="button" title="Als Kopie speichern">Duplizieren</button>
+        <button class="btn btn-danger btn-sm" id="btnDelete" type="button">Löschen</button>
+      </div>
+      <div class="editor-body" id="form">
+
+        <div class="section">
+          <h3><span class="num">1</span> Grundlagen</h3>
+          <div class="grid2">
+            <div class="f span2">
+              <label for="f-name">Name der Kampagne</label>
+              <input type="text" id="f-name" maxlength="160" placeholder="z. B. Rabatt beim Verlassen">
+              <span class="hint">Nur intern sichtbar.</span>
+            </div>
+            <div class="f">
+              <label for="f-site">Seiten-Kennung</label>
+              <input type="text" id="f-site" maxlength="80" placeholder="meine-seite">
+              <span class="hint">Muss zum Einbau-Code passen (data-cre-site).</span>
+            </div>
+            <div class="f">
+              <label for="f-sitename">Anzeigename der Seite</label>
+              <input type="text" id="f-sitename" maxlength="120" placeholder="Meine Webseite">
+            </div>
+            <div class="f">
+              <label for="f-pattern">Nur auf Seiten mit …</label>
+              <input type="text" id="f-pattern" maxlength="320" placeholder="* = alle Seiten">
+              <span class="hint">Textstück in der URL, z. B. /checkout. „*“ = überall.</span>
+            </div>
+            <div class="f" style="align-self:end">
+              <label class="toggle"><input type="checkbox" id="f-enabled"><span class="track"></span><span>Aktiv (wird angezeigt)</span></label>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><span class="num">2</span> Wann erscheint es?</h3>
+          <div class="choice" id="triggerChoice">
+            <label><input type="radio" name="trigger" value="exit_intent"><span>Ausstieg<small>Maus verlässt oben</small></span></label>
+            <label><input type="radio" name="trigger" value="idle"><span>Inaktiv<small>keine Aktion</small></span></label>
+            <label><input type="radio" name="trigger" value="time_on_page"><span>Nach Zeit<small>Sekunden auf Seite</small></span></label>
+            <label><input type="radio" name="trigger" value="scroll_depth"><span>Scroll-Tiefe<small>% gescrollt</small></span></label>
+            <label><input type="radio" name="trigger" value="manual"><span>Manuell<small>per Button/Code</small></span></label>
+          </div>
+          <div class="grid2" style="margin-top:12px">
+            <div class="f" id="wrap-seconds">
+              <label for="f-seconds">Sekunden</label>
+              <input type="number" id="f-seconds" min="1" max="600" value="20">
+            </div>
+            <div class="f" id="wrap-percent">
+              <label for="f-percent">Scroll-Tiefe (%)</label>
+              <input type="number" id="f-percent" min="1" max="100" value="50">
+            </div>
+            <div class="f">
+              <label for="f-cooldown">Danach nicht erneut zeigen (Stunden)</label>
+              <input type="number" id="f-cooldown" min="0" max="8760" value="24">
+              <span class="hint">Pro Besucher, nach Schließen oder Abschluss.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><span class="num">3</span> Inhalt</h3>
+          <div class="f">
+            <label for="f-headline">Überschrift</label>
+            <input type="text" id="f-headline" maxlength="180" placeholder="Warten Sie – kurz bevor Sie gehen">
+          </div>
+          <div class="f">
+            <label for="f-body">Text</label>
+            <textarea id="f-body" maxlength="700" placeholder="Ein gut getimtes Angebot rettet den Besuch."></textarea>
+          </div>
+          <div class="f">
+            <label for="f-cta">Button-Beschriftung <span class="req" title="Pflichtfeld">*</span></label>
+            <input type="text" id="f-cta" maxlength="120" placeholder="Jetzt sichern">
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><span class="num">4</span> Was passiert beim Klick?</h3>
+          <div class="choice" id="actionChoice">
+            <label><input type="radio" name="action" value="url"><span>Link<small>Seite öffnen</small></span></label>
+            <label><input type="radio" name="action" value="pdf"><span>PDF<small>Datei anbieten</small></span></label>
+            <label><input type="radio" name="action" value="coupon"><span>Rabattcode<small>Code + Kopieren</small></span></label>
+            <label><input type="radio" name="action" value="newsletter"><span>Newsletter<small>E-Mail sammeln</small></span></label>
+            <label><input type="radio" name="action" value="contact"><span>Kontakt<small>Nachricht</small></span></label>
+          </div>
+
+          <div class="grid2" style="margin-top:12px">
+            <!-- url -->
+            <div class="f span2 act act-url"><label for="a-url">Ziel-URL <span class="req" title="Pflichtfeld">*</span></label><input type="url" id="a-url" placeholder="https://…"></div>
+            <div class="f act act-url"><label class="toggle"><input type="checkbox" id="a-url-newtab"><span class="track"></span><span>In neuem Tab öffnen</span></label></div>
+            <!-- pdf -->
+            <div class="f span2 act act-pdf"><label for="a-pdf">PDF-URL <span class="req" title="Pflichtfeld">*</span></label><input type="url" id="a-pdf" placeholder="https://…/datei.pdf"><span class="hint">Öffnet in neuem Tab. Button-Text steuern Sie oben unter „Button-Beschriftung“.</span></div>
+            <!-- coupon -->
+            <div class="f span2 act act-coupon"><label for="a-code">Rabattcode <span class="req" title="Pflichtfeld">*</span></label><input type="text" id="a-code" maxlength="80" placeholder="WILLKOMMEN10"><span class="hint">Wird angezeigt, Klick auf den Button kopiert ihn.</span></div>
+            <!-- newsletter -->
+            <div class="f act act-newsletter"><label for="a-news-ph">Platzhalter im Feld</label><input type="text" id="a-news-ph" maxlength="120" placeholder="ihre@email.de"></div>
+            <div class="f span2 act act-newsletter"><label for="a-news-consent">Zustimmungstext (DSGVO)</label><input type="text" id="a-news-consent" maxlength="220" placeholder="Ich möchte Angebote per E-Mail erhalten."></div>
+            <div class="f span2 act act-newsletter"><label for="a-news-ok">Danke-Text nach Anmeldung</label><input type="text" id="a-news-ok" maxlength="200" placeholder="Danke! Sie sind eingetragen."></div>
+            <!-- contact -->
+            <div class="f span2 act act-contact"><label for="a-con-consent">Zustimmungstext (DSGVO)</label><input type="text" id="a-con-consent" maxlength="220" placeholder="Meine Angaben dürfen zur Bearbeitung genutzt werden."></div>
+            <div class="f span2 act act-contact"><label for="a-con-ok">Danke-Text nach Absenden</label><input type="text" id="a-con-ok" maxlength="200" placeholder="Danke! Wir melden uns."></div>
+          </div>
+        </div>
+
+        <div class="section">
+          <h3><span class="num">5</span> Design</h3>
+          <div class="presets" id="presets"></div>
+          <div class="colors" id="colors">
+            <div class="color-f"><span class="color-label">Akzent (Button)</span><div class="color-in"><input type="color" data-color="accent" aria-label="Akzent (Button) – Farbwähler"><input type="text" class="mono" data-color-hex="accent" aria-label="Akzent (Button) – Hex-Wert"></div></div>
+            <div class="color-f"><span class="color-label">Button-Text</span><div class="color-in"><input type="color" data-color="accent_text" aria-label="Button-Text – Farbwähler"><input type="text" class="mono" data-color-hex="accent_text" aria-label="Button-Text – Hex-Wert"></div></div>
+            <div class="color-f"><span class="color-label">Text</span><div class="color-in"><input type="color" data-color="text" aria-label="Text – Farbwähler"><input type="text" class="mono" data-color-hex="text" aria-label="Text – Hex-Wert"></div></div>
+            <div class="color-f"><span class="color-label">Text gedämpft</span><div class="color-in"><input type="color" data-color="muted" aria-label="Text gedämpft – Farbwähler"><input type="text" class="mono" data-color-hex="muted" aria-label="Text gedämpft – Hex-Wert"></div></div>
+            <div class="color-f"><span class="color-label">Hintergrund Karte</span><div class="color-in"><input type="color" data-color="surface" aria-label="Hintergrund Karte – Farbwähler"><input type="text" class="mono" data-color-hex="surface" aria-label="Hintergrund Karte – Hex-Wert"></div></div>
+            <div class="color-f"><span class="color-label">Rahmen</span><div class="color-in"><input type="color" data-color="border" aria-label="Rahmen – Farbwähler"><input type="text" class="mono" data-color-hex="border" aria-label="Rahmen – Hex-Wert"></div></div>
+          </div>
+          <div class="grid2" style="margin-top:14px">
+            <div class="f">
+              <label for="f-position">Position</label>
+              <select id="f-position">
+                <option value="center">Mittig (Overlay)</option>
+                <option value="corner">Ecke unten rechts</option>
+                <option value="bar">Balken unten</option>
+              </select>
+            </div>
+            <div class="f">
+              <label for="f-radius">Ecken-Rundung</label>
+              <div class="range-row"><input type="range" id="f-radius" min="0" max="32" value="18"><output id="out-radius">18px</output></div>
+            </div>
+            <div class="f">
+              <label for="f-logo">Logo-URL (optional)</label>
+              <input type="url" id="f-logo" placeholder="https://…/logo.svg">
+              <span class="hint">.svg .png .webp .jpg</span>
+            </div>
+            <div class="f">
+              <label for="f-font">Schriftart</label>
+              <input type="text" id="f-font" maxlength="120" placeholder='"Inter", system-ui, sans-serif'>
+            </div>
+            <div class="f span2">
+              <label for="f-css">Eigenes CSS (fortgeschritten)</label>
+              <textarea id="f-css" class="mono" maxlength="4000" placeholder=".cre-box{ … }  /* wirkt nur im Popup */"></textarea>
+              <span class="hint">Wird isoliert ins Popup gelegt – kollidiert nicht mit Ihrer Seite.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-foot">
+        <span id="saveNote" class="save-note"></span>
+        <div class="spacer"></div>
+        <button class="btn" id="btnReset" type="button">Verwerfen</button>
+        <button class="btn btn-primary" id="btnSave" type="button">Speichern</button>
+      </div>
+    </div>
+
+    <!-- preview -->
+    <div class="panel col-preview">
+      <div class="preview-head">
+        <h2>Live-Vorschau</h2>
+        <div class="preview-actions">
+          <button class="chip" id="chipDesktop" aria-pressed="true" type="button">Desktop</button>
+          <button class="chip" id="chipMobile" aria-pressed="false" type="button">Mobil</button>
+        </div>
+      </div>
+      <div class="stage" id="stage">
+        <div class="mock-bar"><i></i><i></i><i></i></div>
+        <div class="preview-host" id="previewHost"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Auswertung ===== -->
+  <section id="view-analytics" class="analytics hidden"></section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<!-- real widget: provides window.CRE.preview() for true WYSIWYG -->
+<script src="../cre.js" data-cre-site="__dashboard_preview__" data-cre-api=""></script>
+<script src="app.js"></script>
+</body>
+</html>
