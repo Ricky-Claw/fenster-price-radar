@@ -72,6 +72,15 @@ globalThis.fetch = originalFetch;
 
 const noProviderAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: {} });
 assert.equal(noProviderAnswer.llm.used, false);
+
+globalThis.fetch = async (url) => {
+  if (String(url).includes('api.moonshot.ai')) return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Der Uw-Wert 体现了整体的隔热性 ist wichtig.' }) } }] }) };
+  throw new Error(`unexpected fetch ${url}`);
+};
+const chineseLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test' } });
+assert.equal(chineseLeakAnswer.llm.used, false, 'Antwort mit chinesischen Zeichen darf nicht durchgehen');
+assert.doesNotMatch(chineseLeakAnswer.answer, /[一-鿿]/, 'Draft-Fallback darf keine chinesischen Zeichen enthalten');
+globalThis.fetch = originalFetch;
 assert.equal(noProviderAnswer.llm.reason, 'all_providers_failed_or_unconfigured');
 
 const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });

@@ -295,6 +295,7 @@ function withRequiredRefs(answer, draft) {
 function answerStillSafe(polished, draft) {
   const answer = String(polished?.answer || '');
   if (!answer) return false;
+  if (/[一-鿿]/.test(answer)) return false;
   for (const contact of draft.contacts || []) if (contact.value && !answer.includes(contact.value)) return false;
   if (/in produktion|morgen versendet|zahlung ist eingegangen|lieferung erfolgt am|ticket ist|\bincludes\b|#seite|lärmgesetzliche/i.test(answer)) return false;
   return true;
