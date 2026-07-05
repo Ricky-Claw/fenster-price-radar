@@ -6,7 +6,7 @@ import { answerFenstershopChatbot, answerFenstershopChatbotWithLlm, retrieveFens
 
 globalThis.fetch = async (url) => {
   if (String(url).includes('integrate.api.nvidia.com')) {
-    return { ok: true, json: async () => ({ choices: [{ message: { content: 'Nemotron-Antwort direkt aus Atlas.' } }] }) };
+    return { ok: true, json: async () => ({ choices: [{ message: { content: '<think>\nIch überlege kurz, wie ich am besten antworte.\n</think>\n\n```\nNemotron-Antwort direkt aus Atlas.\n```' } }] }) };
   }
   if (String(url).includes('api.moonshot.ai')) {
     return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kurz poliert aus Atlas.' }) } }] }) };
@@ -57,6 +57,7 @@ const nemotronAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bed
 assert.equal(nemotronAnswer.llm.used, true);
 assert.equal(nemotronAnswer.llm.provider, 'nemotron');
 assert.match(nemotronAnswer.answer, /Nemotron-Antwort direkt aus Atlas\./);
+assert.doesNotMatch(nemotronAnswer.answer, /<think>|```/i, 'Reasoning-Block/Codefences muessen gestrippt sein');
 
 const originalFetch = globalThis.fetch;
 globalThis.fetch = async (url) => {

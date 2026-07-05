@@ -6,6 +6,14 @@ function nemotronApiKey(env = process.env) {
   return env.NVIDIA_API_KEY || '';
 }
 
+function stripReasoning(text = '') {
+  return String(text || '')
+    .replace(/<think\b[^>]*>[\s\S]*?<\/think>/gi, '')
+    .replace(/```[a-z]*\s*/gi, '')
+    .replace(/```\s*/g, '')
+    .trim();
+}
+
 export async function polishFenstershopAnswerNemotron({ message, draft, knowledge = [], env = process.env, fetchImpl = globalThis.fetch } = {}) {
   if (env.FENSTERSHOP_LLM_ENABLED === '0') return null;
   const apiKey = nemotronApiKey(env);
@@ -39,7 +47,7 @@ Wissensquellen: ${JSON.stringify(knowledge.map((chunk) => ({ title: chunk.title,
     });
     if (!response.ok) throw new Error(`nemotron_failed_${response.status}`);
     const data = await response.json();
-    const answer = String(data.choices?.[0]?.message?.content || '').trim();
+    const answer = stripReasoning(data.choices?.[0]?.message?.content || '');
     if (!answer || answer.length > 700) return null;
     return { answer, model: env.FENSTERSHOP_NEMOTRON_MODEL || 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning' };
   } finally {
