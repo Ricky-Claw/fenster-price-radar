@@ -181,7 +181,7 @@ const comparableConfigs = configs.filter(c => {
   const required = ['dfs','fensterblick','fensterversand'].map(k => c.providers[k]);
   const validCount = required.filter(isValidPrice).length;
   // Balkontür ist neu und bislang nur bei einem Anbieter preislich verifiziert -> min. 1 statt 2, solange die anderen sauber "nicht im Angebot" melden.
-  const minValid = c.productType === 'balkontuer' ? 1 : 2;
+  const minValid = c.productType && c.productType !== 'fenster' ? 1 : 2;
   return validCount >= minValid && required.every(isCleanProvider);
 });
 const comparableKeys = new Set(comparableConfigs.map(c => c.key));
@@ -189,7 +189,7 @@ const filteredList = configs.filter(c => !comparableKeys.has(c.key)).map(c => {
   const required = ['dfs','fensterblick','fensterversand'].map(k => c.providers[k]);
   const validCount = required.filter(isValidPrice).length;
   const hasDimensionWarning = required.some(p => p?.warnings?.some(w => String(w).startsWith('dimension_rounded')));
-  const minValid = c.productType === 'balkontuer' ? 1 : 2;
+  const minValid = c.productType && c.productType !== 'fenster' ? 1 : 2;
   const reason = validCount < minValid
     ? `nur ${validCount} vergleichbarer Anbieter${hasDimensionWarning ? ' (Maß vom Anbieter angepasst)' : ''}`
     : 'nicht vergleichbar';

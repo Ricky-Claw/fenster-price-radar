@@ -2503,6 +2503,54 @@
       "layout": "balkontuer",
       "layoutLabel": "Balkontür",
       "productType": "balkontuer"
+    },
+    {
+      "brand": "Aluprof",
+      "profile": "MB-45",
+      "material": "Aluminium",
+      "size": "1000x1200",
+      "width": 1000,
+      "height": 1200,
+      "sizeRole": "Alu-Fenster Standardgröße",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "aluminium-dfs-verified",
+      "layout": "1flg",
+      "layoutLabel": "1-flügelig",
+      "productType": "aluminium"
+    },
+    {
+      "brand": "Aluprof",
+      "profile": "MB-79N SI",
+      "material": "Aluminium",
+      "size": "1000x1200",
+      "width": 1000,
+      "height": 1200,
+      "sizeRole": "Alu-Fenster Standardgröße",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "aluminium-dfs-verified",
+      "layout": "1flg",
+      "layoutLabel": "1-flügelig",
+      "productType": "aluminium"
+    },
+    {
+      "brand": "Aluprof",
+      "profile": "MB-86N SI",
+      "material": "Aluminium",
+      "size": "1000x1200",
+      "width": 1000,
+      "height": 1200,
+      "sizeRole": "Alu-Fenster Standardgröße",
+      "glazing": "2fach",
+      "color": "weiß",
+      "opening": "Dreh-Kipp",
+      "sourceSheet": "aluminium-dfs-verified",
+      "layout": "1flg",
+      "layoutLabel": "1-flügelig",
+      "productType": "aluminium"
     }
   ]
 }

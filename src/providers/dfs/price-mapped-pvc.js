@@ -17,6 +17,12 @@ const PROFILE_ALIASES = {
   'salamander|salamander 76md': 7, 'salamander|salamander 76 md': 7, 'salamander|salamander 82': 74,
   'veka|veka 76': 57, 'veka|veka 82 md': 70, 'veka|veka 82': 70,
 };
+// Aluminium-Profile leben in einem eigenen DFS-Namensraum (data_window_2_profile.json), eigene Alias-Map dagegen.
+const ALU_PROFILE_ALIASES = {
+  'aluprof|mb-45': 36, 'aluprof|mb 45': 36,
+  'aluprof|mb-79n si': 144, 'aluprof|mb 79n si': 144, 'aluprof|mb-79n': 144,
+  'aluprof|mb-86n si': 56, 'aluprof|mb 86n si': 56, 'aluprof|mb-86n': 56,
+};
 const OPEN_TYPE = { fest: 6, fixed: 6, 'dreh-kipp': 4, drehkipp: 4, dk: 4 };
 const GLASS_GROUP = { '2fach': 1, '2-fach': 1, 'double': 1, '3fach': 2, '3-fach': 2, 'triple': 2 };
 
@@ -24,7 +30,8 @@ function norm(s=''){ return String(s).toLowerCase().replace(/ö/g,'o').replace(/
 function pickProfileId(c){
   const brand = norm(c.brand || c.manufacturer || '');
   const profile = norm(c.profile || c.model || '');
-  for (const [k,id] of Object.entries(PROFILE_ALIASES)) {
+  const aliasMap = c.productType === 'aluminium' ? ALU_PROFILE_ALIASES : PROFILE_ALIASES;
+  for (const [k,id] of Object.entries(aliasMap)) {
     const [b,p] = k.split('|').map(norm);
     if (brand.includes(b) && profile.includes(p)) return id;
   }
@@ -238,7 +245,7 @@ const limit=args.limit?+args.limit:30;
 await fs.mkdir(OUT_DIR,{recursive:true});
 const catalogRaw=await readJson(path.join(ROOT,'data/comparison-catalog.json'));
 const catalog=(Array.isArray(catalogRaw)?catalogRaw:catalogRaw.configs||[]).slice(0,limit);
-const profiles=await readJson(path.join(ROOT,'data/dfs/data_window_1_profile.json'));
+const profiles=[...await readJson(path.join(ROOT,'data/dfs/data_window_1_profile.json')), ...await readJson(path.join(ROOT,'data/dfs/data_window_2_profile.json'))];
 const results=[];
 for (const c of catalog) { try { results.push({...c, dfs: await priceOne(c, profiles)}); } catch(e){ results.push({...c, dfs:{status:'error', error:e.message}}); } }
 const summary={total:results.length, priced:results.filter(r=>r.dfs.status==='priced').length, unmatched:results.filter(r=>r.dfs.status==='unmatched').length, errors:results.filter(r=>r.dfs.status==='error').length};

@@ -684,7 +684,7 @@ function App(){
             {filtered.map(row=>{
               const cheapestIds = cheapestProviderIds(row);
               return <tr key={row.key} onClick={()=>setActive(row)}>
-              <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span><span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
+              <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span>{row.material && row.material!=='PVC' && <span className="layoutBadge twoSash">{row.material}</span>}<span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
               {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id,cheapestIds)}</React.Fragment>)}
               <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
               <td>{rowChangeLabel(row)}</td>
