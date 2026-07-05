@@ -6,16 +6,20 @@ const root=path.resolve(__dirname,'../../..');
 const catalog=JSON.parse(await fs.readFile(path.join(root,'data/comparison-catalog.json'),'utf8')).configs;
 const aliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/profile-aliases.json'),'utf8'));
 const doorAliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/balkontuer-profile-aliases.json'),'utf8'));
+const aluAliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/aluminium-profile-aliases.json'),'utf8'));
 const limit=Number(process.argv.find(a=>a.startsWith('--limit='))?.split('=')[1]||30);
 const outDir=path.join(root,'results',`fensterblick-mapped-pvc-${new Date().toISOString().replace(/[:.]/g,'-')}`);
 await fs.mkdir(outDir,{recursive:true});
 const results=[];
 for(const cfg of catalog.slice(0,limit)){
  const isDoor=cfg.productType==='balkontuer';
- const mapped=isDoor?mapDoorProfile(cfg):mapProfile(cfg);
- if(!mapped){results.push({provider:'Fensterblick',input:cfg,status:'unmatched',reason:isDoor?'nicht_im_angebot':'No profile alias match'}); continue;}
+ const isAlu=cfg.productType==='aluminium';
+ const mapped=isAlu?mapAluProfile(cfg):(isDoor?mapDoorProfile(cfg):mapProfile(cfg));
+ if(!mapped){results.push({provider:'Fensterblick',input:cfg,status:'unmatched',reason:isDoor||isAlu?'nicht_im_angebot':'No profile alias match'}); continue;}
  const [w,h]=cfg.size.toLowerCase().split('x').map(Number);
- try{ const priced=await price({profileId:mapped.profileId,width:w,height:h,glazing:cfg.glazing,opening:cfg.opening||'Dreh-Kipp links',color:cfg.color||'weiß',layout:cfg.layout||'1flg',configuratorId:isDoor?2:1});
+ try{ const priced=isAlu
+   ? await priceAluminium({profileId:mapped.profileId,width:w,height:h,glazing:cfg.glazing,opening:cfg.opening||'Dreh-Kipp'})
+   : await price({profileId:mapped.profileId,width:w,height:h,glazing:cfg.glazing,opening:cfg.opening||'Dreh-Kipp links',color:cfg.color||'weiß',layout:cfg.layout||'1flg',configuratorId:isDoor?2:1});
   const actualDims=extractDims(priced.prices?.short_labels);
   const dimsMatch=actualDims?.width===w && actualDims?.height===h;
   const warn=[]; if(Number(priced.prices?.total)<=0) warn.push('zero_or_unavailable_price'); if(!dimsMatch) warn.push(`dimension_adjusted_by_configurator:${actualDims?.width}x${actualDims?.height}`);
@@ -55,6 +59,23 @@ async function price({profileId,width,height,glazing,opening,color,layout='1flg'
  return post('/configurations/process-input-change',{configuration_id:j.configuration_id,configurator_id:configuratorId,config_chain:j.config_chain,ref_id_chain:j.ref_id_chain,inputs,country:'GERMANY'});
 }
 async function step(j,pos,idx,configuratorId=1){return post('/configurations/process-step-change',{change_position:pos,new_step_index:idx,configurator_id:configuratorId,config_chain:j.config_chain,configuration_id:j.configuration_id,ref_id_chain:j.ref_id_chain,inputs:j.inputs,country:'GERMANY'});}
+// Aluminium-Profile leben unter material=2 im selben Fenster-Konfigurator (configurator_id 1); init waehlt immer material 0 (PVC),
+// daher braucht es einen expliziten Material- + Profil-Schritt, bevor Glas/Oeffnung gesetzt werden koennen (andere Response-Form als PVC).
+async function priceAluminium({profileId,width,height,glazing,opening}){
+ let j=await post('/configurations/init-configuration',{configurator_id:1,selectedIds:{material:10,profile:36},country:'GERMANY'});
+ j=await step(j,'material',2,1);
+ const profIdx=(j.updates?.profiles||[]).findIndex(p=>p.id===profileId);
+ if(profIdx<0) throw new Error(`Aluminium-Profil ${profileId} nicht in Fensterblicks Profilliste gefunden`);
+ j=await step(j,'profile',profIdx,1);
+ const glazings=j.updates?.glazings||[];
+ const glazingIndex=/3fach/i.test(glazing)? findIndex(glazings,/3-fach Verglasung$/i,2) : findIndex(glazings,/2-fach Verglasung$/i,0);
+ if(glazingIndex!==j.config_chain.glazing) j=await step(j,'glazing',glazingIndex,1);
+ const openings=j.updates?.vane_types?.[0]?.opening_directions||[];
+ const openingIndex=/fest/i.test(opening) ? findIndex(openings,/^Fest$/i,0) : findIndex(openings,/Dreh-Kipp links/i,5);
+ if(openingIndex!==j.config_chain.opening_direction) j=await step(j,'opening_direction',openingIndex,1);
+ const inputs={...j.inputs,width,height,width_opening_direction:width,vane_widths:{vane_1_width:width,vane_2_width:0,vane_3_width:0,vane_4_width:0}};
+ return post('/configurations/process-input-change',{configuration_id:j.configuration_id,configurator_id:1,config_chain:j.config_chain,ref_id_chain:j.ref_id_chain,inputs,country:'GERMANY'});
+}
 async function post(url,body){const r=await fetch('https://api.configurator.fensterblick.de'+url,{method:'POST',headers:{'content-type':'application/json','accept':'application/json','origin':'https://www.fensterblick.de','referer':'https://www.fensterblick.de/fenster-konfigurator.html'},body:JSON.stringify(body)}); if(!r.ok) throw new Error(`${url} HTTP ${r.status}`); return r.json();}
 function findIndex(arr,rx,fallback){const i=(arr||[]).findIndex(x=>rx.test(x.name||'')); return i>=0?i:fallback;}
 function findOpening(profile,rx,fallback){const vt=profile.vane_types?.[0]; const i=(vt?.opening_directions||[]).findIndex(x=>rx.test(x.name||'')); return i>=0?i:fallback;}
@@ -77,5 +98,8 @@ function mapProfile(cfg){const hay=`${cfg.brand} ${cfg.profile}`.toLowerCase();
 function clean(p){return String(p||'').toLowerCase().replace(/,?\s*[23]fach/g,'').trim();}
 function mapDoorProfile(cfg){const hay=`${cfg.brand} ${cfg.profile}`.toLowerCase();
  for(const [name,ids] of Object.entries(doorAliases)){const n=name.toLowerCase(); if(hay.includes(n)||n.includes(clean(cfg.profile))) return {name,...ids};}
+ return null;}
+function mapAluProfile(cfg){const hay=`${cfg.brand} ${cfg.profile}`.toLowerCase();
+ for(const [name,ids] of Object.entries(aluAliases)){const n=name.toLowerCase(); if(hay.includes(n)||n.includes(clean(cfg.profile))) return {name,...ids};}
  return null;}
 function extractDims(labels){const m=(labels||[]).find(l=>l.name==='Maße')?.value?.match(/(\d+)\s*mm\s*x\s*(\d+)\s*mm/i); return m?{width:Number(m[1]),height:Number(m[2])}:null;}
