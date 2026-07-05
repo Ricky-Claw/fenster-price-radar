@@ -250,8 +250,22 @@
         border: 1px solid #fedf89;
       }
 
+      .banner.success {
+        color: #067647;
+        background: #ecfdf3;
+        border: 1px solid #a6f4c5;
+      }
+
       .banner.visible {
         display: block;
+      }
+
+      .submit-note {
+        margin-top: 14px;
+      }
+
+      .submit-note textarea {
+        min-height: 74px;
       }
 
       .review-note {
@@ -381,6 +395,7 @@
         .input-area,
         .actions,
         .table-actions,
+        .submit-note,
         .speech-controls,
         .banner,
         #draftNote,
@@ -490,6 +505,7 @@
       <section class="results" aria-label="Fensterliste bearbeiten">
         <div id="errorBanner" class="banner error" role="alert"></div>
         <div id="warningBanner" class="banner warning" role="status"></div>
+        <div id="successBanner" class="banner success" role="status"></div>
 
         <p class="review-note">⚠️ Bitte alle Werte gegenprüfen — die KI kann sich auch bei nicht als „prüfen" markierten Zeilen verschätzen (besonders Maße).</p>
 
@@ -507,13 +523,17 @@
           </table>
         </div>
 
+        <div class="submit-note">
+          <label for="submitNote">Nachricht / Kontakt (optional)</label>
+          <textarea id="submitNote" rows="2" placeholder="z.B. Name, Rückrufnummer oder Anmerkung"></textarea>
+        </div>
+
         <div class="table-actions">
           <button id="addRow" class="secondary" type="button">Zeile hinzufuegen</button>
           <button id="saveJson" type="button">Speichern (JSON)</button>
           <button id="printPage" class="secondary" type="button">Drucken</button>
           <button id="savePdf" class="secondary" type="button">Als PDF speichern</button>
-          <button id="ticket" type="button" disabled>Absenden / Als Ticket senden</button>
-          <span class="stub-note">(bald verfuegbar)</span>
+          <button id="ticket" type="button">Absenden / Anfrage senden</button>
           <span class="stub-note">Tipp: Im Druck-Dialog "Als PDF speichern" als Ziel wählen.</span>
         </div>
       </section>
@@ -544,8 +564,11 @@
         var saveBtn = document.getElementById('saveJson');
         var printBtn = document.getElementById('printPage');
         var savePdfBtn = document.getElementById('savePdf');
+        var ticketBtn = document.getElementById('ticket');
+        var submitNoteEl = document.getElementById('submitNote');
         var errorBanner = document.getElementById('errorBanner');
         var warningBanner = document.getElementById('warningBanner');
+        var successBanner = document.getElementById('successBanner');
         var summarySection = document.getElementById('summarySection');
         var summaryTextEl = document.getElementById('summaryText');
         var confirmSummaryBtn = document.getElementById('confirmSummary');
@@ -559,7 +582,7 @@
         var saveTimer;
 
         function saveDraft() {
-          var draft = { transcript: transcriptEl.value, rows: currentRows(), savedAt: Date.now() };
+          var draft = { transcript: transcriptEl.value, rows: currentRows(), submitNote: submitNoteEl.value, savedAt: Date.now() };
           try {
             localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
           } catch (e) { /* private mode / quota — ignore */ }
@@ -590,6 +613,7 @@
 
         function draftHasContent(d) {
           if (d && typeof d.transcript === 'string' && d.transcript.trim()) return true;
+          if (d && typeof d.submitNote === 'string' && d.submitNote.trim()) return true;
           if (!d || !Array.isArray(d.rows) || !d.rows.length) return false;
           return d.rows.some(function (row) {
             if (!row || typeof row !== 'object') return false;
@@ -646,8 +670,10 @@
         function hideBanners() {
           errorBanner.classList.remove('visible');
           warningBanner.classList.remove('visible');
+          successBanner.classList.remove('visible');
           errorBanner.textContent = '';
           warningBanner.textContent = '';
+          successBanner.textContent = '';
         }
 
         function hideSummary() {
@@ -813,6 +839,13 @@
           });
         }
 
+        function hasSubmitContent(item) {
+          if (!item || typeof item !== 'object') return false;
+          return !!(String(item.raum || '').trim() ||
+            Number(item.breiteMm) > 0 ||
+            Number(item.hoeheMm) > 0);
+        }
+
         function appendTranscript(text) {
           var finalText = String(text || '').trim();
           if (!finalText) return;
@@ -953,6 +986,44 @@
           }
         }
 
+        async function submitAufmass() {
+          var rows = currentRows();
+          if (!rows.some(hasSubmitContent)) {
+            showBanner(errorBanner, 'Bitte zuerst mindestens ein Fenster erfassen.');
+            return;
+          }
+
+          hideBanners();
+          ticketBtn.disabled = true;
+          ticketBtn.textContent = 'Wird gesendet...';
+          try {
+            var response = await fetch('/api/aufmass-submit', {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ windows: rows, note: submitNoteEl.value }),
+            });
+            var payload = await response.json().catch(function () {
+              return null;
+            });
+            if (!response.ok || !payload || payload.ok !== true) {
+              throw new Error((payload && payload.message) || 'Anfrage konnte nicht gesendet werden.');
+            }
+
+            if (payload.forwarded) {
+              showBanner(successBanner, 'Anfrage gesendet. Referenz: ' + payload.reference + '. Wir melden uns.');
+              clearDraft();
+            } else {
+              showBanner(warningBanner, 'Anfrage erfasst (Testphase — der Versand ans Ticketsystem wird noch eingerichtet). Referenz: ' + payload.reference + '.');
+            }
+          } catch (error) {
+            var message = String(error && error.message ? error.message : error || 'Anfrage konnte nicht gesendet werden.');
+            showBanner(errorBanner, message + ' Bitte erneut versuchen.');
+          } finally {
+            ticketBtn.disabled = false;
+            ticketBtn.textContent = 'Absenden / Anfrage senden';
+          }
+        }
+
         function saveJson() {
           var blob = new Blob([JSON.stringify(currentRows(), null, 2)], { type: 'application/json' });
           var url = URL.createObjectURL(blob);
@@ -989,11 +1060,13 @@
         renderHeader();
         setupSpeechRecognition();
         transcriptEl.addEventListener('input', scheduleSave);
+        submitNoteEl.addEventListener('input', scheduleSave);
         rowsEl.addEventListener('input', scheduleSave);
         rowsEl.addEventListener('change', scheduleSave);
         discardDraftBtn.addEventListener('click', function () {
           clearDraft();
           transcriptEl.value = '';
+          submitNoteEl.value = '';
           renderRows([]);
         });
         convertBtn.addEventListener('click', convertTranscript);
@@ -1017,10 +1090,12 @@
         savePdfBtn.addEventListener('click', function () {
           printList('pdf');
         });
+        ticketBtn.addEventListener('click', submitAufmass);
 
         var savedDraft = loadDraft();
         if (savedDraft && draftHasContent(savedDraft)) {
           transcriptEl.value = typeof savedDraft.transcript === 'string' ? savedDraft.transcript : '';
+          submitNoteEl.value = typeof savedDraft.submitNote === 'string' ? savedDraft.submitNote : '';
           renderRows(Array.isArray(savedDraft.rows) ? savedDraft.rows : []);
           showDraftNote();
         } else {

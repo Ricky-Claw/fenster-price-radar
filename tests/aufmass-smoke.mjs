@@ -20,6 +20,18 @@ function response() {
   };
 }
 
+const previousSubmitWebhook = process.env.AUFMASS_TICKET_WEBHOOK;
+delete process.env.AUFMASS_TICKET_WEBHOOK;
+let submitHandler;
+try {
+  ({ default: submitHandler } = await import('../api/aufmass-submit.js'));
+} catch (error) {
+  assert.fail(`api/aufmass-submit.js must export default handler (${error?.message || error})`);
+} finally {
+  if (previousSubmitWebhook === undefined) delete process.env.AUFMASS_TICKET_WEBHOOK;
+  else process.env.AUFMASS_TICKET_WEBHOOK = previousSubmitWebhook;
+}
+
 const normalized = normalizeWindowList([
   {
     raum: 'Wohnzimmer',
@@ -114,6 +126,64 @@ assert.equal(c.scope, 'global');
 t += 1001;
 assert.equal(rl.check('A').allowed, true);
 console.log('aufmass-rate-limit ok');
+
+const emptySubmitReq = {
+  method: 'POST',
+  headers: { 'x-real-ip': '203.0.113.10' },
+  body: { windows: [] },
+};
+const emptySubmitRes = response();
+await submitHandler(emptySubmitReq, emptySubmitRes);
+const emptySubmitBody = JSON.parse(emptySubmitRes.body);
+assert.equal(emptySubmitRes.statusCode, 400);
+assert.equal(emptySubmitBody.error, 'empty_list');
+
+const validSubmitReq = {
+  method: 'POST',
+  headers: { 'x-real-ip': '203.0.113.11' },
+  body: {
+    windows: [{
+      raum: 'Wohnzimmer',
+      anzahl: 1,
+      breiteMm: 1200,
+      hoeheMm: 1400,
+      oeffnungsart: 'Dreh-Kipp',
+      anschlag: 'DIN links',
+      material: 'Kunststoff',
+      verglasung: '3fach',
+      farbe: 'Weiß',
+      notiz: '',
+    }],
+  },
+};
+const validSubmitRes = response();
+await submitHandler(validSubmitReq, validSubmitRes);
+const validSubmitBody = JSON.parse(validSubmitRes.body);
+assert.equal(validSubmitRes.statusCode, 200);
+assert.equal(validSubmitBody.ok, true);
+assert.equal(validSubmitBody.forwarded, false);
+assert.equal(typeof validSubmitBody.reference, 'string');
+assert.match(validSubmitBody.reference, /^AUF-/);
+assert.equal(validSubmitBody.windowCount, 1);
+
+const putSubmitReq = { method: 'PUT', headers: { 'x-real-ip': '203.0.113.12' }, body: {} };
+const putSubmitRes = response();
+await submitHandler(putSubmitReq, putSubmitRes);
+assert.equal(putSubmitRes.statusCode, 405);
+
+let submitRateLimitRes;
+for (let i = 0; i < 6; i += 1) {
+  const req = {
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.13' },
+    body: validSubmitReq.body,
+  };
+  submitRateLimitRes = response();
+  await submitHandler(req, submitRateLimitRes);
+}
+const submitRateLimitBody = JSON.parse(submitRateLimitRes.body);
+assert.equal(submitRateLimitRes.statusCode, 429);
+assert.equal(submitRateLimitBody.error, 'rate_limited');
 
 const capped = normalizeWindow({
   breiteMm: 1200,

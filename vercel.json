@@ -12,6 +12,9 @@
     },
     "api/aufmass.js": {
       "maxDuration": 30
+    },
+    "api/aufmass-submit.js": {
+      "maxDuration": 30
     }
   },
   "headers": [
