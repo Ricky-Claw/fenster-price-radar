@@ -7,6 +7,8 @@ const root = path.resolve(__dirname, '../../..');
 const template = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/pvc-default-payload.json'), 'utf8'));
 const catalog = JSON.parse(await fs.readFile(path.join(root, 'data/comparison-catalog.json'), 'utf8')).configs;
 const aliases = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/profile-aliases.json'), 'utf8'));
+const aluTemplate = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/aluminium-default-payload.json'), 'utf8'));
+const aluAliases = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/aluminium-profile-aliases.json'), 'utf8'));
 
 const limit = Number(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || 20);
 const outDir = path.join(root, 'results', `fensterversand-mapped-pvc-${new Date().toISOString().replace(/[:.]/g, '-')}`);
@@ -15,18 +17,22 @@ await fs.mkdir(outDir, { recursive: true });
 const results = [];
 for (const cfg of catalog.slice(0, limit)) {
   if (cfg.productType === 'balkontuer') { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason:'nicht_im_angebot' }); continue; }
-  const mapped = mapProfile(cfg);
-  if (!mapped) { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason:'No equivalent PVC profile in Fensterversand mapping' }); continue; }
+  const isAlu = cfg.productType === 'aluminium';
+  const mapped = isAlu ? mapAluProfile(cfg) : mapProfile(cfg);
+  if (!mapped) { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason: isAlu ? 'nicht_im_angebot' : 'No equivalent PVC profile in Fensterversand mapping' }); continue; }
   const [w,h] = cfg.size.toLowerCase().split('x').map(Number);
-  const payload = buildPayload({ width:w, height:h, brandId:mapped.brandId, profileId:mapped.profileId, glazing:cfg.glazing, color:cfg.color || 'weiß', opening:cfg.opening || 'Dreh-Kipp', layout:cfg.layout || '1flg' });
+  const payload = isAlu
+    ? buildAluminiumPayload({ width:w, height:h, a2355:mapped.a_2355, a2375:mapped.a_2375 })
+    : buildPayload({ width:w, height:h, brandId:mapped.brandId, profileId:mapped.profileId, glazing:cfg.glazing, color:cfg.color || 'weiß', opening:cfg.opening || 'Dreh-Kipp', layout:cfg.layout || '1flg' });
+  const referer = isAlu ? 'https://www.fensterversand.com/?cid=25&t=fenster-aluminium-variabel' : 'https://www.fensterversand.com/?cid=25&t=fenster-kunststoff';
   const res = await fetch('https://www.fensterversand.com/configurator/update', {
     method:'POST',
-    headers:{'content-type':'application/json','accept':'application/json, text/plain, */*','origin':'https://www.fensterversand.com','referer':'https://www.fensterversand.com/?cid=25&t=fenster-kunststoff'},
+    headers:{'content-type':'application/json','accept':'application/json, text/plain, */*','origin':'https://www.fensterversand.com','referer':referer},
     body: JSON.stringify({ configuration: payload.configuration, productId: 25 })
   });
   const json = await res.json().catch(async()=>({raw:await res.text()}));
   const percentages = json.price?.percentages || {};
-  const profileDiscount = Number(percentages[mapped.profileId] || 0);
+  const profileDiscount = isAlu ? Number(json.price?.discount || 0) : Number(percentages[mapped.profileId] || 0);
   const customerTotal = Number(json.price?.discountedTotal) || Number(json.price?.total);
   const listTotal = profileDiscount ? Number((customerTotal / (1 - profileDiscount / 100)).toFixed(2)) : Number(json.price?.total);
   results.push({
@@ -67,6 +73,25 @@ function buildPayload({width,height,brandId,profileId,glazing,color,opening,layo
     c.a_157.value = /fest/i.test(opening) ? 1020 : 1021; // default DK links
   }
   return p;
+}
+// Aluminium-Profile: nur a_2355 (Profil) + a_2375 (Zusatzmerkmal, fehlt bei MB-45 komplett) unterscheiden sich
+// zwischen den 3 Profilen (live per Browser-Netzwerkmitschnitt bestaetigt), alle anderen ~20 Attribute sind identisch.
+function buildAluminiumPayload({ width, height, a2355, a2375 }) {
+  const p = structuredClone(aluTemplate);
+  const c = p.configuration['25'];
+  c.a_258.value = width;
+  c.a_259.value = height;
+  c.a_2355.value = a2355;
+  if (a2375 == null) delete c.a_2375;
+  else { c.a_2375 = c.a_2375 || { aId:2375, value:null, isCustom:false }; c.a_2375.value = a2375; }
+  return p;
+}
+function mapAluProfile(cfg) {
+  const hay = `${cfg.brand} ${cfg.profile}`.toLowerCase();
+  for (const [name, ids] of Object.entries(aluAliases)) {
+    if (hay.includes(name.toLowerCase()) || name.toLowerCase().includes(cleanProfile(cfg.profile))) return { name, ...ids };
+  }
+  return null;
 }
 function fensterversandParams(json) { return json.information?.parameters || {}; }
 function fensterversandEquivalent(layout, json) {
