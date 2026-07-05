@@ -261,6 +261,24 @@
         font-weight: 700;
       }
 
+      .draft-note {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: center;
+        margin: 0 0 12px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 10px 13px;
+        color: var(--muted);
+        background: var(--soft);
+        font-size: 14px;
+      }
+
+      .draft-note[hidden] {
+        display: none;
+      }
+
       .table-wrap {
         overflow-x: auto;
         border: 1px solid var(--line);
@@ -365,6 +383,8 @@
         .table-actions,
         .speech-controls,
         .banner,
+        #draftNote,
+        .draft-note,
         button,
         .subtitle {
           display: none !important;
@@ -374,6 +394,14 @@
           display: block;
           margin: 0 0 14px;
           font-size: 18pt;
+        }
+
+        .review-note {
+          display: block !important;
+          color: #000;
+          font-weight: 700;
+          margin: 0 0 10px;
+          border: 0;
         }
 
         .results {
@@ -465,6 +493,11 @@
 
         <p class="review-note">⚠️ Bitte alle Werte gegenprüfen — die KI kann sich auch bei nicht als „prüfen" markierten Zeilen verschätzen (besonders Maße).</p>
 
+        <div id="draftNote" class="draft-note" hidden>
+          <span>Automatisch gespeicherter Entwurf wiederhergestellt.</span>
+          <button id="discardDraft" class="secondary" type="button">Entwurf verwerfen</button>
+        </div>
+
         <div class="table-wrap">
           <table>
             <thead>
@@ -488,6 +521,7 @@
 
     <script>
       (function () {
+        var DRAFT_KEY = 'aufmass_draft_v1';
         var FIELDS = [
           { key: 'raum', label: 'Raum', control: 'text', default: '' },
           { key: 'anzahl', label: 'Anzahl', control: 'number', default: 1 },
@@ -516,10 +550,59 @@
         var summaryTextEl = document.getElementById('summaryText');
         var confirmSummaryBtn = document.getElementById('confirmSummary');
         var rejectSummaryBtn = document.getElementById('rejectSummary');
+        var draftNote = document.getElementById('draftNote');
+        var discardDraftBtn = document.getElementById('discardDraft');
         var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
         var recognition = null;
         var recording = false;
         var pendingWindows = null;
+        var saveTimer;
+
+        function saveDraft() {
+          var draft = { transcript: transcriptEl.value, rows: currentRows(), savedAt: Date.now() };
+          try {
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+          } catch (e) { /* private mode / quota — ignore */ }
+        }
+
+        function scheduleSave() {
+          clearTimeout(saveTimer);
+          saveTimer = setTimeout(saveDraft, 400);
+        }
+
+        function loadDraft() {
+          try {
+            var raw = localStorage.getItem(DRAFT_KEY);
+            if (!raw) return null;
+            var d = JSON.parse(raw);
+            return (d && typeof d === 'object') ? d : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function clearDraft() {
+          try {
+            localStorage.removeItem(DRAFT_KEY);
+          } catch (e) {}
+          draftNote.hidden = true;
+        }
+
+        function draftHasContent(d) {
+          if (d && typeof d.transcript === 'string' && d.transcript.trim()) return true;
+          if (!d || !Array.isArray(d.rows) || !d.rows.length) return false;
+          return d.rows.some(function (row) {
+            if (!row || typeof row !== 'object') return false;
+            return !!(String(row.raum || '').trim() ||
+              Number(row.breiteMm) > 0 ||
+              Number(row.hoeheMm) > 0 ||
+              String(row.notiz || '').trim());
+          });
+        }
+
+        function showDraftNote() {
+          draftNote.hidden = false;
+        }
 
         function renderHeader() {
           headerRow.textContent = '';
@@ -654,6 +737,7 @@
           button.textContent = 'x entfernen';
           button.addEventListener('click', function () {
             row.remove();
+            scheduleSave();
           });
           cell.appendChild(button);
           row.appendChild(cell);
@@ -686,6 +770,7 @@
           rowsEl.textContent = '';
           (windows || []).forEach(appendRow);
           if (!rowsEl.children.length) appendRow(emptyWindow());
+          scheduleSave();
         }
 
         function intValue(row, field, fallback) {
@@ -903,9 +988,18 @@
 
         renderHeader();
         setupSpeechRecognition();
+        transcriptEl.addEventListener('input', scheduleSave);
+        rowsEl.addEventListener('input', scheduleSave);
+        rowsEl.addEventListener('change', scheduleSave);
+        discardDraftBtn.addEventListener('click', function () {
+          clearDraft();
+          transcriptEl.value = '';
+          renderRows([]);
+        });
         convertBtn.addEventListener('click', convertTranscript);
         confirmSummaryBtn.addEventListener('click', function () {
           renderRows(pendingWindows || []);
+          scheduleSave();
           hideSummary();
         });
         rejectSummaryBtn.addEventListener('click', function () {
@@ -914,6 +1008,7 @@
         });
         addRowBtn.addEventListener('click', function () {
           appendRow(emptyWindow());
+          scheduleSave();
         });
         saveBtn.addEventListener('click', saveJson);
         printBtn.addEventListener('click', function () {
@@ -923,7 +1018,14 @@
           printList('pdf');
         });
 
-        renderRows([]);
+        var savedDraft = loadDraft();
+        if (savedDraft && draftHasContent(savedDraft)) {
+          transcriptEl.value = typeof savedDraft.transcript === 'string' ? savedDraft.transcript : '';
+          renderRows(Array.isArray(savedDraft.rows) ? savedDraft.rows : []);
+          showDraftNote();
+        } else {
+          renderRows([]);
+        }
       }());
     </script>
   </body>
