@@ -8,6 +8,24 @@
   const sessionKey = 'dfs_chatbot_session';
   if (!localStorage.getItem(sessionKey)) localStorage.setItem(sessionKey, crypto.randomUUID?.() || String(Date.now()));
 
+  const PAGE_CONTEXTS = [
+    { key: 'konfigurator', match: /konfigurator/, greeting: 'Hallo, ich bin Janela. Ich sehe, Sie sind gerade im Konfigurator – ich helfe bei der Konfiguration, technischen Begriffen oder leite an die richtige Abteilung weiter.', chips: ['Hilfe beim Konfigurator', 'Uw-Wert erklären', 'Technische Frage stellen'] },
+    { key: 'versand', match: /versand|lieferzeit/, greeting: 'Hallo, ich bin Janela. Für Fragen rund um Lieferung und Versand bin ich hier richtig.', chips: ['Lieferzeit erfahren', 'Lieferung heute?', 'Lieferadresse ändern'] },
+    { key: 'reklamation', match: /reklamation/, greeting: 'Hallo, ich bin Janela. Bei Reklamationen helfe ich Ihnen zum passenden Formular.', chips: ['Reklamation melden', 'Transportschaden melden'] },
+    { key: 'kontakt', match: /kontakt|anfrage|callback/, greeting: 'Hallo, ich bin Janela. Ich helfe Ihnen, die Anfrage auf den richtigen Weg zu bringen.', chips: ['Anfrage senden', 'Montage-Frage'] },
+    { key: 'wissen', match: /wissenswertes|fensterbegriffe|erklaervideo|profilschnitte/, greeting: 'Hallo, ich bin Janela. Ich erkläre gerne Fachbegriffe und technische Fragen.', chips: ['Fachbegriff erklären', 'Technische Frage stellen'] },
+  ];
+  const DEFAULT_CONTEXT = { key: 'standard', greeting: 'Hallo, ich bin Janela! Ich helfe bei allgemeinen Fragen zu Lieferung, Reklamation, Konfigurator, Montage, Aufmaß und technischen Begriffen.', chips: ['Lieferzeit?', 'Bestellstatus', 'Transportschaden', 'Konfigurator Hilfe', 'Uw-Wert erklären'] };
+
+  // ponytail: einfache Teilstring-Suche reicht für die bekannten DFS-URLs; kein Router nötig.
+  // Kein Node-Unit-Test dafür (Widget ist DOM-only Single-File-Embed) — verifiziert über
+  // die Kacheln in public/janela-chatbot-test.html im Browser.
+  function contextForPath(path) {
+    const p = String(path || '').toLowerCase();
+    return PAGE_CONTEXTS.find((c) => c.match.test(p)) || DEFAULT_CONTEXT;
+  }
+  const pageContext = contextForPath(currentScript?.dataset.page || window.location.pathname);
+
   const style = document.createElement('style');
   style.textContent = `
     .dfs-chatbot-button{position:fixed;right:22px;bottom:22px;z-index:2147483000;border:0;border-radius:999px;background:${accent};color:#fff;font:800 15px system-ui;padding:14px 18px;box-shadow:0 12px 34px #001b3f33;cursor:pointer}
@@ -44,9 +62,9 @@
     }
     log.appendChild(msg); log.scrollTop = log.scrollHeight;
   }
-  function addChips(){
+  function addChips(list){
     const row=document.createElement('div'); row.className='dfs-chiprow';
-    ['Lieferzeit?','Bestellstatus','Transportschaden','Konfigurator Hilfe','Uw-Wert erklären'].forEach(text=>{
+    list.forEach(text=>{
       const chip=document.createElement('button'); chip.type='button'; chip.className='dfs-chip'; chip.textContent=text; chip.onclick=()=>ask(text); row.appendChild(chip);
     });
     log.appendChild(row);
@@ -61,7 +79,7 @@
       loading.remove(); addMessage('bot', data.answer || 'Keine sichere Antwort gefunden.', data);
     }catch(error){ loading.remove(); addMessage('bot','Ich bin gerade nicht erreichbar. Bitte versuchen Sie es später erneut.'); }
   }
-  button.onclick=()=>{panel.classList.add('open'); if(!log.dataset.started){addMessage('bot','Hallo! Ich helfe bei allgemeinen Fragen zu Lieferung, Reklamation, Konfigurator, Montage, Aufmaß und technischen Begriffen.'); addChips(); log.dataset.started='1';}};
+  button.onclick=()=>{panel.classList.add('open'); if(!log.dataset.started){addMessage('bot', pageContext.greeting); addChips(pageContext.chips); log.dataset.started='1';}};
   close.onclick=()=>panel.classList.remove('open');
   form.onsubmit=(event)=>{event.preventDefault(); ask();};
 })();

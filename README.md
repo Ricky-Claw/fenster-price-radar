@@ -55,10 +55,13 @@ Snippet-Beispiel:
 ```html
 <script
   src="https://YOUR_DEPLOYMENT/chatbot-widget.js"
-  data-title="Fenstershop Hilfe"
+  data-title="Janela"
   data-api-url="https://YOUR_DEPLOYMENT"
+  data-page="/konfigurator/fenster"
 ></script>
 ```
+
+`data-page` ist optional — ohne Angabe nutzt das Widget `window.location.pathname`, um Begrüßung und Vorschlags-Chips an die aktuelle Seite anzupassen.
 
 MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
 
