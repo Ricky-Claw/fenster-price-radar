@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, CalendarDays, Megaphone, Save, Trash2, ClipboardList } from 'lucide-react';
 import { ACTION_CALENDAR, createActionComment, currentActionCalendarVersion } from './actionCalendar.js';
 import { providerProfileLink, rowConfigLink } from './configLinks.js';
+import TrendChart from './TrendChart.jsx';
 import './styles.css';
 
 const providers = [
@@ -262,6 +263,7 @@ function ActionCalendar(){
 
 function App(){
   const [payload,setPayload]=useState(null);
+  const [trendIndex,setTrendIndex]=useState(null);
   const [staleClosedStamp,setStaleClosedStamp]=useState(()=>localStorage.getItem('priceRadarStaleClosed') || '');
   const [q,setQ]=useState('');
   const [brand,setBrand]=useState('');
@@ -437,6 +439,7 @@ function App(){
     const isLoginRoute = window.location.pathname === '/login';
     if(isLoginRoute) return;
     loadPricePayload();
+    fetch(`/data/price-trend-index.json?v=${Date.now()}`, { cache: 'no-store' }).then(r=>r.ok ? r.json() : null).then(setTrendIndex).catch(()=>setTrendIndex(null));
   },[]);
   useEffect(()=>()=>{ clearUpdatePoll(); clearDoneReset(); },[]);
   useEffect(()=>{
@@ -728,6 +731,11 @@ function App(){
       </section>}
 
       {activeView === 'aktionskalender' && <ActionCalendar />}
+
+      {activeView === 'entwicklung' && <section className="panel trendChartPanel">
+        <div className="panelHead"><div><h2>Preisindex — letzte drei Monate</h2><p>Relative Preisbewegung je Anbieter über alle vergleichbaren Konfigurationen.</p></div></div>
+        <div style={{padding:'22px 30px'}}><TrendChart points={trendIndex?.points}/></div>
+      </section>}
 
       {activeView === 'entwicklung' && <details className="panel trendPanel" id="entwicklung" open={trendChangedCount > 0}>
         <summary className="panelHead trendSummary">

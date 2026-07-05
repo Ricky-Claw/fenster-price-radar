@@ -22,6 +22,7 @@ for (const [script, args] of jobs) {
 }
 
 await run('data:sync');
+await run('trend:build');
 
 const failed = results.filter(r => r.code !== 0);
 if (failed.length) {

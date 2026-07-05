@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "data:sync": "node scripts/sync-results.js",
+    "trend:build": "node scripts/build-trend-index.js",
     "verify:prices": "node scripts/verify-price-radar.js && node scripts/verify-two-sash-equivalence.js",
     "dfs:pvc:mapped": "node src/providers/dfs/price-mapped-pvc.js",
     "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
@@ -20,7 +21,9 @@
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js",
     "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",
-    "knowledge:crawl": "node scripts/crawl-dfs-knowledge.js"
+    "knowledge:crawl": "node scripts/crawl-dfs-knowledge.js",
+    "rueckhol": "npm --prefix rueckhol-automatik start",
+    "rueckhol:test": "npm --prefix rueckhol-automatik test"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

@@ -1,0 +1,159 @@
+{
+  "generatedAt": "2026-07-05T08:12:56.582Z",
+  "note": "Preisindex je Anbieter, Basis 100 beim ersten Auftreten jeder Konfiguration (mittelt relative Preisbewegung, robust gegen Katalog-Wachstum).",
+  "points": [
+    {
+      "date": "2026-04-27",
+      "dfs": 100,
+      "dfsCount": 52,
+      "fensterblick": 100,
+      "fensterblickCount": 40,
+      "fensterversand": 100,
+      "fensterversandCount": 28
+    },
+    {
+      "date": "2026-04-28",
+      "dfs": 100,
+      "dfsCount": 104,
+      "fensterblick": 100,
+      "fensterblickCount": 80,
+      "fensterversand": 100,
+      "fensterversandCount": 56
+    },
+    {
+      "date": "2026-05-05",
+      "dfs": 100,
+      "dfsCount": 104,
+      "fensterblick": 100,
+      "fensterblickCount": 80,
+      "fensterversand": 100,
+      "fensterversandCount": 56
+    },
+    {
+      "date": "2026-05-11",
+      "dfs": 100,
+      "dfsCount": 104,
+      "fensterblick": 100,
+      "fensterblickCount": 80,
+      "fensterversand": 85,
+      "fensterversandCount": 56
+    },
+    {
+      "date": "2026-05-19",
+      "dfs": 100,
+      "dfsCount": 146,
+      "fensterblick": 100.03,
+      "fensterblickCount": 122,
+      "fensterversand": 100,
+      "fensterversandCount": 88
+    },
+    {
+      "date": "2026-05-26",
+      "dfs": 94,
+      "dfsCount": 146,
+      "fensterblick": 100.03,
+      "fensterblickCount": 122,
+      "fensterversand": 78.79,
+      "fensterversandCount": 88
+    },
+    {
+      "date": "2026-06-01",
+      "dfs": 94,
+      "dfsCount": 146,
+      "fensterblick": 122.68,
+      "fensterblickCount": 122,
+      "fensterversand": 80.6,
+      "fensterversandCount": 88
+    },
+    {
+      "date": "2026-06-08",
+      "dfs": 94,
+      "dfsCount": 146,
+      "fensterblick": 118.78,
+      "fensterblickCount": 122,
+      "fensterversand": 85.64,
+      "fensterversandCount": 88
+    },
+    {
+      "date": "2026-06-20",
+      "dfs": 96.72,
+      "dfsCount": 144,
+      "fensterblick": 118.75,
+      "fensterblickCount": 122,
+      "fensterversand": 85.66,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-06-22",
+      "dfs": 96.72,
+      "dfsCount": 144,
+      "fensterblick": 118.18,
+      "fensterblickCount": 122,
+      "fensterversand": 85.66,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-06-23",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 114.79,
+      "fensterblickCount": 122,
+      "fensterversand": 76.28,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-06-24",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 111.82,
+      "fensterblickCount": 134,
+      "fensterversand": 76.28,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-06-25",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 114.2,
+      "fensterblickCount": 134,
+      "fensterversand": 76.28,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-06-28",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 115.45,
+      "fensterblickCount": 134,
+      "fensterversand": 76.28,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-06-29",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 114.84,
+      "fensterblickCount": 134,
+      "fensterversand": 76.28,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-07-03",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 114.07,
+      "fensterblickCount": 134,
+      "fensterversand": 80.62,
+      "fensterversandCount": 86
+    },
+    {
+      "date": "2026-07-05",
+      "dfs": 94.02,
+      "dfsCount": 144,
+      "fensterblick": 116.45,
+      "fensterblickCount": 134,
+      "fensterversand": 80.62,
+      "fensterversandCount": 86
+    }
+  ]
+}

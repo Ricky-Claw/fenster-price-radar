@@ -420,3 +420,8 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
 .quoteViewLink:hover{border-bottom-color:#F47C26}
 .siteFooter{max-width:1420px;margin:6px auto 30px;padding:16px 34px 0;border-top:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.55}
 @media(max-width:1000px){.siteFooter{padding:16px 18px 0}}
+.trendChart svg{width:100%;height:auto;display:block}
+.trendChartLegend{display:flex;gap:20px;flex-wrap:wrap;margin-top:10px}
+.trendChartLegend span{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:#333}
+.trendChartLegend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.trendChartNote{margin:10px 0 0;color:#8496a6;font-size:11px}
