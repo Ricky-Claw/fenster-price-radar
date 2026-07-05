@@ -635,6 +635,7 @@ function App(){
           <span>{weeklyChangeText}</span>
           <span>{dfsPositionText}</span>
           <small>{weeklyRangeText}</small>
+          {payload?.verification && <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>}
         </section>
         {showStaleBanner && <section className="dfsAlert warning" role="alert">
           <div>
