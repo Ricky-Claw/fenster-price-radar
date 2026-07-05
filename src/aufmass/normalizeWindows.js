@@ -25,6 +25,13 @@ const REVIEW_REASON_ORDER = Object.freeze([
   'verglasung_unklar',
 ]);
 
+// Keep in sync with extractWindows NON_LATIN_RE.
+const NON_LATIN_RE = /[\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1100-\u11FF\u0400-\u04FF\u0500-\u052F\u0600-\u06FF\u0750-\u077F\u0590-\u05FF\u0E00-\u0E7F\u3000-\u303F\uFF00-\uFFEF]/g;
+
+function stripNonLatin(value) {
+  return String(value || '').replace(NON_LATIN_RE, '');
+}
+
 function aliasKey(value) {
   return String(value || '').toLowerCase().replace(/[\s-]+/g, '');
 }
@@ -78,7 +85,8 @@ function sortReviewReasons(reviewReasons) {
 }
 
 function normalizeText(rawValue, field) {
-  return String(rawValue || field.default).slice(0, field.maxLen);
+  const stripped = stripNonLatin(String(rawValue || field.default)).trim();
+  return (stripped || field.default).slice(0, field.maxLen);
 }
 
 function snapEnum(value, field, reviewReasons) {

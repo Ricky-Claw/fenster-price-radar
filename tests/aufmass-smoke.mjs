@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import handler from '../api/aufmass.js';
-import { extractWindows } from '../src/aufmass/extractWindows.js';
+import { extractWindows, hasNonLatinScript } from '../src/aufmass/extractWindows.js';
 import { AUFMASS_FIELD_KEYS } from '../src/aufmass/schema.js';
 import { normalizeWindow, normalizeWindowList } from '../src/aufmass/normalizeWindows.js';
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
@@ -61,6 +61,11 @@ assert.equal(Object.hasOwn(normalized[0], 'extra'), false);
 
 assert.deepEqual(AUFMASS_FIELD_KEYS, ['raum', 'anzahl', 'breiteMm', 'hoeheMm', 'oeffnungsart', 'anschlag', 'material', 'verglasung', 'farbe', 'notiz']);
 
+assert.equal(hasNonLatinScript('你好'), true);
+assert.equal(hasNonLatinScript('Привет'), true);
+assert.equal(hasNonLatinScript('Wohnzimmer 你好'), true);
+assert.equal(hasNonLatinScript('Wohnzimmer Weiß Anthrazit größer'), false);
+
 const aufmassHtml = await readFile(new URL('../public/aufmass.html', import.meta.url), 'utf8');
 const fieldsLiteral = aufmassHtml.match(/var FIELDS = \[([\s\S]*?)\];/);
 assert.ok(fieldsLiteral, 'public/aufmass.html must define inline FIELDS');
@@ -110,6 +115,11 @@ assert.deepEqual(normalizeWindowList({}), []);
 assert.equal(normalizeWindow({ breiteMm: '120 cm', hoeheMm: '1400' }).breiteMm, 1200);
 assert.equal(normalizeWindow({ breiteMm: '1,20 m', hoeheMm: '1400' }).breiteMm, 1200);
 assert.equal(normalizeWindow({ breiteMm: '1200 mm', hoeheMm: '1400' }).breiteMm, 1200);
+
+const strippedTextWindow = normalizeWindow({ raum: 'Küche 厨房', material: 'Holz 木' });
+assert.equal(strippedTextWindow.raum, 'Küche');
+assert.equal(strippedTextWindow.material, 'Holz');
+assert.equal(normalizeWindow({ farbe: 'Weiß' }).farbe, 'Weiß');
 
 let t = 1000;
 const rl = createRateLimiter({ windowMs: 1000, maxPerKey: 2, maxGlobal: 3, now: () => t });
@@ -248,6 +258,7 @@ const llmResult = await extractWindows({
   },
 });
 assert.match(llmRequestBody.messages[0].content, /zusammenfassung/);
+assert.match(llmRequestBody.messages[0].content, /WICHTIG: Antworte ausschließlich auf Deutsch/);
 assert.equal(llmRequestBody.max_tokens, 2500);
 assert.equal(llmResult.model, 'kimi-test');
 assert.deepEqual(llmResult.windows, [{ raum: 'Wohnzimmer', breiteMm: 1200 }]);
@@ -274,6 +285,87 @@ const proseResult = await extractWindows({
 });
 assert.deepEqual(proseResult.windows, [{ raum: 'Flur' }]);
 assert.equal(proseResult.summary, '');
+
+const chineseOnlyConsoleError = console.error;
+const chineseOnlyLoggedErrors = [];
+console.error = (...args) => { chineseOnlyLoggedErrors.push(args); };
+let chineseOnlyResult;
+try {
+  chineseOnlyResult = await extractWindows({
+    transcript: 'x',
+    env: { KIMI_API_KEY: 'test' },
+    fetchImpl: async () => ({
+      ok: true,
+      json: async () => ({
+        choices: [{
+          message: {
+            content: JSON.stringify({
+              windows: [{ raum: 'Wohnzimmer', breiteMm: 1200 }],
+              zusammenfassung: '你好世界',
+            }),
+          },
+        }],
+      }),
+    }),
+  });
+} finally {
+  console.error = chineseOnlyConsoleError;
+}
+assert.equal(chineseOnlyResult, null);
+assert.equal(chineseOnlyLoggedErrors.length, 1);
+assert.equal(chineseOnlyLoggedErrors[0][0], '[aufmass] KIMI non-german output rejected');
+
+const languageFallbackConsoleError = console.error;
+const languageFallbackLoggedErrors = [];
+console.error = (...args) => { languageFallbackLoggedErrors.push(args); };
+let languageFallbackResult;
+const languageFallbackUrls = [];
+try {
+  languageFallbackResult = await extractWindows({
+    transcript: 'Wohnzimmer 120 auf 140',
+    env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test' },
+    fetchImpl: async (url) => {
+      languageFallbackUrls.push(String(url));
+      if (String(url).includes('nvidia.com')) {
+        return {
+          ok: true,
+          json: async () => ({
+            choices: [{
+              message: {
+                content: JSON.stringify({
+                  windows: [{ raum: '卧室', breiteMm: 1200 }],
+                  zusammenfassung: '你好世界',
+                }),
+              },
+            }],
+          }),
+        };
+      }
+      return {
+        ok: true,
+        json: async () => ({
+          choices: [{
+            message: {
+              content: JSON.stringify({
+                windows: [{ raum: 'Wohnzimmer', breiteMm: 1200, hoeheMm: 1400 }],
+                zusammenfassung: 'Ein Fenster im Wohnzimmer.',
+              }),
+            },
+          }],
+        }),
+      };
+    },
+  });
+} finally {
+  console.error = languageFallbackConsoleError;
+}
+assert.match(languageFallbackUrls[0], /integrate\.api\.nvidia\.com/);
+assert.match(languageFallbackUrls[1], /api\.moonshot\.ai/);
+assert.deepEqual(languageFallbackResult.windows, [{ raum: 'Wohnzimmer', breiteMm: 1200, hoeheMm: 1400 }]);
+assert.equal(languageFallbackResult.summary, 'Ein Fenster im Wohnzimmer.');
+assert.equal(languageFallbackResult.provider, 'KIMI');
+assert.equal(languageFallbackLoggedErrors.length, 1);
+assert.equal(languageFallbackLoggedErrors[0][0], '[aufmass] NEMOTRON non-german output rejected');
 
 let nemotronPrimaryUrl = '';
 let nemotronPrimaryBody = null;

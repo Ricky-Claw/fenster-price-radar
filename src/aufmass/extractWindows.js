@@ -6,6 +6,9 @@ const NEMOTRON_URL = 'https://integrate.api.nvidia.com/v1/chat/completions';
 const KIMI_URL = 'https://api.moonshot.ai/v1/chat/completions';
 const NEMOTRON_DEFAULT_MODEL = 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning';
 const KIMI_DEFAULT_MODEL = 'moonshot-v1-8k';
+const NON_GERMAN_ERROR_SUFFIX = '_non_german';
+
+const NON_LATIN_RE = /[\u3400-\u4DBF\u4E00-\u9FFF\u3040-\u30FF\uAC00-\uD7AF\u1100-\u11FF\u0400-\u04FF\u0500-\u052F\u0600-\u06FF\u0750-\u077F\u0590-\u05FF\u0E00-\u0E7F\u3000-\u303F\uFF00-\uFFEF]/;
 
 const FIELD_DESCRIPTIONS = Object.freeze({
   raum: 'Raum/Position. Kürzel/Dialekt ausschreiben ("Wohnzi"->"Wohnzimmer", "Schlafzi"->"Schlafzimmer", "Bad", "Küche"). "" wenn nicht genannt.',
@@ -70,6 +73,10 @@ function extractJson(text = '') {
   }
 }
 
+export function hasNonLatinScript(text) {
+  return NON_LATIN_RE.test(String(text || ''));
+}
+
 function providerConfigs(env = process.env) {
   const providers = [];
   const nemotronKey = env.NVIDIA_API_KEY || '';
@@ -122,6 +129,7 @@ export async function extractWindows({ transcript, env = process.env, fetchImpl 
   if (providers.length === 0 || typeof fetchImpl !== 'function') return null;
 
   const prompt = `Du bist Aufmaß-Assistent für einen deutschen Fensterhändler. Wandle das frei gesprochene/diktierte Handwerker-Transkript in eine strukturierte Fensterliste um. Gib AUSSCHLIESSLICH gültiges JSON zurück, exakt in der Form {"windows":[ ... ],"zusammenfassung":"..."} — kein Fließtext, keine Markdown-Codeblöcke.
+WICHTIG: Antworte ausschließlich auf Deutsch. Alle Textwerte (raum, material, farbe, notiz) und die zusammenfassung MÜSSEN deutschsprachig sein (deutsches Alphabet inkl. ä ö ü ß). Niemals Chinesisch, Englisch oder eine andere Sprache/Schrift verwenden.
 
 Pro Fenster diese Felder (alle Schlüssel immer ausgeben):
 ${promptFieldList()}
@@ -154,11 +162,18 @@ Transkript:
       const content = data.choices?.[0]?.message?.content || '';
       const parsed = extractJson(stripReasoning(content));
       if (!Array.isArray(parsed?.windows)) throw new Error(`${provider.name.toLowerCase()}_invalid_windows`);
+      const combinedText = [
+        typeof parsed.zusammenfassung === 'string' ? parsed.zusammenfassung : '',
+        ...parsed.windows.flatMap((window) => Object.values(window || {}).filter((value) => typeof value === 'string')),
+      ].join(' ');
+      if (hasNonLatinScript(combinedText)) throw new Error(`${provider.name.toLowerCase()}${NON_GERMAN_ERROR_SUFFIX}`);
       const summary = typeof parsed.zusammenfassung === 'string' ? parsed.zusammenfassung.trim().slice(0, 4000) : '';
       return { windows: parsed.windows, model: provider.model, summary, provider: provider.name };
     } catch (error) {
       if (Object.hasOwn(error || {}, 'status')) {
         console.error(`[aufmass] ${provider.name} failed`, error.status);
+      } else if (error?.message === `${provider.name.toLowerCase()}${NON_GERMAN_ERROR_SUFFIX}`) {
+        console.error(`[aufmass] ${provider.name} non-german output rejected`);
       } else {
         console.error(`[aufmass] ${provider.name} failed`, error);
       }
