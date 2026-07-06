@@ -6,9 +6,11 @@ import { MIN_CONFIRMING_PROVIDERS, VERIFY_TOLERANCE_PCT } from '../src/verificat
 
 const resultsRoot = path.resolve('results');
 const publicDataPath = path.resolve('public', 'data', 'price-radar.json');
+const catalogPath = path.resolve('data', 'comparison-catalog.json');
 const verificationPath = path.resolve('data', 'verification.json');
 const startedAt = new Date();
-const limit = parseLimit(process.argv);
+const requestedLimit = parseLimit(process.argv);
+const limit = Math.max(requestedLimit, minLimitForThreeProviderCoverage(requestedLimit));
 
 const jobs = [
   { provider: 'dfs', prefix: 'dfs-mapped-pvc-', script: 'dfs:pvc:mapped', args: ['--', `--limit=${limit}`] },
@@ -25,6 +27,45 @@ function parseLimit(argv) {
     process.exit(1);
   }
   return n;
+}
+
+// ponytail: Provider-Skripte kennen nur --limit=N (Katalog-Praefix ab Index 0),
+// kein Profil-Filter. Statt eine Zahl zu raten, aus dem zuletzt publizierten
+// price-radar.json ableiten, welcher Katalog-Index als erster ein Profil traegt,
+// das aktuell bei allen 3 Anbietern valide ist -- und den Scrape-Umfang genau so
+// weit anheben, dass dieser Index mit erfasst wird. Kein Eingriff in die
+// Cron-kritischen Provider-Skripte selbst.
+function minLimitForThreeProviderCoverage(fallbackLimit) {
+  let publicPayload;
+  let catalog;
+  try {
+    publicPayload = JSON.parse(fs.readFileSync(publicDataPath, 'utf8'));
+    const rawCatalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+    catalog = Array.isArray(rawCatalog) ? rawCatalog : rawCatalog.configs || [];
+  } catch {
+    return fallbackLimit;
+  }
+
+  const threeProviderKeys = new Set(
+    (publicPayload.configs || [])
+      .filter(config => ['dfs', 'fensterblick', 'fensterversand'].every(provider => config.providers?.[provider]?.valid))
+      .map(config => config.key)
+  );
+  if (threeProviderKeys.size === 0) return fallbackLimit;
+
+  const index = catalog.findIndex(row => threeProviderKeys.has(buildRowKey({
+    brand: row.brand || '',
+    profile: row.profile || '',
+    size: row.size || `${row.width || ''}x${row.height || ''}`,
+    glazing: row.glazing || row.glass || '',
+    opening: row.opening || 'Dreh-Kipp',
+    color: row.color || 'Weiß/Weiß',
+    layout: row.layout || '1flg'
+  })));
+  if (index === -1) return fallbackLimit;
+
+  console.log(`Stichprobe erweitert auf ${index + 1} Katalog-Zeilen, damit ein bei allen 3 Anbietern gefuehrtes Profil (Katalog-Index ${index}) mit erfasst wird.`);
+  return index + 1;
 }
 
 function run(script, args = []) {
