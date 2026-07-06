@@ -276,6 +276,18 @@
         document.addEventListener('mouseout', function (e) {
           if (!e.relatedTarget && e.clientY <= 0) fire(c, 'exit_intent');
         });
+        // Touch devices have no mouse-leave signal. A fast upward flick
+        // (back toward the top/browser chrome) is the mobile equivalent of
+        // "about to leave" — same trigger category. Sampled on a fixed
+        // interval rather than diffed between raw scroll events: native
+        // touch scrolling fires many small steps (~16ms apart), so a real
+        // fast flick shows up as distance-per-tick, not one big single jump.
+        var sampleY = window.scrollY;
+        var scrollSampler = setInterval(function () {
+          var y = window.scrollY;
+          if (sampleY - y > 70) { fire(c, 'exit_intent'); clearInterval(scrollSampler); }
+          sampleY = y;
+        }, 120);
       } else if (c.trigger === 'idle') {
         var secs = Number(cfg.seconds) || 30, timer;
         function reset() { clearTimeout(timer); timer = setTimeout(function () { fire(c, 'idle'); }, secs * 1000); }
