@@ -73,7 +73,7 @@ body {
 }
 
 h1, h2, h3, p { margin-top: 0; }
-h1 { font-size: 48pt; line-height: .96; color: #fff; letter-spacing: -.045em; margin-bottom: 9mm; }
+h1 { font-size: 48pt; line-height: .96; color: #fff; letter-spacing: -.045em; margin-bottom: 9mm; hyphens: auto; overflow-wrap: break-word; }
 h2 { font-size: 30pt; line-height: 1.04; color: var(--blue); letter-spacing: -.035em; margin: 8mm 0 7mm; max-width: 148mm; }
 h3 { color: var(--blue); margin-bottom: 2mm; font-size: 14pt; }
 p { font-size: 12.1pt; line-height: 1.55; }

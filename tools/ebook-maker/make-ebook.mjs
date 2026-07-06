@@ -15,6 +15,160 @@ const configPath = path.resolve(argValue('--config', path.join(repoRoot, 'tools/
 const noPdf = process.argv.includes('--no-pdf');
 const config = JSON.parse(readFileSync(configPath, 'utf8'));
 const outDir = path.resolve(argValue('--out', path.join(repoRoot, 'public/ebooks', config.slug || 'dfs-ebook')));
+
+// ---------------------------------------------------------------------------
+// Validierung — bricht ab, bevor ein unsauberes E-Book entsteht.
+// Limits sind aus dem A4-Layout in styles.css abgeleitet (feste Seitenhöhe 297mm).
+// ---------------------------------------------------------------------------
+
+const LIMITS = {
+  title: 60,
+  subtitle: 90,
+  claim: 200,
+  kicker: 40,
+  topics: { max: 4, chars: 24 },
+  page: { label: 24, title: 60, lead: 260, blocksMax: 3 },
+  cards: { items: 3, title: 40, text: 150 },
+  checklist: { min: 3, max: 8, chars: 90 },
+  timeline: { items: 3, title: 40, text: 140 },
+  table: { headersMin: 2, headersMax: 4, rowsMax: 7, cell: 60 },
+  note: 220,
+  text: 400,
+  cta: { title: 60, text: 300, buttonText: 60, contactsMax: 3 },
+};
+
+// ponytail: grobe mm-Schätzung pro Block; Ground Truth ist der PDF-Seitenzahl-Check unten.
+const HEIGHT_BUDGET_MM = 235;
+const HEAD_MM = 70; // Label + h2 + Lead
+const BLOCK_GAP_MM = 9;
+
+function blockHeightMm(block) {
+  if (block.type === 'cards') return 62;
+  if (block.type === 'checklist') return 12 + (block.items?.length || 0) * 11;
+  if (block.type === 'timeline') return 70;
+  if (block.type === 'table') return 16 + (block.rows?.length || 0) * 11;
+  if (block.type === 'note') return 24;
+  return 34; // text
+}
+
+function validateConfig(cfg) {
+  const errors = [];
+  const err = (msg) => errors.push(msg);
+  const need = (value, name) => {
+    if (!value || (typeof value === 'string' && !value.trim())) err(`Pflichtfeld fehlt: ${name}`);
+  };
+  const maxLen = (value, limit, name) => {
+    if (typeof value === 'string' && value.length > limit) err(`${name} zu lang (${value.length} > ${limit} Zeichen)`);
+  };
+
+  need(cfg.slug, 'slug');
+  if (cfg.slug && !/^[a-z0-9-]+$/.test(cfg.slug)) err(`slug muss kebab-case sein: "${cfg.slug}"`);
+  need(cfg.title, 'title');
+  need(cfg.subtitle, 'subtitle');
+  need(cfg.claim, 'claim');
+  maxLen(cfg.title, LIMITS.title, 'title');
+  maxLen(cfg.subtitle, LIMITS.subtitle, 'subtitle');
+  maxLen(cfg.claim, LIMITS.claim, 'claim');
+  maxLen(cfg.kicker, LIMITS.kicker, 'kicker');
+
+  const topics = cfg.topics || [];
+  if (topics.length > LIMITS.topics.max) err(`topics: max. ${LIMITS.topics.max} Pills (${topics.length} angegeben)`);
+  topics.forEach((topic, i) => maxLen(topic, LIMITS.topics.chars, `topics[${i}]`));
+
+  if (cfg.cta) {
+    maxLen(cfg.cta.title, LIMITS.cta.title, 'cta.title');
+    maxLen(cfg.cta.text, LIMITS.cta.text, 'cta.text');
+    maxLen(cfg.cta.buttonText, LIMITS.cta.buttonText, 'cta.buttonText');
+    if (cfg.cta.buttonUrl && !/^https:\/\//.test(cfg.cta.buttonUrl)) err(`cta.buttonUrl muss mit https:// beginnen: "${cfg.cta.buttonUrl}"`);
+    if ((cfg.cta.contacts || []).length > LIMITS.cta.contactsMax) err(`cta.contacts: max. ${LIMITS.cta.contactsMax} Einträge`);
+  }
+
+  const pages = cfg.pages || [];
+  if (!pages.length) err('pages: mindestens eine Inhaltsseite nötig');
+
+  pages.forEach((page, p) => {
+    const where = `pages[${p}] („${page.title || page.label || '?'}“)`;
+    need(page.label, `${where}.label`);
+    need(page.title, `${where}.title`);
+    need(page.lead, `${where}.lead`);
+    maxLen(page.label, LIMITS.page.label, `${where}.label`);
+    maxLen(page.title, LIMITS.page.title, `${where}.title`);
+    maxLen(page.lead, LIMITS.page.lead, `${where}.lead`);
+
+    const blocks = page.blocks || [];
+    if (!blocks.length) err(`${where}: mindestens ein Block nötig`);
+    if (blocks.length > LIMITS.page.blocksMax) err(`${where}: max. ${LIMITS.page.blocksMax} Blöcke (${blocks.length} angegeben)`);
+
+    let heightMm = HEAD_MM;
+    blocks.forEach((block, b) => {
+      const at = `${where}.blocks[${b}]`;
+      const type = block.type || 'text';
+      heightMm += blockHeightMm(block) + BLOCK_GAP_MM;
+
+      if (type === 'cards') {
+        const items = block.items || [];
+        if (items.length !== LIMITS.cards.items) err(`${at}: cards braucht genau ${LIMITS.cards.items} Karten (3-Spalten-Raster), ${items.length} angegeben`);
+        items.forEach((item, i) => {
+          need(item.title, `${at}.items[${i}].title`);
+          need(item.text, `${at}.items[${i}].text`);
+          maxLen(item.title, LIMITS.cards.title, `${at}.items[${i}].title`);
+          maxLen(item.text, LIMITS.cards.text, `${at}.items[${i}].text`);
+        });
+      } else if (type === 'checklist') {
+        const items = block.items || [];
+        if (items.length < LIMITS.checklist.min || items.length > LIMITS.checklist.max) {
+          err(`${at}: checklist braucht ${LIMITS.checklist.min}–${LIMITS.checklist.max} Punkte, ${items.length} angegeben`);
+        }
+        items.forEach((item, i) => maxLen(item, LIMITS.checklist.chars, `${at}.items[${i}]`));
+      } else if (type === 'timeline') {
+        const items = block.items || [];
+        if (items.length !== LIMITS.timeline.items) err(`${at}: timeline braucht genau ${LIMITS.timeline.items} Schritte (3-Spalten-Raster), ${items.length} angegeben`);
+        items.forEach((item, i) => {
+          need(item.title, `${at}.items[${i}].title`);
+          maxLen(item.title, LIMITS.timeline.title, `${at}.items[${i}].title`);
+          maxLen(item.text, LIMITS.timeline.text, `${at}.items[${i}].text`);
+        });
+      } else if (type === 'table') {
+        const headers = block.headers || [];
+        const rows = block.rows || [];
+        if (headers.length < LIMITS.table.headersMin || headers.length > LIMITS.table.headersMax) {
+          err(`${at}: table braucht ${LIMITS.table.headersMin}–${LIMITS.table.headersMax} Spalten, ${headers.length} angegeben`);
+        }
+        if (!rows.length || rows.length > LIMITS.table.rowsMax) err(`${at}: table braucht 1–${LIMITS.table.rowsMax} Zeilen, ${rows.length} angegeben`);
+        rows.forEach((row, r) => {
+          if (row.length !== headers.length) err(`${at}.rows[${r}]: ${row.length} Zellen, aber ${headers.length} Spalten`);
+          row.forEach((cell, c) => maxLen(cell, LIMITS.table.cell, `${at}.rows[${r}][${c}]`));
+        });
+      } else if (type === 'note') {
+        need(block.text, `${at}.text`);
+        maxLen(block.text, LIMITS.note, `${at}.text`);
+      } else if (type === 'text') {
+        need(block.text, `${at}.text`);
+        maxLen(block.text, LIMITS.text, `${at}.text`);
+      } else {
+        err(`${at}: unbekannter Block-Typ "${type}" (erlaubt: cards, checklist, timeline, table, note, text)`);
+      }
+    });
+
+    if (heightMm > HEIGHT_BUDGET_MM) {
+      err(`${where}: Inhalt zu hoch für eine A4-Seite (~${Math.round(heightMm)}mm > ${HEIGHT_BUDGET_MM}mm) — Blöcke kürzen oder auf zwei Seiten verteilen`);
+    }
+  });
+
+  return errors;
+}
+
+const validationErrors = validateConfig(config);
+if (validationErrors.length) {
+  console.error(`Konfiguration ungültig (${configPath}):`);
+  validationErrors.forEach((message) => console.error(`  - ${message}`));
+  process.exit(1);
+}
+
+// ---------------------------------------------------------------------------
+// Rendern
+// ---------------------------------------------------------------------------
+
 const assetsDir = path.join(outDir, 'assets');
 mkdirSync(assetsDir, { recursive: true });
 
@@ -114,7 +268,14 @@ const htmlPath = path.join(outDir, 'index.html');
 writeFileSync(htmlPath, html);
 
 if (!noPdf) {
-  const chromeCandidates = [process.env.CHROME_PATH, '/usr/bin/chromium', '/usr/bin/google-chrome-stable', '/usr/bin/google-chrome'].filter(Boolean);
+  const chromeCandidates = [
+    process.env.CHROME_PATH,
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/chromium',
+    '/usr/bin/google-chrome-stable',
+    '/usr/bin/google-chrome',
+  ].filter(Boolean);
   const chrome = chromeCandidates.find((candidate) => existsSync(candidate));
   if (!chrome) throw new Error('Kein Chromium/Chrome gefunden. Setze CHROME_PATH oder nutze --no-pdf.');
   const pdfPath = path.join(outDir, `${config.slug || 'dfs-ebook'}.pdf`);
@@ -122,8 +283,18 @@ if (!noPdf) {
   if (result.status !== 0) throw new Error(`PDF-Export fehlgeschlagen:\n${result.stderr || result.stdout}`);
   const pdf = readFileSync(pdfPath);
   if (pdf.slice(0, 4).toString() !== '%PDF') throw new Error(`Ungültige PDF-Signatur: ${pdfPath}`);
+
+  // Ground-Truth-Check: jede section.page muss genau eine PDF-Seite ergeben.
+  // Mehr Seiten = Inhalt übergelaufen → Layout kaputt.
+  const expectedPages = pages.length + 2; // Cover + Inhalt + CTA
+  const pdfPages = (pdf.toString('latin1').match(/\/Type\s*\/Page[^s]/g) || []).length;
+  if (pdfPages === 0) {
+    console.warn('Warnung: PDF-Seitenzahl nicht lesbar — Überlauf-Check übersprungen.');
+  } else if (pdfPages !== expectedPages) {
+    throw new Error(`PDF hat ${pdfPages} Seiten, erwartet ${expectedPages} — eine Seite läuft über. Inhalte kürzen.`);
+  }
   console.log(`HTML: ${htmlPath}`);
-  console.log(`PDF: ${pdfPath} (${pdf.length} bytes)`);
+  console.log(`PDF: ${pdfPath} (${pdf.length} bytes, ${pdfPages} Seiten)`);
 } else {
   console.log(`HTML: ${htmlPath}`);
   console.log('PDF: übersprungen (--no-pdf)');
