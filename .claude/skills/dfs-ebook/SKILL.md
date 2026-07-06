@@ -31,6 +31,17 @@ Jedes DFS-E-Book entsteht aus einer JSON-Config über `tools/ebook-maker/make-eb
 | `note` / `text` | kurzer Absatz |
 | pro Seite | max. 3 Blöcke |
 
+## Mockbild (Buch-Vorschaubild für die Freebie-Seite)
+
+**Wird komplett von Codex generiert — in EINEM Durchgang. Nie Text nachträglich hinzufügen.**
+
+1. Der Generator legt automatisch ab: `assets/cover.png` (echtes Cover als A4-Render) + `mockup-prompt.txt` (fertiger Prompt).
+2. Generieren: `codex exec -i public/ebooks/<slug>/assets/cover.png "$(cat public/ebooks/<slug>/mockup-prompt.txt)"`
+3. Ablage: `public/ebooks/<slug>/assets/mockup.png` (quadratisch 1024×1024).
+4. Sichtcheck: Titeltext im Mockbild muss **buchstabengleich** mit dem Cover sein. Weicht er ab → neu generieren, **nicht** nachbearbeiten.
+
+Verboten: Text-Overlays, Compositing, Badges/Sticker, Canva-Nachbearbeitung, Prompt frei umformulieren. Der Prompt kommt aus dem Generator — Textquelle ist ausschließlich das mitgegebene Cover.
+
 ## Inhaltsregeln (nicht automatisierbar — selbst prüfen)
 
 - Keine Preis-, Liefer-, Förder- oder Garantieversprechen.

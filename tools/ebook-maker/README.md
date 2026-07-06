@@ -56,6 +56,16 @@ Der Generator prüft die Config hart und bricht mit klaren Fehlermeldungen ab (E
 
 **Bei Validierungsfehlern: Inhalte kürzen oder Seiten aufteilen — nie die Limits im Generator ändern.**
 
+## Mockbild
+
+Der Generator erzeugt pro Lauf zusätzlich `assets/cover.png` (echtes Cover, A4-Render) und `mockup-prompt.txt`. Das Buch-Vorschaubild entsteht daraus komplett per Codex in einem Durchgang:
+
+```bash
+codex exec -i public/ebooks/<slug>/assets/cover.png "$(cat public/ebooks/<slug>/mockup-prompt.txt)"
+```
+
+Regeln: Text kommt ausschließlich aus dem mitgegebenen Cover — nie nachträglich Text, Overlays oder Badges ergänzen. Abweichender Titeltext = neu generieren, nicht nachbearbeiten. Details: `.claude/skills/dfs-ebook/SKILL.md`.
+
 Regeln für Agenten: siehe `.claude/skills/dfs-ebook/SKILL.md`.
 
 ## Sicherheit

@@ -267,6 +267,21 @@ const html = `<!doctype html>
 const htmlPath = path.join(outDir, 'index.html');
 writeFileSync(htmlPath, html);
 
+// Mockbild-Prompt für Codex: Cover als Referenzbild, Bild entsteht in EINEM
+// Durchgang — Text stammt nur aus dem Cover, nachträgliche Overlays verboten.
+const mockupPrompt = `Erzeuge das Mockbild für das DFS-E-Book „${config.title}".
+
+Das beigefügte Bild ist das ECHTE Cover (Seite 1) des E-Books. Stelle dieses Cover als hochwertiges 3D-Buch-/Broschüren-Mockup dar: leicht schräge 3/4-Ansicht von vorne, weiches Licht von links oben, dezenter Schlagschatten.
+
+Harte Regeln:
+- Cover-Inhalt (Text, Logo, Farben, Layout) 1:1 vom Referenzbild übernehmen — Text NICHT neu setzen, NICHTS hinzufügen, NICHTS weglassen, keine Schreibweise „korrigieren".
+- Kein zusätzlicher Text, keine Badges, keine Sticker, kein Wasserzeichen.
+- Hintergrund hell und neutral (#FFFFFF bis #F5F5F5), kein Farbverlauf, kein Showroom-Kitsch.
+- Format quadratisch 1024x1024, Buch mittig, ca. 70–80% der Bildhöhe.
+
+Speichere das Ergebnis als PNG nach: public/ebooks/${config.slug}/assets/mockup.png`;
+writeFileSync(path.join(outDir, 'mockup-prompt.txt'), mockupPrompt);
+
 if (!noPdf) {
   const chromeCandidates = [
     process.env.CHROME_PATH,
@@ -293,8 +308,16 @@ if (!noPdf) {
   } else if (pdfPages !== expectedPages) {
     throw new Error(`PDF hat ${pdfPages} Seiten, erwartet ${expectedPages} — eine Seite läuft über. Inhalte kürzen.`);
   }
+
+  // Cover als PNG (A4 bei 96dpi) — Referenzbild für das Codex-Mockbild.
+  const coverPath = path.join(assetsDir, 'cover.png');
+  const coverResult = spawnSync(chrome, ['--headless=new', '--disable-gpu', '--no-sandbox', '--window-size=794,1123', `--screenshot=${coverPath}`, `file://${htmlPath}`], { encoding: 'utf8' });
+  if (coverResult.status !== 0 || !existsSync(coverPath)) throw new Error(`Cover-Export fehlgeschlagen:\n${coverResult.stderr || coverResult.stdout}`);
+
   console.log(`HTML: ${htmlPath}`);
   console.log(`PDF: ${pdfPath} (${pdf.length} bytes, ${pdfPages} Seiten)`);
+  console.log(`Cover: ${coverPath}`);
+  console.log(`Mockup-Prompt: ${path.join(outDir, 'mockup-prompt.txt')} (Codex: codex exec -i assets/cover.png "$(cat mockup-prompt.txt)")`);
 } else {
   console.log(`HTML: ${htmlPath}`);
   console.log('PDF: übersprungen (--no-pdf)');
