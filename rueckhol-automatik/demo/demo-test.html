@@ -148,13 +148,23 @@
 <div class="testpanel" id="testpanel">
   <div class="body">
     <h3>Popup-Test</h3>
-    <p>Am Desktop feuern Popups von selbst (Maus zum oberen Rand = Verlassen, warten, scrollen). Hier jedes gezielt auslösen — Interaktionen zählen echt in der Auswertung (Seite <b>demo</b>).</p>
+    <p>Die Popups feuern hier <b>von selbst</b>: Artikel in den Warenkorb legen · Maus zum oberen Rand (Seite verlassen) · nach unten scrollen · kurz verweilen. Hier zusätzlich jedes gezielt auslösen — Interaktionen zählen echt in der Auswertung (Seite <b>demo</b>).</p>
     <div class="btns" id="testbtns"><span style="color:var(--muted);font-size:12.5px">Lade Kampagnen …</span></div>
   </div>
   <button type="button" class="toggle" id="testtoggle">🧪 Popup-Test</button>
 </div>
 <div class="toast" id="toast"></div>
 
+<script>
+  // Demo-Seite: Frequenz-Deckel aufheben, damit Popups bei JEDEM Besuch wieder
+  // feuern (im echten Einsatz schützt der Deckel Besucher vor Genervtwerden —
+  // hier würde er jeden zweiten Test "da passiert nichts" aussehen lassen).
+  try {
+    Object.keys(localStorage)
+      .filter(function (k) { return k.indexOf('cre_seen_demo_') === 0; })
+      .forEach(function (k) { localStorage.removeItem(k); });
+  } catch (e) {}
+</script>
 <script async src="../cre.js" data-cre-site="demo" data-cre-api=""></script>
 <script>
   // ---- Kulissen-Shop (Warenkorb ist fake, absichtlich) ----
@@ -205,6 +215,13 @@
       btn.addEventListener('click', function () {
         cart += 1; document.getElementById('cartCount').textContent = cart;
         toast(p[1] + ' liegt im Warenkorb (Test)');
+        // Warenkorb-Auslöser: beim ERSTEN Artikel kurz danach das Gutschein-Popup
+        // (simuliert die klassische "Rabatt gegen Kaufabbruch"-Mechanik).
+        if (cart === 1) {
+          setTimeout(function () {
+            if (window.CRE && window.CRE.trigger) window.CRE.trigger('demo-gutschein');
+          }, 1500);
+        }
       });
       pi.appendChild(name); pi.appendChild(price); pi.appendChild(btn);
       card.appendChild(ph); card.appendChild(pi); grid.appendChild(card);
@@ -216,6 +233,7 @@
 
   // ---- echtes Test-Werkzeug: Kampagnen laden + gezielt triggern ----
   var LABELS = { newsletter: 'Newsletter', contact: 'Kontakt', coupon: 'Gutschein', url: 'Link', pdf: 'PDF' };
+  var TRIGGER_LABELS = { exit_intent: 'feuert beim Verlassen', idle: 'feuert bei Inaktivität', time_on_page: 'feuert nach Zeit auf der Seite', scroll_depth: 'feuert beim Scrollen', manual: 'nur manuell/per Warenkorb' };
   document.getElementById('testtoggle').addEventListener('click', function () {
     document.getElementById('testpanel').classList.toggle('open');
   });
@@ -236,7 +254,7 @@
       campaigns.forEach(function (c) {
         var b = document.createElement('button'); b.type = 'button';
         var t = document.createElement('span'); t.textContent = LABELS[c.action_type] || c.action_type;
-        var s = document.createElement('small'); s.textContent = c.name || '';
+        var s = document.createElement('small'); s.textContent = (c.name || '') + ' · ' + (TRIGGER_LABELS[c.trigger] || c.trigger);
         b.appendChild(t); b.appendChild(s);
         b.addEventListener('click', function () {
           document.getElementById('testpanel').classList.remove('open');
