@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { buildRowKey, deriveCustomerTotal } from '../src/pricing.js';
 import { MIN_CONFIRMING_PROVIDERS, VERIFY_TOLERANCE_PCT } from '../src/verification.js';
 
 const resultsRoot = path.resolve('results');
@@ -57,7 +58,7 @@ function latestSample(prefix) {
         return { name: n, count: 0, time: Number.NaN };
       }
     })
-    .filter(x => x.count >= 1 && Number.isFinite(x.time) && x.time > startedAt.getTime())
+    .filter(x => x.count === limit && Number.isFinite(x.time) && x.time > startedAt.getTime())
     .sort((a, b) => a.name.localeCompare(b.name));
   return candidates.at(-1)?.name || null;
 }
@@ -66,13 +67,7 @@ function rowFromResult(provider, dir, r) {
   const wrapped = r[provider] || r.dfs || r.fensterblick || r.fensterversand;
   const data = wrapped || r || {};
   const input = r.input || r || {};
-  const price = data?.comparePrice?.listTotal ?? data?.listTotal ?? data?.price?.listTotal ?? null;
-  const discountMeta = data?.discountMetadata || data?.discount || {};
-  const explicitCustomerTotal = data?.customerPrice?.total ?? data?.customerTotal ?? null;
-  const discountedTotal = discountMeta.discountedTotalObserved ?? null;
-  const customerTotal = typeof explicitCustomerTotal === 'number' && Number.isFinite(explicitCustomerTotal) && explicitCustomerTotal > 0
-    ? explicitCustomerTotal
-    : (typeof discountedTotal === 'number' && Number.isFinite(discountedTotal) && discountedTotal > 0 ? discountedTotal : price);
+  const customerTotal = deriveCustomerTotal(data);
   const row = {
     provider,
     brand: input.brand || input.manufacturer || r.brand || r.manufacturer || '',
@@ -86,7 +81,7 @@ function rowFromResult(provider, dir, r) {
     customerTotal,
     sourceDir: dir
   };
-  row.key = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color, row.layout].join('|');
+  row.key = buildRowKey(row);
   return row;
 }
 
@@ -125,7 +120,7 @@ for (const job of runResults) {
   if (job.code !== 0) continue;
   const dir = latestSample(job.prefix);
   if (!dir) {
-    console.warn(`WARN: no fresh non-empty ${job.prefix} result found after ${startedAt.toISOString()}`);
+    console.warn(`WARN: no fresh complete ${job.prefix} result found after ${startedAt.toISOString()}`);
     continue;
   }
   const rows = loadProviderRows(job.provider, dir);
@@ -192,7 +187,9 @@ const verification = {
   verifiedKeys: entries
 };
 
-fs.writeFileSync(verificationPath, `${JSON.stringify(verification, null, 2)}\n`);
+const verificationTmpPath = `${verificationPath}.tmp`;
+fs.writeFileSync(verificationTmpPath, `${JSON.stringify(verification, null, 2)}\n`);
+fs.renameSync(verificationTmpPath, verificationPath);
 
 console.log(JSON.stringify({
   checked: entries.length,

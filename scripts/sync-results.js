@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { buildRowKey, deriveCustomerTotal } from '../src/pricing.js';
 import { configVerification } from '../src/verification.js';
 
 const root = path.resolve('results');
@@ -15,7 +16,7 @@ const catalogKeys = (() => {
   try {
     const raw = readJson(catalogPath);
     const configs = Array.isArray(raw) ? raw : raw.configs || [];
-    return new Set(configs.map(c => [c.brand, c.profile, c.size, c.glazing, c.opening || 'Dreh-Kipp', c.color || 'weiß', c.layout || '1flg'].join('|')));
+    return new Set(configs.map(c => buildRowKey(c)));
   } catch { return new Set(); }
 })();
 const historyOut = path.join(out, 'history');
@@ -97,11 +98,8 @@ for (const [provider, dir] of Object.entries(sources)) {
     const input = r.input || r || {};
     const price = data?.comparePrice?.listTotal ?? data?.listTotal ?? data?.price?.listTotal ?? null;
     const discountMeta = data?.discountMetadata || data?.discount || {};
-    const explicitCustomerTotal = data?.customerPrice?.total ?? data?.customerTotal ?? null;
     const discountedTotal = discountMeta.discountedTotalObserved ?? null;
-    const customerTotal = typeof explicitCustomerTotal === 'number' && Number.isFinite(explicitCustomerTotal) && explicitCustomerTotal > 0
-      ? explicitCustomerTotal
-      : (typeof discountedTotal === 'number' && Number.isFinite(discountedTotal) && discountedTotal > 0 ? discountedTotal : price);
+    const customerTotal = deriveCustomerTotal(data);
     const discountObserved = discountMeta.observed === true || (
       typeof discountedTotal === 'number' && Number.isFinite(discountedTotal) && typeof price === 'number' && Math.abs(discountedTotal - price) > 0.01
     );
@@ -139,7 +137,7 @@ for (const [provider, dir] of Object.entries(sources)) {
 
 const keys = new Map();
 for (const row of rows) {
-  const k = [row.brand, row.profile, row.size, row.glazing, row.opening, row.color, row.layout].join('|');
+  const k = buildRowKey(row);
   if (catalogKeys.size && !catalogKeys.has(k)) continue;
   if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, width: row.width, height: row.height, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, productType: row.productType, providers: {} });
   keys.get(k).providers[row.provider] = row;

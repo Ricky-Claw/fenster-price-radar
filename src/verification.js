@@ -16,6 +16,15 @@ function latestEntryForKey(entries, key) {
     .sort((a, b) => entryTime(b) - entryTime(a))[0] || null;
 }
 
+function toleranceDeltaPct(verifiedPrice, currentTotal) {
+  if (!isFiniteNumber(verifiedPrice) || !isFiniteNumber(currentTotal) || currentTotal === 0) {
+    return null;
+  }
+
+  const deltaPct = Math.abs(verifiedPrice - currentTotal) / currentTotal * 100;
+  return Number.isFinite(deltaPct) ? deltaPct : null;
+}
+
 export function configVerification(entries, config) {
   if (!Array.isArray(entries) || entries.length === 0) return null;
 
@@ -26,21 +35,21 @@ export function configVerification(entries, config) {
   const providerNames = Object.keys(prices);
 
   if (entry.result === 'mismatch') {
-    return { status: 'mismatch', verifiedAt: entry.verifiedAt, providers: providerNames };
+    const mismatchedProviders = providerNames.filter(provider => {
+      const deltaPct = toleranceDeltaPct(prices[provider], config?.providers?.[provider]?.customerTotal);
+      return deltaPct !== null && deltaPct > VERIFY_TOLERANCE_PCT;
+    });
+
+    if (mismatchedProviders.length === 0) return null;
+
+    return { status: 'mismatch', verifiedAt: entry.verifiedAt, providers: mismatchedProviders };
   }
 
   if (entry.result !== 'verified') return null;
 
   const matchedProviders = providerNames.filter(provider => {
-    const verifiedPrice = prices[provider];
-    const currentTotal = config?.providers?.[provider]?.customerTotal;
-
-    if (!isFiniteNumber(verifiedPrice) || !isFiniteNumber(currentTotal) || currentTotal === 0) {
-      return false;
-    }
-
-    const deltaPct = Math.abs(verifiedPrice - currentTotal) / currentTotal * 100;
-    return Number.isFinite(deltaPct) && deltaPct <= VERIFY_TOLERANCE_PCT;
+    const deltaPct = toleranceDeltaPct(prices[provider], config?.providers?.[provider]?.customerTotal);
+    return deltaPct !== null && deltaPct <= VERIFY_TOLERANCE_PCT;
   });
 
   if (matchedProviders.length < MIN_CONFIRMING_PROVIDERS) return null;

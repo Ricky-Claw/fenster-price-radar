@@ -472,6 +472,13 @@ function App(){
     return Number.isFinite(verifiedAt) && verifiedAt > latest ? verifiedAt : latest;
   }, 0);
   const latestVerifiedConfigDate = latestVerifiedConfigTime ? new Date(latestVerifiedConfigTime).toLocaleDateString('de-DE') : '';
+  const mismatchConfigs = data.filter(config => config.verification?.status === 'mismatch');
+  const mismatchConfigCount = mismatchConfigs.length;
+  const latestMismatchConfigTime = mismatchConfigs.reduce((latest, config) => {
+    const verifiedAt = Date.parse(config.verification?.verifiedAt || '');
+    return Number.isFinite(verifiedAt) && verifiedAt > latest ? verifiedAt : latest;
+  }, 0);
+  const latestMismatchConfigDate = latestMismatchConfigTime ? new Date(latestMismatchConfigTime).toLocaleDateString('de-DE') : '';
   const excludedConfigs = Array.isArray(payload?.filtered) ? payload.filtered : [];
   const filtered=useMemo(()=>data.filter(r=>{
     const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color,r.layoutLabel].join(' ').toLowerCase();
@@ -481,9 +488,16 @@ function App(){
     if(glazing && r.glazing!==glazing) return false;
     if(layout && (r.layout || '1flg')!==layout) return false;
     if(onlyAction && r.delta===null) return false;
-    if(onlyVerified && r.verification?.status !== 'verified') return false;
+    if(onlyVerified && !r.verification) return false;
     return true;
   }),[data,q,brand,profile,glazing,layout,onlyAction,onlyVerified]);
+  const verificationBadge = verifiedConfigCount > 0
+    ? <span className="verifyBadge" title={payload?.verification?.note || ''}>✓ {verifiedConfigCount} Konfigurationen live verifiziert · {latestVerifiedConfigDate}</span>
+    : mismatchConfigCount > 0
+      ? <span className="verifyBadge mismatch" title={payload?.verification?.note || ''}>⚠ Stichprobe: {mismatchConfigCount} Preisabweichungen festgestellt · {latestMismatchConfigDate}</span>
+      : payload?.verification?.samples > 0
+        ? <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>
+        : null;
 
   const stats=useMemo(()=>{
     const exact=data.filter(r=>r.dfsPrice && r.bestCompetitor);
@@ -677,7 +691,7 @@ function App(){
           <span>{weeklyChangeText}</span>
           <span>{dfsPositionText}</span>
           <small>{weeklyRangeText}</small>
-          {verifiedConfigCount ? <span className="verifyBadge" title={payload?.verification?.note || ''}>✓ {verifiedConfigCount} Konfigurationen live verifiziert · {latestVerifiedConfigDate}</span> : payload?.verification && <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>}
+          {verificationBadge}
         </section>
         {!updateBannerClosed && <section className="dfsAlert" role="status">
           <div>

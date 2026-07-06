@@ -246,6 +246,11 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
   font-weight:800;
   white-space:nowrap;
 }
+.weeklyChangeBanner .verifyBadge.mismatch{
+  background:#FFF3E8;
+  color:#945014;
+  border-color:#ffd8aa;
+}
 .weeklyChangeBanner strong{
   display:inline-flex;
   align-items:center;

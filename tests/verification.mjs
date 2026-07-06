@@ -40,7 +40,21 @@ assert.deepEqual(
   configVerification([
     { key, verifiedAt: '2026-07-05', result: 'mismatch', prices: { dfs: 100, fensterblick: 220 } },
   ], config),
-  { status: 'mismatch', verifiedAt: '2026-07-05', providers: ['dfs', 'fensterblick'] }
+  { status: 'mismatch', verifiedAt: '2026-07-05', providers: ['fensterblick'] }
+);
+
+assert.equal(
+  configVerification([
+    { key, verifiedAt: '2026-07-05', result: 'mismatch', prices: { dfs: 100.5, fensterblick: 199.1 } },
+  ], config),
+  null
+);
+
+assert.equal(
+  configVerification([
+    { key, verifiedAt: '2026-07-05', result: 'mismatch', prices: { dfs: null, fensterblick: '220' } },
+  ], config),
+  null
 );
 
 assert.deepEqual(

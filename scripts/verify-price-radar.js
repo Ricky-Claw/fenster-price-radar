@@ -132,12 +132,19 @@ try {
   verificationGate = readJson(path.resolve('data', 'verification.json'));
 } catch {}
 
+if (verificationGate) {
+  const embeddedVerification = payload.verification || {};
+  if (embeddedVerification.samples !== verificationGate.samples || embeddedVerification.verifiedAt !== verificationGate.verifiedAt) {
+    fail('verification.json und price-radar.json sind nicht aus demselben Sync — npm run data:sync ausführen');
+  }
+}
+
 if (verificationGate?.verifiedKeys !== undefined) {
   if (!Array.isArray(verificationGate.verifiedKeys)) fail('verification.verifiedKeys must be an array');
   if (verificationGate.verifiedKeys.length > 0) {
     const configKeys = new Set(payload.configs.map(config => config.key));
     for (const entry of verificationGate.verifiedKeys) {
-      if (!configKeys.has(entry?.key)) fail(`verification zombie key: ${entry?.key || 'missing key'}`);
+      if (!configKeys.has(entry?.key)) console.warn(`verification stale key (config nicht mehr vergleichbar): ${entry?.key || 'missing key'}`);
     }
 
     const verifiedCount = verificationGate.verifiedKeys.filter(entry => entry?.result === 'verified').length;
