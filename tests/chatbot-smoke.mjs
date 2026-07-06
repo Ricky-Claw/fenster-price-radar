@@ -123,6 +123,9 @@ assert.match(llmGuardrail.answer, /keinen Zugriff/i);
 const chunks = retrieveFenstershopKnowledge('Lieferadresse ändern Kosten', { limit: 2 });
 assert.ok(chunks.length >= 1, 'knowledge retrieval should find chatbot md chunks');
 
+const companyChunks = retrieveFenstershopKnowledge('Firmenwissen Pflege GitHub Beispieldatei', { limit: 3 });
+assert.ok(companyChunks.some((chunk) => chunk.sourceType === 'firmenwissen'), 'knowledge/ Ordner muss ins Retrieval einfließen');
+
 function response() {
   return {
     statusCode: null,

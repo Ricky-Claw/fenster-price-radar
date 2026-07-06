@@ -1,9 +1,11 @@
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { polishFenstershopAnswer } from './kimiClient.js';
 import { polishFenstershopAnswerNemotron } from './nemotronClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
 const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', import.meta.url);
+const COMPANY_KNOWLEDGE_DIR = fileURLToPath(new URL('../../knowledge/', import.meta.url));
 
 export const CONTACTS = {
   logisticsPhone: '+49 7221 3022 157',
@@ -28,7 +30,7 @@ export const LINKS = {
   profiles: 'https://deutscher-fenstershop.de/profilschnitte-detailzeichnungen/pvc',
 };
 
-const STOPWORDS = new Set('ich du sie er es wir ihr der die das ein eine einer eines einem einen und oder aber wenn dann ist sind war waren mit ohne für auf an im in zu zur zum von vom den dem des bei bitte kann können könnte gerne mal wie was wann wo wohin welche welcher welches meine meiner mein dein ihre ihrer ihre ihre'.split(/\s+/));
+const STOPWORDS = new Set('ich du sie er es wir ihr der die das ein eine einer eines einem einen und oder aber wenn dann ist sind war waren mit ohne für auf an im in zu zur zum von vom den dem des bei bitte kann können könnte gerne mal wie was wann wo wohin welche welcher welches meine meiner mein dein ihre ihrer hat habe haben wird wurde wurden gibt noch schon auch'.split(/\s+/));
 
 function lower(value = '') {
   return String(value).toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '').replace(/ß/g, 'ss');
@@ -47,10 +49,30 @@ function hasSensitiveData(text) {
     || /\b\d{5,}\b/.test(text);
 }
 
+function companyKnowledgeChunks() {
+  const chunks = [];
+  let files = [];
+  try {
+    files = readdirSync(COMPANY_KNOWLEDGE_DIR).filter((name) => /\.(md|txt)$/i.test(name) && !/^anleitung/i.test(name));
+  } catch { return chunks; }
+  for (const file of files.sort()) {
+    let raw = '';
+    try { raw = readFileSync(`${COMPANY_KNOWLEDGE_DIR}${file}`, 'utf8'); } catch { continue; }
+    let heading = file.replace(/\.(md|txt)$/i, '').replace(/[-_]/g, ' ');
+    for (const block of raw.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean)) {
+      const headingMatch = block.match(/^#{1,3}\s+(.{3,120})$/m);
+      if (headingMatch) heading = headingMatch[1].trim();
+      const text = block.replace(/^#{1,6}\s+.*$/gm, '').replace(/\s+/g, ' ').trim();
+      if (text.length >= 60) chunks.push({ title: heading, text, url: `knowledge/${file}`, sourceType: 'firmenwissen' });
+    }
+  }
+  return chunks;
+}
+
 let cachedChunks;
 function knowledgeChunks() {
   if (cachedChunks) return cachedChunks;
-  const chunks = [];
+  const chunks = [...companyKnowledgeChunks()];
   try {
     const dfs = JSON.parse(readFileSync(DFS_KNOWLEDGE_FILE, 'utf8'));
     for (const doc of dfs.documents || []) {
