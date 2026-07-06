@@ -25,7 +25,10 @@ const LATEST_UPDATE_ID = '2026-07-05-alu-balkontuer';
 const LATEST_UPDATE_ITEMS = [
   'Aluminium-Fenster und Balkontür sind jetzt eigene Vergleichstypen',
   'Preisentwicklung: 3-Monats-Diagramm je Anbieter',
-  'Stichproben-Verifizierung sichtbar direkt im Wochenvergleich'
+  'Stichproben-Verifizierung sichtbar direkt im Wochenvergleich',
+  'Janela-Chatbot: erkennt jetzt den Seiten-Kontext für Begrüßung und Vorschläge',
+  'Aufmaß per Sprache: Dokument-Kopf/Fußzeile editierbar, Eingaben werden automatisch lokal gespeichert',
+  'Rückhol-Automatik: neues Popup-System zum Testen — Verwaltung, Testseite und Übersicht jetzt live'
 ];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const formatPercent = value => Number(value || 0).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
