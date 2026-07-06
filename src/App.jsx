@@ -284,6 +284,7 @@ function App(){
   const [glazing,setGlazing]=useState('');
   const [layout,setLayout]=useState('1flg');
   const [onlyAction,setOnlyAction]=useState(false);
+  const [onlyVerified,setOnlyVerified]=useState(false);
   const [active,setActive]=useState(null);
   const [quote,setQuote]=useState({profile:'aluplast-ideal-4000',width:1000,height:1200,glazing:'3fach',opening:'Dreh-Kipp',color:'weiß'});
   const [quoteResult,setQuoteResult]=useState(null);
@@ -464,6 +465,13 @@ function App(){
     return () => window.removeEventListener('keydown', handleMenuKeydown);
   },[menuOpen]);
   const data=payload?.configs||[];
+  const verifiedConfigs = data.filter(config => config.verification?.status === 'verified');
+  const verifiedConfigCount = verifiedConfigs.length;
+  const latestVerifiedConfigTime = verifiedConfigs.reduce((latest, config) => {
+    const verifiedAt = Date.parse(config.verification?.verifiedAt || '');
+    return Number.isFinite(verifiedAt) && verifiedAt > latest ? verifiedAt : latest;
+  }, 0);
+  const latestVerifiedConfigDate = latestVerifiedConfigTime ? new Date(latestVerifiedConfigTime).toLocaleDateString('de-DE') : '';
   const excludedConfigs = Array.isArray(payload?.filtered) ? payload.filtered : [];
   const filtered=useMemo(()=>data.filter(r=>{
     const hay=[r.brand,r.profile,r.size,r.glazing,r.opening,r.color,r.layoutLabel].join(' ').toLowerCase();
@@ -473,8 +481,9 @@ function App(){
     if(glazing && r.glazing!==glazing) return false;
     if(layout && (r.layout || '1flg')!==layout) return false;
     if(onlyAction && r.delta===null) return false;
+    if(onlyVerified && r.verification?.status !== 'verified') return false;
     return true;
-  }),[data,q,brand,profile,glazing,layout,onlyAction]);
+  }),[data,q,brand,profile,glazing,layout,onlyAction,onlyVerified]);
 
   const stats=useMemo(()=>{
     const exact=data.filter(r=>r.dfsPrice && r.bestCompetitor);
@@ -668,7 +677,7 @@ function App(){
           <span>{weeklyChangeText}</span>
           <span>{dfsPositionText}</span>
           <small>{weeklyRangeText}</small>
-          {payload?.verification && <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>}
+          {verifiedConfigCount ? <span className="verifyBadge" title={payload?.verification?.note || ''}>✓ {verifiedConfigCount} Konfigurationen live verifiziert · {latestVerifiedConfigDate}</span> : payload?.verification && <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>}
         </section>
         {!updateBannerClosed && <section className="dfsAlert" role="status">
           <div>
@@ -693,6 +702,7 @@ function App(){
             <select value={profile} onChange={e=>setProfile(e.target.value)}><option value="">Alle Profile</option>{unique(data.filter(x=>!brand||x.brand===brand),'profile').map(x=><option key={x}>{x}</option>)}</select>
             <select value={glazing} onChange={e=>setGlazing(e.target.value)}><option value="">Alle Gläser</option>{unique(data,'glazing').map(x=><option key={x}>{x}</option>)}</select>
             <button className={cls('toggle',onlyAction&&'on')} onClick={()=>setOnlyAction(!onlyAction)}><SlidersHorizontal size={16}/> nur vergleichbar</button>
+            <button className={cls('toggle',onlyVerified&&'on')} onClick={()=>setOnlyVerified(!onlyVerified)}><SlidersHorizontal size={16}/> Nur live geprüfte</button>
           </div>
           <div className="layoutChooser" aria-label="Fensterbauart auswählen">{layouts.filter(([id])=>id).map(([id,label])=>{const count=stats.layoutCounts?.[id]||0; return <button key={id} type="button" className={cls('layoutChoice', layout===id&&'active')} onClick={()=>setLayout(id)}><small>{label}</small><b>{count}</b><span>{LAYOUT_TILE_HINT[id]||''}</span></button>})}</div>
           <div className="kpiStrip" aria-label="Preisradar Kennzahlen">
@@ -710,8 +720,13 @@ function App(){
           <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
             {filtered.map(row=>{
               const cheapestIds = cheapestProviderIds(row);
+              const verificationStatus = row.verification?.status;
+              const verificationDate = row.verification?.verifiedAt ? new Date(row.verification.verifiedAt).toLocaleDateString('de-DE') : '';
+              const verificationProviders = Array.isArray(row.verification?.providers) ? row.verification.providers.join(', ') : '';
+              const verificationProviderTitle = verificationProviders ? ` · bestätigt: ${verificationProviders}` : '';
+              const verificationTitle = verificationStatus === 'mismatch' ? `Abweichung festgestellt am ${verificationDate}${verificationProviderTitle}` : `Live geprüft am ${verificationDate}${verificationProviderTitle}`;
               return <tr key={row.key} onClick={()=>setActive(row)}>
-              <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span>{row.material && row.material!=='PVC' && <span className="layoutBadge twoSash">{row.material}</span>}<span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
+              <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span>{verificationStatus === 'verified' && <span className="rowVerifyBadge verified" title={verificationTitle}>✓ live geprüft</span>}{verificationStatus === 'mismatch' && <span className="rowVerifyBadge mismatch" title={verificationTitle}>⚠ Abweichung</span>}{row.material && row.material!=='PVC' && <span className="layoutBadge twoSash">{row.material}</span>}<span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
               {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id,cheapestIds)}</React.Fragment>)}
               <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
               <td>{rowChangeLabel(row)}</td>
