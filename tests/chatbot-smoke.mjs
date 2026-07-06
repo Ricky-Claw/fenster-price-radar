@@ -42,6 +42,28 @@ answer = ask('Kann ich Hilfe beim Konfigurator bekommen?');
 assert.equal(answer.intent, 'configurator_help');
 assert.ok(answer.links.some((link) => link.url.includes('/konfigurator/fenster')));
 
+answer = ask('Der Fahrer steht vor der Tür und ein Fenster ist kaputt!');
+assert.equal(answer.intent, 'delivery_emergency');
+assert.match(answer.answer, /\+49 7221 3022 157/);
+assert.match(answer.answer, /Lieferschein/);
+
+answer = ask('Ein Fenster ist kaputt geliefert worden');
+assert.equal(answer.intent, 'delivery_damage');
+
+answer = ask('Bietet ihr auch Montage an?');
+assert.equal(answer.intent, 'montage');
+assert.match(answer.answer, /keine Montage/i);
+assert.doesNotMatch(answer.answer, /ja, wir (bieten|montieren)/i);
+
+answer = ask('Was kostet ein Kunststofffenster 120x140?');
+assert.equal(answer.intent, 'price_quick');
+assert.ok(answer.links.some((link) => link.url.includes('/konfigurator/fenster')));
+
+answer = ask('Kann ich die Fenster selbst abholen?');
+assert.equal(answer.intent, 'self_pickup');
+assert.match(answer.answer, /50 €/);
+assert.match(answer.answer, /60 €/);
+
 answer = ask('Was bedeutet Ug Wert bei Fenstern?');
 assert.ok(['knowledge_rag', 'technical_specific'].includes(answer.intent));
 assert.ok(answer.links.some((link) => /fensterbegriffe|profilschnitte/.test(link.url)));
@@ -81,6 +103,15 @@ globalThis.fetch = async (url) => {
 const chineseLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test' } });
 assert.equal(chineseLeakAnswer.llm.used, false, 'Antwort mit chinesischen Zeichen darf nicht durchgehen');
 assert.doesNotMatch(chineseLeakAnswer.answer, /[一-鿿]/, 'Draft-Fallback darf keine chinesischen Zeichen enthalten');
+globalThis.fetch = originalFetch;
+
+globalThis.fetch = async (url) => {
+  if (String(url).includes('api.moonshot.ai')) return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Rufen Sie uns gerne unter +49 7221 3022 333 an.' }) } }] }) };
+  throw new Error(`unexpected fetch ${url}`);
+};
+const phoneLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test' } });
+assert.equal(phoneLeakAnswer.llm.used, false, 'erfundene Telefonnummer muss blockiert werden');
+assert.doesNotMatch(phoneLeakAnswer.answer, /3022 333/, 'erfundene Nummer darf nicht in der Antwort landen');
 globalThis.fetch = originalFetch;
 assert.equal(noProviderAnswer.llm.reason, 'all_providers_failed_or_unconfigured');
 

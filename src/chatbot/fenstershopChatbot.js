@@ -168,17 +168,17 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
     });
   }
 
-  if (hasAny(n, [/fahrer.*(da|vor ort|kommt|wartet)/, /liefer.*(heute|notfall|akut|jetzt)/, /avisier.*(heute|48|morgen)/, /spedition.*(heute|fahrer)/])) {
+  if (hasAny(n, [/fahrer.*(da|vor ort|kommt|wartet|steht)/, /lkw.*(da|steht|vor)/, /liefer.*(heute|notfall|akut|jetzt)/, /avisier.*(heute|48|morgen)/, /spedition.*(heute|fahrer|da|steht)/])) {
     return result({
       intent: 'delivery_emergency', action: 'contact_logistics_phone', sensitive,
-      answer: `Wenn die Lieferung heute kommt, der Fahrer vor Ort ist oder es ein akuter Liefernotfall ist, wenden Sie sich bitte direkt telefonisch an unsere Logistikabteilung:\n\n${CONTACTS.logisticsPhone}`,
+      answer: `Wenn die Lieferung heute kommt, der Fahrer vor Ort ist oder es ein akuter Liefernotfall ist, wenden Sie sich bitte direkt telefonisch an unsere Logistikabteilung:\n\n${CONTACTS.logisticsPhone}\n\nBitte beachten Sie: Sichtbare Schäden müssen sofort dem Fahrer gemeldet, auf dem Lieferschein vermerkt und mit Fotos dokumentiert werden.`,
       contacts: [{ type: 'phone', label: 'Logistik', value: CONTACTS.logisticsPhone }],
       links: [{ label: 'Versand und Lieferzeiten', url: LINKS.delivery }],
       sources: [{ title: 'Regelwerk: Liefernotfall', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
     });
   }
 
-  if (hasAny(n, [/transportschaden/, /beschadigt/, /schaden.*liefer/, /liverschein|lieferschein/, /ware.*kaputt/])) {
+  if (hasAny(n, [/transportschaden/, /beschadigt/, /schaden.*liefer/, /liverschein|lieferschein/, /(ware|fenster|scheibe|element|tur|palette).*kaputt/, /kaputt.*(geliefert|liefer)/])) {
     return result({
       intent: 'delivery_damage', action: 'open_complaint_form', sensitive,
       answer: `Bei sichtbarem Transportschaden: Bitte den Fahrer direkt informieren, den Schaden auf dem Lieferschein vermerken lassen, Fotos machen und anschließend das Reklamationsformular nutzen.`,
@@ -253,6 +253,32 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
     });
   }
 
+  if (hasAny(n, [/montage/, /montier/, /konnen sie.*einbau/, /einbau.*(anbieten|moglich|service|buchen)/, /machen sie.*aufmass/])) {
+    return result({
+      intent: 'montage', action: 'answer_no_montage', sensitive,
+      answer: `Wir führen selbst keine Montage aus. Wenn Sie eine Montage wünschen, geben Sie dies bitte direkt in Ihrer Anfrage über das „Anfrage senden"-Formular mit an — wir prüfen dann, ob wir Ihnen in Ihrem Postleitzahlengebiet einen Montagepartner empfehlen können. Eine Empfehlung ist je nach Region nicht immer möglich.`,
+      links: [{ label: 'Anfrage senden / Callback', url: LINKS.callback }],
+      sources: [{ title: 'Regelwerk: Montage', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
+    });
+  }
+
+  if (!/versand|liefer/.test(n) && hasAny(n, [/was kostet/, /preis.*(wissen|berechnen|erfahren)/, /schnell.*preis/, /preis.*(fenster|tur|haustur|rollladen)/])) {
+    return result({
+      intent: 'price_quick', action: 'answer_with_configurator_link', sensitive,
+      answer: `Für eine schnelle Preisermittlung nutzen Sie am besten direkt unseren Konfigurator: Dort wählen Sie Größe, Profil, Farbe, Verglasung und Zubehör aus und erhalten sofort eine Preisberechnung.\n\n${LINKS.configurator}\n\nFür größere Anfragen mit mehreren Elementen nutzen Sie gerne das „Anfrage senden"-Formular im Hauptmenü.`,
+      links: [{ label: 'Fenster-Konfigurator', url: LINKS.configurator }],
+      sources: [{ title: 'Regelwerk: schnelle Preisermittlung', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
+    });
+  }
+
+  if (hasAny(n, [/abholung/, /abholen/, /selbst.*holen/, /mitnahmegestell/])) {
+    return result({
+      intent: 'self_pickup', action: 'answer_self_pickup', sensitive,
+      answer: `Eine Abholung ist grundsätzlich möglich. Bitte bringen Sie ausreichend Personen für die manuelle Beladung mit. Beladung durch unsere Mitarbeiter: pauschal 50 € pro 5 Fenster. Mitnahmegestell (Einweg-Holzgestell): zusätzlich 60 € pro Gestell. Bitte geeignetes Fahrzeug und Material zur Ladungssicherung einplanen — Fenster und Bauelemente sind schwer, sperrig und empfindlich.`,
+      sources: [{ title: 'Regelwerk: Selbstabholung', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
+    });
+  }
+
   const chunks = retrieveFenstershopKnowledge(text, { limit: 2 });
   const links = sourceLinksForQuery(n);
   if (chunks.length) {
@@ -292,10 +318,25 @@ function withRequiredRefs(answer, draft) {
   return out;
 }
 
+const KNOWN_PHONE_DIGITS = new Set(
+  Object.values(CONTACTS)
+    .filter((value) => /^\+?[\d\s/-]+$/.test(value))
+    .map((value) => value.replace(/\D/g, ''))
+);
+
+function hasUnknownPhoneNumber(answer) {
+  const candidates = String(answer).match(/(\+\d{2}[\d\s/-]{8,})|(\b0\d{3,4}[\s/-]?\d{3,}[\s/-]?\d*)/g) || [];
+  return candidates.some((candidate) => {
+    const digits = candidate.replace(/\D/g, '');
+    return digits.length >= 8 && !KNOWN_PHONE_DIGITS.has(digits) && !KNOWN_PHONE_DIGITS.has(`49${digits.replace(/^0/, '')}`);
+  });
+}
+
 function answerStillSafe(polished, draft) {
   const answer = String(polished?.answer || '');
   if (!answer) return false;
   if (/[一-鿿]/.test(answer)) return false;
+  if (hasUnknownPhoneNumber(answer)) return false;
   for (const contact of draft.contacts || []) if (contact.value && !answer.includes(contact.value)) return false;
   if (/in produktion|morgen versendet|zahlung ist eingegangen|lieferung erfolgt am|ticket ist|\bincludes\b|#seite|lärmgesetzliche/i.test(answer)) return false;
   return true;
