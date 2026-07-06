@@ -137,14 +137,45 @@ function createApp(options = {}) {
   app.use(express.json());
 
   app.get('/', (req, res) => {
+    res.set('cache-control', 'no-store');
     res.type('text/html; charset=utf-8').send(`
       <!doctype html>
-      <html lang="en">
-        <head><meta charset="utf-8"><title>Conversion Rescue</title></head>
-        <body style="font-family: system-ui, sans-serif; padding: 40px">
-          <h1>Conversion Rescue</h1>
-          <p><a href="dashboard/">Open dashboard</a></p>
-          <p><a href="demo/">Open demo page</a></p>
+      <html lang="de">
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <title>Rückhol-Automatik</title>
+          <style>
+            :root { --accent:#14532d; --ink:#1b1e1b; --muted:#6b6f68; --line:#e6e3da; }
+            * { box-sizing: border-box; }
+            body { margin:0; min-height:100vh; background:#f4f2ec; color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; display:grid; place-items:center; padding:24px; }
+            .wrap { width:min(680px,100%); }
+            .head { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+            .dot { width:34px; height:34px; border-radius:10px; background:var(--accent); position:relative; flex:none; }
+            .dot::after { content:""; position:absolute; inset:9px 9px auto auto; width:10px; height:10px; border-radius:50%; background:#f6fbf4; }
+            h1 { margin:0; font-size:24px; letter-spacing:-0.01em; }
+            .sub { color:var(--muted); font-size:14px; margin:0 0 22px 46px; }
+            .cards { display:grid; gap:14px; }
+            a.card { display:block; background:#fff; border:1px solid var(--line); border-radius:16px; padding:18px 20px; text-decoration:none; color:inherit; box-shadow:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(20,40,30,.06); transition:transform .1s ease, border-color .15s ease; }
+            a.card:hover { transform:translateY(-2px); border-color:var(--accent); }
+            a.card b { display:block; font-size:16px; margin-bottom:3px; }
+            a.card span { color:var(--muted); font-size:13.5px; line-height:1.45; }
+            .foot { margin-top:20px; color:var(--muted); font-size:12px; text-align:center; }
+            @media (max-width:520px){ .sub{ margin-left:0 } }
+          </style>
+        </head>
+        <body>
+          <div class="wrap">
+            <div class="head"><span class="dot"></span><h1>Rückhol-Automatik</h1></div>
+            <p class="sub">Popups, die Besucher vor dem Absprung zurückholen — Steuerung, Test-Shop und Auswertung.</p>
+            <div class="cards">
+              <a class="card" href="demo/demo-test.html"><b>🛒 Test-Shop öffnen</b><span>Simulierter Online-Shop: Popups erscheinen wie beim echten Besucher — beim Verlassen, nach Zeit, beim Scrollen. Auf dem Handy per Test-Knopf auslösbar.</span></a>
+              <a class="card" href="dashboard/"><b>⚙️ Steuerung (Dashboard)</b><span>Kampagnen anlegen und bearbeiten, Texte/Design anpassen, Auswertung ansehen. Passwortgeschützt.</span></a>
+              <a class="card" href="demo/alle-popups.html"><b>🎨 Popup-Galerie</b><span>Alle Popup-Typen (Newsletter, Kontakt, Gutschein, Link, PDF) nebeneinander als Vorschau.</span></a>
+            </div>
+            <p class="foot">Version <span id="v">…</span> · <a href="api/health" style="color:inherit">Status</a></p>
+          </div>
+          <script>fetch('api/health').then(function(r){return r.json()}).then(function(d){document.getElementById('v').textContent=d.version}).catch(function(){document.getElementById('v').textContent='?'})</script>
         </body>
       </html>
     `);

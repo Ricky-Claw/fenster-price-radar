@@ -3,100 +3,249 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rückhol-Automatik · Test-Seite</title>
+<title>NORDMÖBEL — Test-Shop der Rückhol-Automatik</title>
 <style>
-  :root { --bg:#f4f7fb; --ink:#18212f; --muted:#667085; --line:#d7dde8; --blue:#004b93; --blue-dark:#003668; }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
-  header { background: #fff; border-bottom: 3px solid var(--blue); }
-  .bar { width: min(1000px, calc(100% - 32px)); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
-  .brand { font-weight: 800; font-size: 20px; color: var(--blue); }
-  main { width: min(1000px, calc(100% - 32px)); margin: 0 auto; padding: 28px 0 80px; }
-  h1 { font-size: clamp(24px, 5vw, 38px); line-height: 1.15; margin: 0 0 10px; }
-  .lead { font-size: 17px; color: var(--muted); max-width: 620px; margin: 0 0 8px; }
+  :root {
+    --ink:#191c1f; --muted:#6a7178; --line:#e7e9ec; --bg:#f7f8f9;
+    --brand:#0f5c4e; --brand-dark:#0b463b; --accent:#d97706; --sale:#c2410c;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:#fff; color:var(--ink); font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.5; }
 
-  .panel { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px; margin: 24px 0; box-shadow: 0 10px 30px rgba(20,40,60,.05); }
-  .panel h2 { margin: 0 0 4px; font-size: 16px; }
-  .panel .hint { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
-  .btns { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-  .trig { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; cursor: pointer; font: inherit; text-align: left; min-height: 56px; transition: border-color .15s, background .15s, transform .08s; }
-  .trig:hover { border-color: var(--blue); background: #f7fafd; }
-  .trig:active { transform: translateY(1px); }
-  .trig b { font-size: 15px; font-weight: 700; }
-  .trig span { font-size: 12.5px; color: var(--muted); }
-  .empty { color: var(--muted); font-size: 14px; }
+  /* ---- shop header ---- */
+  .topbar { background:var(--brand); color:#eafff9; font-size:12.5px; text-align:center; padding:7px 12px; }
+  header.shop { position:sticky; top:0; z-index:50; background:#fff; border-bottom:1px solid var(--line); }
+  .shopbar { width:min(1120px,calc(100% - 32px)); margin:0 auto; display:flex; align-items:center; gap:18px; padding:14px 0; }
+  .logo { font-weight:900; font-size:21px; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+  .logo em { font-style:normal; color:var(--brand); }
+  nav.cats { display:flex; gap:16px; font-size:14px; color:var(--muted); }
+  nav.cats a { color:inherit; text-decoration:none; }
+  nav.cats a:hover { color:var(--ink); }
+  .spacer { flex:1; }
+  .cart { position:relative; display:inline-flex; align-items:center; gap:8px; border:1px solid var(--line); border-radius:999px; padding:8px 15px; background:#fff; cursor:pointer; font:inherit; font-weight:600; font-size:14px; }
+  .cart:hover { border-color:var(--brand); }
+  .cart .count { display:inline-grid; place-items:center; min-width:22px; height:22px; border-radius:999px; background:var(--accent); color:#fff; font-size:12px; font-weight:800; }
+  @media (max-width:700px){ nav.cats { display:none; } }
 
-  .filler { height: 60vh; display: grid; place-items: center; color: #aab4c2; font-size: 14px; border: 1px dashed var(--line); border-radius: 14px; margin-top: 24px; }
-  footer { border-top: 1px solid var(--line); }
-  footer .bar { color: var(--muted); font-size: 13px; }
-  @media (max-width: 600px) { main { padding: 20px 0 70px; } .panel { padding: 16px; } }
+  /* ---- hero ---- */
+  .hero { background:linear-gradient(120deg,#0f5c4e,#12705f 55%,#178a75); color:#fff; }
+  .hero .in { width:min(1120px,calc(100% - 32px)); margin:0 auto; padding:52px 0 56px; display:grid; gap:10px; }
+  .hero .badge { display:inline-block; width:fit-content; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); border-radius:999px; padding:4px 12px; font-size:12.5px; font-weight:700; letter-spacing:.03em; }
+  .hero h1 { margin:4px 0 2px; font-size:clamp(28px,4.6vw,44px); line-height:1.08; letter-spacing:-0.015em; max-width:620px; }
+  .hero p { margin:0; max-width:520px; color:#d9f2ec; font-size:16px; }
+  .hero .cta { margin-top:14px; display:inline-block; width:fit-content; background:#fff; color:var(--brand-dark); font-weight:800; padding:12px 22px; border-radius:12px; text-decoration:none; }
+
+  /* ---- sections ---- */
+  main { width:min(1120px,calc(100% - 32px)); margin:0 auto; }
+  section { padding:42px 0 8px; }
+  .sec-head { display:flex; align-items:baseline; gap:12px; margin-bottom:18px; }
+  .sec-head h2 { margin:0; font-size:20px; letter-spacing:-0.01em; }
+  .sec-head span { color:var(--muted); font-size:13.5px; }
+
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:18px; }
+  .product { border:1px solid var(--line); border-radius:16px; overflow:hidden; background:#fff; display:flex; flex-direction:column; transition:box-shadow .15s ease, transform .1s ease; }
+  .product:hover { box-shadow:0 12px 32px rgba(15,40,35,.10); transform:translateY(-2px); }
+  .ph { aspect-ratio:4/3; display:grid; place-items:center; font-size:56px; position:relative; }
+  .ph.sale::before { content:"−30%"; position:absolute; top:10px; left:10px; background:var(--sale); color:#fff; font-size:12px; font-weight:800; padding:3px 9px; border-radius:999px; }
+  .pi { padding:13px 15px 15px; display:grid; gap:6px; }
+  .pi b { font-size:15px; }
+  .pi .price { display:flex; align-items:baseline; gap:8px; }
+  .pi .price b { font-size:17px; }
+  .pi .price s { color:var(--muted); font-size:13px; }
+  .pi button { margin-top:4px; border:0; border-radius:10px; background:var(--brand); color:#fff; font:inherit; font-weight:700; font-size:14px; padding:10px 12px; cursor:pointer; }
+  .pi button:hover { background:var(--brand-dark); }
+
+  .banner { margin:44px 0 8px; border-radius:18px; background:linear-gradient(115deg,#fff7ed,#ffedd5); border:1px solid #fed7aa; padding:26px 28px; display:flex; flex-wrap:wrap; align-items:center; gap:16px; }
+  .banner b { font-size:18px; }
+  .banner span { color:#7c2d12; }
+
+  .usp { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px; margin-top:8px; }
+  .usp div { border:1px solid var(--line); border-radius:14px; padding:16px; font-size:14px; color:var(--muted); background:var(--bg); }
+  .usp div b { display:block; color:var(--ink); margin-bottom:2px; }
+
+  footer.shop { margin-top:56px; background:#14181b; color:#aeb6bd; }
+  footer.shop .in { width:min(1120px,calc(100% - 32px)); margin:0 auto; padding:34px 0; display:grid; gap:6px; font-size:13.5px; }
+  footer.shop b { color:#fff; }
+
+  /* ---- floating test panel (unser werkzeug, nicht teil des shops) ---- */
+  .testpanel { position:fixed; right:14px; bottom:14px; z-index:2147482000; font-size:14px; }
+  .testpanel .toggle { border:0; border-radius:999px; background:#111827; color:#fff; font:inherit; font-weight:700; padding:12px 18px; cursor:pointer; box-shadow:0 10px 30px rgba(0,0,0,.25); }
+  .testpanel .body { display:none; position:absolute; right:0; bottom:54px; width:min(320px,calc(100vw - 28px)); background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 18px 50px rgba(0,0,0,.22); padding:14px; }
+  .testpanel.open .body { display:block; }
+  .testpanel h3 { margin:0 0 2px; font-size:14px; }
+  .testpanel p { margin:0 0 10px; color:var(--muted); font-size:12.5px; line-height:1.45; }
+  .testpanel .btns { display:grid; gap:7px; }
+  .testpanel .btns button { border:1px solid var(--line); border-radius:10px; background:#fff; font:inherit; font-size:13.5px; font-weight:600; text-align:left; padding:9px 11px; cursor:pointer; }
+  .testpanel .btns button:hover { border-color:var(--brand); background:#f4faf8; }
+  .testpanel .btns button small { display:block; font-weight:500; color:var(--muted); font-size:11.5px; }
+
+  .toast { position:fixed; left:50%; bottom:76px; transform:translateX(-50%) translateY(16px); background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-size:13.5px; font-weight:600; opacity:0; pointer-events:none; transition:all .2s ease; z-index:2147482001; }
+  .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
-<header>
-  <div class="bar"><div class="brand">Fenster<span style="color:var(--ink)">radar</span></div><nav style="color:var(--muted);font-size:14px">Test-Seite</nav></div>
+
+<div class="topbar">Kostenloser Versand ab 50 € · 30 Tage Rückgaberecht — <b>Test-Shop</b> der Rückhol-Automatik, keine echten Bestellungen</div>
+<header class="shop">
+  <div class="shopbar">
+    <a class="logo" href="#">NORD<em>MÖBEL</em></a>
+    <nav class="cats"><a href="#neu">Neuheiten</a><a href="#sale">Sale %</a><a href="#wohnen">Wohnen</a><a href="#schlafen">Schlafen</a></nav>
+    <span class="spacer"></span>
+    <button type="button" class="cart" id="cartBtn">🛒 Warenkorb <span class="count" id="cartCount">0</span></button>
+  </div>
 </header>
 
-<main>
-  <h1>Fensterpreise vergleichen, bevor Sie kaufen.</h1>
-  <p class="lead">Test-Seite für die Rückhol-Automatik. Tippen Sie unten einen Popup-Typ an — das echte Popup erscheint und ist voll bedienbar (auch auf dem Handy).</p>
-
-  <div class="panel">
-    <h2>Popup live testen</h2>
-    <p class="hint">Jeder Knopf zeigt das echte Popup. Wenn Sie es bedienen (E-Mail eintragen, Code kopieren …), wird das als echte Auswertung gezählt — sichtbar im Dashboard unter „Auswertung“, Seite <b>demo</b>.</p>
-    <div class="btns" id="btns"><span class="empty">Lade Popups …</span></div>
+<div class="hero">
+  <div class="in">
+    <span class="badge">SOMMER-KOLLEKTION 2026</span>
+    <h1>Möbel, die bleiben. Preise, die gehen.</h1>
+    <p>Skandinavisches Design für Wohnzimmer, Schlafzimmer und Büro — direkt vom Hersteller, ohne Zwischenhandel.</p>
+    <a class="cta" href="#neu">Jetzt stöbern</a>
   </div>
+</div>
 
-  <div class="filler">weiter unten — gut zum Testen des „Scroll-Tiefe“-Auslösers am Desktop</div>
+<main>
+  <section id="neu">
+    <div class="sec-head"><h2>Neuheiten</h2><span>frisch eingetroffen</span></div>
+    <div class="grid" id="gridNeu"></div>
+  </section>
+
+  <div class="banner"><b>☀️ Sommer-Sale:</b> <span>bis zu 30&nbsp;% auf ausgewählte Sofas &amp; Sessel — nur noch diese Woche.</span></div>
+
+  <section id="sale">
+    <div class="sec-head"><h2>Sale</h2><span>reduzierte Einzelstücke</span></div>
+    <div class="grid" id="gridSale"></div>
+  </section>
+
+  <section id="wohnen">
+    <div class="sec-head"><h2>Wohnen</h2><span>Sofas, Regale, Leuchten</span></div>
+    <div class="grid" id="gridWohnen"></div>
+  </section>
+
+  <section id="schlafen">
+    <div class="sec-head"><h2>Gut schlafen</h2><span>Betten &amp; Matratzen</span></div>
+    <div class="grid" id="gridSchlafen"></div>
+  </section>
+
+  <section>
+    <div class="usp">
+      <div><b>🚚 Schnelle Lieferung</b>2–4 Werktage, bis ins Wunschzimmer</div>
+      <div><b>🔧 Aufbauservice</b>auf Wunsch direkt mitbestellen</div>
+      <div><b>↩️ 30 Tage Rückgabe</b>ohne Wenn und Aber</div>
+      <div><b>🌱 Nachhaltig</b>FSC-zertifizierte Hölzer</div>
+    </div>
+  </section>
 </main>
 
-<footer><div class="bar">Fensterradar · Test-Seite für die Rückhol-Automatik</div></footer>
+<footer class="shop">
+  <div class="in">
+    <b>NORDMÖBEL</b>
+    <span>Simulierter Shop zum Testen der Rückhol-Automatik — Produkte, Preise und Warenkorb sind Kulisse. Popups, Tracking und Auswertung sind echt (Seite „demo“).</span>
+  </div>
+</footer>
+
+<!-- Schwebendes Test-Werkzeug: Popups gezielt auslösen (Exit-Intent geht auf Touch nicht) -->
+<div class="testpanel" id="testpanel">
+  <div class="body">
+    <h3>Popup-Test</h3>
+    <p>Am Desktop feuern Popups von selbst (Maus zum oberen Rand = Verlassen, warten, scrollen). Hier jedes gezielt auslösen — Interaktionen zählen echt in der Auswertung (Seite <b>demo</b>).</p>
+    <div class="btns" id="testbtns"><span style="color:var(--muted);font-size:12.5px">Lade Kampagnen …</span></div>
+  </div>
+  <button type="button" class="toggle" id="testtoggle">🧪 Popup-Test</button>
+</div>
+<div class="toast" id="toast"></div>
 
 <script async src="../cre.js" data-cre-site="demo" data-cre-api=""></script>
 <script>
-  var LABELS = { newsletter: 'Newsletter', contact: 'Kontakt', coupon: 'Gutschein', url: 'Link', pdf: 'PDF' };
+  // ---- Kulissen-Shop (Warenkorb ist fake, absichtlich) ----
+  var PRODUCTS = {
+    gridNeu: [
+      ['🛋️', 'Sofa „Fjord“ 3-Sitzer', 899, null, '#e8f4f0'],
+      ['🪑', 'Armlehnstuhl „Birk“', 249, null, '#f4efe8'],
+      ['💡', 'Stehleuchte „Lys“', 129, null, '#fdf6e3'],
+      ['🪞', 'Standspiegel „Klar“', 179, null, '#eef1f4']
+    ],
+    gridSale: [
+      ['🛋️', 'Ecksofa „Skagen“', 1119, 1599, '#fdeee3'],
+      ['🪑', 'Sessel „Mette“', 314, 449, '#f3e8f4'],
+      ['🛏️', 'Polsterbett „Ruh“ 180×200', 699, 999, '#e8eef4'],
+      ['💡', 'Tischleuchte „Glut“', 55, 79, '#fdf6e3']
+    ],
+    gridWohnen: [
+      ['📚', 'Regal „Stack“ Eiche', 339, null, '#f4efe8'],
+      ['🛋️', 'Récamiere „Nora“', 649, null, '#e8f4f0'],
+      ['🖼️', 'Wandboard „Line“', 89, null, '#eef1f4'],
+      ['🕰️', 'Wanduhr „Takt“', 49, null, '#fdf6e3']
+    ],
+    gridSchlafen: [
+      ['🛏️', 'Massivholzbett „Tanne“', 799, null, '#e8eef4'],
+      ['🛌', 'Matratze „Wolke 7“ H3', 449, null, '#f0f4e8'],
+      ['🧸', 'Kinderbett „Lo“', 299, null, '#fdeee3'],
+      ['🪟', 'Verdunkelungsvorhang 2er', 59, null, '#eef1f4']
+    ]
+  };
+  var eur = function (n) { return n.toLocaleString('de-DE') + ' €'; };
+  var cart = 0;
+  function toast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast._t); toast._t = setTimeout(function () { t.classList.remove('show'); }, 1800);
+  }
+  Object.keys(PRODUCTS).forEach(function (gridId) {
+    var grid = document.getElementById(gridId);
+    PRODUCTS[gridId].forEach(function (p) {
+      var card = document.createElement('article'); card.className = 'product';
+      var ph = document.createElement('div'); ph.className = 'ph' + (p[3] ? ' sale' : ''); ph.style.background = p[4]; ph.textContent = p[0];
+      var pi = document.createElement('div'); pi.className = 'pi';
+      var name = document.createElement('b'); name.textContent = p[1];
+      var price = document.createElement('div'); price.className = 'price';
+      var now = document.createElement('b'); now.textContent = eur(p[2]); price.appendChild(now);
+      if (p[3]) { var old = document.createElement('s'); old.textContent = eur(p[3]); price.appendChild(old); }
+      var btn = document.createElement('button'); btn.type = 'button'; btn.textContent = 'In den Warenkorb';
+      btn.addEventListener('click', function () {
+        cart += 1; document.getElementById('cartCount').textContent = cart;
+        toast(p[1] + ' liegt im Warenkorb (Test)');
+      });
+      pi.appendChild(name); pi.appendChild(price); pi.appendChild(btn);
+      card.appendChild(ph); card.appendChild(pi); grid.appendChild(card);
+    });
+  });
+  document.getElementById('cartBtn').addEventListener('click', function () {
+    toast(cart ? cart + ' Artikel im Test-Warenkorb — Kasse gibt es hier nicht 😉' : 'Der Test-Warenkorb ist leer');
+  });
 
+  // ---- echtes Test-Werkzeug: Kampagnen laden + gezielt triggern ----
+  var LABELS = { newsletter: 'Newsletter', contact: 'Kontakt', coupon: 'Gutschein', url: 'Link', pdf: 'PDF' };
+  document.getElementById('testtoggle').addEventListener('click', function () {
+    document.getElementById('testpanel').classList.toggle('open');
+  });
   function apiBase() {
-    // gleicher Ursprung + Pfad wie cre.js (funktioniert auch hinter dem /rueckhol-Proxy)
     var s = document.querySelector('script[src*="cre.js"]');
     return (s && s.getAttribute('src') || '../cre.js').replace(/\/cre\.js.*$/, '');
   }
-
-  function buildButtons(campaigns) {
-    var box = document.getElementById('btns');
-    if (!campaigns.length) {
-      box.innerHTML = '<span class="empty">Noch keine Kampagne für die Seite „demo“ angelegt. Im Dashboard eine anlegen (Seiten-Kennung: demo) — dann erscheint sie hier.</span>';
-      return;
-    }
-    box.innerHTML = '';
-    campaigns.forEach(function (c) {
-      var b = document.createElement('button');
-      b.type = 'button';
-      b.className = 'trig';
-      var title = document.createElement('b');
-      title.textContent = LABELS[c.action_type] || c.action_type;
-      var sub = document.createElement('span');
-      sub.textContent = c.name || '';
-      b.appendChild(title);
-      b.appendChild(sub);
-      b.addEventListener('click', function () {
-        if (window.CRE && window.CRE.trigger) window.CRE.trigger(c.id);
+  fetch(apiBase() + '/api/config?siteId=demo', { credentials: 'omit' })
+    .then(function (r) { return r.json(); })
+    .then(function (d) {
+      var box = document.getElementById('testbtns');
+      var campaigns = (d && d.campaigns) || [];
+      box.textContent = '';
+      if (!campaigns.length) {
+        box.textContent = 'Keine Kampagne für Seite „demo“ — im Dashboard anlegen.';
+        return;
+      }
+      campaigns.forEach(function (c) {
+        var b = document.createElement('button'); b.type = 'button';
+        var t = document.createElement('span'); t.textContent = LABELS[c.action_type] || c.action_type;
+        var s = document.createElement('small'); s.textContent = c.name || '';
+        b.appendChild(t); b.appendChild(s);
+        b.addEventListener('click', function () {
+          document.getElementById('testpanel').classList.remove('open');
+          if (window.CRE && window.CRE.trigger) window.CRE.trigger(c.id);
+        });
+        box.appendChild(b);
       });
-      box.appendChild(b);
-    });
-  }
-
-  function load() {
-    fetch(apiBase() + '/api/config?siteId=demo', { credentials: 'omit' })
-      .then(function (r) { return r.json(); })
-      .then(function (d) { buildButtons((d && d.campaigns) || []); })
-      .catch(function () {
-        document.getElementById('btns').innerHTML = '<span class="empty">Server nicht erreichbar.</span>';
-      });
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', load);
-  else load();
+    })
+    .catch(function () { document.getElementById('testbtns').textContent = 'Server nicht erreichbar.'; });
 </script>
 </body>
 </html>
