@@ -34,8 +34,8 @@ Widget/Snippet für `deutscher-fenstershop.de`. **Rule-first RAG**: harte Regeln
 - **Out of Scope MVP (hart):** kein Zugriff auf Bestellungen, Tickets, Zahlungen, Lieferstatus, Kundendaten; keine verbindlichen Liefertermine/Zusagen; fragt nie sensible Daten ab (Bestellnr., Adresse, Zahlung, Fotos, voller Name); legt keine Reklamation automatisch an.
 - **Test:** `npm run test:chatbot`.
 
-### 1c. E-Book-Freebie „Ruhiges Heimspiel"
-Statisches HTML/PDF unter `public/ebooks/ruhiges-heimspiel/`. Checks: `npm run ebook:check`, `npm run ebook:pdf`. (Feature-Branch `tool/dfs-ebook-maker` existiert.)
+### 1c. E-Books/Freebies
+Bestehendes E-Book „Ruhiges Heimspiel" unter `public/ebooks/ruhiges-heimspiel/` (dessen `styles.css` ist das kanonische Design). **Neue E-Books nie von Hand bauen** — immer Generator `npm run ebook:make -- --config <json> --out public/ebooks/<slug>` (validiert hart, exportiert PDF, prüft Seitenzahl). Regeln: `.claude/skills/dfs-ebook/SKILL.md`. Checks: `npm run ebook:check`, `npm run ebook:pdf`.
 
 ### Start (Welt A)
 ```bash
