@@ -1,5 +1,7 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
+ * Version: 1.0.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
+ * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
  */
 (function () {
@@ -14,6 +16,8 @@
   var d = (script && script.dataset) || {};
   var SITE = (d.creSite || 'default').trim();
   var API = (d.creApi || (script && script.src ? script.src.replace(/\/cre\.js.*$/, '') : '')).replace(/\/+$/, '');
+  var DEBUG = d.creDebug === '1';
+  function dbg(msg) { if (DEBUG && window.console) console.info('[Rueckhol] ' + msg); }
 
   function api(path) { return API + path; }
   function esc(s) {
@@ -253,7 +257,9 @@
 
   // ---- triggers ----
   function matchesPage(c) {
-    if (!c.page_pattern) return true;
+    // '*' is the server/dashboard default for "all pages" — must match everything,
+    // not be substring-searched in the URL (that silently killed every auto-trigger).
+    if (!c.page_pattern || c.page_pattern === '*') return true;
     return location.href.indexOf(c.page_pattern) !== -1 || location.pathname.indexOf(c.page_pattern) !== -1;
   }
   function arm(campaigns) {
@@ -313,13 +319,17 @@
 
   function init() {
     fetch(api('/api/config?siteId=' + encodeURIComponent(SITE)), { credentials: 'omit' })
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        if (!r.ok) dbg('config request failed: HTTP ' + r.status + ' (check data-cre-api and SITE_ORIGINS)');
+        return r.json();
+      })
       .then(function (data) {
         var campaigns = (data && data.campaigns) || [];
-        if (!campaigns.length) return;
+        if (!campaigns.length) { dbg('no active campaigns for site "' + SITE + '" — create one in the dashboard'); return; }
+        dbg(campaigns.length + ' campaign(s) armed for site "' + SITE + '"');
         arm(campaigns);
       })
-      .catch(function () {});
+      .catch(function (e) { dbg('config fetch error: ' + (e && e.message ? e.message : 'network/CORS') + ' — popup stays off'); });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);

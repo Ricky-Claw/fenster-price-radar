@@ -67,8 +67,16 @@
     });
   }
 
-  if (window.CRE && window.CRE.preview) render();
-  else window.addEventListener('load', function () { setTimeout(render, 50); });
+  // cre.js loads async and may land after window.load — poll instead of a
+  // single 50ms shot, so the gallery can't stay silently empty on slow loads.
+  (function waitForCre(tries) {
+    if (window.CRE && window.CRE.preview) { render(); return; }
+    if (tries > 50) {
+      document.getElementById('aktionen').innerHTML = '<p style="color:var(--muted)">Widget-Script (cre.js) konnte nicht geladen werden — Server erreichbar?</p>';
+      return;
+    }
+    setTimeout(function () { waitForCre(tries + 1); }, 100);
+  })(0);
 </script>
 <script async src="../cre.js" data-cre-site="mock" data-cre-api=""></script>
 </body>

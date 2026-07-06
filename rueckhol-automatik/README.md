@@ -1,90 +1,138 @@
-# Rückhol-Automatik (Conversion Rescue) — eingebettet im Fensterradar-Repo
+# Rückhol-Automatik (Conversion Rescue) — v1.0
 
-Testphase: dieser Ordner ist der Original-`conversion-rescue`-Stack, 1:1 in `fenster-price-radar` reinkopiert, damit Popup + Dashboard direkt hier laufen und getestet werden können. Eigenständiger Express-Server + SQLite, kein Next.js/Supabase, keine Abhängigkeit zum Rest des Fensterradar-Repos (Vite-App bleibt unberührt).
+> **Dies ist die einzige kanonische Quelle dieses Produkts.**
+> Das alte Standalone-Repo `~/conversion-rescue` ist eingefroren (DEPRECATED) und
+> Desktop-Handoff-Kopien wurden entfernt. Änderungen passieren nur noch hier.
+> Version: siehe `package.json` / `GET /api/health` / Kopf von `widget/cre.js` — bei
+> Änderungen alle drei pflegen und `CHANGELOG.md` ergänzen.
 
-**Später beim Kunden:** wenn die Testphase durch ist, zieht dieser Ordner auf einen echten Server um (VPS o.ä.) — SQLite braucht ein persistentes Dateisystem, läuft NICHT auf Vercel-Serverless. Bis dahin: lokal/testweise hier drin.
+Exit-Intent/Rückhol-Popup-System: erscheint, wenn ein Besucher die Seite verlassen
+will (oder nach Zeit/Scroll/Inaktivität), und bietet Newsletter, Kontakt, Rabattcode,
+Link oder PDF an. Eigenständiger Express-Server + SQLite, kein Framework-Zwang auf
+der Kundenseite — Einbau ist ein `<script>`-Tag.
 
-`reference/{core,snippet,theme}.ts` aus dem Original-Repo wurden bewusst **nicht mitkopiert** (waren nur Portierungs-Notizen, kein Laufzeit-Code).
+**Abgrenzung:** `src/frontend/lib/cre/*` im Schwarzwald-Agent-Repo ist ein ANDERES
+Produkt (Supabase-CRE fürs Kunden-Cockpit, live für DFS) — kein Duplikat, nicht anfassen.
 
-## Design & CD
+---
 
-Das Popup-Design ist pro Kampagne frei einstellbar — Farben, Schrift, Ecken-Radius, Logo, Position (mittig/Ecke/Balken), siehe `server/lib/theme.js` (`THEME_PRESETS`, `normalizeTheme`). Die 3 mitgelieferten Presets (Harbor/Clay/Noon) sind **nur Platzhalter/Ausgangspunkte**, keine Endversion.
+## Live-Zustand (Testphase)
 
-**Alex passt das Design an das jeweilige CD der Kundenseite an**, bevor eine Kampagne live geht. Alle Varianten nebeneinander zum Ansehen/Abstimmen: `demo/alle-popups.html` (siehe Setup unten).
+| Was | Wo |
+|---|---|
+| Server | VPS `nexus-host` (76.13.143.100), systemd-Dienst `rueckhol-automatik`, Port 8791 (nur localhost) |
+| Direkt-Domain | https://rueckhol.schwarzwald-agent.de (Caddy, Auto-TLS) |
+| Kunden-URL | https://fenster-price-radar.vercel.app/rueckhol/* (Vercel-Proxy-Rewrite in `../vercel.json`) |
+| Dashboard | `/dashboard/` — Passwort = `FENSTER_RADAR_PASSWORD` |
+| Test-Seite | `/demo/demo-test.html` — Popups feuern echt, speisen echte Analytics (Seite `demo`) |
+| Galerie | `/demo/alle-popups.html` — alle Popup-Typen als Vorschau (blau/orange Beispiel-Farben) |
+| Health | `/api/health` → `{ok, name, version, uptimeSeconds}` |
+| Service-Env | `/etc/rueckhol-automatik/service.env` auf der VPS |
 
-## Setup (aus dem Fensterradar-Repo-Root)
+Der Fensterradar-`middleware.js` nimmt `/rueckhol/*` vom seitenweiten Passwort-Gate aus
+(die App hat ihr eigenes Login); der Vercel-Proxy erzwingt `no-store` auf `/rueckhol/*`.
+
+## Lokal entwickeln
 
 ```bash
-npm run rueckhol         # startet Server auf :8080 (PORT env überschreibbar)
-npm run rueckhol:test    # 8 Tests, node --test, sollten grün sein
+npm run rueckhol         # aus dem Fensterradar-Repo-Root — Server auf :8080
+npm run rueckhol:test    # 12 Tests (node --test)
 ```
 
-Oder direkt in diesem Ordner: `npm install && npm start` / `npm test`.
-
-Kein echter `npm install`-Download nötig für `better-sqlite3`/`express` — beide sind Node-Stdlib-Shims unter `vendor/` (kein `node:sqlite`-Experimental-Warning-Risiko außer der Laufzeitwarnung selbst), `npm install` legt nur die lokalen Symlinks an.
-
-Dashboard: `http://localhost:8080/dashboard` · Testseite (echter Seitenkontext, Exit-Intent live testen): `http://localhost:8080/demo/fensterradar-test.html` (identisch zu `public/rueckhol-test.html` im Hauptrepo, aber mit funktionierendem relativem `cre.js`-Pfad) · **Design-Galerie (alle Popup-Varianten nebeneinander, ohne Trigger/Cooldown, für Alex/CD-Abstimmung):** `http://localhost:8080/demo/alle-popups.html`.
+Oder in diesem Ordner: `npm install && npm start` / `npm test`. `better-sqlite3` und
+`express` sind Node-Stdlib-Shims unter `vendor/` — kein echter Download nötig.
+Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
 
 ## Env-Variablen
 
-| Var | Zweck | Default |
+| Variable | Zweck | Default |
 |---|---|---|
 | `PORT` | Server-Port | `8080` |
-| `ADMIN_TOKEN` | Bearer-Token für `/api/campaigns` (CRUD). **Ohne gesetzt: Admin-Routen offen** — nur für lokale Entwicklung so lassen, vor jedem echten Deploy setzen. | leer (Warnung im Log) |
-| `SITE_ORIGINS` | JSON `{"siteId": ["https://origin1", "https://origin2"]}` — CORS-Allowlist für `/api/config`, `/api/events`, `/api/submit`. **Ohne gesetzt: CORS erlaubt alle Origins** — vor Prod-Deploy setzen. | leer (allow-all + Warnung) |
-| `WEBHOOK_URL` | optional — bekommt POST bei jeder Formular-Submission (Lead/Contact/Newsletter) | leer (kein Webhook) |
-
-## Struktur
-
-- `server/index.js` — Express-App, alle Routen (siehe unten)
-- `server/db.js` — SQLite-Schema + Queries (`data/conversion-rescue.sqlite`)
-- `server/lib/sanitize.js` — Input-Cleaning (Text, URLs, Trigger/Action-Config, Submission-Validierung inkl. Consent+E-Mail)
-- `server/lib/theme.js` — Theme-Presets für den Popup-Look
-- `server/lib/analytics.js` — Funnel-Auswertung (`summarizeAnalytics`)
-- `widget/cre.js` — das eigentliche Embed-Script (Shadow DOM, Trigger, Consent, Frequency-Cap)
-- `dashboard/` — visueller Kampagnen-Editor mit Live-Vorschau + Analytics-Ansicht (statisch, `/dashboard`)
-- `demo/` — Testseiten, u.a. Kopien der Archipel-Inseln (`quittung-index.html`, `fensterradar-test.html`) zum Ausprobieren des Widgets im echten Seitenkontext, plus `alle-popups.html` (Design-Galerie aller Aktionen/Presets nebeneinander, für CD-Abstimmung mit Alex)
-- `tests/` — Unit/Integration-Tests für sanitize, analytics, API
+| `FENSTER_RADAR_PASSWORD` | Dashboard-Login-Passwort. **Ungesetzt = Dashboard offen (nur Dev!)** | leer |
+| `FENSTER_RADAR_AUTH_SECRET` | HMAC-Secret für Session-Cookies (Fallback: das Passwort) | leer |
+| `ADMIN_TOKEN` | Alternativ/zusätzlich: Bearer-Token für API-Zugriff ohne Cookie (Skripte/Seeding) | leer |
+| `SITE_ORIGINS` | JSON `{"siteId":["https://origin",…]}` — CORS-Allowlist der Widget-Endpunkte. **Ungesetzt = allow-all (nur Test!)** | leer |
+| `WEBHOOK_URL` | Bekommt POST bei jeder Lead-Submission — **der Weg, wie Leads den Kunden erreichen** | leer |
+| `DISABLE_DEMO` | `1` = `/demo/*` wird nicht ausgeliefert (Kunden-Produktivbetrieb) | aus |
 
 ## API
 
-Öffentlich (CORS-gated über `SITE_ORIGINS`):
-- `GET /api/config?siteId=X` — aktive Kampagnen für die Seite, die das Widget lädt
-- `POST /api/events` — Tracking-Events (`popup_shown`, `cta_click`, Conversion-Typen)
-- `POST /api/submit` — Formular-Submissions (lead/contact/newsletter), erzwingt Consent + validiert E-Mail
+Öffentlich (CORS über `SITE_ORIGINS`; Preflight akzeptiert jede dort gelistete Origin.
+Ehrlich gesagt: CORS steuert nur, welche BROWSER-Seiten Antworten lesen dürfen — blinde
+Schreib-POSTs von Skripten verhindert es nicht; Rate-Limit + Validierung deckeln das,
+eine echte Schreib-Autorisierung wäre v2):
+- `GET /api/config?siteId=X` — aktive Kampagnen fürs Widget
+- `POST /api/events` — Tracking (siteId im Body; Rate-Limit pro IP)
+- `POST /api/submit` — Lead-Formulare (erzwingt Consent + valide E-Mail; feuert Webhook)
+- `GET /cre.js` — Embed-Script (Cache 5 Min)
+- `GET /api/health` — Monitoring/Version
 
-Admin (gated über `ADMIN_TOKEN`, `Authorization: Bearer <token>`):
-- `GET/POST/PUT/DELETE /api/campaigns` — Kampagnen-CRUD
-- `GET /api/analytics?siteId=X` — Funnel-Zahlen (allTime + last7Days)
+Login (eigenes Cookie `rueckhol_session`, HMAC-signiert, 24 h):
+- `GET /login` — Login-Seite · `POST /api/login` · `POST /api/logout`
 
-Statisch:
-- `GET /cre.js` — das Embed-Script
-- `/dashboard`, `/demo` — statische Verzeichnisse
+Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
+- `GET/POST/PUT/DELETE /api/campaigns` — Kampagnen-CRUD (POST vergibt bei
+  Namens-Kollision über Site-Grenzen automatisch eine eindeutige ID)
+- `GET /api/analytics?siteId=X` — Funnel (allTime + last7Days)
+- `/dashboard/` — UI (nicht eingeloggte Aufrufe → Redirect auf `/login`)
 
 ## Einbau auf einer Kundenseite
 
 ```html
-<script async src="https://<deploy-host>/cre.js" data-cre-site="<siteId>"></script>
+<script async src="https://<host>/cre.js" data-cre-site="<siteId>" data-cre-api="https://<host>"></script>
 ```
 
-`siteId` muss zu einer Kampagne in der DB passen (`site_id`-Feld) und zu einem Eintrag in `SITE_ORIGINS` für die Origin der Einbettseite.
+- `siteId` muss zu den Kampagnen (Feld „Seiten-Kennung") und zum `SITE_ORIGINS`-Eintrag passen.
+- Fehlersuche: `data-cre-debug="1"` ans Tag → das Widget loggt in der Browser-Konsole,
+  warum kein Popup erscheint (Server nicht erreichbar / CORS / keine aktive Kampagne).
+- Der Server darf tot sein — das Widget schluckt alle Fehler, die Kundenseite bricht nie.
 
-## Test-Einbindung: Fensterradar
+## Betrieb & Update (VPS)
 
-`~/fenster-price-radar/public/rueckhol-test.html` (Commit `bbe6d3c`, 2026-07-02) bindet das Widget testweise ein:
-
-```html
-<script async src="http://localhost:8080/cre.js" data-cre-site="fensterradar" data-cre-api="http://localhost:8080"></script>
+```bash
+# Deploy/Update vom kanonischen Stand (data/ NIE mitkopieren — dort lebt die Kunden-DB):
+rsync -az --delete --exclude='.git' --exclude='node_modules' --exclude='data' --exclude='.DS_Store' \
+  ./ root@76.13.143.100:/opt/rueckhol-automatik/
+ssh root@76.13.143.100 'chown -R fensterradar:fensterradar /opt/rueckhol-automatik \
+  && sudo -u fensterradar bash -c "cd /opt/rueckhol-automatik && npm install --no-audit --no-fund && npm test" \
+  && systemctl restart rueckhol-automatik'
+curl -s https://rueckhol.schwarzwald-agent.de/api/health   # muss ok:true + neue Version zeigen
 ```
 
-- Zeigt aktuell auf `localhost:8080` — läuft nur, wenn dieser Server lokal läuft. Für Live: Server hosten, `data-cre-api` auf https-URL umstellen.
-- Für `siteId="fensterradar"` existiert noch **keine Kampagne** in der DB — im Dashboard (`/dashboard`) erst anlegen, sonst zeigt das Popup nichts.
-- `vercel.json` im Fensterradar-Repo hat einen Ausnahme-Eintrag, damit diese Seite nicht vom SPA-Rewrite geschluckt wird — bei Änderungen an Vercel-Routing dort gegenprüfen.
+- Die SQLite-DB liegt in `data/` (gitignored, rsync-excluded) — sie überlebt jedes Code-Update.
+- Schema-Änderungen: aktuell nur additiv per `CREATE TABLE IF NOT EXISTS` — es gibt
+  **keinen Migrationsmechanismus**. Neue Spalten brauchen einen bewussten Migrationsschritt
+  (dokumentieren, bevor 1.x eine Spalte ändert!).
+- Monitoring: `GET /api/health` extern anpingen (z.B. Uptime-Robot auf die Direkt-Domain).
 
-## Offene Punkte (Stand 2026-07-01, letzter Commit)
+## Multi-Kunde / Vermarktung (v1-Modell)
 
-- **Kein Deploy.** Läuft nur lokal. Für Archipel-Inseln (`porto`/`quittung`, PHP-Backend + eigener `storage/`) gilt: **nicht mit wipe-deploy-Tools ausrollen** — siehe Warnung im Hauptrepo-Memory zu Archipel (`deployStaticWebsite` würde Live-Server-Daten löschen). Dieses Repo hier läuft separat als eigener Node-Prozess, nicht als Datei-Injection in die Insel-Statik.
-- **Zwei parallele CRE-Implementierungen existieren:** dieses Repo UND `src/frontend/lib/cre/*` im Hauptrepo (Supabase-backed, live für DFS). Beide zielen z.T. auf dieselben Sites (`porto`/`quittung`). Vor Produktiv-Einsatz klären, welches System für welche Site die Quelle der Wahrheit ist — sonst doppelte/widersprüchliche Analytics.
-- `data/conversion-rescue.sqlite*` liegt im Repo — vermutlich Testdaten aus der Entwicklung, vor Deploy prüfen/löschen.
-- Analytics hat kein Page-Breakdown (nur Action/Trigger/Reason) und keinen Export.
-- `ADMIN_TOKEN`/`SITE_ORIGINS` sind in keiner `.env`-Datei hinterlegt (auch keine `.env.example`) — beim Deploy manuell setzen.
+**Eine Instanz pro Kunde.** Das Dashboard hat EIN Passwort und zeigt ALLE Sites einer
+Instanz — es gibt keine Benutzerkonten/Mandanten-Trennung innerhalb einer Instanz.
+Deshalb: pro zahlendem Kunden ein eigener Dienst (eigener Port + eigene `service.env`
++ eigene SQLite in eigenem Ordner + eigener Caddy-Vhost). Die `siteId`-Mechanik dient
+INNERHALB eines Kunden zur Trennung mehrerer Webseiten desselben Kunden.
+Aufwand pro weiterer Instanz: Ordner kopieren (ohne `data/`), Env-Datei, systemd-Unit,
+Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wäre v2.
+
+## Struktur
+
+- `server/index.js` — Express-App, alle Routen
+- `server/lib/auth.js` — Passwort-Login, Session-Cookies, Dashboard-Guards
+- `server/lib/sanitize.js` — Input-Cleaning (Text/URLs/Trigger/Action, Consent+E-Mail-Pflicht)
+- `server/lib/theme.js` — Design-Presets + Theme-Normalisierung
+- `server/lib/analytics.js` — Funnel-Auswertung
+- `server/db.js` — SQLite-Schema + Queries (`data/conversion-rescue.sqlite`)
+- `widget/cre.js` — Embed-Widget (Shadow DOM, Trigger, Consent, Frequency-Cap, Debug-Modus)
+- `dashboard/` — Kampagnen-Editor mit Live-Vorschau + Auswertung (mobil-tauglich)
+- `demo/demo-test.html` — echte Test-Seite (Popups feuern live) · `demo/alle-popups.html` — Typen-Galerie
+- `tests/` — 12 Tests: API/CRUD, Preflight-Regression, Auth-Flow, Slug-Kollision, Sanitize, Analytics
+
+## Offene Punkte (bewusst, Stand v1.0)
+
+- **Leads erreichen den Kunden nur über `WEBHOOK_URL`** (kein Posteingang im Dashboard,
+  kein Export). Vor echtem Kundenbetrieb: Webhook auf CRM/Zapier/Mail-Bridge zeigen lassen.
+- Kein DB-Backup-Cron auf der VPS (eine Datei, `data/conversion-rescue.sqlite`).
+- Kein Rate-Limit auf `/api/login` (Events haben eins).
+- DSGVO-Werkzeuge (Löschung/Export/Aufbewahrung) fehlen — Integrator-/v2-Thema.
+- Finales Popup-Design macht der Webdesigner des Kunden (Beispiel-Themes blau/orange).

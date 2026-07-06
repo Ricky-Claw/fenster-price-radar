@@ -189,8 +189,15 @@ function createDatabase(options = {}) {
     ensureSite(campaign.site_id, campaign.site_name || campaign.site_id);
     const serialized = serializeCampaign(campaign);
     const existing = statements.getCampaign.get({ id: campaign.id });
-    if (existing) statements.updateCampaign.run(serialized);
-    else statements.insertCampaign.run(serialized);
+    if (existing) {
+      // node:sqlite throws on named params the statement doesn't use — the
+      // UPDATE deliberately has no @created_at (creation time is immutable),
+      // so it must be stripped here or every edit-save 500s.
+      const { created_at, ...updatable } = serialized;
+      statements.updateCampaign.run(updatable);
+    } else {
+      statements.insertCampaign.run(serialized);
+    }
     return hydrateCampaign(statements.getCampaign.get({ id: campaign.id }));
   }
 

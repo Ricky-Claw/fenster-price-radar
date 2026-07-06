@@ -235,8 +235,27 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
   };
 }
 
+const CAMPAIGN_FIELD_ALIASES = [
+  ['actionConfig', 'action_config'],
+  ['actionType', 'action_type'],
+  ['triggerConfig', 'trigger_config'],
+  ['pagePattern', 'page_pattern'],
+  ['ctaLabel', 'cta_label'],
+  ['customCss', 'custom_css'],
+  ['siteId', 'site_id'],
+  ['siteName', 'site_name'],
+];
+
 function sanitizeCampaignInput(input = {}, existing = {}) {
-  const merged = { ...existing, ...input };
+  // Normalize camelCase aliases onto the snake_case keys BEFORE merging with
+  // `existing` — otherwise an update sent as camelCase (the documented API
+  // shape) loses against the stored snake_case value and the edit is silently
+  // dropped (merged.action_config from the DB beat input.actionConfig).
+  const inputNorm = { ...input };
+  for (const [camel, snake] of CAMPAIGN_FIELD_ALIASES) {
+    if (inputNorm[snake] === undefined && inputNorm[camel] !== undefined) inputNorm[snake] = inputNorm[camel];
+  }
+  const merged = { ...existing, ...inputNorm };
   const { trigger, triggerConfig } = sanitizeTrigger(merged.trigger, merged.trigger_config || merged.triggerConfig);
   const { actionType, actionConfig } = sanitizeAction(merged.action_type || merged.actionType, merged.action_config || merged.actionConfig);
   const id = cleanId(merged.id || existing.id || cleanText(merged.name || 'conversion-rescue', 80).toLowerCase().replace(/\s+/g, '-') || randomId());

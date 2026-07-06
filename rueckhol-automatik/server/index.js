@@ -14,6 +14,7 @@ const {
 } = require('./lib/sanitize');
 const { getThemePresets } = require('./lib/theme');
 const { checkPassword, sessionCookie, createGuards, isConfigured } = require('./lib/auth');
+const { version: APP_VERSION } = require('../package.json');
 
 function parseSiteOrigins(raw) {
   if (!raw) return null;
@@ -78,6 +79,25 @@ function createApp(options = {}) {
     if (allowOpenCors) {
       res.set('access-control-allow-origin', '*');
     } else if (siteOrigins[siteId] && siteOrigins[siteId].includes(origin)) {
+      res.set('access-control-allow-origin', origin);
+      res.set('vary', 'origin');
+    }
+    res.set('access-control-allow-methods', 'GET,POST,OPTIONS');
+    res.set('access-control-allow-headers', 'content-type,authorization');
+  }
+
+  // Preflight (OPTIONS) carries no body, so the per-site check can't run there:
+  // the widget sends siteId in the JSON body (sendBeacon/fetch trigger a preflight
+  // on the bare URL). Allow the preflight for any origin that appears in ANY site's
+  // allowlist. Note: CORS here controls response VISIBILITY in browsers, not write
+  // authorization — non-browser clients can always POST directly. Rate limits +
+  // sanitizers bound the damage; a write-auth secret would be a v2 feature.
+  const allKnownOrigins = new Set(Object.values(siteOrigins || {}).flat());
+  function applyPreflightCors(req, res) {
+    const origin = req.get('origin') || '';
+    if (allowOpenCors) {
+      res.set('access-control-allow-origin', '*');
+    } else if (allKnownOrigins.has(origin)) {
       res.set('access-control-allow-origin', origin);
       res.set('vary', 'origin');
     }
@@ -177,16 +197,23 @@ function createApp(options = {}) {
     res.json({ ok: true });
   });
 
+  app.get('/api/health', (req, res) => {
+    res.set('cache-control', 'no-store');
+    let dbOk = true;
+    try { db.listSites(); } catch (_) { dbOk = false; }
+    res.status(dbOk ? 200 : 503).json({ ok: dbOk, name: 'rueckhol-automatik', version: APP_VERSION, uptimeSeconds: Math.floor(process.uptime()) });
+  });
+
   app.options('/api/config', (req, res) => {
-    applyCors(req, res, cleanId(req.query.siteId || 'default', 'default'));
+    applyPreflightCors(req, res);
     res.status(204).send('');
   });
   app.options('/api/events', (req, res) => {
-    applyCors(req, res, cleanId(req.query.siteId || 'default', 'default'));
+    applyPreflightCors(req, res);
     res.status(204).send('');
   });
   app.options('/api/submit', (req, res) => {
-    applyCors(req, res, cleanId(req.query.siteId || 'default', 'default'));
+    applyPreflightCors(req, res);
     res.status(204).send('');
   });
 
@@ -218,6 +245,13 @@ function createApp(options = {}) {
   app.post('/api/submit', (req, res) => {
     const siteId = cleanId(req.body.siteId || req.body.site_id || 'default', 'default');
     applyCors(req, res, siteId);
+    // Same throttle as /api/events — this is the endpoint that fires the
+    // customer's webhook and fills the submissions table.
+    const ip = req.socket.remoteAddress || 'unknown';
+    if (!checkRateLimit(ip)) {
+      res.status(429).json({ error: 'Too many submissions' });
+      return;
+    }
     let submission;
     try {
       submission = sanitizeSubmission(req.body.kind, req.body.payload);
@@ -281,6 +315,20 @@ function createApp(options = {}) {
 
   app.post('/api/campaigns', requireDashboardAuth, (req, res) => {
     const campaign = sanitizeCampaignInput(req.body);
+    // The id is slugged from the name when the client sends none. Two sites can
+    // pick the same name — without this check the second POST would silently
+    // UPDATE the first site's campaign (cross-site hijack). Suffix until unique.
+    if (!cleanText(req.body.id, 140)) {
+      let candidate = campaign.id;
+      let n = 2;
+      let clash = db.getCampaign(candidate);
+      while (clash && clash.site_id !== campaign.site_id) {
+        candidate = `${campaign.id}-${n}`;
+        n += 1;
+        clash = db.getCampaign(candidate);
+      }
+      campaign.id = candidate;
+    }
     const saved = db.saveCampaign(campaign);
     res.json({ campaign: saved });
   });
@@ -314,6 +362,9 @@ function createApp(options = {}) {
   });
 
   app.get('/cre.js', (req, res) => {
+    // Short TTL: widget updates reach customer sites within minutes without
+    // a cache-busting convention; still saves repeat fetches per visit.
+    res.set('cache-control', 'public, max-age=300');
     sendFile(res, path.join(rootDir, 'widget', 'cre.js'), 'text/javascript; charset=utf-8');
   });
 
@@ -321,7 +372,11 @@ function createApp(options = {}) {
   // handler per prefix (unlike app.get/post, which support several via rest args).
   const dashboardStatic = express.static(path.join(rootDir, 'dashboard'));
   app.use('/dashboard', (req, res, next) => requireDashboardPage(req, res, () => dashboardStatic(req, res, next)));
-  app.use('/demo', express.static(path.join(rootDir, 'demo')));
+  // Demo/test pages are for our test phase — a customer's production install
+  // should not serve them (DISABLE_DEMO=1 in the service env).
+  if (process.env.DISABLE_DEMO !== '1') {
+    app.use('/demo', express.static(path.join(rootDir, 'demo')));
+  }
 
   return {
     app,

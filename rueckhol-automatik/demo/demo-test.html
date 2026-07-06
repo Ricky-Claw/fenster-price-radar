@@ -73,7 +73,12 @@
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'trig';
-      b.innerHTML = '<b>' + (LABELS[c.action_type] || c.action_type) + '</b><span>' + (c.name || '') + '</span>';
+      var title = document.createElement('b');
+      title.textContent = LABELS[c.action_type] || c.action_type;
+      var sub = document.createElement('span');
+      sub.textContent = c.name || '';
+      b.appendChild(title);
+      b.appendChild(sub);
       b.addEventListener('click', function () {
         if (window.CRE && window.CRE.trigger) window.CRE.trigger(c.id);
       });
