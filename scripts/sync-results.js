@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { configVerification } from '../src/verification.js';
 
 const root = path.resolve('results');
 const out = path.resolve('public', 'data');
@@ -228,6 +229,10 @@ for (const c of comparableConfigs) {
 const verification = (() => {
   try { return readJson(path.resolve('data', 'verification.json')); } catch { return null; }
 })();
+for (const c of comparableConfigs) {
+  const v = configVerification(verification?.verifiedKeys, c);
+  if (v) c.verification = v;
+}
 const payload = {
   generatedAt,
   comparisonBaseline: previous ? { generatedAt: previous.generatedAt, snapshot: previous.label } : null,
