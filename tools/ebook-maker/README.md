@@ -43,6 +43,21 @@ node tools/ebook-maker/make-ebook.mjs --config tools/ebook-maker/example-ebook.j
   - `lead`
   - `blocks`: `cards`, `checklist`, `timeline`, `note`, `table`, `text`
 
+## Validierung
+
+Der Generator prüft die Config hart und bricht mit klaren Fehlermeldungen ab (Exit 1), bevor ein unsauberes E-Book entsteht:
+
+- Pflichtfelder (`slug`, `title`, `subtitle`, `claim`, je Seite `label`/`title`/`lead`)
+- Längen-Limits pro Feld und Block (abgeleitet aus dem A4-Layout in `styles.css`)
+- Block-Regeln: `cards` genau 3, `checklist` 3–8, `timeline` genau 3, `table` 2–4 Spalten / max. 7 Zeilen, max. 3 Blöcke pro Seite
+- Höhen-Budget pro Seite (~235mm) gegen Überlauf
+- unbekannte Block-Typen sind Fehler
+- PDF-Export prüft die Seitenzahl: mehr PDF-Seiten als `pages + 2` = Überlauf = Abbruch
+
+**Bei Validierungsfehlern: Inhalte kürzen oder Seiten aufteilen — nie die Limits im Generator ändern.**
+
+Regeln für Agenten: siehe `.claude/skills/dfs-ebook/SKILL.md`.
+
 ## Sicherheit
 
 - keine offiziellen FIFA-/Turnier-Logos oder geschützten Visuals nutzen
