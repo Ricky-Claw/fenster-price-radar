@@ -86,7 +86,7 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
   background:var(--dfs-color-blue);
   color:var(--dfs-color-white);
   border-bottom:0;
-  padding:var(--dfs-sp-3) var(--dfs-sp-6);
+  padding:var(--dfs-sp-3) max(var(--dfs-sp-6), calc((100% - var(--dfs-container)) / 2 + var(--dfs-sp-5)));
   gap:var(--dfs-sp-4);
   z-index:50;
 }
@@ -141,7 +141,7 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
 .viewMenu{
   position:absolute;
   top:calc(100% + var(--dfs-sp-2));
-  right:var(--dfs-sp-6);
+  right:max(var(--dfs-sp-6), calc((100% - var(--dfs-container)) / 2 + var(--dfs-sp-5)));
   width:min(320px,calc(100vw - var(--dfs-sp-6)));
   display:grid;
   gap:var(--dfs-sp-1);
