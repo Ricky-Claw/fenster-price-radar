@@ -30,16 +30,16 @@ Kontakte: ${JSON.stringify(draft.contacts || [])}
 Wissensquellen: ${JSON.stringify(knowledge.map((chunk) => ({ title: chunk.title, text: chunk.text.slice(0, 900) })))}
 `;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_NEMOTRON_TIMEOUT_MS || 20000));
+  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_NEMOTRON_TIMEOUT_MS || 30000));
   try {
     const response = await fetchImpl(NEMOTRON_URL, {
       method: 'POST',
       headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
       body: JSON.stringify({
         model: env.FENSTERSHOP_NEMOTRON_MODEL || 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
-        temperature: 0.6,
+        temperature: 0.2,
         top_p: 0.95,
-        max_tokens: 1200,
+        max_tokens: 4000,
         stream: false,
         messages: [{ role: 'user', content: prompt }],
       }),
