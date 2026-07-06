@@ -1,51 +1,51 @@
 {
   "verifiedAt": "2026-07-06",
-  "samples": 0,
-  "note": "0 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
+  "samples": 5,
+  "note": "5 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
   "verifiedKeys": [
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|1000x1200|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T17:31:58.085Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-06T17:57:30.854Z",
+      "result": "verified",
       "prices": {
         "dfs": 244.37,
-        "fensterblick": 238.45
+        "fensterblick": 244.48
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|1200x1600|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T17:31:58.086Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-06T17:57:30.855Z",
+      "result": "verified",
       "prices": {
         "dfs": 307.48,
-        "fensterblick": 307.63
+        "fensterblick": 315.42
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|415x500|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T17:31:58.086Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-06T17:57:30.855Z",
+      "result": "verified",
       "prices": {
         "dfs": 149,
-        "fensterblick": 135.67
+        "fensterblick": 139.11
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 3fach|1000x1200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T17:31:58.086Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-06T17:57:30.855Z",
+      "result": "verified",
       "prices": {
         "dfs": 291.13,
-        "fensterblick": 272.42
+        "fensterblick": 279.31
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 3fach|415x500|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T17:31:58.086Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-06T17:57:30.855Z",
+      "result": "verified",
       "prices": {
         "dfs": 157.09,
-        "fensterblick": 141.55
+        "fensterblick": 145.13
       }
     }
   ]
