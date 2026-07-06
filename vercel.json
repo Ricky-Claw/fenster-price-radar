@@ -76,7 +76,7 @@
       "destination": "https://rueckhol.schwarzwald-agent.de/$1"
     },
     {
-      "source": "/((?!data/|assets/|api/|reports/|ebooks/|aufmass\\.html|rueckhol-test\\.html|rueckhol-popups-test\\.html|janela-chatbot-test\\.html).*)",
+      "source": "/((?!data/|assets/|api/|reports/|ebooks/|aufmass\\.html|rueckhol-test\\.html|rueckhol-popups-test\\.html|janela-chatbot-test\\.html|janela-wissen-anleitung\\.html|janela-wissen-anleitung\\.md).*)",
       "destination": "/index.html"
     }
   ]
