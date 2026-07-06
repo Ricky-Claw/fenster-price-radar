@@ -10,6 +10,7 @@
     "data:sync": "node scripts/sync-results.js",
     "trend:build": "node scripts/build-trend-index.js",
     "verify:prices": "node scripts/verify-price-radar.js && node scripts/verify-two-sash-equivalence.js",
+    "verify:sample": "node scripts/verify-sample-configs.js",
     "dfs:pvc:mapped": "node src/providers/dfs/price-mapped-pvc.js",
     "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
     "fv:pvc:mapped": "node src/providers/fensterversand/price-mapped-pvc.js",

@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { configVerification } from '../src/verification.js';
 
 const dataPath = path.resolve('public', 'data', 'price-radar.json');
 const historyDir = path.resolve('public', 'data', 'history');
@@ -125,6 +126,32 @@ for (const config of payload.configs) {
 }
 if (!providerRows) fail('no provider rows found');
 if (invalidWeekly) fail(`${invalidWeekly} weekly changes do not match current customer prices`);
+
+let verificationGate = null;
+try {
+  verificationGate = readJson(path.resolve('data', 'verification.json'));
+} catch {}
+
+if (verificationGate?.verifiedKeys !== undefined) {
+  if (!Array.isArray(verificationGate.verifiedKeys)) fail('verification.verifiedKeys must be an array');
+  if (verificationGate.verifiedKeys.length > 0) {
+    const configKeys = new Set(payload.configs.map(config => config.key));
+    for (const entry of verificationGate.verifiedKeys) {
+      if (!configKeys.has(entry?.key)) fail(`verification zombie key: ${entry?.key || 'missing key'}`);
+    }
+
+    const verifiedCount = verificationGate.verifiedKeys.filter(entry => entry?.result === 'verified').length;
+    if (verificationGate.samples !== verifiedCount) {
+      fail(`verification samples ${verificationGate.samples} != verified entries ${verifiedCount}`);
+    }
+
+    for (const config of payload.configs) {
+      if (config.verification?.status !== 'verified') continue;
+      const reproduced = configVerification(verificationGate.verifiedKeys, config);
+      if (reproduced?.status !== 'verified') fail(`non-reproducible verification badge: ${config.key}`);
+    }
+  }
+}
 
 console.log(JSON.stringify({
   ok: true,

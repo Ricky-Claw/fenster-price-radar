@@ -1,6 +1,52 @@
 {
-  "verifiedAt": "2026-07-05",
-  "samples": 5,
-  "note": "5 Fenster in verschiedenen Größen über alle Anbieter live nachgeprüft — Preise bestätigt.",
-  "verifiedKeys": []
+  "verifiedAt": "2026-07-06",
+  "samples": 0,
+  "note": "0 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
+  "verifiedKeys": [
+    {
+      "key": "Drutex|Iglo 5 Classic, 2fach|1000x1200|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-06T17:31:58.085Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 244.37,
+        "fensterblick": 238.45
+      }
+    },
+    {
+      "key": "Drutex|Iglo 5 Classic, 2fach|1200x1600|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-06T17:31:58.086Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 307.48,
+        "fensterblick": 307.63
+      }
+    },
+    {
+      "key": "Drutex|Iglo 5 Classic, 2fach|415x500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-06T17:31:58.086Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 149,
+        "fensterblick": 135.67
+      }
+    },
+    {
+      "key": "Drutex|Iglo 5 Classic, 3fach|1000x1200|3fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-06T17:31:58.086Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 291.13,
+        "fensterblick": 272.42
+      }
+    },
+    {
+      "key": "Drutex|Iglo 5 Classic, 3fach|415x500|3fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-06T17:31:58.086Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 157.09,
+        "fensterblick": 141.55
+      }
+    }
+  ]
 }

@@ -29,6 +29,13 @@ Stand: 2026-05-11
      - `npm run build`
    - `prices:update` enthält `verify:prices`; Fehler blockieren Commit/Push.
 
+6. **Verifizierungs-Badges nur aus Live-Stichproben**
+   - Ein Per-Config-Badge darf nur aus einem echten Live-Abgleich über `npm run verify:sample` entstehen.
+   - Kein `data/verification.json`-Entry bedeutet kein Badge.
+   - Bei Preisabweichung wird die Konfiguration als sichtbares Mismatch geführt, nie als grünes Badge.
+   - `verify:prices` bricht bei Zombie-Keys, abweichender `samples`-Zählung oder nicht reproduzierbaren Badges ab.
+   - `verify:sample` läuft getrennt von `prices:update` und darf den Wochen-Snapshot nie blockieren.
+
 ## Failure lesson
 
 Am 2026-05-11 wurde der Wochenvergleich zunächst gegen einen Same-Day-Sync statt gegen die echte Vorwoche gerechnet. Dadurch zeigte die App fälschlich 0 Preisänderungen, obwohl Fensterversand-Endpreise live gefallen waren.
