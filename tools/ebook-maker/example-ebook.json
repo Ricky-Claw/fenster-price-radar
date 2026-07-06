@@ -1,0 +1,72 @@
+{
+  "slug": "dfs-freebie-demo",
+  "title": "Ratgeber für bessere Fensterplanung",
+  "subtitle": "Klar planen. Besser entscheiden.",
+  "kicker": "Deutscher Fenstershop Freebie",
+  "claim": "Ein kompakter Leitfaden für Maße, Ausstattung, Komfort und die nächsten Schritte zur Anfrage.",
+  "topics": ["Maße", "Ausstattung", "Anfrage"],
+  "footerLabel": "DFS Ratgeber",
+  "cta": {
+    "kicker": "Nächster Schritt",
+    "title": "Fensterprojekt sauber vorbereiten",
+    "text": "Mit einer klaren Fensterliste wird die Anfrage schneller prüfbar. Wichtig sind Maße, Öffnungsart, Farbe, Verglasung und Zubehör.",
+    "buttonText": "Fenster online konfigurieren oder Anfrage vorbereiten",
+    "buttonUrl": "https://deutscher-fenstershop.de/konfigurator/fenster",
+    "contacts": [
+      { "label": "E-Mail", "value": "anfrage@deutscher-fenstershop.de" },
+      { "label": "Telefon", "value": "+49 7221 / 3022-333" },
+      { "label": "Web", "value": "deutscher-fenstershop.de" }
+    ]
+  },
+  "pages": [
+    {
+      "label": "Überblick",
+      "title": "Was dieses Freebie leistet",
+      "lead": "Der Ratgeber hilft, ein Fensterprojekt verständlich vorzubereiten – ohne Fachchinesisch und ohne verbindliche Preis- oder Lieferzusagen.",
+      "blocks": [
+        {
+          "type": "cards",
+          "items": [
+            { "icon": "↔", "title": "Maße klären", "text": "Breite und Höhe je Fenster aufnehmen und Raum zuordnen." },
+            { "icon": "⌂", "title": "Situation beschreiben", "text": "Neubau, Sanierung, Lärm, Hitze oder Sicherheit einordnen." },
+            { "icon": "✓", "title": "Anfrage vorbereiten", "text": "Öffnungsart, Farbe, Verglasung und Zubehör notieren." }
+          ]
+        },
+        { "type": "note", "text": "Für eine konkrete Empfehlung braucht der Deutsche Fenstershop immer Maße und Projektsituation." }
+      ]
+    },
+    {
+      "label": "Checkliste",
+      "title": "Fensterliste vorbereiten",
+      "lead": "Eine gute Fensterliste spart Rückfragen und macht Angebote belastbarer.",
+      "blocks": [
+        {
+          "type": "checklist",
+          "items": [
+            "Raum und Position notieren",
+            "Breite und Höhe messen",
+            "Öffnungsart festlegen",
+            "Farbe, Verglasung und Zubehör ergänzen",
+            "Fotos der Einbausituation bereithalten"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Beispiel",
+      "title": "So kann eine Fensterliste aussehen",
+      "lead": "Die Werte sind nur ein Beispiel und ersetzen keine technische Prüfung.",
+      "blocks": [
+        {
+          "type": "table",
+          "headers": ["Raum", "Maße", "Öffnung", "Hinweis"],
+          "rows": [
+            ["Wohnzimmer", "2000 × 1400", "Dreh-Kipp", "Schallschutz prüfen"],
+            ["Küche", "1200 × 1200", "Kipp", "pflegeleicht"],
+            ["Schlafzimmer", "1400 × 1300", "Dreh-Kipp", "ruhige Verglasung"]
+          ]
+        }
+      ]
+    }
+  ]
+}
