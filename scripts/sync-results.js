@@ -225,11 +225,15 @@ for (const c of comparableConfigs) {
     }
   }
 }
+const verification = (() => {
+  try { return readJson(path.resolve('data', 'verification.json')); } catch { return null; }
+})();
 const payload = {
   generatedAt,
   comparisonBaseline: previous ? { generatedAt: previous.generatedAt, snapshot: previous.label } : null,
   sources,
   summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length, weeklyBaselineGeneratedAt: previousPayload?.generatedAt || null },
+  verification,
   configs: comparableConfigs,
   filtered: filteredList
 };

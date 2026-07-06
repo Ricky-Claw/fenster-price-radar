@@ -16,6 +16,11 @@
     "filteredOut": 0,
     "weeklyBaselineGeneratedAt": "2026-07-05T14:01:42.956Z"
   },
+  "verification": {
+    "verifiedAt": "2026-07-05",
+    "samples": 5,
+    "note": "5 Fenster in verschiedenen Größen über alle Anbieter live nachgeprüft — Preise bestätigt."
+  },
   "configs": [
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|415x500|2fach|Dreh-Kipp|weiß|1flg",
