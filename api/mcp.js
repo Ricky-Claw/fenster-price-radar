@@ -11,7 +11,6 @@ import {
   dfsChatbotAsk,
 } from '../src/mcp/tools.js';
 
-export const config = { api: { bodyParser: false } };
 const BODY_MAX_BYTES = 262144;
 
 function tokenOk(header) {
@@ -25,12 +24,22 @@ function tokenOk(header) {
 }
 
 async function readBody(req) {
+  // Vercel parst JSON-Bodies teils schon vor -> req.body nutzen; sonst Rohstream lesen (wie api/chatbot.js, api/aufmass.js).
+  if (req.body && typeof req.body === 'object') {
+    if (Buffer.byteLength(JSON.stringify(req.body), 'utf8') > BODY_MAX_BYTES) throw new Error('request_too_large');
+    return req.body;
+  }
+  if (typeof req.body === 'string') {
+    if (Buffer.byteLength(req.body, 'utf8') > BODY_MAX_BYTES) throw new Error('request_too_large');
+    return req.body.trim() ? JSON.parse(req.body) : undefined;
+  }
   const chunks = [];
   let bytes = 0;
   for await (const chunk of req) {
-    bytes += chunk.length;
+    const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+    bytes += buffer.byteLength;
     if (bytes > BODY_MAX_BYTES) throw new Error('request_too_large');
-    chunks.push(chunk);
+    chunks.push(buffer);
   }
   const raw = Buffer.concat(chunks).toString('utf8');
   return raw.trim() ? JSON.parse(raw) : undefined;
