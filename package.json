@@ -21,6 +21,7 @@
     "test:links": "node tests/config-links.mjs",
     "test:verification": "node tests/verification.mjs",
     "test:aufmass": "node tests/aufmass-smoke.mjs",
+    "test:agent": "node tests/agent-token.mjs",
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js && node --check tools/ebook-maker/make-ebook.mjs",
     "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",

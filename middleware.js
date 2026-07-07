@@ -28,6 +28,14 @@ async function validSession(cookie, secret) {
   if (!Number.isFinite(expires) || expires < Math.floor(Date.now() / 1000)) return false;
   return parts[2] === await sign(payload, secret);
 }
+// Maschinen-Zugang für Agents (read-only /data/*): Authorization: Bearer <RADAR_AGENT_TOKEN>.
+// Vergleich über HMAC-Digests statt String-Vergleich, damit kein Timing auf Token-Zeichen leakt.
+async function validAgentToken(authHeader, token) {
+  if (!token) return false;
+  const match = String(authHeader || '').match(/^Bearer\s+(\S+)$/i);
+  if (!match) return false;
+  return await sign(match[1], token) === await sign(token, token);
+}
 function canonicalPath(p) {
   let out = String(p || '');
   for (let i = 0; i < 3; i += 1) {
@@ -62,6 +70,7 @@ export default async function middleware(request) {
   const secret = process.env.FENSTER_RADAR_AUTH_SECRET || process.env.FENSTER_RADAR_PASSWORD || '';
   const session = cookieValue(request.headers.get('cookie') || '', COOKIE);
   if (await validSession(session, secret)) return;
+  if (isData && await validAgentToken(request.headers.get('authorization'), process.env.RADAR_AGENT_TOKEN || '')) return;
   if (isData) return new Response('Unauthorized', { status: 401 });
   url.pathname = '/login';
   url.searchParams.set('next', path);
