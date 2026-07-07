@@ -119,6 +119,15 @@ function cheapestProviderIds(row){
   const min = Math.min(...priced.map(p => p.total));
   return new Set(priced.filter(p => p.total === min).map(p => p.id));
 }
+// Einkaufspreis (Eko4u, Hersteller netto) — Zusatzspalte, nie Teil des Wettbewerber-Vergleichs.
+function purchaseCell(row){
+  const p=row.providers?.eko4u;
+  const change=row.weeklyChange?.eko4u;
+  if(!p) return <td className="muted">—</td>;
+  if(!p.valid) return <td><span className="pill warn">{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span></td>;
+  const margin=typeof row.purchaseMargin==='number'?row.purchaseMargin:null;
+  return <td className="price purchase"><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
+}
 function providerCell(row, id, cheapestIds){
   const p=row.providers[id];
   const change=row.weeklyChange?.[id];
@@ -465,6 +474,7 @@ function App(){
     return () => window.removeEventListener('keydown', handleMenuKeydown);
   },[menuOpen]);
   const data=payload?.configs||[];
+  const hasPurchase=useMemo(()=>data.some(r=>r.providers?.eko4u),[data]);
   const verifiedConfigs = data.filter(config => config.verification?.status === 'verified');
   const verifiedConfigCount = verifiedConfigs.length;
   const latestVerifiedConfigTime = verifiedConfigs.reduce((latest, config) => {
@@ -579,7 +589,7 @@ function App(){
     };
     const rows = [
       ['Fensterradar-Export','Stand:',stamp],
-      ['Marke','Profil','Größe','Glas','Öffnung','Farbe','Bauart','DFS Endpreis','DFS Liste','DFS Rabatt %','Fensterblick Endpreis','Fensterblick Liste','Fensterversand Endpreis','Fensterversand Liste','Günstigster','Abstand DFS €','Abstand %','DFS Δ Woche','FB Δ Woche','FV Δ Woche']
+      ['Marke','Profil','Größe','Glas','Öffnung','Farbe','Bauart','DFS Endpreis','DFS Liste','DFS Rabatt %','Fensterblick Endpreis','Fensterblick Liste','Fensterversand Endpreis','Fensterversand Liste','Einkauf Eko4u netto','Marge €','Marge %','Günstigster','Abstand DFS €','Abstand %','DFS Δ Woche','FB Δ Woche','FV Δ Woche','EK Δ Woche']
     ];
     configs.forEach(row => {
       const validProviders = providers
@@ -601,12 +611,16 @@ function App(){
         providerValue(row,'fensterblick','listTotal'),
         providerValue(row,'fensterversand','customerTotal'),
         providerValue(row,'fensterversand','listTotal'),
+        providerValue(row,'eko4u','listTotal'),
+        csvNumber(row.purchaseMargin),
+        csvNumber(row.purchaseMarginPct),
         cheapest,
         csvNumber(row.delta),
         csvNumber(row.deltaPct),
         csvNumber(row.weeklyChange?.dfs?.delta),
         csvNumber(row.weeklyChange?.fensterblick?.delta),
-        csvNumber(row.weeklyChange?.fensterversand?.delta)
+        csvNumber(row.weeklyChange?.fensterversand?.delta),
+        csvNumber(row.weeklyChange?.eko4u?.delta)
       ]);
     });
     const csv = `\uFEFF${rows.map(row => row.map(csvText).join(';')).join('\r\n')}`;
@@ -731,7 +745,7 @@ function App(){
             <ul>{excludedConfigs.map((item,index)=><li key={`${item.brand}-${item.profile}-${item.size}-${index}`}><span>{item.brand} · {item.profile} · {item.size}</span><em>{item.reason || 'nicht vergleichbar'}</em></li>)}</ul>
           </details> : null}
 
-          <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
+          <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}{hasPurchase?<th>Einkauf Eko4u</th>:null}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
             {filtered.map(row=>{
               const cheapestIds = cheapestProviderIds(row);
               const verificationStatus = row.verification?.status;
@@ -742,9 +756,10 @@ function App(){
               return <tr key={row.key} onClick={()=>setActive(row)}>
               <td><a className="configTitleLink" href={rowConfigLink(row)} target="_blank" rel="noreferrer" onClick={stopRowClick}><b>{row.brand} · {row.profile}</b></a><div className="configMeta"><span className="sizeBadge">{row.size}</span><span className={cls('layoutBadge',(row.layout||'1flg')!=='1flg'&&'twoSash')}>{row.layoutLabel || '1-flügelig'}</span>{verificationStatus === 'verified' && <span className="rowVerifyBadge verified" title={verificationTitle}>✓ live geprüft</span>}{verificationStatus === 'mismatch' && <span className="rowVerifyBadge mismatch" title={verificationTitle}>⚠ Abweichung</span>}{row.material && row.material!=='PVC' && <span className="layoutBadge twoSash">{row.material}</span>}<span>{row.sizeRole || 'Vergleichsgröße'}</span></div><small>{row.glazing} · {row.opening} · {row.color}</small></td>
               {providers.map(([id])=><React.Fragment key={id}>{providerCell(row,id,cheapestIds)}</React.Fragment>)}
+              {hasPurchase?purchaseCell(row):null}
               <td>{row.delta===null?<span className="muted">—</span>:<span className={cls('delta',row.delta<=0?'good':'bad')}>{row.delta<=0?<TrendingDown size={15}/>:<TrendingUp size={15}/>} {eur(row.delta)} / {row.deltaPct}%</span>}</td>
               <td>{rowChangeLabel(row)}</td>
-              <td>{Object.values(row.providers).some(isIssue)?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
+              <td>{Object.entries(row.providers).filter(([id])=>id!=='eko4u').some(([,p])=>isIssue(p))?<span className="quality warn"><AlertTriangle size={15}/> prüfen</span>:<span className="quality ok"><CheckCircle2 size={15}/> sauber</span>}</td>
             </tr>})}
           </tbody></table></div>
         </section>
@@ -814,7 +829,7 @@ function App(){
       Persönliches Werkzeug zur privaten Nutzung — reiner Preisvergleich. Steht in keiner Verbindung zu den genannten Anbietern oder Firmen und gehört zu keiner von ihnen. Alle Marken-, Produkt- und Firmennamen sind Eigentum ihrer jeweiligen Inhaber und dienen nur der Kennzeichnung.
     </footer>
 
-    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small>{providerChangeLine(active.weeklyChange?.[id])}<small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}</div></aside>}
+    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small>{providerChangeLine(active.weeklyChange?.[id])}<small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}{(()=>{const p=active.providers?.eko4u; if(!p) return null; return <section className="providerBox purchaseBox"><b>Einkauf Eko4u (Hersteller)</b>{p.valid?<><span>{eur(p.listTotal)}</span><small>netto · {active.purchaseMargin!==null&&active.purchaseMargin!==undefined?`Marge zu DFS-Endpreis: ${eur(active.purchaseMargin)} (${active.purchaseMarginPct}%)`:'keine Marge berechenbar'}</small>{providerChangeLine(active.weeklyChange?.eko4u)}{p.equivalence?.proof?<em>{p.equivalence.proof}</em>:null}</>:<small>{p.note?p.note:(p.reason==='nicht_im_angebot'?'Kein EK-Preis: System/Größe nicht im Eko4u-Standardprogramm.':'Kein EK-Preis verfügbar.')}</small>}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}</section>;})()}</div></aside>}
   </>;
 }
 

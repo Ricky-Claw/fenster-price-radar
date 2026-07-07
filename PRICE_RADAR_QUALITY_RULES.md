@@ -9,7 +9,14 @@ Stand: 2026-05-11
      - DFS: eigener Konfigurator/API
      - Fensterblick: `api.configurator.fensterblick.de`
      - Fensterversand: `fensterversand.com/configurator/update`
+     - Eko4u (Einkauf): `eko4u.com/?p=configurator.workshop` (Login via `EKO4U_LOGIN`/`EKO4U_PASSWORD`)
    - Nach jedem Update müssen die Result-Ordner im `sources` Block von `public/data/price-radar.json` auf den aktuellen Lauf zeigen.
+
+1b. **Einkaufspreis (Eko4u) ist Zusatzinfo, nie Wettbewerber**
+   - `eko4u` (Hersteller-Einkaufspreis netto) fließt nie in `bestCompetitor`, `minPrice/maxPrice` oder das Vergleichbarkeits-Gate ein (`PURCHASE_PROVIDERS` in `scripts/sync-results.js`).
+   - Fehlt der Eko4u-Lauf oder ist er unvollständig, wird der Radar ohne EK-Spalte veröffentlicht (lauter WARN im Sync-Log + `summary.purchase`), der Wettbewerbsvergleich bleibt unberührt.
+   - Fehlerzeilen des Einkaufs-Providers werden nicht veröffentlicht (EK-Zelle bleibt leer, Zähler in `summary.purchase.errorsSkipped`).
+   - Glas-Normierung für EK-Vergleichbarkeit: 2fach = `STD_4/16/4` (S9000: `1S_038_03`), 3fach = `2S_001_02` + systemabhängige Glasleiste — dokumentiert in `data/eko4u/profile-aliases.json`. Änderungen daran sind preisrelevant und brauchen einen neuen Discovery-Beleg.
 
 2. **Vorwochenvergleich darf nie Same-Day-Sync sein**
    - `weeklyChange` muss gegen den letzten früheren History-Snapshot laufen, nicht gegen `public/data/price-radar.json` vom selben Tag.

@@ -80,10 +80,22 @@ function latest(prefix) {
   return selected;
 }
 
+// Einkaufspreis-Provider: reine Zusatzinfo, zählt nie als Wettbewerber (kein bestCompetitor/min/max/Vergleichbarkeits-Gate).
+const PURCHASE_PROVIDERS = new Set(['eko4u']);
+
+function latestOptional(prefix) {
+  try { return latest(prefix); }
+  catch (e) {
+    console.warn(`WARN: ${e.message} — Einkaufspreise (${prefix}) fehlen in diesem Sync.`);
+    return null;
+  }
+}
+
 const sources = {
   dfs: latest('dfs-mapped-pvc-'),
   fensterblick: latest('fensterblick-mapped-pvc-'),
-  fensterversand: latest('fensterversand-mapped-pvc-')
+  fensterversand: latest('fensterversand-mapped-pvc-'),
+  eko4u: latestOptional('eko4u-mapped-')
 };
 
 const rows = [];
@@ -136,20 +148,26 @@ for (const [provider, dir] of Object.entries(sources)) {
 }
 
 const keys = new Map();
+let purchaseErrorsSkipped = 0;
 for (const row of rows) {
   const k = buildRowKey(row);
   if (catalogKeys.size && !catalogKeys.has(k)) continue;
+  // Fehler beim Einkaufs-Provider dürfen den Radar nicht blockieren: Zeile weglassen (EK bleibt leer), sichtbar in summary.purchase.
+  if (PURCHASE_PROVIDERS.has(row.provider) && row.status === 'error') { purchaseErrorsSkipped += 1; continue; }
   if (!keys.has(k)) keys.set(k, { key: k, brand: row.brand, profile: row.profile, material: row.material, size: row.size, sizeRole: row.sizeRole, width: row.width, height: row.height, glazing: row.glazing, opening: row.opening, color: row.color, layout: row.layout, layoutLabel: row.layoutLabel, productType: row.productType, providers: {} });
   keys.get(k).providers[row.provider] = row;
 }
 
 const configs = [...keys.values()].map(c => {
-  const prices = Object.values(c.providers).filter(p => p.valid && typeof p.listTotal === 'number').map(p => p.listTotal);
-  const customerPrices = Object.values(c.providers).filter(p => p.valid && typeof p.customerTotal === 'number').map(p => p.customerTotal);
+  const competitorRows = Object.entries(c.providers).filter(([k]) => !PURCHASE_PROVIDERS.has(k)).map(([, p]) => p);
+  const prices = competitorRows.filter(p => p.valid && typeof p.listTotal === 'number').map(p => p.listTotal);
+  const customerPrices = competitorRows.filter(p => p.valid && typeof p.customerTotal === 'number').map(p => p.customerTotal);
   const dfs = c.providers.dfs?.valid ? c.providers.dfs.listTotal : null;
   const dfsCustomer = c.providers.dfs?.valid ? c.providers.dfs.customerTotal : null;
+  const purchaseRow = c.providers.eko4u;
+  const purchasePrice = purchaseRow?.valid && typeof purchaseRow.listTotal === 'number' ? purchaseRow.listTotal : null;
   const comp = Object.entries(c.providers)
-    .filter(([k, p]) => k !== 'dfs' && p.valid && typeof p.customerTotal === 'number')
+    .filter(([k, p]) => k !== 'dfs' && !PURCHASE_PROVIDERS.has(k) && p.valid && typeof p.customerTotal === 'number')
     .map(([k, p]) => ({ provider: k, price: p.customerTotal, listPrice: p.listTotal }))
     .sort((a, b) => a.price - b.price);
   const best = comp[0] || null;
@@ -157,6 +175,9 @@ const configs = [...keys.values()].map(c => {
     ...c,
     dfsPrice: dfs,
     dfsCustomerPrice: dfsCustomer,
+    purchasePrice,
+    purchaseMargin: dfsCustomer && purchasePrice ? +(dfsCustomer - purchasePrice).toFixed(2) : null,
+    purchaseMarginPct: dfsCustomer && purchasePrice ? +(((dfsCustomer - purchasePrice) / purchasePrice) * 100).toFixed(1) : null,
     bestCompetitor: best,
     delta: dfsCustomer && best ? +(dfsCustomer - best.price).toFixed(2) : null,
     deltaPct: dfsCustomer && best ? +(((dfsCustomer - best.price) / best.price) * 100).toFixed(1) : null,
@@ -199,7 +220,7 @@ for (const c of comparableConfigs) {
   c.previousGeneratedAt = previousPayload?.generatedAt || null;
   c.previousSnapshot = previous ? previous.label : null;
   c.weeklyChange = {};
-  for (const provider of ['dfs','fensterblick','fensterversand']) {
+  for (const provider of ['dfs','fensterblick','fensterversand','eko4u']) {
     const now = c.providers[provider];
     const old = prev?.providers?.[provider];
     if (now?.valid && old?.valid) {
@@ -235,7 +256,20 @@ const payload = {
   generatedAt,
   comparisonBaseline: previous ? { generatedAt: previous.generatedAt, snapshot: previous.label } : null,
   sources,
-  summary: { rows: rows.length, configs: comparableConfigs.length, candidates: configs.length, filteredOut: configs.length - comparableConfigs.length, weeklyBaselineGeneratedAt: previousPayload?.generatedAt || null },
+  summary: {
+    rows: rows.length,
+    configs: comparableConfigs.length,
+    candidates: configs.length,
+    filteredOut: configs.length - comparableConfigs.length,
+    weeklyBaselineGeneratedAt: previousPayload?.generatedAt || null,
+    purchase: sources.eko4u ? {
+      provider: 'eko4u',
+      source: sources.eko4u,
+      priced: rows.filter(r => r.provider === 'eko4u' && r.valid).length,
+      unmatched: rows.filter(r => r.provider === 'eko4u' && r.status === 'unmatched').length,
+      errorsSkipped: purchaseErrorsSkipped
+    } : { provider: 'eko4u', source: null, note: 'kein Eko4u-Lauf gefunden — Einkaufspreise leer' }
+  },
   verification,
   configs: comparableConfigs,
   filtered: filteredList

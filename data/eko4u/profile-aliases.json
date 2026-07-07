@@ -1,0 +1,64 @@
+{
+  "_kommentar": "Eko4u (Eko-Okna Händlerportal) Mapping: Katalogprofil -> Konstruktor-Library. lib1 = 1-flügelig (Item 'RU LEWE', Alu 'RU_PRAWO'), lib2 = 2-flügelig (Items 'R_RU' Pfosten / 'R_RU STULP' Stulp). Verglasung: 2fach = STD_4/16/4 (Ausnahme S9000: 1S_038_03, 4/16Ar/4 Ug 1.1), 3fach = 2S_001_02 (4/14Ar/4/14Ar/4 Ug 0.6, Rw 32dB) + ggf. Glasleiste (beads3), weil Standardleiste keine 40mm trägt. Ermittelt am 2026-07-07 per Discovery gegen ?p=configurator.workshop.",
+  "Aluplast Ideal 4000": {
+    "match": "ideal\\s*4000",
+    "lib1": "4000SL_1SK_01",
+    "lib2": "4000SL_2SK_01",
+    "glazing3Beads": "ID4000_QUBE"
+  },
+  "Aluplast Ideal 5000": {
+    "match": "ideal\\s*5000",
+    "lib1": "5000SL_1SK_01",
+    "lib2": "5000SL_2SK_01",
+    "glazing3Beads": "ID5000_QUBE"
+  },
+  "Aluplast Ideal 7000": {
+    "match": "ideal\\s*7000",
+    "lib1": "7000SL_1SK_01",
+    "lib2": "7000SL_2SK_01"
+  },
+  "Aluplast Ideal 8000": {
+    "match": "ideal\\s*8000",
+    "lib1": "8000SL_1SK_01",
+    "lib2": "8000SL_2SK_01",
+    "balkonLid": "BAL8000SL_01@1RU"
+  },
+  "Gealan S8000": {
+    "match": "gealan\\s*s?\\s*8000",
+    "lib1": "S8000_1SK_01",
+    "lib2": "S8000_2SK_01"
+  },
+  "Gealan S9000": {
+    "match": "gealan\\s*s?\\s*9000",
+    "lib1": "S9000_1SK_01",
+    "lib2": "S9000_2SK_01",
+    "glazing2": "1S_038_03"
+  },
+  "Salamander GreenEvo 76 3D": {
+    "match": "salamander\\s*76\\s*md",
+    "lib1": "GE763D_1SK_01",
+    "lib2": "GE763D_2SK_01"
+  },
+  "Salamander BluEvolution 82": {
+    "match": "salamander\\s*82",
+    "lib1": "BLUEV82SL_1SK_01",
+    "lib2": "BLUEV82SL_2SK_01"
+  },
+  "Aluprof MB-45": {
+    "match": "mb-?45",
+    "material": "aluminium",
+    "lib1": "MB45_1SK_01"
+  },
+  "Aluprof MB-79N": {
+    "match": "mb-?79n",
+    "material": "aluminium",
+    "lib1": "MB79N_1SK_01",
+    "varianteHinweis": "Eko4u-Standardaufbau (Frame K520012); Katalog nennt 'MB-79N SI' — SI-Variante nicht explizit wählbar"
+  },
+  "Aluprof MB-86N": {
+    "match": "mb-?86n",
+    "material": "aluminium",
+    "lib1": "MB86N_1SK_01",
+    "varianteHinweis": "Eko4u-Standardaufbau (Frame K528612); Katalog nennt 'MB-86N SI' — SI-Variante nicht explizit wählbar"
+  }
+}

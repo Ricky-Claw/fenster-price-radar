@@ -14,6 +14,7 @@
     "dfs:pvc:mapped": "node src/providers/dfs/price-mapped-pvc.js",
     "fb:pvc:mapped": "node src/providers/fensterblick/price-mapped-pvc.js",
     "fv:pvc:mapped": "node src/providers/fensterversand/price-mapped-pvc.js",
+    "eko:pvc:mapped": "node src/providers/eko4u/price-mapped-pvc.js",
     "prices:update": "node scripts/update-prices.js && npm run verify:prices",
     "test:calendar": "node tests/action-calendar.mjs",
     "test:app-shell": "node tests/app-shell.mjs",

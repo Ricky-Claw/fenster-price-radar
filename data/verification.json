@@ -1,160 +1,160 @@
 {
-  "verifiedAt": "2026-07-06",
-  "samples": 0,
-  "note": "0 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
+  "verifiedAt": "2026-07-07",
+  "samples": 17,
+  "note": "17 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
   "verifiedKeys": [
     {
       "key": "Aluplast|Ideal 4000, 2fach|500x500|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.907Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.140Z",
+      "result": "verified",
       "prices": {
         "dfs": 136.31,
-        "fensterblick": 128.48,
-        "fensterversand": 260.85
+        "fensterblick": 130.81,
+        "fensterversand": 326.06
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|1000x1200|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 244.37,
-        "fensterblick": 234.28
+        "fensterblick": 238.51
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|1200x1600|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 307.48,
-        "fensterblick": 302.25
+        "fensterblick": 307.72
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|1500x1866|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 414.7,
-        "fensterblick": 412.64
+        "fensterblick": 420.1
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 2fach|415x500|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 149,
-        "fensterblick": 133.3
+        "fensterblick": 135.71
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 3fach|1000x1200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 291.13,
-        "fensterblick": 267.65
+        "fensterblick": 272.49
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 3fach|1200x1600|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 382.31,
-        "fensterblick": 355.65
+        "fensterblick": 362.09
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 3fach|1500x1866|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 523.79,
-        "fensterblick": 490.49
+        "fensterblick": 499.36
       }
     },
     {
       "key": "Drutex|Iglo 5 Classic, 3fach|415x500|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 157.09,
-        "fensterblick": 139.07
+        "fensterblick": 141.58
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 2fach|1000x1200|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 301.9,
-        "fensterblick": 277.26
+        "fensterblick": 282.28
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 2fach|1200x1600|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 380.1,
-        "fensterblick": 356.19
+        "fensterblick": 362.63
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 2fach|1500x1866|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 513.08,
-        "fensterblick": 485.75
+        "fensterblick": 494.54
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 2fach|450x480|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 183.57,
-        "fensterblick": 159.08
+        "fensterblick": 161.95
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 3fach|1000x1200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 348.67,
-        "fensterblick": 310.64
+        "fensterblick": 316.26
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 3fach|1200x1600|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 454.94,
-        "fensterblick": 409.59
+        "fensterblick": 417
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 3fach|1500x1866|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 622.17,
-        "fensterblick": 563.6
+        "fensterblick": 573.8
       }
     },
     {
       "key": "Drutex|Iglo Energy Classic, 3fach|450x480|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-06T20:06:44.908Z",
-      "result": "mismatch",
+      "verifiedAt": "2026-07-07T12:23:25.141Z",
+      "result": "verified",
       "prices": {
         "dfs": 191.99,
-        "fensterblick": 165.09
+        "fensterblick": 168.07
       }
     }
   ]

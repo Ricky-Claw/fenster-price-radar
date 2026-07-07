@@ -6,6 +6,8 @@ const jobs = [
   ['dfs:pvc:mapped', ['--', `--limit=${limit}`]],
   ['fb:pvc:mapped', ['--', `--limit=${limit}`]],
   ['fv:pvc:mapped', ['--', `--limit=${limit}`]],
+  // Einkaufspreise vom Hersteller; ohne EKO4U_LOGIN/EKO4U_PASSWORD beendet sich der Job selbst mit Exit 0 (Skip).
+  ['eko:pvc:mapped', ['--', `--limit=${limit}`]],
 ];
 
 function run(script, args = []) {

@@ -29,6 +29,10 @@ jobs:
 
       - name: Run weekly provider update
         run: npm run prices:update
+        env:
+          # Eko4u-Einkaufspreise: ohne diese Secrets überspringt sich der eko-Job selbst (Radar dann ohne EK-Spalte).
+          EKO4U_LOGIN: ${{ secrets.EKO4U_LOGIN }}
+          EKO4U_PASSWORD: ${{ secrets.EKO4U_PASSWORD }}
 
       - name: Build app
         run: npm run build
