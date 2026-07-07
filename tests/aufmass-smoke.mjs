@@ -112,6 +112,18 @@ assert.deepEqual(normalized[2], {
 });
 assert.deepEqual(normalizeWindowList({}), []);
 
+// LLM-Duplikationsmuster: n identische Zeilen mit anzahl === n werden zu einer Zeile kollabiert.
+const dupInput = { raum: 'Dachgeschoss', anzahl: 3, breiteMm: 800, hoeheMm: 1000, oeffnungsart: 'Dreh-Kipp', verglasung: '3fach' };
+const collapsed = normalizeWindowList([dupInput, dupInput, dupInput]);
+assert.equal(collapsed.length, 1);
+assert.equal(collapsed[0].anzahl, 3);
+// Bewusst identische Einzelzeilen (anzahl 1) bleiben getrennt.
+const single = { raum: 'Bad', anzahl: 1, breiteMm: 600, hoeheMm: 400 };
+assert.equal(normalizeWindowList([single, single]).length, 2);
+// 2 Zeilen mit anzahl 3 (kein exaktes Muster) bleiben unangetastet.
+const odd = { raum: 'Flur', anzahl: 3, breiteMm: 700, hoeheMm: 900 };
+assert.equal(normalizeWindowList([odd, odd]).length, 2);
+
 assert.equal(normalizeWindow({ breiteMm: '120 cm', hoeheMm: '1400' }).breiteMm, 1200);
 assert.equal(normalizeWindow({ breiteMm: '1,20 m', hoeheMm: '1400' }).breiteMm, 1200);
 assert.equal(normalizeWindow({ breiteMm: '1200 mm', hoeheMm: '1400' }).breiteMm, 1200);
@@ -321,12 +333,13 @@ console.error = (...args) => { languageFallbackLoggedErrors.push(args); };
 let languageFallbackResult;
 const languageFallbackUrls = [];
 try {
+  // Kimi ist primär; liefert es fremdsprachigen Output, muss Nemotron als Fallback übernehmen.
   languageFallbackResult = await extractWindows({
     transcript: 'Wohnzimmer 120 auf 140',
     env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test' },
     fetchImpl: async (url) => {
       languageFallbackUrls.push(String(url));
-      if (String(url).includes('nvidia.com')) {
+      if (String(url).includes('moonshot.ai')) {
         return {
           ok: true,
           json: async () => ({
@@ -359,52 +372,79 @@ try {
 } finally {
   console.error = languageFallbackConsoleError;
 }
-assert.match(languageFallbackUrls[0], /integrate\.api\.nvidia\.com/);
-assert.match(languageFallbackUrls[1], /api\.moonshot\.ai/);
+assert.match(languageFallbackUrls[0], /api\.moonshot\.ai/);
+assert.match(languageFallbackUrls[1], /integrate\.api\.nvidia\.com/);
 assert.deepEqual(languageFallbackResult.windows, [{ raum: 'Wohnzimmer', breiteMm: 1200, hoeheMm: 1400 }]);
 assert.equal(languageFallbackResult.summary, 'Ein Fenster im Wohnzimmer.');
-assert.equal(languageFallbackResult.provider, 'KIMI');
+assert.equal(languageFallbackResult.provider, 'NEMOTRON');
 assert.equal(languageFallbackLoggedErrors.length, 1);
-assert.equal(languageFallbackLoggedErrors[0][0], '[aufmass] NEMOTRON non-german output rejected');
+assert.equal(languageFallbackLoggedErrors[0][0], '[aufmass] KIMI non-german output rejected');
 
-let nemotronPrimaryUrl = '';
-let nemotronPrimaryBody = null;
-const nemotronPrimaryResult = await extractWindows({
+// Beide Keys gesetzt: Kimi muss primär sein (JSON-Format erzwungen).
+let kimiPrimaryUrl = '';
+let kimiPrimaryBody = null;
+const kimiPrimaryResult = await extractWindows({
   transcript: 'Bad fest 60 auf 40',
-  env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test', FENSTERSHOP_NEMOTRON_MODEL: 'nemotron-test' },
+  env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test', FENSTERSHOP_LLM_MODEL: 'kimi-test-model' },
   fetchImpl: async (url, options) => {
-    nemotronPrimaryUrl = String(url);
-    nemotronPrimaryBody = JSON.parse(options.body);
+    kimiPrimaryUrl = String(url);
+    kimiPrimaryBody = JSON.parse(options.body);
     return {
       ok: true,
       json: async () => ({
         choices: [{
           message: {
-            content: '<think>{"draft":true}</think>\n{"windows":[{"raum":"Bad","breiteMm":600,"hoeheMm":400}],"zusammenfassung":"Ein Fenster im Bad."}',
+            content: '{"windows":[{"raum":"Bad","breiteMm":600,"hoeheMm":400}],"zusammenfassung":"Ein Fenster im Bad."}',
           },
         }],
       }),
     };
   },
 });
-assert.match(nemotronPrimaryUrl, /^https:\/\/integrate\.api\.nvidia\.com/);
-assert.equal(nemotronPrimaryBody.model, 'nemotron-test');
-assert.equal(nemotronPrimaryBody.stream, false);
-assert.equal(Object.hasOwn(nemotronPrimaryBody, 'response_format'), false);
-assert.deepEqual(nemotronPrimaryBody.messages[0], { role: 'system', content: 'detailed thinking off' });
-assert.equal(nemotronPrimaryBody.messages[1].role, 'user');
-assert.match(nemotronPrimaryBody.messages[1].content, /zusammenfassung/);
-assert.equal(nemotronPrimaryBody.max_tokens, 2500);
-assert.deepEqual(nemotronPrimaryResult.windows, [{ raum: 'Bad', breiteMm: 600, hoeheMm: 400 }]);
-assert.equal(nemotronPrimaryResult.summary, 'Ein Fenster im Bad.');
-assert.equal(nemotronPrimaryResult.provider, 'NEMOTRON');
+assert.match(kimiPrimaryUrl, /^https:\/\/api\.moonshot\.ai/);
+assert.equal(kimiPrimaryBody.model, 'kimi-test-model');
+assert.deepEqual(kimiPrimaryBody.response_format, { type: 'json_object' });
+assert.equal(kimiPrimaryBody.max_tokens, 2500);
+assert.match(kimiPrimaryBody.messages[0].content, /zusammenfassung/);
+assert.deepEqual(kimiPrimaryResult.windows, [{ raum: 'Bad', breiteMm: 600, hoeheMm: 400 }]);
+assert.equal(kimiPrimaryResult.summary, 'Ein Fenster im Bad.');
+assert.equal(kimiPrimaryResult.provider, 'KIMI');
 
-let nemotronThinkingOnBody = null;
-const nemotronThinkingOnResult = await extractWindows({
+// Nemotron-Fallback: Reasoning ist DEFAULT AN — "thinking off" lieferte kaputte Listen (Regression 05.-07.07.).
+let nemotronDefaultBody = null;
+const nemotronDefaultResult = await extractWindows({
   transcript: 'Bad fest 60 auf 40',
-  env: { NVIDIA_API_KEY: 'nvidia-test', FENSTERSHOP_NEMOTRON_THINKING: 'on' },
+  env: { NVIDIA_API_KEY: 'nvidia-test', FENSTERSHOP_NEMOTRON_MODEL: 'nemotron-test' },
   fetchImpl: async (_url, options) => {
-    nemotronThinkingOnBody = JSON.parse(options.body);
+    nemotronDefaultBody = JSON.parse(options.body);
+    return {
+      ok: true,
+      json: async () => ({
+        choices: [{
+          message: {
+            content: '<think>{"draft":true}</think>\n{"windows":[{"raum":"Bad"}],"zusammenfassung":"Ein Fenster im Bad."}',
+          },
+        }],
+      }),
+    };
+  },
+});
+assert.equal(nemotronDefaultBody.model, 'nemotron-test');
+assert.equal(nemotronDefaultBody.stream, false);
+assert.equal(Object.hasOwn(nemotronDefaultBody, 'response_format'), false);
+assert.deepEqual(nemotronDefaultBody.messages[0], { role: 'system', content: 'detailed thinking on' });
+assert.equal(nemotronDefaultBody.messages[1].role, 'user');
+assert.match(nemotronDefaultBody.messages[1].content, /zusammenfassung/);
+assert.equal(nemotronDefaultBody.max_tokens, 4000);
+assert.deepEqual(nemotronDefaultResult.windows, [{ raum: 'Bad' }]);
+
+// Explizit abschaltbar bleibt es per Env.
+let nemotronThinkingOffBody = null;
+await extractWindows({
+  transcript: 'Bad fest 60 auf 40',
+  env: { NVIDIA_API_KEY: 'nvidia-test', FENSTERSHOP_NEMOTRON_THINKING: 'off' },
+  fetchImpl: async (_url, options) => {
+    nemotronThinkingOffBody = JSON.parse(options.body);
     return {
       ok: true,
       json: async () => ({
@@ -417,11 +457,8 @@ const nemotronThinkingOnResult = await extractWindows({
     };
   },
 });
-assert.deepEqual(nemotronThinkingOnBody.messages[0], { role: 'system', content: 'detailed thinking on' });
-assert.equal(nemotronThinkingOnBody.messages[1].role, 'user');
-assert.match(nemotronThinkingOnBody.messages[1].content, /zusammenfassung/);
-assert.equal(nemotronThinkingOnBody.max_tokens, 4000);
-assert.deepEqual(nemotronThinkingOnResult.windows, [{ raum: 'Bad' }]);
+assert.deepEqual(nemotronThinkingOffBody.messages[0], { role: 'system', content: 'detailed thinking off' });
+assert.equal(nemotronThinkingOffBody.max_tokens, 2500);
 
 const fallbackConsoleError = console.error;
 const fallbackLoggedErrors = [];
@@ -429,12 +466,13 @@ console.error = (...args) => { fallbackLoggedErrors.push(args); };
 let fallbackResult;
 const fallbackUrls = [];
 try {
+  // Kimi down -> Nemotron übernimmt.
   fallbackResult = await extractWindows({
     transcript: 'Kueche 100 auf 120',
-    env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test', FENSTERSHOP_LLM_MODEL: 'kimi-fallback-test' },
+    env: { NVIDIA_API_KEY: 'nvidia-test', KIMI_API_KEY: 'kimi-test', FENSTERSHOP_NEMOTRON_MODEL: 'nemotron-fallback-test' },
     fetchImpl: async (url) => {
       fallbackUrls.push(String(url));
-      if (String(url).includes('nvidia.com')) {
+      if (String(url).includes('moonshot.ai')) {
         return { ok: false, status: 500, json: async () => ({}) };
       }
       return {
@@ -455,14 +493,14 @@ try {
 } finally {
   console.error = fallbackConsoleError;
 }
-assert.match(fallbackUrls[0], /integrate\.api\.nvidia\.com/);
-assert.match(fallbackUrls[1], /api\.moonshot\.ai/);
+assert.match(fallbackUrls[0], /api\.moonshot\.ai/);
+assert.match(fallbackUrls[1], /integrate\.api\.nvidia\.com/);
 assert.deepEqual(fallbackResult.windows, [{ raum: 'Kueche', breiteMm: 1000, hoeheMm: 1200 }]);
 assert.equal(fallbackResult.summary, 'Ein Fenster in der Kueche.');
-assert.equal(fallbackResult.model, 'kimi-fallback-test');
-assert.equal(fallbackResult.provider, 'KIMI');
+assert.equal(fallbackResult.model, 'nemotron-fallback-test');
+assert.equal(fallbackResult.provider, 'NEMOTRON');
 assert.equal(fallbackLoggedErrors.length, 1);
-assert.equal(fallbackLoggedErrors[0][0], '[aufmass] NEMOTRON failed');
+assert.equal(fallbackLoggedErrors[0][0], '[aufmass] KIMI failed');
 assert.equal(fallbackLoggedErrors[0][1], 500);
 
 let noKeyFetchCalled = false;

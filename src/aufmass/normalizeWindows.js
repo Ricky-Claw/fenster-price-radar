@@ -156,7 +156,25 @@ export function normalizeWindow(rawObj) {
   return normalized;
 }
 
+// LLM-Duplikationsmuster: "3 Stück" kommt als 3 identische Zeilen mit anzahl=3 zurück (= 9 Fenster).
+// Nur genau dieses Muster kollabieren: n komplett identische Zeilen mit anzahl === n -> eine Zeile.
+// Bewusst identische Einzelzeilen (anzahl 1) bleiben unangetastet.
+function collapseLlmDuplicates(windows) {
+  const groups = new Map();
+  for (const windowItem of windows) {
+    const key = JSON.stringify(AUFMASS_FIELDS.map((field) => windowItem[field.key]));
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(windowItem);
+  }
+  const out = [];
+  for (const group of groups.values()) {
+    if (group.length > 1 && group[0].anzahl === group.length) out.push(group[0]);
+    else out.push(...group);
+  }
+  return out;
+}
+
 export function normalizeWindowList(rawList) {
   if (!Array.isArray(rawList)) return [];
-  return rawList.slice(0, MAX_WINDOWS).map((item) => normalizeWindow(item));
+  return collapseLlmDuplicates(rawList.slice(0, MAX_WINDOWS).map((item) => normalizeWindow(item)));
 }

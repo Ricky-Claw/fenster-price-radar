@@ -78,11 +78,35 @@ export function hasNonLatinScript(text) {
 }
 
 function providerConfigs(env = process.env) {
+  // Kimi primär: erzwingt JSON (response_format) und lieferte stabil korrekte Listen.
+  // Nemotron nur Fallback und nur mit Reasoning AN — "detailed thinking off" (05.07.) produzierte
+  // Höhen=0, duplizierte Zeilen und erfundene Werte (Regression im Live-Test 07.07.).
   const providers = [];
+  const kimiKey = kimiApiKey(env);
+  if (kimiKey) {
+    const model = env.FENSTERSHOP_LLM_MODEL || KIMI_DEFAULT_MODEL;
+    providers.push({
+      name: 'KIMI',
+      url: KIMI_URL,
+      key: kimiKey,
+      model,
+      timeoutMs: Number(env.FENSTERSHOP_LLM_TIMEOUT_MS) || 25000,
+      body(prompt) {
+        return {
+          model,
+          temperature: 0.2,
+          max_tokens: 2500,
+          response_format: { type: 'json_object' },
+          messages: [{ role: 'user', content: prompt }],
+        };
+      },
+    });
+  }
+
   const nemotronKey = env.NVIDIA_API_KEY || '';
   if (nemotronKey) {
     const model = env.FENSTERSHOP_NEMOTRON_MODEL || NEMOTRON_DEFAULT_MODEL;
-    const nemotronThinking = (env.FENSTERSHOP_NEMOTRON_THINKING || 'off').toLowerCase() === 'on';
+    const nemotronThinking = (env.FENSTERSHOP_NEMOTRON_THINKING || 'on').toLowerCase() === 'on';
     providers.push({
       name: 'NEMOTRON',
       url: NEMOTRON_URL,
@@ -100,27 +124,6 @@ function providerConfigs(env = process.env) {
             { role: 'system', content: nemotronThinking ? 'detailed thinking on' : 'detailed thinking off' },
             { role: 'user', content: prompt },
           ],
-        };
-      },
-    });
-  }
-
-  const kimiKey = kimiApiKey(env);
-  if (kimiKey) {
-    const model = env.FENSTERSHOP_LLM_MODEL || KIMI_DEFAULT_MODEL;
-    providers.push({
-      name: 'KIMI',
-      url: KIMI_URL,
-      key: kimiKey,
-      model,
-      timeoutMs: Number(env.FENSTERSHOP_LLM_TIMEOUT_MS) || 25000,
-      body(prompt) {
-        return {
-          model,
-          temperature: 0.2,
-          max_tokens: 2500,
-          response_format: { type: 'json_object' },
-          messages: [{ role: 'user', content: prompt }],
         };
       },
     });
