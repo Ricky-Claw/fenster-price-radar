@@ -126,6 +126,19 @@ assert.ok(chunks.length >= 1, 'knowledge retrieval should find chatbot md chunks
 const companyChunks = retrieveFenstershopKnowledge('Firmenwissen Pflege GitHub Beispieldatei', { limit: 3 });
 assert.ok(companyChunks.some((chunk) => chunk.sourceType === 'firmenwissen'), 'knowledge/ Ordner muss ins Retrieval einfließen');
 
+const uploadChunks = retrieveFenstershopKnowledge('Sonderrabatt Messeaktion Oktober', {
+  limit: 3,
+  extraChunks: [{ title: 'Messeaktion', text: 'Zur Messeaktion im Oktober gibt es einen Sonderrabatt von 5 Prozent auf alle Drutex-Fenster.', url: 'upload:messe.md', sourceType: 'upload' }],
+});
+assert.ok(uploadChunks.some((chunk) => chunk.sourceType === 'upload'), 'hochgeladenes Sitzungs-Wissen muss ins Retrieval einfließen');
+
+answer = answerFenstershopChatbot({
+  message: 'Gibt es einen Sonderrabatt zur Messeaktion?',
+  extraChunks: [{ title: 'Messeaktion', text: 'Zur Messeaktion im Oktober gibt es einen Sonderrabatt von 5 Prozent auf alle Drutex-Fenster.', url: 'upload:messe.md', sourceType: 'upload' }],
+});
+assert.equal(answer.intent, 'knowledge_rag');
+assert.ok(answer.sources.some((s) => String(s.url).startsWith('upload:')), 'Antwort muss Upload als Quelle nennen');
+
 function response() {
   return {
     statusCode: null,

@@ -1,12 +1,32 @@
-import { answerFenstershopChatbotWithLlm } from '../src/chatbot/fenstershopChatbot.js';
+import { answerFenstershopChatbotWithLlm, chunkKnowledgeText } from '../src/chatbot/fenstershopChatbot.js';
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
 // Der Chatbot ruft bezahlte LLMs (Nemotron/Moonshot). Ohne Drossel + Body-Cap
 // koennte jeder die Kosten hochtreiben. Gleiche Schutzschicht wie api/aufmass.js.
 // CORS bleibt offen (Widget ist auf der Shop-Domain eingebettet) — per
 // CHATBOT_ALLOW_ORIGIN auf eine feste Herkunft verschaerfbar.
-const BODY_MAX_BYTES = 32768;
+const BODY_MAX_BYTES = 131072;
 const MESSAGE_MAX_CHARS = 2000;
+const KNOWLEDGE_MAX_FILES = 3;
+const KNOWLEDGE_MAX_CHARS = 30000;
+const KNOWLEDGE_NAME_MAX = 100;
+
+// Sitzungs-Wissen von der Testseite: kommt pro Request mit, wird nie gespeichert.
+// Serverless ist zur Laufzeit read-only — dauerhaftes Wissen geht über knowledge/ im Repo.
+function extraChunksFromBody(body) {
+  const files = Array.isArray(body.knowledge) ? body.knowledge.slice(0, KNOWLEDGE_MAX_FILES) : [];
+  const chunks = [];
+  for (const file of files) {
+    const name = String(file?.name || 'upload.md').slice(0, KNOWLEDGE_NAME_MAX);
+    const content = String(file?.content || '').slice(0, KNOWLEDGE_MAX_CHARS);
+    chunks.push(...chunkKnowledgeText(content, {
+      fallbackHeading: name.replace(/\.(md|txt)$/i, '').replace(/[-_]/g, ' '),
+      url: `upload:${name}`,
+      sourceType: 'upload',
+    }));
+  }
+  return chunks;
+}
 const ALLOW_ORIGIN = process.env.CHATBOT_ALLOW_ORIGIN || '*';
 const rateLimiter = createRateLimiter({
   windowMs: Number(process.env.CHATBOT_RL_WINDOW_MS) || 60000,
@@ -90,7 +110,7 @@ export default async function handler(req, res) {
   try {
     const body = await readBody(req);
     const message = String(body.message || body.question || body.text || '').slice(0, MESSAGE_MAX_CHARS);
-    return sendJson(res, 200, await answerFenstershopChatbotWithLlm({ message }));
+    return sendJson(res, 200, await answerFenstershopChatbotWithLlm({ message, extraChunks: extraChunksFromBody(body) }));
   } catch (error) {
     return sendJson(res, 400, { ok: false, error: 'invalid_request', message: error.message });
   }

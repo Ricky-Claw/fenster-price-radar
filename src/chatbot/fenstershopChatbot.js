@@ -49,22 +49,32 @@ function hasSensitiveData(text) {
     || /\b\d{5,}\b/.test(text);
 }
 
-function companyKnowledgeChunks() {
+export function chunkKnowledgeText(raw, { fallbackHeading = 'Wissen', url = '', sourceType = 'firmenwissen', minLength = 60 } = {}) {
   const chunks = [];
+  let heading = fallbackHeading;
+  for (const block of String(raw || '').split(/\n{2,}/).map((part) => part.trim()).filter(Boolean)) {
+    const headingMatch = block.match(/^#{1,3}\s+(.{3,120})$/m);
+    if (headingMatch) heading = headingMatch[1].trim();
+    const text = block.replace(/^#{1,6}\s+.*$/gm, '').replace(/\s+/g, ' ').trim();
+    if (text.length >= minLength) chunks.push({ title: heading, text, url, sourceType });
+  }
+  return chunks;
+}
+
+function companyKnowledgeChunks() {
   let files = [];
   try {
     files = readdirSync(COMPANY_KNOWLEDGE_DIR).filter((name) => /\.(md|txt)$/i.test(name) && !/^anleitung/i.test(name));
-  } catch { return chunks; }
+  } catch { return []; }
+  const chunks = [];
   for (const file of files.sort()) {
     let raw = '';
     try { raw = readFileSync(`${COMPANY_KNOWLEDGE_DIR}${file}`, 'utf8'); } catch { continue; }
-    let heading = file.replace(/\.(md|txt)$/i, '').replace(/[-_]/g, ' ');
-    for (const block of raw.split(/\n{2,}/).map((part) => part.trim()).filter(Boolean)) {
-      const headingMatch = block.match(/^#{1,3}\s+(.{3,120})$/m);
-      if (headingMatch) heading = headingMatch[1].trim();
-      const text = block.replace(/^#{1,6}\s+.*$/gm, '').replace(/\s+/g, ' ').trim();
-      if (text.length >= 60) chunks.push({ title: heading, text, url: `knowledge/${file}`, sourceType: 'firmenwissen' });
-    }
+    chunks.push(...chunkKnowledgeText(raw, {
+      fallbackHeading: file.replace(/\.(md|txt)$/i, '').replace(/[-_]/g, ' '),
+      url: `knowledge/${file}`,
+      sourceType: 'firmenwissen',
+    }));
   }
   return chunks;
 }
@@ -92,10 +102,10 @@ function knowledgeChunks() {
   return chunks;
 }
 
-export function retrieveFenstershopKnowledge(query, { limit = 3 } = {}) {
+export function retrieveFenstershopKnowledge(query, { limit = 3, extraChunks = [] } = {}) {
   const qTerms = terms(query);
   if (!qTerms.length) return [];
-  return knowledgeChunks()
+  return [...extraChunks, ...knowledgeChunks()]
     .map((chunk) => {
       const title = lower(chunk.title || '');
       const url = lower(chunk.url || '');
@@ -176,7 +186,7 @@ function conciseKnowledgeAnswer(query, chunks, links) {
   return `${snippet}\n\nMehr dazu: ${link?.url || chunks[0]?.url || LINKS.knowledge}`;
 }
 
-export function answerFenstershopChatbot({ message = '' } = {}) {
+export function answerFenstershopChatbot({ message = '', extraChunks = [] } = {}) {
   const text = String(message || '').trim();
   const n = lower(text);
   const sensitive = hasSensitiveData(text);
@@ -301,7 +311,7 @@ export function answerFenstershopChatbot({ message = '' } = {}) {
     });
   }
 
-  const chunks = retrieveFenstershopKnowledge(text, { limit: 2 });
+  const chunks = retrieveFenstershopKnowledge(text, { limit: 2, extraChunks });
   const links = sourceLinksForQuery(n);
   if (chunks.length) {
     return result({
@@ -369,10 +379,10 @@ const LLM_PROVIDERS = [
   { name: 'moonshot', polish: polishFenstershopAnswer },
 ];
 
-export async function answerFenstershopChatbotWithLlm({ message = '', env = process.env } = {}) {
-  const draft = answerFenstershopChatbot({ message });
+export async function answerFenstershopChatbotWithLlm({ message = '', extraChunks = [], env = process.env } = {}) {
+  const draft = answerFenstershopChatbot({ message, extraChunks });
   if (mustKeepGuardrailDraft(draft)) return draft;
-  const knowledge = retrieveFenstershopKnowledge(message, { limit: 3 });
+  const knowledge = retrieveFenstershopKnowledge(message, { limit: 3, extraChunks });
   for (const provider of LLM_PROVIDERS) {
     let polished;
     try {

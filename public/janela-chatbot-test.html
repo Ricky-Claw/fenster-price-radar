@@ -3,57 +3,204 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Janela — Testseite Seiten-Kontext</title>
+<title>Janela — Testumgebung</title>
 <style>
-  :root { --bg:#f7f9fc; --ink:#18212f; --muted:#667089; --line:#d7dde8; }
+  :root { --blue:#003A66; --blue2:#005A8F; --orange:#F47C26; --line:#dbe4ee; --muted:#667089; --bg:#f5f7fa; }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--ink); font-family: system-ui, -apple-system, "Segoe UI", sans-serif; line-height: 1.5; }
-  header { background: #fff; border-bottom: 1px solid var(--line); padding: 24px; }
-  header h1 { margin: 0 0 6px; font-size: 24px; }
-  header p { margin: 0; color: var(--muted); max-width: 760px; }
-  main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 20px; }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
-  .card .label { padding: 12px 16px; border-bottom: 1px solid var(--line); font-weight: 700; font-size: 14px; }
-  .card .label small { display: block; font-weight: 400; color: var(--muted); margin-top: 2px; }
-  .card iframe { display: block; width: 100%; height: 520px; border: 0; background: repeating-linear-gradient(45deg, #fbfcfe, #fbfcfe 10px, #f2f4f8 10px, #f2f4f8 20px); }
+  body { margin:0; background:var(--bg); color:#18212f; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.5; }
+  header { background:var(--blue); color:#fff; padding:18px 24px; }
+  header .wrap { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; }
+  header h1 { margin:0; font-size:20px; font-family:Helvetica,Arial,sans-serif; }
+  header p { margin:4px 0 0; color:#DCEAF4; font-size:13px; }
+  main { max-width:1100px; margin:0 auto; padding:24px; display:grid; grid-template-columns:1fr 340px; gap:20px; align-items:start; }
+  .panel { background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+
+  /* Chat */
+  .chatPanel { display:flex; flex-direction:column; height:calc(100vh - 160px); min-height:560px; }
+  .chatHead { padding:14px 18px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .chatHead b { font-size:15px; }
+  .chatHead small { color:var(--muted); }
+  .chatLog { flex:1; overflow:auto; padding:18px; background:#f6f9fc; display:flex; flex-direction:column; gap:12px; }
+  .msg { border-radius:16px; padding:12px 14px; max-width:88%; white-space:pre-wrap; font-size:14.5px; line-height:1.45; }
+  .msg.user { align-self:flex-end; background:var(--blue); color:#fff; }
+  .msg.bot { align-self:flex-start; background:#fff; border:1px solid #e3ebf3; }
+  .msg .meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+  .metaChip { border-radius:999px; padding:4px 9px; font-size:11px; font-weight:800; background:#EAF6FF; color:var(--blue); }
+  .metaChip.upload { background:#e7f3ec; color:#1f7a4d; }
+  .metaChip.llm { background:#fff2df; color:#9a5700; }
+  .msg .links { display:grid; gap:5px; margin-top:9px; }
+  .msg .links a { color:var(--blue); font-weight:800; text-decoration:none; font-size:13px; }
+  .chatForm { display:flex; gap:8px; padding:14px; border-top:1px solid var(--line); background:#fff; }
+  .chatForm textarea { flex:1; resize:none; border:1px solid var(--line); border-radius:12px; padding:11px; font:14.5px system-ui; height:52px; }
+  .chatForm button { border:0; border-radius:12px; background:var(--orange); color:#fff; font-weight:900; padding:0 20px; cursor:pointer; font-size:14.5px; }
+  .chatForm button:hover { background:#D86818; }
+  .chiprow { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 10px; font-size:12px; cursor:pointer; color:#26384d; }
+  .chip:hover { background:#EAF6FF; }
+
+  /* Wissen */
+  .sidePanel { padding:18px; display:grid; gap:14px; }
+  .sidePanel h2 { margin:0; font-size:15px; color:var(--blue); font-family:Helvetica,Arial,sans-serif; }
+  .sidePanel p { margin:0; font-size:13px; color:var(--muted); }
+  .dropZone { border:2px dashed var(--line); border-radius:12px; padding:20px 14px; text-align:center; color:var(--muted); font-size:13px; cursor:pointer; transition:.15s; }
+  .dropZone:hover, .dropZone.over { border-color:var(--orange); color:var(--blue); background:#fff9f3; }
+  .fileList { display:grid; gap:8px; }
+  .fileEntry { display:flex; justify-content:space-between; align-items:center; gap:8px; background:#e7f3ec; color:#1f7a4d; border:1px solid #bfe0cc; border-radius:10px; padding:9px 11px; font-size:13px; font-weight:700; }
+  .fileEntry button { border:0; background:transparent; color:#1f7a4d; font-size:16px; cursor:pointer; padding:0 2px; }
+  .sideLinks { display:grid; gap:7px; }
+  .sideLinks a { color:var(--blue); font-weight:800; font-size:13px; text-decoration:none; }
+  .sideLinks a:hover { text-decoration:underline; }
+  .note { background:#fff7ec; border:1px solid #f1d6b5; border-radius:10px; padding:11px 13px; font-size:12.5px; color:#6b4a12; }
+  @media (max-width:900px){ main { grid-template-columns:1fr; } .chatPanel { height:70vh; min-height:480px; } }
 </style>
 </head>
 <body>
 <header>
-  <p style="margin:0 0 10px;font-weight:700;color:#004b93;text-transform:uppercase;font-size:12px;letter-spacing:.04em">Testseite — nicht für Kunden verlinken</p>
-  <h1>Janela — Seiten-Kontext im Chatbot</h1>
-  <p>Jede Kachel simuliert eine andere Shop-Seite über <code>data-page</code>. Begrüßung und Vorschlags-Chips passen sich automatisch an — die Antwortlogik im Hintergrund ist für alle Seiten identisch.</p>
+  <div class="wrap">
+    <div>
+      <h1>Janela — Testumgebung</h1>
+      <p>Interne Testseite — nicht für Kunden verlinken. Antworten kommen live aus Regelwerk, Firmenwissen und Website-Wissen.</p>
+    </div>
+  </div>
 </header>
 <main>
-  <div class="grid" id="cards"></div>
+  <section class="panel chatPanel" aria-label="Chat mit Janela">
+    <div class="chatHead">
+      <div><b>Janela</b> <small>· Chat wie auf der Website, plus Test-Details (Intent, KI-Modell, Quellen)</small></div>
+    </div>
+    <div class="chatLog" id="log"></div>
+    <form class="chatForm" id="form">
+      <textarea id="input" placeholder="Ihre Frage an Janela…" aria-label="Chatnachricht"></textarea>
+      <button type="submit">Senden</button>
+    </form>
+  </section>
+
+  <aside class="panel sidePanel" aria-label="Wissen anbinden">
+    <h2>Wissen für diese Sitzung hochladen</h2>
+    <p>Markdown- oder Textdatei hier ablegen — Janela nutzt den Inhalt sofort als zusätzliche Wissensquelle (max. 3 Dateien, je ~30&nbsp;kB).</p>
+    <div class="dropZone" id="drop">Datei hierher ziehen<br>oder klicken zum Auswählen</div>
+    <input type="file" id="file" accept=".md,.txt" multiple hidden>
+    <div class="fileList" id="files"></div>
+    <div class="note"><b>Nur für diese Test-Sitzung.</b> Dauerhaftes Wissen wird über den GitHub-Ordner <code>knowledge/</code> gepflegt (Anleitung unten). Ein Obsidian-Vault lässt sich später an dieselbe Pipeline anschließen — Markdown rein, gleiche Suche.</div>
+    <h2>Anleitung &amp; Vorlagen</h2>
+    <div class="sideLinks">
+      <a href="/janela-wissen-anleitung.html" target="_blank" rel="noopener">📖 Anleitung: Firmenwissen pflegen (ansehen)</a>
+      <a href="/janela-wissen-anleitung.md" download="Janela-Anleitung-Firmenwissen.md">⬇ Anleitung herunterladen (.md)</a>
+      <a href="https://github.com/Ricky-Claw/fenster-price-radar/tree/main/knowledge" target="_blank" rel="noopener">🗂 Wissensordner auf GitHub öffnen</a>
+    </div>
+  </aside>
 </main>
 <script>
-  var CONTEXTS = [
-    { label: 'Startseite (Standard)', page: '/' },
-    { label: 'Konfigurator', page: '/konfigurator/fenster' },
-    { label: 'Versand & Lieferzeiten', page: '/fenster#versand-und-lieferzeiten' },
-    { label: 'Reklamation', page: '/system/reklamation' },
-    { label: 'Kontakt / Anfrage', page: '/callback' },
-    { label: 'Wissenswertes', page: '/wissenswertes' }
-  ];
-  var origin = location.origin;
-  var grid = document.getElementById('cards');
-  CONTEXTS.forEach(function (ctx) {
-    var card = document.createElement('div');
-    card.className = 'card';
-    var label = document.createElement('div');
-    label.className = 'label';
-    label.textContent = ctx.label;
-    var small = document.createElement('small');
-    small.textContent = ctx.page;
-    label.appendChild(small);
-    var iframe = document.createElement('iframe');
-    iframe.srcdoc = '<!doctype html><html><head></head><body><script src="' + origin + '/chatbot-widget.js" data-api-url="' + origin + '" data-page="' + ctx.page + '"><' + '/script></body></html>';
-    card.appendChild(label);
-    card.appendChild(iframe);
-    grid.appendChild(card);
-  });
+  var log = document.getElementById('log');
+  var form = document.getElementById('form');
+  var input = document.getElementById('input');
+  var drop = document.getElementById('drop');
+  var fileInput = document.getElementById('file');
+  var fileList = document.getElementById('files');
+  var sessionFiles = [];
+
+  function esc(v){ return String(v||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+
+  function addMsg(role, text, data){
+    var el = document.createElement('div');
+    el.className = 'msg ' + role;
+    el.innerHTML = esc(text).replace(/\n/g,'<br>');
+    if (data) {
+      var meta = document.createElement('div');
+      meta.className = 'meta';
+      var llm = data.llm || {};
+      meta.innerHTML =
+        '<span class="metaChip">Intent: ' + esc(data.intent || '—') + '</span>' +
+        '<span class="metaChip llm">KI: ' + esc(llm.used ? (llm.provider || 'LLM') : 'Regelwerk direkt') + '</span>' +
+        (data.sources || []).map(function(s){
+          var u = String(s.url || s.title || '');
+          var isUpload = u.indexOf('upload:') === 0;
+          return '<span class="metaChip' + (isUpload ? ' upload' : '') + '">Quelle: ' + esc(isUpload ? u.replace('upload:','Upload · ') : (s.title || u).slice(0,48)) + '</span>';
+        }).join('');
+      el.appendChild(meta);
+      if ((data.links || []).length || (data.contacts || []).length) {
+        var links = document.createElement('div');
+        links.className = 'links';
+        (data.links || []).forEach(function(l){ links.insertAdjacentHTML('beforeend', '<a href="' + esc(l.url) + '" target="_blank" rel="noreferrer">' + esc(l.label || l.url) + '</a>'); });
+        (data.contacts || []).forEach(function(c){ links.insertAdjacentHTML('beforeend', '<span><b>' + esc(c.label) + ':</b> ' + esc(c.value) + '</span>'); });
+        el.appendChild(links);
+      }
+    }
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function addChips(){
+    var row = document.createElement('div');
+    row.className = 'chiprow';
+    ['Lieferzeit?','Bietet ihr Montage an?','Was kostet ein Fenster?','Transportschaden melden','Uw-Wert erklären'].forEach(function(t){
+      var c = document.createElement('button'); c.type='button'; c.className='chip'; c.textContent=t;
+      c.onclick = function(){ ask(t); };
+      row.appendChild(c);
+    });
+    log.appendChild(row);
+  }
+
+  async function ask(text){
+    var clean = String(text || input.value || '').trim();
+    if (!clean) return;
+    input.value = '';
+    addMsg('user', clean);
+    addMsg('bot', 'Ich prüfe das kurz…');
+    var loading = log.lastElementChild;
+    try {
+      var res = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ message: clean, knowledge: sessionFiles })
+      });
+      var data = await res.json();
+      loading.remove();
+      addMsg('bot', data.answer || data.message || 'Keine sichere Antwort gefunden.', data.ok !== false ? data : null);
+    } catch (e) {
+      loading.remove();
+      addMsg('bot', 'Ich bin gerade nicht erreichbar. Bitte später erneut versuchen.');
+    }
+  }
+
+  function renderFiles(){
+    fileList.innerHTML = '';
+    sessionFiles.forEach(function(f, i){
+      var el = document.createElement('div');
+      el.className = 'fileEntry';
+      el.innerHTML = '<span>📄 ' + esc(f.name) + ' <small>(' + Math.round(f.content.length/1024) + ' kB)</small></span>';
+      var x = document.createElement('button');
+      x.type = 'button'; x.textContent = '×'; x.title = 'Entfernen';
+      x.onclick = function(){ sessionFiles.splice(i,1); renderFiles(); };
+      el.appendChild(x);
+      fileList.appendChild(el);
+    });
+  }
+
+  function takeFiles(list){
+    Array.from(list).slice(0, 3 - sessionFiles.length).forEach(function(file){
+      if (!/\.(md|txt)$/i.test(file.name)) { alert('Bitte nur .md- oder .txt-Dateien.'); return; }
+      var reader = new FileReader();
+      reader.onload = function(){
+        sessionFiles.push({ name: file.name.slice(0,100), content: String(reader.result).slice(0,30000) });
+        renderFiles();
+        addMsg('bot', 'Wissensdatei „' + file.name + '" ist für diese Sitzung aktiv. Stellen Sie mir eine Frage dazu!');
+      };
+      reader.readAsText(file);
+    });
+  }
+
+  drop.onclick = function(){ fileInput.click(); };
+  fileInput.onchange = function(){ takeFiles(fileInput.files); fileInput.value=''; };
+  drop.ondragover = function(e){ e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = function(){ drop.classList.remove('over'); };
+  drop.ondrop = function(e){ e.preventDefault(); drop.classList.remove('over'); takeFiles(e.dataTransfer.files); };
+
+  form.onsubmit = function(e){ e.preventDefault(); ask(); };
+  input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } });
+
+  addMsg('bot', 'Hallo, ich bin Janela! Ich beantworte Fragen zu Lieferung, Reklamation, Konfigurator, Montage, Aufmaß und technischen Begriffen — und zu allem, was Sie mir rechts als Wissensdatei geben.');
+  addChips();
 </script>
 </body>
 </html>
