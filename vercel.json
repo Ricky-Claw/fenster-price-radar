@@ -15,6 +15,10 @@
     },
     "api/aufmass-submit.js": {
       "maxDuration": 30
+    },
+    "api/mcp.js": {
+      "includeFiles": "public/data/**",
+      "maxDuration": 30
     }
   },
   "headers": [

@@ -22,6 +22,7 @@
     "test:verification": "node tests/verification.mjs",
     "test:aufmass": "node tests/aufmass-smoke.mjs",
     "test:agent": "node tests/agent-token.mjs",
+    "test:mcp": "node tests/mcp-smoke.mjs",
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js && node --check tools/ebook-maker/make-ebook.mjs",
     "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",
@@ -31,11 +32,11 @@
     "rueckhol:test": "npm --prefix rueckhol-automatik test"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
+    "lucide-react": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "lucide-react": "latest"
-  },
-  "devDependencies": {}
+    "vite": "latest"
+  }
 }

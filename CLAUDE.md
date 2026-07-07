@@ -55,7 +55,7 @@ Lebt im Repo `~/Schwarzwald-Agent Fable 5` (Frontend `src/frontend`, Next.js App
 ---
 
 ## 3. Sicherheit (Pflicht, beide Welten)
-- **Secrets nur aus Env**, nie in Code/Repo/Chat/Log. Welt A: `FENSTER_RADAR_PASSWORD` + `FENSTER_RADAR_AUTH_SECRET` (Radar-Login), `RADAR_AGENT_TOKEN` (Maschinen-Lesezugang `/data/*`), `EKO4U_LOGIN`/`EKO4U_PASSWORD` (Einkaufspreise), LLM-Keys (`NVIDIA_API_KEY`, `KIMI_API_KEY`). Rückhol-Automatik auf VPS: `ADMIN_TOKEN` für Agent-CRUD. Agent-Zugänge dokumentiert in `docs/AGENT_API.md`. Welt B: siehe Schwarzwald-Repo.
+- **Secrets nur aus Env**, nie in Code/Repo/Chat/Log. Welt A: `FENSTER_RADAR_PASSWORD` + `FENSTER_RADAR_AUTH_SECRET` (Radar-Login), `RADAR_AGENT_TOKEN` (Maschinen-Lesezugang `/data/*`), `MCP_AGENT_TOKEN` (MCP-Server `/api/mcp` für Agents wie Alpha) + `RUECKHOL_ADMIN_TOKEN` (MCP→Popup-CRUD), `EKO4U_LOGIN`/`EKO4U_PASSWORD` (Einkaufspreise), LLM-Keys (`NVIDIA_API_KEY`, `KIMI_API_KEY`). Rückhol-Automatik auf VPS: `ADMIN_TOKEN` für Agent-CRUD. Agent-/MCP-Zugänge dokumentiert in `docs/AGENT_API.md` (MCP-Endpoint `POST /api/mcp`, Tools: radar_*, popup_*, dfs_chatbot_ask; Handler `api/mcp.js`, Logik `src/mcp/tools.js`, Test `npm run test:mcp`). Welt B: siehe Schwarzwald-Repo.
 - Chatbot **darf nie** sensible Kundendaten abfragen oder Backend-Zugriff vortäuschen (siehe 1b Out-of-Scope).
 - Kein roher HTML-Inject ins Widget ohne Escape. Eingaben an Systemgrenzen validieren.
 

@@ -56,6 +56,37 @@ Kampagnen-Felder: siehe `rueckhol-automatik/server/lib/sanitize.js` (`sanitizeCa
 - Rückhol-Token: volle Kampagnen-CRUD — Widget-Endpunkte (`config/events/submit`) bleiben öffentlich mit eigenem Origin-/Rate-Limit-Gate.
 - Beide Tokens rotierbar durch simples Neusetzen der Env + Neustart/Redeploy.
 
-## Phase 2 (bei Bedarf): MCP-Server
+## MCP-Server (für Agents wie Alpha) — gebaut
 
-Wenn Agents die Tools als MCP-Connector (claude.ai / Cowork-Registry) brauchen statt roher HTTP-Calls: dünner MCP-Wrapper über genau diese Endpunkte — Vercel Function mit `mcp-handler` (Streamable HTTP), Tools: `radar_get_prices`, `radar_get_history`, `popup_list`, `popup_create`, `popup_update`, `popup_delete`, `popup_analytics`. Auth: gleiche Bearer-Tokens als MCP-Server-Env. Kein neues Rechte-Modell nötig — der Wrapper ruft nur die hier dokumentierte API. Bauen, sobald ein konkreter Agent MCP-only andocken muss.
+Endpoint: **`POST https://fenster-price-radar.vercel.app/api/mcp`** (Streamable HTTP, stateless). Auth: `Authorization: Bearer $MCP_AGENT_TOKEN`. Ein MCP-fähiger Agent trägt genau diese URL + Token als Connector ein.
+
+Tools:
+
+| Tool | Zweck | Schreibt? |
+|---|---|---|
+| `radar_get_summary` | Stand, Zählstände, EK-Lauf, Wochen-Baseline, Verifizierung | nein |
+| `radar_list_configs` | Konfigurationen + Preise + EK/Marge, filterbar (brand/profile/layout/glazing/onlyWithPurchase) | nein |
+| `radar_get_config` | eine Konfiguration im Detail (key ODER brand+profile+size) | nein |
+| `radar_get_trend` | 3-Monats-Preistrend je Anbieter | nein |
+| `popup_list` | Rückhol-Popups + Sites + Theme-Presets | nein |
+| `popup_analytics` | Popup-Analytics | nein |
+| `popup_create` / `popup_update` / `popup_delete` | Popup-CRUD | **ja** |
+| `dfs_chatbot_ask` | Frage an den Website-Chatbot von deutscher-fenstershop.de (Janela) | nein (fragt) |
+
+### Einrichtung (Betreiber)
+
+1. **MCP-Zugangstoken** (Vercel): `openssl rand -base64 32` → Vercel-Env `MCP_AGENT_TOKEN` (Production) → redeploy. Ohne Env ist `/api/mcp` komplett zu (401 auf alles).
+2. **Popup-Schreibzugang** (nur für `popup_*`): Vercel-Env `RUECKHOL_ADMIN_TOKEN` = das `ADMIN_TOKEN`, das auf dem VPS in `/etc/rueckhol-automatik/service.env` gesetzt ist. Fehlt es, funktionieren die Radar- und Chatbot-Tools trotzdem; `popup_*` meldet sauber „nicht konfiguriert".
+3. Optional: `MCP_ALLOW_ORIGIN` (CORS, default `*` — Auth läuft über Bearer, nicht über Origin), `DFS_CHATBOT_URL` (default self-`/api/chatbot`).
+4. Im Agenten (Alpha) den Connector anlegen: Typ „Custom MCP / Streamable HTTP", URL = `…/api/mcp`, Header `Authorization: Bearer <MCP_AGENT_TOKEN>`.
+
+Test: `npm run test:mcp` (startet den Handler lokal, verbindet einen echten MCP-Client, prüft 401 + Tool-Liste + Radar-Calls).
+
+### Beispiel (roher JSON-RPC, was der Connector intern macht)
+
+```bash
+curl -sS -X POST https://fenster-price-radar.vercel.app/api/mcp \
+  -H "authorization: Bearer $MCP_AGENT_TOKEN" \
+  -H "content-type: application/json" -H "accept: application/json, text/event-stream" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"radar_list_configs","arguments":{"brand":"Aluplast","onlyWithPurchase":true}}}'
+```
