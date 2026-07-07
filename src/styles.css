@@ -432,3 +432,11 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
 .trendChartLegend span{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:800;color:#333}
 .trendChartLegend i{width:12px;height:12px;border-radius:3px;display:inline-block}
 .trendChartNote{margin:10px 0 0;color:#8496a6;font-size:11px}
+
+/* Einkaufspreis-Spalte (Eko4u) grün abgesetzt — visuell sofort als EK erkennbar, nie mit Wettbewerberpreisen verwechselbar */
+#radar thead th.purchaseHead{background:#EDF9F1;color:#1E6B3C}
+#radar td.purchase{background:#F2FBF5;box-shadow:inset 3px 0 0 #35A25E;text-align:right}
+#radar td.purchase b{color:#1E6B3C}
+#radar td.purchase small{color:#3d7a54}
+.providerBox.purchaseBox{background:#F2FBF5;border-color:#bfe8cc}
+#radar td.purchase .purchaseNote{display:block;margin-top:6px;font-size:10px;line-height:1.3;color:#3d7a54;white-space:normal}

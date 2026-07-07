@@ -142,6 +142,7 @@ for (const [provider, dir] of Object.entries(sources)) {
       equivalence: data?.equivalence || null,
       warnings: data?.warnings || [],
       reason: data?.reason || data?.error || '',
+      note: data?.note || '',
       sourceDir: dir
     });
   }

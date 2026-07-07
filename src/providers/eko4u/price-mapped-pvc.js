@@ -69,9 +69,11 @@ async function priceConfig(cfg,mapped,lid){
   overrides[`${P}[SASH][1][FITTING]`]=ruFitting; // R_RU -> RU_RU (Dreh-Kipp + Dreh-Kipp)
  }
  const res=await workshopApply(baseForm,overrides);
- // ERROR_CODE 4 = "Computation error": Konfigurator kann Größe/Aufbau im Standard nicht kalkulieren (z.B. 1flg Dreh-Kipp 1400x1900) -> wie bei Fensterblick als "nicht im Angebot" werten.
+ // ERROR_CODE 4 = Fertigungs-/Maßgrenze des Herstellers (z.B. "maximum sash surface exceeded (> 2,4 m2)",
+ // "Window too low. Misses 92 mm") -> als "nicht im Angebot" werten und den Original-Grund in die Note schreiben.
  if(String(res?.ERROR_CODE)==='4'){
-  return {provider:'Eko4u',input:cfg,mappedProfile:mapped.name,status:'unmatched',reason:'nicht_im_angebot',note:`Eko4u kann ${w}x${h} ${cfg.glazing||''} in ${lid} nicht kalkulieren (Computation error)`};
+  const explanation=String(res?.ERROR_EXPLANATION||'').split('\n').filter(l=>l.trim()&&!/^Echec\s/i.test(l)).join(' | ').trim();
+  return {provider:'Eko4u',input:cfg,mappedProfile:mapped.name,status:'unmatched',reason:'nicht_im_angebot',note:`Eko4u kann ${w}x${h} ${cfg.glazing||''} nicht fertigen: ${explanation||'Computation error'} (${lid})`};
  }
  if(hasError(res)) throw new Error(`Workshop ${lid}: ERROR_CODE ${res.ERROR_CODE} ${res.ERROR_MESSAGE||''}`);
  const form=res.options||'';

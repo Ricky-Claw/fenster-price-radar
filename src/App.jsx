@@ -123,8 +123,8 @@ function cheapestProviderIds(row){
 function purchaseCell(row){
   const p=row.providers?.eko4u;
   const change=row.weeklyChange?.eko4u;
-  if(!p) return <td className="muted">—</td>;
-  if(!p.valid) return <td><span className="pill warn">{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span></td>;
+  if(!p) return <td className="muted purchase">—</td>;
+  if(!p.valid) return <td className="purchase"><span className="pill warn" title={p.note||''}>{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span>{p.note?<small className="purchaseNote">{p.note}</small>:null}</td>;
   const margin=typeof row.purchaseMargin==='number'?row.purchaseMargin:null;
   return <td className="price purchase"><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
 }
@@ -745,7 +745,7 @@ function App(){
             <ul>{excludedConfigs.map((item,index)=><li key={`${item.brand}-${item.profile}-${item.size}-${index}`}><span>{item.brand} · {item.profile} · {item.size}</span><em>{item.reason || 'nicht vergleichbar'}</em></li>)}</ul>
           </details> : null}
 
-          <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}{hasPurchase?<th>Einkauf Eko4u</th>:null}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
+          <div className="tableWrap"><table><thead><tr><th>Konfiguration</th>{providers.map(([id,name])=><th key={id}>{name}</th>)}{hasPurchase?<th className="purchaseHead">Einkauf Eko4u</th>:null}<th>Abstand DFS</th><th>Entwicklung</th><th>Status</th></tr></thead><tbody>
             {filtered.map(row=>{
               const cheapestIds = cheapestProviderIds(row);
               const verificationStatus = row.verification?.status;

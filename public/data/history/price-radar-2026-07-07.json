@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07T12:23:55.547Z",
+  "generatedAt": "2026-07-07T13:17:17.777Z",
   "comparisonBaseline": {
     "generatedAt": "2026-07-06T20:07:44.669Z",
     "snapshot": "price-radar-2026-07-06.json"
@@ -8,7 +8,7 @@
     "dfs": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z",
     "fensterblick": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z",
     "fensterversand": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z",
-    "eko4u": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+    "eko4u": "eko4u-mapped-2026-07-07T13-08-55-966Z"
   },
   "summary": {
     "rows": 608,
@@ -18,7 +18,7 @@
     "weeklyBaselineGeneratedAt": "2026-07-06T20:07:44.669Z",
     "purchase": {
       "provider": "eko4u",
-      "source": "eko4u-mapped-2026-07-07T12-15-00-837Z",
+      "source": "eko4u-mapped-2026-07-07T13-08-55-966Z",
       "priced": 92,
       "unmatched": 60,
       "errorsSkipped": 0
@@ -240,6 +240,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -275,6 +276,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -303,6 +305,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -331,7 +334,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 175.3,
@@ -439,6 +443,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -474,6 +479,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -502,6 +508,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -530,7 +537,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 184.81,
@@ -638,6 +646,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -673,6 +682,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -701,6 +711,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -729,7 +740,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 287.49,
@@ -837,6 +849,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -872,6 +885,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -900,6 +914,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -928,7 +943,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 342.51,
@@ -1036,6 +1052,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -1071,6 +1088,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -1099,6 +1117,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -1127,7 +1146,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 361.74,
@@ -1235,6 +1255,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -1270,6 +1291,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -1298,6 +1320,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -1326,7 +1349,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 449.78,
@@ -1434,6 +1458,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -1469,6 +1494,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -1497,6 +1523,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -1525,7 +1552,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 487.88,
@@ -1633,6 +1661,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -1668,6 +1697,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -1696,6 +1726,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -1724,7 +1755,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 616.22,
@@ -1832,6 +1864,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -1867,6 +1900,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -1895,6 +1929,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -1923,7 +1958,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 215.97,
@@ -2031,6 +2067,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -2066,6 +2103,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -2094,6 +2132,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -2122,7 +2161,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 225.87,
@@ -2230,6 +2270,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -2265,6 +2306,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -2293,6 +2335,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -2321,7 +2364,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 355.18,
@@ -2429,6 +2473,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -2464,6 +2509,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -2492,6 +2538,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -2520,7 +2567,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 410.2,
@@ -2628,6 +2676,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -2663,6 +2712,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -2691,6 +2741,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -2719,7 +2770,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 447.18,
@@ -2827,6 +2879,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -2862,6 +2915,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -2890,6 +2944,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -2918,7 +2973,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 535.22,
@@ -3026,6 +3082,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -3061,6 +3118,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -3089,6 +3147,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -3117,7 +3176,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 603.62,
@@ -3225,6 +3285,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -3260,6 +3321,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -3288,6 +3350,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -3316,7 +3379,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 731.96,
@@ -3424,6 +3488,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -3459,6 +3524,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -3531,6 +3597,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -3568,7 +3635,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 151.46,
@@ -3688,6 +3756,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -3723,6 +3792,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -3795,6 +3865,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -3832,7 +3903,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 162.93,
@@ -3943,6 +4015,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -3978,6 +4051,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -4050,6 +4124,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -4087,7 +4162,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 231.73,
@@ -4198,6 +4274,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -4233,6 +4310,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -4305,6 +4383,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -4342,7 +4421,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 285.38,
@@ -4453,6 +4533,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -4488,6 +4569,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -4560,6 +4642,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -4597,7 +4680,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 275.5,
@@ -4708,6 +4792,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -4743,6 +4828,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -4815,6 +4901,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -4852,7 +4939,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 358.04,
@@ -4963,6 +5051,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -4998,6 +5087,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -5070,6 +5160,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -5098,7 +5189,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 2fach nicht fertigen: Window impossible to produce - maximum sash surface exceeded ( > 2,4 m2) (4000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 333.86,
@@ -5209,6 +5301,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -5244,6 +5337,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -5316,6 +5410,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -5344,7 +5439,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 3fach nicht fertigen: Window impossible to produce - maximum sash surface exceeded ( > 2,4 m2) (4000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 455.83,
@@ -5455,6 +5551,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -5490,6 +5587,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -5562,6 +5660,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -5599,7 +5698,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 189.29,
@@ -5710,6 +5810,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -5745,6 +5846,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -5817,6 +5919,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -5854,7 +5957,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 198.81,
@@ -5965,6 +6069,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -6000,6 +6105,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -6072,6 +6178,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -6109,7 +6216,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 304.24,
@@ -6220,6 +6328,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -6255,6 +6364,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -6327,6 +6437,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -6364,7 +6475,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 357.89,
@@ -6475,6 +6587,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -6510,6 +6623,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -6582,6 +6696,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -6619,7 +6734,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 361.67,
@@ -6730,6 +6846,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -6765,6 +6882,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -6837,6 +6955,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -6874,7 +6993,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 444.21,
@@ -6985,6 +7105,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -7020,6 +7141,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -7092,6 +7214,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -7120,7 +7243,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 2fach nicht fertigen: Acceptable sash size exceeded. (5000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 438.34,
@@ -7231,6 +7355,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -7266,6 +7391,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -7338,6 +7464,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -7366,7 +7493,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 3fach nicht fertigen: Acceptable sash size exceeded. (5000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 560.31,
@@ -7477,6 +7605,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -7512,6 +7641,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -7584,6 +7714,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -7612,7 +7743,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 500x500 2fach nicht fertigen: Window too low. Misses 92 mm (7000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 306.73,
@@ -7723,6 +7855,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -7758,6 +7891,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -7830,6 +7964,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -7858,7 +7993,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 500x500 3fach nicht fertigen: Window too low. Misses 92 mm (7000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 318.19,
@@ -7969,6 +8105,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -8004,6 +8141,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -8076,6 +8214,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -8113,7 +8252,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 469.25,
@@ -8224,6 +8364,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -8259,6 +8400,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -8331,6 +8473,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -8368,7 +8511,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 522.9,
@@ -8479,6 +8623,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -8514,6 +8659,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -8586,6 +8732,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -8623,7 +8770,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 557.88,
@@ -8734,6 +8882,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -8769,6 +8918,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -8841,6 +8991,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -8878,7 +9029,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 640.41,
@@ -8989,6 +9141,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -9024,6 +9177,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -9096,6 +9250,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -9124,7 +9279,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 2fach nicht fertigen: Acceptable sash size exceeded. (7000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 676.08,
@@ -9235,6 +9391,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -9270,6 +9427,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -9342,6 +9500,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -9370,7 +9529,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 3fach nicht fertigen: Acceptable sash size exceeded. (7000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 798.05,
@@ -9481,6 +9641,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -9516,6 +9677,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -9588,6 +9750,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -9625,7 +9788,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 246.88,
@@ -9736,6 +9900,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -9771,6 +9936,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -9843,6 +10009,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -9880,7 +10047,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 246.88,
@@ -9991,6 +10159,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -10026,6 +10195,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -10098,6 +10268,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -10135,7 +10306,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 396.83,
@@ -10246,6 +10418,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -10281,6 +10454,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -10353,6 +10527,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -10390,7 +10565,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 396.83,
@@ -10501,6 +10677,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -10536,6 +10713,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -10608,6 +10786,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -10645,7 +10824,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 471.78,
@@ -10756,6 +10936,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -10791,6 +10972,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -10863,6 +11045,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -10900,7 +11083,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 471.78,
@@ -11011,6 +11195,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -11046,6 +11231,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -11118,6 +11304,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -11146,7 +11333,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 2fach nicht fertigen: Acceptable sash size exceeded. (8000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 571.74,
@@ -11257,6 +11445,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -11292,6 +11481,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -11364,6 +11554,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -11392,7 +11583,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 3fach nicht fertigen: Acceptable sash size exceeded. (8000SL_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 571.74,
@@ -11503,6 +11695,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -11538,6 +11731,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -11566,6 +11760,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -11603,7 +11798,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 129.74,
@@ -11703,6 +11899,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -11738,6 +11935,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -11766,6 +11964,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -11803,7 +12002,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 141.2,
@@ -11903,6 +12103,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -11938,6 +12139,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -11966,6 +12168,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -12003,7 +12206,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 242.56,
@@ -12103,6 +12307,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -12138,6 +12343,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -12166,6 +12372,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -12203,7 +12410,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 292.08,
@@ -12303,6 +12511,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -12338,6 +12547,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -12366,6 +12576,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -12403,7 +12614,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 342.2,
@@ -12503,6 +12715,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -12538,6 +12751,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -12566,6 +12780,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -12603,7 +12818,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 422.9,
@@ -12703,6 +12919,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -12738,6 +12955,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -12766,6 +12984,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -12803,7 +13022,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 449.37,
@@ -12903,6 +13123,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -12938,6 +13159,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -12966,6 +13188,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -13003,7 +13226,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 564.92,
@@ -13103,6 +13327,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -13138,6 +13363,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -13166,6 +13392,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -13203,7 +13430,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 167.68,
@@ -13303,6 +13531,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -13338,6 +13567,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -13366,6 +13596,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -13403,7 +13634,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 179.14,
@@ -13503,6 +13735,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -13538,6 +13771,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -13566,6 +13800,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -13603,7 +13838,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 308.17,
@@ -13703,6 +13939,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -13738,6 +13975,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -13766,6 +14004,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -13803,7 +14042,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 361.82,
@@ -13903,6 +14143,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -13938,6 +14179,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -13966,6 +14208,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -14003,7 +14246,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 408,
@@ -14103,6 +14347,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -14138,6 +14383,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -14166,6 +14412,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -14203,7 +14450,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 490.53,
@@ -14303,6 +14551,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -14338,6 +14587,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -14366,6 +14616,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -14403,7 +14654,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 550.17,
@@ -14503,6 +14755,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -14538,6 +14791,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -14566,6 +14820,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -14603,7 +14858,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 672.14,
@@ -14703,6 +14959,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -14738,6 +14995,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -14766,6 +15024,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -14803,7 +15062,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 225.06,
@@ -14903,6 +15163,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -14938,6 +15199,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -14966,6 +15228,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -15003,7 +15266,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 241.57,
@@ -15103,6 +15367,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -15138,6 +15403,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -15166,6 +15432,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -15203,7 +15470,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 329.16,
@@ -15303,6 +15571,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -15338,6 +15607,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -15366,6 +15636,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -15403,7 +15674,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 384.18,
@@ -15503,6 +15775,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -15538,6 +15811,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -15566,6 +15840,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -15603,7 +15878,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 443.11,
@@ -15703,6 +15979,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -15738,6 +16015,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -15766,6 +16044,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -15803,7 +16082,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 528.86,
@@ -15903,6 +16183,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -15938,6 +16219,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -15966,6 +16248,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -15994,7 +16277,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 2fach nicht fertigen: Window impossible to produce - maximum sash surface exceeded ( > 2,4 m2) (GE763D_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 554.74,
@@ -16094,6 +16378,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -16129,6 +16414,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -16157,6 +16443,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -16185,7 +16472,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Eko4u kann 1400x1900 3fach nicht fertigen: Window impossible to produce - maximum sash surface exceeded ( > 2,4 m2) (GE763D_1SK_01@RU LEWE)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 676.71,
@@ -16285,6 +16573,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -16320,6 +16609,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -16348,6 +16638,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -16385,7 +16676,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 278.15,
@@ -16485,6 +16777,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -16520,6 +16813,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -16548,6 +16842,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -16585,7 +16880,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 278.15,
@@ -16685,6 +16981,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -16720,6 +17017,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -16748,6 +17046,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -16785,7 +17084,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 425.57,
@@ -16885,6 +17185,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -16920,6 +17221,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -16948,6 +17250,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -16985,7 +17288,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 425.57,
@@ -17085,6 +17389,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -17120,6 +17425,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -17148,6 +17454,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -17185,7 +17492,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 473.07,
@@ -17285,6 +17593,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -17320,6 +17629,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -17348,6 +17658,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -17385,7 +17696,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 473.07,
@@ -17485,6 +17797,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -17520,6 +17833,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -17548,6 +17862,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -17585,7 +17900,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 611.06,
@@ -17685,6 +18001,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -17720,6 +18037,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -17748,6 +18066,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -17785,7 +18104,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 611.06,
@@ -17885,6 +18205,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -17915,6 +18236,7 @@
             "dimension_adjusted_by_configurator:600x600"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 540x540 nicht konfigurierbar (Anbieter würde 600x600 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -17987,6 +18309,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -18015,7 +18338,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 184.88,
@@ -18115,6 +18439,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -18145,6 +18470,7 @@
             "dimension_adjusted_by_configurator:600x600"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 540x540 nicht konfigurierbar (Anbieter würde 600x600 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -18217,6 +18543,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -18245,7 +18572,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 198.25,
@@ -18345,6 +18673,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -18380,6 +18709,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -18452,6 +18782,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -18480,7 +18811,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 322.78,
@@ -18591,6 +18923,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -18626,6 +18959,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -18698,6 +19032,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -18726,7 +19061,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 376.43,
@@ -18837,6 +19173,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -18872,6 +19209,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -18944,6 +19282,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -18972,7 +19311,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 505.15,
@@ -19083,6 +19423,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -19118,6 +19459,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -19190,6 +19532,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -19218,7 +19561,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 587.69,
@@ -19329,6 +19673,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -19359,6 +19704,7 @@
             "dimension_adjusted_by_configurator:1200x600"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 1200x2200 nicht konfigurierbar (Anbieter würde 1200x600 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -19431,6 +19777,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -19459,7 +19806,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 847.38,
@@ -19559,6 +19907,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -19589,6 +19938,7 @@
             "dimension_adjusted_by_configurator:1200x600"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 1200x2200 nicht konfigurierbar (Anbieter würde 1200x600 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -19661,6 +20011,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -19689,7 +20040,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 968.43,
@@ -19789,6 +20141,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -19819,6 +20172,7 @@
             "dimension_adjusted_by_configurator:500x500"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 400x500 nicht konfigurierbar (Anbieter würde 500x500 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -19891,6 +20245,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -19919,7 +20274,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 167.54,
@@ -20019,6 +20375,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -20049,6 +20406,7 @@
             "dimension_adjusted_by_configurator:500x500"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 400x500 nicht konfigurierbar (Anbieter würde 500x500 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -20121,6 +20479,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -20149,7 +20508,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 176.71,
@@ -20249,6 +20609,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -20284,6 +20645,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -20356,6 +20718,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -20384,7 +20747,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 366.78,
@@ -20495,6 +20859,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -20530,6 +20895,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -20602,6 +20968,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -20630,7 +20997,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 424.55,
@@ -20741,6 +21109,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -20776,6 +21145,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -20848,6 +21218,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -20876,7 +21247,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 489.87,
@@ -20987,6 +21359,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -21022,6 +21395,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -21094,6 +21468,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -21122,7 +21497,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 583.41,
@@ -21233,6 +21609,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -21263,6 +21640,7 @@
             "dimension_adjusted_by_configurator:1500x500"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 1500x2000 nicht konfigurierbar (Anbieter würde 1500x500 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -21335,6 +21713,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -21363,7 +21742,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 938.61,
@@ -21463,6 +21843,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -21493,6 +21874,7 @@
             "dimension_adjusted_by_configurator:1500x500"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 1500x2000 nicht konfigurierbar (Anbieter würde 1500x500 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -21565,6 +21947,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -21593,7 +21976,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1076.17,
@@ -21693,6 +22077,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -21728,6 +22113,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -21800,6 +22186,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -21828,7 +22215,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 451.5,
@@ -21939,6 +22327,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -21974,6 +22363,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -22046,6 +22436,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -22074,7 +22465,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 509.27,
@@ -22185,6 +22577,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -22220,6 +22613,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -22292,6 +22686,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -22320,7 +22715,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 603.08,
@@ -22431,6 +22827,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -22466,6 +22863,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -22538,6 +22936,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -22566,7 +22965,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 696.62,
@@ -22677,6 +23077,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -22707,6 +23108,7 @@
             "dimension_adjusted_by_configurator:1500x500"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 1500x2000 nicht konfigurierbar (Anbieter würde 1500x500 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -22779,6 +23181,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -22807,7 +23210,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1037.84,
@@ -22907,6 +23311,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -22937,6 +23342,7 @@
             "dimension_adjusted_by_configurator:1500x500"
           ],
           "reason": "nicht_im_angebot",
+          "note": "Größe 1500x2000 nicht konfigurierbar (Anbieter würde 1500x500 liefern)",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -23009,6 +23415,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -23037,7 +23444,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1175.4,
@@ -23137,6 +23545,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -23172,6 +23581,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -23244,6 +23654,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -23281,7 +23692,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 501.67,
@@ -23392,6 +23804,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -23427,6 +23840,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -23499,6 +23913,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -23536,7 +23951,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 572.04,
@@ -23647,6 +24063,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -23682,6 +24099,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -23754,6 +24172,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -23791,7 +24210,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 646.1,
@@ -23902,6 +24322,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -23937,6 +24358,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -24009,6 +24431,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -24046,7 +24469,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 723.82,
@@ -24157,6 +24581,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -24192,6 +24617,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -24264,6 +24690,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -24301,7 +24728,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 632.54,
@@ -24412,6 +24840,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -24447,6 +24876,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -24519,6 +24949,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -24556,7 +24987,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 716.56,
@@ -24667,6 +25099,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -24702,6 +25135,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -24774,6 +25208,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -24811,7 +25246,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 804.34,
@@ -24922,6 +25358,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -24957,6 +25394,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -25029,6 +25467,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -25066,7 +25505,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 895.77,
@@ -25177,6 +25617,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -25212,6 +25653,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -25284,6 +25726,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -25321,7 +25764,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 930.33,
@@ -25432,6 +25876,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -25467,6 +25912,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -25539,6 +25985,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -25576,7 +26023,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1045.56,
@@ -25687,6 +26135,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -25722,6 +26171,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -25794,6 +26244,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -25831,7 +26282,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1164.54,
@@ -25942,6 +26394,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -25977,6 +26430,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -26049,6 +26503,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -26086,7 +26541,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1287.15,
@@ -26197,6 +26653,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -26232,6 +26689,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -26304,6 +26762,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -26341,7 +26800,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 716.19,
@@ -26452,6 +26912,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -26487,6 +26948,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -26559,6 +27021,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -26596,7 +27059,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 791.15,
@@ -26707,6 +27171,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -26742,6 +27207,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -26814,6 +27280,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -26851,7 +27318,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 866.17,
@@ -26962,6 +27430,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -26997,6 +27466,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -27069,6 +27539,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -27106,7 +27577,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 941.16,
@@ -27217,6 +27689,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -27252,6 +27725,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -27280,6 +27754,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -27308,7 +27783,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 508.34,
@@ -27408,6 +27884,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -27443,6 +27920,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -27471,6 +27949,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -27499,7 +27978,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 611.55,
@@ -27599,6 +28079,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -27634,6 +28115,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -27662,6 +28144,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -27690,7 +28173,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 719.04,
@@ -27790,6 +28274,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -27825,6 +28310,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -27853,6 +28339,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -27890,7 +28377,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 593.92,
@@ -27990,6 +28478,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -28025,6 +28514,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -28053,6 +28543,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -28090,7 +28581,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 739.24,
@@ -28190,6 +28682,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -28225,6 +28718,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -28253,6 +28747,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -28290,7 +28785,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 895.46,
@@ -28390,6 +28886,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -28425,6 +28922,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -28453,6 +28951,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -28490,7 +28989,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1113.12,
@@ -28590,6 +29090,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -28625,6 +29126,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -28697,6 +29199,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -28734,7 +29237,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 497.28,
@@ -28845,6 +29349,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -28880,6 +29385,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -28952,6 +29458,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -28989,7 +29496,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 567.67,
@@ -29100,6 +29608,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -29135,6 +29644,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -29207,6 +29717,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -29244,7 +29755,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 641.69,
@@ -29355,6 +29867,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -29390,6 +29903,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -29462,6 +29976,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -29499,7 +30014,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 719.44,
@@ -29610,6 +30126,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -29645,6 +30162,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -29717,6 +30235,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -29754,7 +30273,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 626.77,
@@ -29865,6 +30385,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -29900,6 +30421,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -29972,6 +30494,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -30009,7 +30532,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 710.89,
@@ -30120,6 +30644,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -30155,6 +30680,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -30227,6 +30753,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -30264,7 +30791,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 798.56,
@@ -30375,6 +30903,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -30410,6 +30939,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -30482,6 +31012,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -30519,7 +31050,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 890.01,
@@ -30630,6 +31162,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -30665,6 +31198,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -30737,6 +31271,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -30774,7 +31309,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 921.47,
@@ -30885,6 +31421,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -30920,6 +31457,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -30992,6 +31530,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -31029,7 +31568,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1036.74,
@@ -31140,6 +31680,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -31175,6 +31716,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -31247,6 +31789,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -31284,7 +31827,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1155.61,
@@ -31395,6 +31939,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -31430,6 +31975,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -31502,6 +32048,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -31539,7 +32086,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1278.24,
@@ -31650,6 +32198,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -31685,6 +32234,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -31757,6 +32307,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -31794,7 +32345,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 708.69,
@@ -31905,6 +32457,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -31940,6 +32493,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -32012,6 +32566,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -32049,7 +32604,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 783.69,
@@ -32160,6 +32716,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -32195,6 +32752,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -32267,6 +32825,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -32304,7 +32863,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 858.61,
@@ -32415,6 +32975,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -32450,6 +33011,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -32522,6 +33084,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -32559,7 +33122,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 933.63,
@@ -32670,6 +33234,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -32705,6 +33270,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -32733,6 +33299,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -32761,7 +33328,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 413.58,
@@ -32861,6 +33429,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -32896,6 +33465,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -32924,6 +33494,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -32952,7 +33523,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 499.56,
@@ -33052,6 +33624,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -33087,6 +33660,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -33115,6 +33689,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "No equivalent PVC profile in Fensterversand mapping",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -33143,7 +33718,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 593.17,
@@ -33231,6 +33807,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -33266,6 +33843,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -33294,6 +33872,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -33322,7 +33901,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": null,
@@ -33399,6 +33979,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -33434,6 +34015,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -33462,6 +34044,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -33499,7 +34082,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": null,
@@ -33576,6 +34160,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -33611,6 +34196,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -33639,6 +34225,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -33667,7 +34254,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": null,
@@ -33744,6 +34332,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -33779,6 +34368,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -33807,6 +34397,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -33835,7 +34426,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": null,
@@ -33912,6 +34504,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -33947,6 +34540,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -33975,6 +34569,7 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -34003,7 +34598,8 @@
           "equivalence": null,
           "warnings": [],
           "reason": "nicht_im_angebot",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": null,
@@ -34092,6 +34688,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -34127,6 +34724,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -34175,6 +34773,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -34212,7 +34811,8 @@
           },
           "warnings": [],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 584.47,
@@ -34323,6 +34923,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -34358,6 +34959,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -34406,6 +35008,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -34445,7 +35048,8 @@
             "aluprof_variante_si_nicht_explizit"
           ],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 724.42,
@@ -34556,6 +35160,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "dfs-mapped-pvc-2026-07-07T11-58-40-758Z"
         },
         "fensterblick": {
@@ -34591,6 +35196,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterblick-mapped-pvc-2026-07-07T11-58-54-191Z"
         },
         "fensterversand": {
@@ -34639,6 +35245,7 @@
           },
           "warnings": [],
           "reason": "",
+          "note": "",
           "sourceDir": "fensterversand-mapped-pvc-2026-07-07T12-05-28-099Z"
         },
         "eko4u": {
@@ -34678,7 +35285,8 @@
             "aluprof_variante_si_nicht_explizit"
           ],
           "reason": "",
-          "sourceDir": "eko4u-mapped-2026-07-07T12-15-00-837Z"
+          "note": "",
+          "sourceDir": "eko4u-mapped-2026-07-07T13-08-55-966Z"
         }
       },
       "dfsPrice": 1369.08,
