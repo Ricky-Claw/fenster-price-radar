@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-07T12:13:26.926Z",
+  "generatedAt": "2026-07-07T14:14:28.590Z",
   "note": "Preisindex je Anbieter, Basis 100 beim ersten Auftreten jeder Konfiguration (mittelt relative Preisbewegung, robust gegen Katalog-Wachstum).",
   "points": [
     {
@@ -166,11 +166,11 @@
     },
     {
       "date": "2026-07-07",
-      "dfs": 94.14,
+      "dfs": 94.68,
       "dfsCount": 147,
-      "fensterblick": 115.43,
+      "fensterblick": 111.6,
       "fensterblickCount": 142,
-      "fensterversand": 101.59,
+      "fensterversand": 101.5,
       "fensterversandCount": 89
     }
   ]
