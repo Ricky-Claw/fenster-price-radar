@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "node scripts/build-anleitung.js",
     "dev": "vite --host 0.0.0.0",
+    "prebuild": "node scripts/build-anleitung.js",
     "build": "vite build",
     "preview": "vite preview --host 0.0.0.0",
     "data:sync": "node scripts/sync-results.js",

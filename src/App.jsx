@@ -682,6 +682,7 @@ function App(){
         <a href="#aktionskalender" className={activeView==='aktionskalender' ? 'active' : ''} onClick={event=>{event.preventDefault();selectView('aktionskalender');}}>Aktionskalender</a>
         <a href="/aufmass.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Aufmaß per Sprache</a>
         <a href="/janela-chatbot-test.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Janela Chatbot (Test)</a>
+        <a href="/janela-wissen-anleitung.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Janela Wissen (Anleitung)</a>
         <a href="/rueckhol/" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Rückhol-Automatik</a>
         <a href="/rueckhol-popups-test.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Rückhol-Popups (Test)</a>
       </nav>
