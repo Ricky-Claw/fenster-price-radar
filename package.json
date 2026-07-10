@@ -32,11 +32,11 @@
     "rueckhol:test": "npm --prefix rueckhol-automatik test"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.29.0",
-    "@vitejs/plugin-react": "latest",
-    "lucide-react": "latest",
-    "react": "latest",
-    "react-dom": "latest",
-    "vite": "latest"
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "@vitejs/plugin-react": "6.0.1",
+    "lucide-react": "1.11.0",
+    "react": "19.2.5",
+    "react-dom": "19.2.5",
+    "vite": "8.0.10"
   }
 }
