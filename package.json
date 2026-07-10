@@ -23,6 +23,7 @@
     "test:links": "node tests/config-links.mjs",
     "test:verification": "node tests/verification.mjs",
     "test:aufmass": "node tests/aufmass-smoke.mjs",
+    "check:live": "node scripts/check-live.mjs",
     "test:agent": "node tests/agent-token.mjs",
     "test:mcp": "node tests/mcp-smoke.mjs",
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",

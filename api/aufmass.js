@@ -4,9 +4,10 @@ import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
 const BODY_MAX_BYTES = 65536;
 const ALLOW_ORIGIN = process.env.AUFMASS_ALLOW_ORIGIN || '';
+// Offices and VPNs share one NAT egress IP, so per-IP is deliberately generous; the global cap is the real cost brake.
 const rateLimiter = createRateLimiter({
   windowMs: Number(process.env.AUFMASS_RL_WINDOW_MS) || 60000,
-  maxPerKey: Number(process.env.AUFMASS_RL_MAX_PER_IP) || 8,
+  maxPerKey: Number(process.env.AUFMASS_RL_MAX_PER_IP) || 30,
   maxGlobal: Number(process.env.AUFMASS_RL_MAX_GLOBAL) || 60,
 });
 

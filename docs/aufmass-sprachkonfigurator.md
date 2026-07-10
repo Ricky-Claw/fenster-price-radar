@@ -38,7 +38,7 @@ Eingaben werden **lokal automatisch gespeichert** (überleben Neuladen/Netzausfa
 | `AUFMASS_TICKET_WEBHOOK` | Ziel-URL fürs Absenden (CMS/Ticket). Ungesetzt = „erfasst (Testphase)", kein echter Versand |
 | `AUFMASS_ALLOW_ORIGIN` | CORS-Origin, falls die Seite mal fremd-domainig eingebettet wird (sonst same-origin) |
 | `FENSTERSHOP_LLM_MODEL`, `FENSTERSHOP_LLM_TIMEOUT_MS` | Kimi-Fallback-Modell/Timeout (optional) |
-| `AUFMASS_RL_*`, `AUFMASS_SUBMIT_RL_*` | Rate-Limit-Feintuning (optional) |
+| `AUFMASS_RL_*`, `AUFMASS_SUBMIT_RL_*` | Rate-Limit-Feintuning (optional); Aufmaß-API pro IP standardmäßig 30/min (Büro/VPN-tauglich), global weiterhin 60/min als Kosten-Deckel |
 
 ### Test / Build
 
@@ -46,6 +46,12 @@ Eingaben werden **lokal automatisch gespeichert** (überleben Neuladen/Netzausfa
 npm run test:aufmass    # Offline-Smoke (Normalizer, Extractor, Handler, Rate-Limit, Drift-Guard)
 npm run build
 ```
+
+## Vor jedem Kunden-Termin
+
+`npm run check:live` — prüft die Live-Seite anonym von außen (Seite erreichbar, API antwortet, Absenden-Endpoint ok).
+
+Optional: `CHECK_LIVE_KI=1 npm run check:live` für einen echten KI-Testcall (kostet einen LLM-Call).
 
 ---
 
