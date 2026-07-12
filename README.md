@@ -61,7 +61,20 @@ Snippet-Beispiel:
 ></script>
 ```
 
-`data-page` ist optional — ohne Angabe nutzt das Widget `window.location.pathname`, um Begrüßung und Vorschlags-Chips an die aktuelle Seite anzupassen.
+Attribute am Script-Tag:
+
+| Attribut | Bedeutung | Default |
+|---|---|---|
+| `data-api-url` | Basis-URL der Chatbot-API | Origin des Script-Tags |
+| `data-title` | Titel im Widget-Kopf | `Janela` |
+| `data-accent` | Akzentfarbe (Hex) | `#004b93` |
+| `data-page` | Erzwingt Seitenkontext für Begrüßung/Chips | `window.location.pathname` |
+
+Das Widget ist ein reines Single-File-Script ohne Abhängigkeiten. Ist die API nicht erreichbar, zeigt es eine Kontakt-Antwort statt eines Fehlers — die Kundenseite bricht nie.
+
+Serverseitig vor Produktivbetrieb auf einer fremden Domain: `CHATBOT_ALLOW_ORIGIN` auf die Shop-Domain setzen (Default ist `*`). Direktzugriff ohne Widget: `POST /api/chatbot` mit `{"message": "...", "page": "..."}` → `{"answer": ...}` (Rate-Limit pro IP).
+
+**Firmenwissen pflegen ohne Code:** Markdown-Dateien unter `knowledge/` direkt in GitHub bearbeiten → automatischer Deploy, der Bot kennt den neuen Stand nach wenigen Minuten. Anleitung: `public/janela-wissen-anleitung.md`. Gecrawltes Website-Wissen aktualisieren: `npm run knowledge:crawl`.
 
 MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
 
@@ -72,6 +85,48 @@ Test:
 ```bash
 npm run test:chatbot
 ```
+
+## Sprachaufmaß (Voice-Konfigurator) — Integration
+
+Eigenständige Seite unter `/aufmass.html` — vom Shop aus **verlinken** (Button/Menüpunkt). Bewusst nicht per iframe einbettbar (CSP `frame-ancestors 'none'`).
+
+Fertige Aufmaße werden an die Env-Variable `AUFMASS_TICKET_WEBHOOK` (Ziel-URL eures CMS/Ticketsystems) weitergeleitet. Die Empfängerseite bekommt ein POST (JSON, 6-Sekunden-Timeout, HTTP 2xx = übernommen):
+
+```json
+{
+  "reference": "AUF-20260711-a1b2c3d4",
+  "submittedAt": "2026-07-11T12:00:00.000Z",
+  "windowCount": 2,
+  "note": "Anmerkung des Kunden",
+  "windows": [
+    {
+      "raum": "Wohnzimmer", "anzahl": 1,
+      "breiteMm": 1200, "hoeheMm": 1400,
+      "oeffnungsart": "Dreh-Kipp", "anschlag": "links",
+      "material": "Kunststoff", "verglasung": "3-fach",
+      "farbe": "weiß", "notiz": ""
+    }
+  ]
+}
+```
+
+Ob der Webhook aktiv ist, zeigt `GET /api/aufmass-submit` (`configured: true/false`). Ohne Webhook läuft die Seite im Testphase-Modus (nichts wird versendet). Weitere Env-Variablen (KI-Keys, CORS via `AUFMASS_ALLOW_ORIGIN`, Rate-Limits): `docs/aufmass-sprachkonfigurator.md`.
+
+## Rückholautomatik (Exit-Intent-Popups) — Integration
+
+Ein Script-Tag auf der Kundenseite, der Server läuft separat:
+
+```html
+<script async src="https://rueckhol.schwarzwald-agent.de/cre.js"
+        data-cre-site="<siteId>"
+        data-cre-api="https://rueckhol.schwarzwald-agent.de"></script>
+```
+
+Voraussetzungen: `siteId` muss zu einer aktiven Kampagne passen und die Seiten-Domain muss serverseitig in `SITE_ORIGINS` freigeschaltet sein. Fehlersuche: `data-cre-debug="1"` ans Tag. Vollständige Doku (Env, API, Betrieb): `rueckhol-automatik/README.md`.
+
+## Maschinenzugang für Agents/Automationen
+
+Preisdaten, Popup-CRUD und Chatbot sind auch per Token-API/MCP erreichbar — Endpunkte, Auth und Beispiele in `docs/AGENT_API.md`.
 
 ## Ruhiges Heimspiel E-Book
 

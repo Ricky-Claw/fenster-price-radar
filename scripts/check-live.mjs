@@ -72,7 +72,11 @@ await check('submit-health', async () => {
   const response = await timedFetch(`${BASE}/api/aufmass-submit`);
   const json = await response.json();
   if (response.status === 200 && json.ok === true) {
-    report('ok', 'submit-health', `Webhook konfiguriert: ${json.configured === true ? 'ja' : 'nein'}`);
+    if (json.configured === true) {
+      report('ok', 'submit-health', 'Webhook konfiguriert: ja');
+    } else {
+      report('warn', 'submit-health', 'Webhook konfiguriert: NEIN — Aufmasse werden nicht weitergeleitet (AUFMASS_TICKET_WEBHOOK setzen)');
+    }
   } else {
     report('FAIL', 'submit-health', `HTTP ${response.status}, ok=${String(json.ok)}`);
   }
