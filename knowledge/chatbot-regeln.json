@@ -1,0 +1,114 @@
+{
+  "_anleitung": "Harte Antwort-Regeln für Janela. Reihenfolge zählt: die erste passende Regel gewinnt. 'stichwoerter' sind Suchmuster (Regex, klein geschrieben, Umlaute als ae/oe/ue bzw. a/o/u, ß als ss). 'nicht' verhindert die Regel, wenn eines dieser Muster ebenfalls vorkommt. Platzhalter wie {{contacts.logisticsPhone}} oder {{links.delivery}} werden automatisch durch die zentralen Kontakte/Links ersetzt. Nach dem Speichern in GitHub greift die Änderung nach 1-2 Minuten automatisch.",
+  "regeln": [
+    {
+      "intent": "delivery_emergency",
+      "action": "contact_logistics_phone",
+      "quelle": "Liefernotfall",
+      "stichwoerter": ["fahrer.*(da|vor ort|kommt|wartet|steht)", "lkw.*(da|steht|vor)", "liefer.*(heute|notfall|akut|jetzt)", "avisier.*(heute|48|morgen)", "spedition.*(heute|fahrer|da|steht)"],
+      "antwort": "Wenn die Lieferung heute kommt, der Fahrer vor Ort ist oder es ein akuter Liefernotfall ist, wenden Sie sich bitte direkt telefonisch an unsere Logistikabteilung:\n\n{{contacts.logisticsPhone}}\n\nBitte beachten Sie: Sichtbare Schäden müssen sofort dem Fahrer gemeldet, auf dem Lieferschein vermerkt und mit Fotos dokumentiert werden.",
+      "kontakte": [{ "type": "phone", "label": "Logistik", "wert": "{{contacts.logisticsPhone}}" }],
+      "links": [{ "label": "Versand und Lieferzeiten", "url": "{{links.delivery}}" }]
+    },
+    {
+      "intent": "delivery_damage",
+      "action": "open_complaint_form",
+      "quelle": "Transportschaden",
+      "stichwoerter": ["transportschaden", "beschadigt", "schaden.*liefer", "liverschein|lieferschein", "(ware|fenster|scheibe|element|tur|palette).*kaputt", "kaputt.*(geliefert|liefer)"],
+      "antwort": "Bei sichtbarem Transportschaden: Bitte den Fahrer direkt informieren, den Schaden auf dem Lieferschein vermerken lassen, Fotos machen und anschließend das Reklamationsformular nutzen.",
+      "kontakte": [{ "type": "email", "label": "Logistik", "wert": "{{contacts.logisticsEmail}}" }],
+      "links": [{ "label": "Reklamationsformular", "url": "{{links.complaint}}" }]
+    },
+    {
+      "intent": "order_status",
+      "action": "contact_order_status",
+      "quelle": "Bestellstatus",
+      "stichwoerter": ["bestellstatus", "bestellung.*(status|produktion|bearbeitung|andern|aendern|storno|auftragsbestatigung)", "status.*bestellung", "wo.*bestellung", "wann.*(bestellung|ware|liefertermin)", "produktionsstand"],
+      "antwort": "Ich habe keinen Zugriff auf konkrete Bestellungen, Produktionsstände oder Liefertermine. Bitte senden Sie Ihre Anfrage mit den notwendigen Angaben per E-Mail an:\n\n{{contacts.orderStatusEmail}}",
+      "kontakte": [{ "type": "email", "label": "Bestellstatus", "wert": "{{contacts.orderStatusEmail}}" }]
+    },
+    {
+      "intent": "payment_status",
+      "action": "contact_payment",
+      "quelle": "Zahlungsfragen",
+      "stichwoerter": ["zahlung", "zahlungseingang", "rechnung", "paypal", "uberweisung|ueberweisung", "bezahlt"],
+      "antwort": "Ich kann keine Zahlungseingänge oder Rechnungsdetails prüfen. Bitte wenden Sie sich für Zahlungsfragen an:\n\n{{contacts.paymentEmail}}",
+      "kontakte": [{ "type": "email", "label": "Zahlung", "wert": "{{contacts.paymentEmail}}" }]
+    },
+    {
+      "intent": "inquiry_status",
+      "action": "contact_inquiry",
+      "quelle": "Anfrage-ID",
+      "stichwoerter": ["anfrage[-\\s]?id", "ticket", "bearbeitungsstand.*anfrage", "stand.*anfrage"],
+      "antwort": "Ich habe keinen Zugriff auf das Ticketsystem und kann den Bearbeitungsstand einer Anfrage nicht prüfen. Bitte senden Sie Ihre Frage zur Anfrage-ID per E-Mail an:\n\n{{contacts.inquiryEmail}}",
+      "kontakte": [{ "type": "email", "label": "Anfrage", "wert": "{{contacts.inquiryEmail}}" }]
+    },
+    {
+      "intent": "technical_specific",
+      "action": "contact_technical_phone",
+      "quelle": "konkrete technische Werte",
+      "stichwoerter": ["produkt[-\\s]?id", "konkrete.*konfiguration", "uw[-\\s]?wert.*(genau|produkt|konfiguration)", "ug[-\\s]?wert.*(genau|produkt|konfiguration)", "schallschutz.*(genau|produkt|konfiguration)", "rc2|sicherheitsklasse|statik|durchbiegung"],
+      "antwort": "Konkrete technische Rückfragen zu einer bestimmten Produkt-ID, einem Profil oder einer konkreten Konfiguration lassen sich telefonisch am besten klären. Bitte wenden Sie sich direkt an unsere technische Abteilung:\n\n{{contacts.technicalPhone}}",
+      "kontakte": [
+        { "type": "phone", "label": "Technik", "wert": "{{contacts.technicalPhone}}" },
+        { "type": "email", "label": "Technik", "wert": "{{contacts.technicalEmail}}" }
+      ],
+      "links": [
+        { "label": "Fensterbegriffe", "url": "{{links.glossary}}" },
+        { "label": "PVC-Profilschnitte", "url": "{{links.profiles}}" }
+      ]
+    },
+    {
+      "intent": "delivery_general_time",
+      "action": "answer_with_link",
+      "quelle": "allgemeine Lieferzeit",
+      "stichwoerter": ["lieferzeit", "versandzeit", "wie lange.*liefer", "wann.*geliefert", "spedition", "tracking|sendungsverfolgung"],
+      "antwort": "Die Lieferzeit hängt von Produkt, Profil, Hersteller und Ausstattung ab. Die voraussichtliche Lieferzeit sehen Sie am Produkt oder im Warenkorb. Mehr dazu: {{links.delivery}}",
+      "links": [{ "label": "Versand und Lieferzeiten", "url": "{{links.delivery}}" }]
+    },
+    {
+      "intent": "configurator_help",
+      "action": "answer_with_configurator_link",
+      "quelle": "Konfiguratorhilfe",
+      "stichwoerter": ["konfigurator", "konfigurieren", "fenster.*auswahlen|auswaehlen", "profil.*wahl", "ma[ßs]e.*eingeben"],
+      "antwort": "Für Hilfe beim Konfigurieren können Sie den Fenster-Konfigurator nutzen. Bei technischen Problemen oder unklaren Optionen hilft unsere technische Abteilung weiter:\n\n{{contacts.technicalPhone}}",
+      "kontakte": [{ "type": "phone", "label": "Technik", "wert": "{{contacts.technicalPhone}}" }],
+      "links": [
+        { "label": "Fenster-Konfigurator", "url": "{{links.configurator}}" },
+        { "label": "Erklärvideos", "url": "{{links.videos}}" }
+      ]
+    },
+    {
+      "intent": "complaint",
+      "action": "open_complaint_form",
+      "quelle": "Reklamation",
+      "stichwoerter": ["reklamation", "reklamieren", "mangel", "ersatz", "defekt"],
+      "antwort": "Für Reklamationen nutzen Sie bitte das Reklamationsformular. Bitte übermitteln Sie Fotos und personenbezogene Angaben nur dort, nicht hier im Chat.",
+      "links": [{ "label": "Reklamationsformular", "url": "{{links.complaint}}" }]
+    },
+    {
+      "intent": "montage",
+      "action": "answer_no_montage",
+      "quelle": "Montage",
+      "stichwoerter": ["montage", "montier", "konnen sie.*einbau", "einbau.*(anbieten|moglich|service|buchen)", "machen sie.*aufmass"],
+      "antwort": "Wir führen selbst keine Montage aus. Wenn Sie eine Montage wünschen, geben Sie dies bitte direkt in Ihrer Anfrage über das „Anfrage senden“-Formular mit an — wir prüfen dann, ob wir Ihnen in Ihrem Postleitzahlengebiet einen Montagepartner empfehlen können. Eine Empfehlung ist je nach Region nicht immer möglich.",
+      "links": [{ "label": "Anfrage senden / Callback", "url": "{{links.callback}}" }]
+    },
+    {
+      "intent": "price_quick",
+      "action": "answer_with_configurator_link",
+      "quelle": "schnelle Preisermittlung",
+      "stichwoerter": ["was kostet", "preis.*(wissen|berechnen|erfahren)", "schnell.*preis", "preis.*(fenster|tur|haustur|rollladen)"],
+      "nicht": ["versand|liefer"],
+      "antwort": "Für eine schnelle Preisermittlung nutzen Sie am besten direkt unseren Konfigurator: Dort wählen Sie Größe, Profil, Farbe, Verglasung und Zubehör aus und erhalten sofort eine Preisberechnung.\n\n{{links.configurator}}\n\nFür größere Anfragen mit mehreren Elementen nutzen Sie gerne das „Anfrage senden“-Formular im Hauptmenü.",
+      "links": [{ "label": "Fenster-Konfigurator", "url": "{{links.configurator}}" }]
+    },
+    {
+      "intent": "self_pickup",
+      "action": "answer_self_pickup",
+      "quelle": "Selbstabholung",
+      "stichwoerter": ["abholung", "abholen", "selbst.*holen", "mitnahmegestell"],
+      "antwort": "Eine Abholung ist grundsätzlich möglich. Bitte bringen Sie ausreichend Personen für die manuelle Beladung mit. Beladung durch unsere Mitarbeiter: pauschal 50 € pro 5 Fenster. Mitnahmegestell (Einweg-Holzgestell): zusätzlich 60 € pro Gestell. Bitte geeignetes Fahrzeug und Material zur Ladungssicherung einplanen — Fenster und Bauelemente sind schwer, sperrig und empfindlich."
+    }
+  ]
+}

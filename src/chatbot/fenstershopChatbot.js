@@ -31,6 +31,38 @@ export const LINKS = {
   profiles: 'https://deutscher-fenstershop.de/profilschnitte-detailzeichnungen/pvc',
 };
 
+const RULES_FILE = new URL('../../knowledge/chatbot-regeln.json', import.meta.url);
+
+function resolveRulePlaceholders(value = '') {
+  return String(value).replace(/\{\{(contacts|links)\.([a-zA-Z]+)\}\}/g, (match, group, key) => {
+    const source = group === 'contacts' ? CONTACTS : LINKS;
+    return source[key] ?? match;
+  });
+}
+
+let cachedRules = null;
+function loadHardRules() {
+  if (cachedRules) return cachedRules;
+  try {
+    const parsed = JSON.parse(readFileSync(RULES_FILE, 'utf8'));
+    cachedRules = (parsed.regeln || []).map((rule) => ({
+      intent: rule.intent,
+      action: rule.action,
+      patterns: (rule.stichwoerter || []).map((pattern) => new RegExp(pattern)),
+      notPatterns: (rule.nicht || []).map((pattern) => new RegExp(pattern)),
+      answer: resolveRulePlaceholders(rule.antwort),
+      contacts: (rule.kontakte || []).map((contact) => ({ type: contact.type, label: contact.label, value: resolveRulePlaceholders(contact.wert) })),
+      links: (rule.links || []).map((link) => ({ label: link.label, url: resolveRulePlaceholders(link.url) })),
+      sources: [{ title: `Regelwerk: ${rule.quelle || rule.intent}`, url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
+    }));
+  } catch (error) {
+    // Kaputte Regel-Datei darf den Bot nicht töten: laut loggen, ohne harte Regeln weiterlaufen (RAG/Fallback greifen).
+    console.error('[chatbot] knowledge/chatbot-regeln.json konnte nicht geladen werden:', error?.message || error);
+    cachedRules = [];
+  }
+  return cachedRules;
+}
+
 const STOPWORDS = new Set('ich du sie er es wir ihr der die das ein eine einer eines einem einen und oder aber wenn dann ist sind war waren mit ohne für auf an im in zu zur zum von vom den dem des bei bitte kann können könnte gerne mal wie was wann wo wohin welche welcher welches meine meiner mein dein ihre ihrer hat habe haben wird wurde wurden gibt noch schon auch'.split(/\s+/));
 
 function lower(value = '') {
@@ -201,114 +233,15 @@ export function answerFenstershopChatbot({ message = '', extraChunks = [] } = {}
     });
   }
 
-  if (hasAny(n, [/fahrer.*(da|vor ort|kommt|wartet|steht)/, /lkw.*(da|steht|vor)/, /liefer.*(heute|notfall|akut|jetzt)/, /avisier.*(heute|48|morgen)/, /spedition.*(heute|fahrer|da|steht)/])) {
+  for (const rule of loadHardRules()) {
+    if (rule.notPatterns.some((pattern) => pattern.test(n))) continue;
+    if (!hasAny(n, rule.patterns)) continue;
     return result({
-      intent: 'delivery_emergency', action: 'contact_logistics_phone', sensitive,
-      answer: `Wenn die Lieferung heute kommt, der Fahrer vor Ort ist oder es ein akuter Liefernotfall ist, wenden Sie sich bitte direkt telefonisch an unsere Logistikabteilung:\n\n${CONTACTS.logisticsPhone}\n\nBitte beachten Sie: Sichtbare Schäden müssen sofort dem Fahrer gemeldet, auf dem Lieferschein vermerkt und mit Fotos dokumentiert werden.`,
-      contacts: [{ type: 'phone', label: 'Logistik', value: CONTACTS.logisticsPhone }],
-      links: [{ label: 'Versand und Lieferzeiten', url: LINKS.delivery }],
-      sources: [{ title: 'Regelwerk: Liefernotfall', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/transportschaden/, /beschadigt/, /schaden.*liefer/, /liverschein|lieferschein/, /(ware|fenster|scheibe|element|tur|palette).*kaputt/, /kaputt.*(geliefert|liefer)/])) {
-    return result({
-      intent: 'delivery_damage', action: 'open_complaint_form', sensitive,
-      answer: `Bei sichtbarem Transportschaden: Bitte den Fahrer direkt informieren, den Schaden auf dem Lieferschein vermerken lassen, Fotos machen und anschließend das Reklamationsformular nutzen.`,
-      links: [{ label: 'Reklamationsformular', url: LINKS.complaint }],
-      contacts: [{ type: 'email', label: 'Logistik', value: CONTACTS.logisticsEmail }],
-      sources: [{ title: 'Regelwerk: Transportschaden', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/bestellstatus/, /bestellung.*(status|produktion|bearbeitung|andern|aendern|storno|auftragsbestatigung)/, /status.*bestellung/, /wo.*bestellung/, /wann.*(bestellung|ware|liefertermin)/, /produktionsstand/])) {
-    return result({
-      intent: 'order_status', action: 'contact_order_status', sensitive,
-      answer: `Ich habe keinen Zugriff auf konkrete Bestellungen, Produktionsstände oder Liefertermine. Bitte senden Sie Ihre Anfrage mit den notwendigen Angaben per E-Mail an:\n\n${CONTACTS.orderStatusEmail}`,
-      contacts: [{ type: 'email', label: 'Bestellstatus', value: CONTACTS.orderStatusEmail }],
-      sources: [{ title: 'Regelwerk: Bestellstatus', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/zahlung/, /zahlungseingang/, /rechnung/, /paypal/, /uberweisung|ueberweisung/, /bezahlt/])) {
-    return result({
-      intent: 'payment_status', action: 'contact_payment', sensitive,
-      answer: `Ich kann keine Zahlungseingänge oder Rechnungsdetails prüfen. Bitte wenden Sie sich für Zahlungsfragen an:\n\n${CONTACTS.paymentEmail}`,
-      contacts: [{ type: 'email', label: 'Zahlung', value: CONTACTS.paymentEmail }],
-      sources: [{ title: 'Regelwerk: Zahlungsfragen', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/anfrage[-\s]?id/, /ticket/, /bearbeitungsstand.*anfrage/, /stand.*anfrage/])) {
-    return result({
-      intent: 'inquiry_status', action: 'contact_inquiry', sensitive,
-      answer: `Ich habe keinen Zugriff auf das Ticketsystem und kann den Bearbeitungsstand einer Anfrage nicht prüfen. Bitte senden Sie Ihre Frage zur Anfrage-ID per E-Mail an:\n\n${CONTACTS.inquiryEmail}`,
-      contacts: [{ type: 'email', label: 'Anfrage', value: CONTACTS.inquiryEmail }],
-      sources: [{ title: 'Regelwerk: Anfrage-ID', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/produkt[-\s]?id/, /konkrete.*konfiguration/, /uw[-\s]?wert.*(genau|produkt|konfiguration)/, /ug[-\s]?wert.*(genau|produkt|konfiguration)/, /schallschutz.*(genau|produkt|konfiguration)/, /rc2|sicherheitsklasse|statik|durchbiegung/])) {
-    return result({
-      intent: 'technical_specific', action: 'contact_technical_phone', sensitive,
-      answer: `Konkrete technische Rückfragen zu einer bestimmten Produkt-ID, einem Profil oder einer konkreten Konfiguration lassen sich telefonisch am besten klären. Bitte wenden Sie sich direkt an unsere technische Abteilung:\n\n${CONTACTS.technicalPhone}`,
-      contacts: [{ type: 'phone', label: 'Technik', value: CONTACTS.technicalPhone }, { type: 'email', label: 'Technik', value: CONTACTS.technicalEmail }],
-      links: [{ label: 'Fensterbegriffe', url: LINKS.glossary }, { label: 'PVC-Profilschnitte', url: LINKS.profiles }],
-      sources: [{ title: 'Regelwerk: konkrete technische Werte', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/lieferzeit/, /versandzeit/, /wie lange.*liefer/, /wann.*geliefert/, /spedition/, /tracking|sendungsverfolgung/])) {
-    return result({
-      intent: 'delivery_general_time', action: 'answer_with_link', sensitive,
-      answer: `Die Lieferzeit hängt von Produkt, Profil, Hersteller und Ausstattung ab. Die voraussichtliche Lieferzeit sehen Sie am Produkt oder im Warenkorb. Mehr dazu: ${LINKS.delivery}`,
-      links: [{ label: 'Versand und Lieferzeiten', url: LINKS.delivery }],
-      sources: [{ title: 'Regelwerk: allgemeine Lieferzeit', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/konfigurator/, /konfigurieren/, /fenster.*auswahlen|auswaehlen/, /profil.*wahl/, /ma[ßs]e.*eingeben/])) {
-    return result({
-      intent: 'configurator_help', action: 'answer_with_configurator_link', sensitive,
-      answer: `Für Hilfe beim Konfigurieren können Sie den Fenster-Konfigurator nutzen. Bei technischen Problemen oder unklaren Optionen hilft unsere technische Abteilung weiter:\n\n${CONTACTS.technicalPhone}`,
-      links: [{ label: 'Fenster-Konfigurator', url: LINKS.configurator }, { label: 'Erklärvideos', url: LINKS.videos }],
-      contacts: [{ type: 'phone', label: 'Technik', value: CONTACTS.technicalPhone }],
-      sources: [{ title: 'Regelwerk: Konfiguratorhilfe', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/reklamation/, /reklamieren/, /mangel/, /ersatz/, /defekt/])) {
-    return result({
-      intent: 'complaint', action: 'open_complaint_form', sensitive,
-      answer: 'Für Reklamationen nutzen Sie bitte das Reklamationsformular. Bitte übermitteln Sie Fotos und personenbezogene Angaben nur dort, nicht hier im Chat.',
-      links: [{ label: 'Reklamationsformular', url: LINKS.complaint }],
-      sources: [{ title: 'Regelwerk: Reklamation', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/montage/, /montier/, /konnen sie.*einbau/, /einbau.*(anbieten|moglich|service|buchen)/, /machen sie.*aufmass/])) {
-    return result({
-      intent: 'montage', action: 'answer_no_montage', sensitive,
-      answer: `Wir führen selbst keine Montage aus. Wenn Sie eine Montage wünschen, geben Sie dies bitte direkt in Ihrer Anfrage über das „Anfrage senden"-Formular mit an — wir prüfen dann, ob wir Ihnen in Ihrem Postleitzahlengebiet einen Montagepartner empfehlen können. Eine Empfehlung ist je nach Region nicht immer möglich.`,
-      links: [{ label: 'Anfrage senden / Callback', url: LINKS.callback }],
-      sources: [{ title: 'Regelwerk: Montage', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (!/versand|liefer/.test(n) && hasAny(n, [/was kostet/, /preis.*(wissen|berechnen|erfahren)/, /schnell.*preis/, /preis.*(fenster|tur|haustur|rollladen)/])) {
-    return result({
-      intent: 'price_quick', action: 'answer_with_configurator_link', sensitive,
-      answer: `Für eine schnelle Preisermittlung nutzen Sie am besten direkt unseren Konfigurator: Dort wählen Sie Größe, Profil, Farbe, Verglasung und Zubehör aus und erhalten sofort eine Preisberechnung.\n\n${LINKS.configurator}\n\nFür größere Anfragen mit mehreren Elementen nutzen Sie gerne das „Anfrage senden"-Formular im Hauptmenü.`,
-      links: [{ label: 'Fenster-Konfigurator', url: LINKS.configurator }],
-      sources: [{ title: 'Regelwerk: schnelle Preisermittlung', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
-    });
-  }
-
-  if (hasAny(n, [/abholung/, /abholen/, /selbst.*holen/, /mitnahmegestell/])) {
-    return result({
-      intent: 'self_pickup', action: 'answer_self_pickup', sensitive,
-      answer: `Eine Abholung ist grundsätzlich möglich. Bitte bringen Sie ausreichend Personen für die manuelle Beladung mit. Beladung durch unsere Mitarbeiter: pauschal 50 € pro 5 Fenster. Mitnahmegestell (Einweg-Holzgestell): zusätzlich 60 € pro Gestell. Bitte geeignetes Fahrzeug und Material zur Ladungssicherung einplanen — Fenster und Bauelemente sind schwer, sperrig und empfindlich.`,
-      sources: [{ title: 'Regelwerk: Selbstabholung', url: 'programmierlogik_chatbot_final_mit_anfrage_status.md' }],
+      intent: rule.intent, action: rule.action, sensitive,
+      answer: rule.answer,
+      contacts: rule.contacts,
+      links: rule.links,
+      sources: rule.sources,
     });
   }
 
