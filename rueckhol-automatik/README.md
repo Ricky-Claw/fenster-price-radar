@@ -16,7 +16,15 @@ Produkt (Supabase-CRE fürs Kunden-Cockpit, live für DFS) — kein Duplikat, ni
 
 ---
 
-## Live-Zustand (Testphase)
+## Hosting-Modell
+
+Der Server ist eigenständig und läuft auf jedem Node-Host. Zielbild für den
+Kundenbetrieb: **eigene Subdomain des Kunden** (z. B. `rueckhol.<kunden-domain>`),
+eine Instanz pro Kunde (siehe „Multi-Kunde" unten). Die Tabelle unten zeigt das
+**aktuelle Pilot-Hosting** — es ist jederzeit umziehbar (Ordner + Env + DNS),
+danach nur die Snippet-URLs auf der Kundenseite anpassen.
+
+## Live-Zustand (Pilot-Hosting, Testphase)
 
 | Was | Wo |
 |---|---|
@@ -96,7 +104,7 @@ rsync -az --delete --exclude='.git' --exclude='node_modules' --exclude='data' --
 ssh root@76.13.143.100 'chown -R fensterradar:fensterradar /opt/rueckhol-automatik \
   && sudo -u fensterradar bash -c "cd /opt/rueckhol-automatik && npm install --no-audit --no-fund && npm test" \
   && systemctl restart rueckhol-automatik'
-curl -s https://rueckhol.schwarzwald-agent.de/api/health   # muss ok:true + neue Version zeigen
+curl -s https://<rueckhol-host>/api/health   # muss ok:true + neue Version zeigen
 ```
 
 - Die SQLite-DB liegt in `data/` (gitignored, rsync-excluded) — sie überlebt jedes Code-Update.

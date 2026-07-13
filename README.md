@@ -114,31 +114,19 @@ Ob der Webhook aktiv ist, zeigt `GET /api/aufmass-submit` (`configured: true/fal
 
 ## Rückholautomatik (Exit-Intent-Popups) — Integration
 
-Ein Script-Tag auf der Kundenseite, der Server läuft separat:
+**Eigenständiges Produkt** im Ordner `rueckhol-automatik/`: eigener Express-Server + SQLite, keine Abhängigkeit zum Radar. Läuft auf jedem Node-Host — empfohlen ist eine eigene Subdomain des Kunden (z. B. `rueckhol.<kunden-domain>`), eine Instanz pro Kunde.
+
+Einbau auf der Kundenseite ist ein Script-Tag:
 
 ```html
-<script async src="https://rueckhol.schwarzwald-agent.de/cre.js"
+<script async src="https://<rueckhol-host>/cre.js"
         data-cre-site="<siteId>"
-        data-cre-api="https://rueckhol.schwarzwald-agent.de"></script>
+        data-cre-api="https://<rueckhol-host>"></script>
 ```
 
-Voraussetzungen: `siteId` muss zu einer aktiven Kampagne passen und die Seiten-Domain muss serverseitig in `SITE_ORIGINS` freigeschaltet sein. Fehlersuche: `data-cre-debug="1"` ans Tag. Vollständige Doku (Env, API, Betrieb): `rueckhol-automatik/README.md`.
+`<rueckhol-host>` = wo der Rückhol-Server gehostet ist. Voraussetzungen: `siteId` muss zu einer aktiven Kampagne passen (Dashboard unter `https://<rueckhol-host>/dashboard`) und die Seiten-Domain muss serverseitig in `SITE_ORIGINS` freigeschaltet sein. Fehlersuche: `data-cre-debug="1"` ans Tag. Vollständige Doku (Start, Env, API, Betrieb, Instanz-pro-Kunde-Modell): `rueckhol-automatik/README.md`.
 
 ## Maschinenzugang für Agents/Automationen
 
 Preisdaten, Popup-CRUD und Chatbot sind auch per Token-API/MCP erreichbar — Endpunkte, Auth und Beispiele in `docs/AGENT_API.md`.
 
-## Ruhiges Heimspiel E-Book
-
-Das WM-/Fußball-Freebie liegt als statisches HTML/PDF unter:
-
-- Vorschau/Quelle: `public/ebooks/ruhiges-heimspiel/index.html`
-- PDF: `public/ebooks/ruhiges-heimspiel/ruhiges-heimspiel-ebook.pdf`
-- Logo: `public/ebooks/ruhiges-heimspiel/assets/fenstershop-logo.png`
-
-Lokale Checks:
-
-```bash
-npm run ebook:check
-npm run ebook:pdf
-```
