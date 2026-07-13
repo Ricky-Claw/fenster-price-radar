@@ -535,6 +535,28 @@
           display: none;
         }
       }
+      .rueckfragen ul {
+        margin: 8px 0 6px;
+        padding-left: 18px;
+      }
+      .rueckfragen li {
+        margin: 4px 0;
+      }
+      .rueckfrage {
+        background: none;
+        border: none;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+      .rueckfragen-hint {
+        margin: 6px 0 0;
+        font-size: 0.85rem;
+        opacity: 0.85;
+      }
     </style>
   </head>
   <body>
@@ -590,6 +612,12 @@
         <div id="successBanner" class="banner success" role="status"></div>
 
         <p class="review-note">⚠️ Bitte alle Werte gegenprüfen — die KI kann sich auch bei nicht als „prüfen" markierten Zeilen verschätzen (besonders Maße).</p>
+
+        <div id="rueckfragenPanel" class="banner warning rueckfragen" role="status" hidden>
+          <strong>❓ Rückfragen zur Aufnahme:</strong>
+          <ul id="rueckfragenList"></ul>
+          <p class="rueckfragen-hint">Antwort einfach oben nachdiktieren (z. B. „Das Wohnzimmerfenster ist 1,20 breit") und erneut umwandeln — oder auf eine Frage klicken und den Wert direkt in der Tabelle korrigieren.</p>
+        </div>
 
         <div id="draftNote" class="draft-note" hidden>
           <span>Automatisch gespeicherter Entwurf wiederhergestellt.</span>
@@ -954,7 +982,65 @@
           rowsEl.textContent = '';
           (windows || []).forEach(appendRow);
           if (!rowsEl.children.length) appendRow(emptyWindow());
+          renderRueckfragen();
           scheduleSave();
+        }
+
+        var rueckfragenPanel = document.getElementById('rueckfragenPanel');
+        var rueckfragenList = document.getElementById('rueckfragenList');
+
+        var REASON_QUESTIONS = {
+          breite_unklar: 'Wie breit ist das Fenster (z. B. „1,20 breit" oder „120 cm")?',
+          hoehe_unklar: 'Wie hoch ist das Fenster?',
+          breite_geklemmt: 'Die Breite wirkt ungewoehnlich — bitte das Mass bestaetigen oder korrigieren.',
+          hoehe_geklemmt: 'Die Hoehe wirkt ungewoehnlich — bitte das Mass bestaetigen oder korrigieren.',
+          oeffnungsart_unklar: 'Wie soll sich das Fenster oeffnen (Dreh-Kipp, Dreh, Kipp oder festverglast)?',
+          anschlag_unklar: 'Anschlag links oder rechts (von innen gesehen)?',
+          verglasung_unklar: '2-fach oder 3-fach verglast?',
+          anzahl_unklar: 'Wie viele Fenster dieser Art sind es?',
+          anzahl_geklemmt: 'Die Anzahl wirkt ungewoehnlich — bitte bestaetigen oder korrigieren.',
+        };
+        var REASON_FIELD = {
+          breite: 'breiteMm',
+          hoehe: 'hoeheMm',
+          oeffnungsart: 'oeffnungsart',
+          anschlag: 'anschlag',
+          verglasung: 'verglasung',
+          anzahl: 'anzahl',
+        };
+
+        function renderRueckfragen() {
+          if (!rueckfragenPanel) return;
+          rueckfragenList.textContent = '';
+          var count = 0;
+          Array.prototype.forEach.call(rowsEl.querySelectorAll('tr'), function (row, index) {
+            if (!needsReview(row)) return;
+            var raum = textValue(row, 'raum').trim();
+            var label = 'Fenster ' + (index + 1) + (raum ? ' (' + raum + ')' : '');
+            reviewReasons(row).forEach(function (reason) {
+              var question = REASON_QUESTIONS[reason];
+              if (!question) return;
+              count += 1;
+              var item = document.createElement('li');
+              var button = document.createElement('button');
+              button.type = 'button';
+              button.className = 'rueckfrage';
+              button.textContent = label + ': ' + question;
+              button.addEventListener('click', function () {
+                var fieldKey = REASON_FIELD[reason.replace(/_(unklar|geklemmt)$/, '')];
+                var input = fieldKey ? row.querySelector('[data-field="' + fieldKey + '"]') : null;
+                row.scrollIntoView({ block: 'center', behavior: 'smooth' });
+                if (input) {
+                  input.focus();
+                  if (input.select) input.select();
+                }
+              });
+              item.appendChild(button);
+              rueckfragenList.appendChild(item);
+            });
+          });
+          rueckfragenPanel.hidden = count === 0;
+          rueckfragenPanel.classList.toggle('visible', count > 0);
         }
 
         function intValue(row, field, fallback) {
@@ -1149,6 +1235,15 @@
           if (!rows.some(hasSubmitContent)) {
             showBanner(errorBanner, 'Bitte zuerst mindestens ein Fenster erfassen.');
             return;
+          }
+
+          var offeneZeilen = rows.filter(function (item) { return item.needsReview; }).length;
+          if (offeneZeilen > 0) {
+            var trotzdem = window.confirm(offeneZeilen + (offeneZeilen === 1 ? ' Fenster ist' : ' Fenster sind') + ' noch als "pruefen" markiert. Bitte erst die Rueckfragen beantworten oder die Werte in der Tabelle korrigieren.\n\nTrotzdem absenden?');
+            if (!trotzdem) {
+              renderRueckfragen();
+              return;
+            }
           }
 
           hideBanners();
