@@ -76,6 +76,8 @@ Serverseitig vor Produktivbetrieb auf einer fremden Domain: `CHATBOT_ALLOW_ORIGI
 
 **Firmenwissen pflegen ohne Code:** Markdown-Dateien unter `knowledge/` direkt in GitHub bearbeiten → automatischer Deploy, der Bot kennt den neuen Stand nach wenigen Minuten. Anleitung: `public/janela-wissen-anleitung.md`. Gecrawltes Website-Wissen aktualisieren: `npm run knowledge:crawl`.
 
+**Harte Regeln pflegen ohne Code:** Die deterministischen Antwort-Regeln (Liefernotfall, Bestellstatus, Reklamation …) liegen in `knowledge/chatbot-regeln.json` — gleiche GitHub-Pflege, Platzhalter wie `{{contacts.logisticsPhone}}` werden automatisch ersetzt. Details: `knowledge/ANLEITUNG.md`.
+
 MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
 
 LLM-Polierung: primär NVIDIA Nemotron (`NVIDIA_API_KEY`, Modell via `FENSTERSHOP_NEMOTRON_MODEL`), Fallback Kimi/Moonshot (`KIMI_API_KEY`). Ohne Keys bleibt die reine Regelantwort bestehen.

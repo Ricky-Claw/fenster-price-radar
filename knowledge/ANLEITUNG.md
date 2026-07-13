@@ -51,3 +51,16 @@ Regeln dabei:
 
 - Änderungen brauchen einen Commit + ~1–2 Min Deploy — kein Live-Adminpanel. Dafür: versioniert, nachvollziehbar, jederzeit rückrollbar über die GitHub-Historie.
 - Suche ist stichwortbasiert, keine semantische Vektor-Suche. Für die Größenordnung (Dutzende Dateien) völlig ausreichend; sollte der Ordner stark wachsen, ist der Umstieg auf Embeddings der nächste Schritt (Plan liegt in `FENSTERSHOP_CHATBOT_PLAN.md`).
+
+## Harte Antwort-Regeln pflegen (`chatbot-regeln.json`)
+
+Neben dem Wissen liegen auch die **harten Regeln** (Liefernotfall, Bestellstatus, Reklamation, Preise, Abholung …) hier im Ordner: **`knowledge/chatbot-regeln.json`**. Diese Antworten kommen wortgleich beim Kunden an — ohne KI-Umformulierung.
+
+So bearbeitet ihr eine Regel (gleicher Weg wie beim Wissen: Datei in GitHub öffnen → Stift → Commit):
+
+- **`antwort`** — der Text, den Janela ausgibt. Platzhalter wie `{{contacts.logisticsPhone}}` oder `{{links.delivery}}` werden automatisch durch die zentralen Telefonnummern/Links ersetzt (zentral gepflegt, eine Änderung wirkt überall).
+- **`stichwoerter`** — Suchmuster, bei denen die Regel greift. Klein geschrieben, Umlaute ohne Punkte (`ae` oder `a`), ß als `ss`. `.*` heißt „beliebiger Text dazwischen".
+- **`nicht`** — Muster, die die Regel verhindern (z. B. greift „Preis" nicht, wenn es um Versandkosten geht).
+- **Reihenfolge zählt:** die erste passende Regel gewinnt.
+
+Vorsicht: Die Datei ist JSON — ein fehlendes Komma macht alle Regeln unwirksam (der Bot läuft dann nur noch über Wissenssuche und Kontakt-Verweise, stürzt aber nicht ab). Im Zweifel vor dem Commit auf https://jsonlint.com prüfen. Test für Entwickler: `npm run test:chatbot`.
