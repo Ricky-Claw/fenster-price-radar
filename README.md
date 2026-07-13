@@ -32,7 +32,17 @@ npm run build
 3. `scripts/sync-results.js` baut daraus `public/data/price-radar.json` und den datierten Snapshot unter `public/data/history/`. Bei unvollständigen Provider-Läufen bricht der Sync ab, bevor Public-Daten veröffentlicht werden.
 4. `scripts/verify-price-radar.js` und `scripts/verify-two-sash-equivalence.js` prüfen den Snapshot als Quality-Gate (`npm run verify:prices`).
 
-Der wöchentliche Montagslauf läuft primär als VPS-Cron auf Hostinger `nexus-host`. Die GitHub Action bleibt als manueller Fallback per `workflow_dispatch`. `results/` wird nicht committed; committed werden nur `public/data/price-radar.json` und `public/data/history/*.json`.
+Der wöchentliche Montagslauf läuft primär als VPS-Cron auf Hostinger `nexus-host` (`scripts/weekly-price-radar-update.sh`). Die GitHub Action bleibt als manueller Fallback per `workflow_dispatch`. `results/` wird nicht committed; committed werden nur `public/data/price-radar.json` und `public/data/history/*.json`.
+
+**Einkaufspreise (Eko4u) im Cron:** Das Skript lädt optional `/opt/fenster-price-radar/.env.cron` (gitignored, `chmod 600`, Owner `fensterradar`) und exportiert daraus `EKO4U_LOGIN`/`EKO4U_PASSWORD` vor dem Lauf. Fehlt die Datei, läuft der Preis-Sync trotzdem durch — nur ohne Einkaufspreis-Spalte (kein Blocker, aber unvollständige Daten). Datei anlegen:
+
+```bash
+cat > /opt/fenster-price-radar/.env.cron << 'EOF'
+EKO4U_LOGIN=<Eko4u-Login>
+EKO4U_PASSWORD=<Eko4u-Passwort>
+EOF
+chmod 600 /opt/fenster-price-radar/.env.cron
+```
 
 ## V1 Scope
 
