@@ -9,3 +9,4 @@ rueckhol-automatik/data/*.sqlite*
 # Build-generiert aus knowledge/ANLEITUNG.md (scripts/build-anleitung.js)
 public/janela-wissen-anleitung.html
 public/janela-wissen-anleitung.md
+.env.cron

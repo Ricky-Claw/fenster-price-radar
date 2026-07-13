@@ -5,6 +5,15 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 FPR_PUSH_ENABLED="${FPR_PUSH_ENABLED:-0}"
 
+# Optionale Secrets fuer den Cron-Lauf (z.B. EKO4U_LOGIN/EKO4U_PASSWORD fuer
+# Einkaufspreise) — Datei ist gitignored, liegt nur auf dem Server.
+if [ -f "$ROOT/.env.cron" ]; then
+  set -a
+  # shellcheck disable=SC1091
+  . "$ROOT/.env.cron"
+  set +a
+fi
+
 if [ -n "$(git status --short)" ]; then
   echo "BLOCKER: repo dirty before weekly update. Refusing to overwrite local work."
   git status --short
@@ -20,7 +29,9 @@ npm run prices:update
 npm run build
 
 STAMP="$(date +%F)"
-git add public/data/price-radar.json "public/data/history/price-radar-${STAMP}.json"
+# price-trend-index.json wird von prices:update mitgeneriert — ohne git add
+# bleibt sie dirty liegen und blockiert den naechsten Wochenlauf (Vorfall 2026-07-13).
+git add public/data/price-radar.json public/data/price-trend-index.json "public/data/history/price-radar-${STAMP}.json"
 
 if git diff --cached --quiet; then
   echo "No price data changes to commit."
