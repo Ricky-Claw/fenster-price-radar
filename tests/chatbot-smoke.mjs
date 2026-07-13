@@ -5,6 +5,9 @@ import { answerFenstershopChatbot, answerFenstershopChatbotWithLlm, retrieveFens
 
 
 globalThis.fetch = async (url) => {
+  if (String(url).includes('api.anthropic.com')) {
+    return { ok: true, json: async () => ({ model: 'claude-haiku-4-5', stop_reason: 'end_turn', content: [{ type: 'text', text: 'Claude-Antwort direkt aus Atlas.' }] }) };
+  }
   if (String(url).includes('integrate.api.nvidia.com')) {
     return { ok: true, json: async () => ({ choices: [{ message: { content: '<think>\nIch überlege kurz, wie ich am besten antworte.\n</think>\n\n```\nNemotron-Antwort direkt aus Atlas.\n```' } }] }) };
   }
@@ -80,6 +83,24 @@ assert.equal(nemotronAnswer.llm.used, true);
 assert.equal(nemotronAnswer.llm.provider, 'nemotron');
 assert.match(nemotronAnswer.answer, /Nemotron-Antwort direkt aus Atlas\./);
 assert.doesNotMatch(nemotronAnswer.answer, /<think>|```/i, 'Reasoning-Block/Codefences muessen gestrippt sein');
+
+// Claude hat Vorrang, sobald ANTHROPIC_API_KEY gesetzt ist
+const claudeAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test', NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
+assert.equal(claudeAnswer.llm.used, true);
+assert.equal(claudeAnswer.llm.provider, 'claude');
+assert.match(claudeAnswer.answer, /Claude-Antwort direkt aus Atlas\./);
+
+// Claude-Ausfall kaskadiert sauber zu Nemotron
+{
+  const beforeFetch = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    if (String(url).includes('api.anthropic.com')) return { ok: false, status: 529 };
+    return beforeFetch(url);
+  };
+  const cascade = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test', NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
+  assert.equal(cascade.llm.provider, 'nemotron');
+  globalThis.fetch = beforeFetch;
+}
 
 const originalFetch = globalThis.fetch;
 globalThis.fetch = async (url) => {

@@ -2,6 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { polishFenstershopAnswer } from './kimiClient.js';
 import { polishFenstershopAnswerNemotron } from './nemotronClient.js';
+import { polishFenstershopAnswerClaude } from './claudeClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
 const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', import.meta.url);
@@ -375,6 +376,7 @@ function answerStillSafe(polished, draft) {
 }
 
 const LLM_PROVIDERS = [
+  { name: 'claude', polish: polishFenstershopAnswerClaude },
   { name: 'nemotron', polish: polishFenstershopAnswerNemotron },
   { name: 'moonshot', polish: polishFenstershopAnswer },
 ];
