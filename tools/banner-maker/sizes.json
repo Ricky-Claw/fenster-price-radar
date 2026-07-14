@@ -1,0 +1,12 @@
+{
+  "sizes": [
+    { "name": "medium-rectangle", "width": 300, "height": 250 },
+    { "name": "large-rectangle", "width": 336, "height": 280 },
+    { "name": "leaderboard", "width": 728, "height": 90 },
+    { "name": "billboard", "width": 970, "height": 250 },
+    { "name": "wide-skyscraper", "width": 160, "height": 600 },
+    { "name": "half-page", "width": 300, "height": 600 },
+    { "name": "mobile-banner", "width": 320, "height": 50 },
+    { "name": "large-mobile-banner", "width": 320, "height": 100 }
+  ]
+}

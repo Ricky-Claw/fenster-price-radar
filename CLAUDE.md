@@ -38,6 +38,9 @@ Widget/Snippet für `deutscher-fenstershop.de`. **Rule-first RAG**: harte Regeln
 ### 1c. E-Books/Freebies
 Bestehendes E-Book „Ruhiges Heimspiel" unter `public/ebooks/ruhiges-heimspiel/` (dessen `styles.css` ist das kanonische Design). **Neue E-Books nie von Hand bauen** — immer Generator `npm run ebook:make -- --config <json> --out public/ebooks/<slug>` (validiert hart, exportiert PDF, prüft Seitenzahl). Regeln: `.claude/skills/dfs-ebook/SKILL.md`. Checks: `npm run ebook:check`, `npm run ebook:pdf`.
 
+### 1d. Werbebanner-Generator
+Erstellt Google-Display-Banner aus dem Aktionskalender als echte Rasterbilder mit exakten Größen und höchstens 150 KB je Datei. Generieren: `npm run banner:make -- --aktion <id>` (oder Ad-hoc-Config); Regeln: `.claude/skills/dfs-banner/SKILL.md`. KI-Motive liegen nach Aktion unter `tools/banner-maker/motive/<aktion-id>/`; Output unter `tools/banner-maker/out/` ist gitignored und darf nie nach `public/`. Verifikation: `npm run test:banner`.
+
 ### Start (Welt A)
 ```bash
 npm install

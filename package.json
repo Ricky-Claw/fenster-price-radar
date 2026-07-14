@@ -4,6 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "banner:check": "node --check tools/banner-maker/select-action.mjs && node --check tools/banner-maker/image-meta.mjs && node --check tools/banner-maker/fonts.mjs && node --check tools/banner-maker/banner-template.mjs && node --check tools/banner-maker/render.mjs && node --check tools/banner-maker/compress.mjs && node --check tools/banner-maker/make-banner.mjs && node --check tools/lib/find-chrome.mjs",
+    "banner:make": "node tools/banner-maker/make-banner.mjs",
     "predev": "node scripts/build-anleitung.js",
     "dev": "vite --host 0.0.0.0",
     "prebuild": "node scripts/build-anleitung.js",
@@ -23,6 +25,7 @@
     "test:links": "node tests/config-links.mjs",
     "test:verification": "node tests/verification.mjs",
     "test:aufmass": "node tests/aufmass-smoke.mjs",
+    "test:banner": "node tests/banner-maker.mjs",
     "check:live": "node scripts/check-live.mjs",
     "test:agent": "node tests/agent-token.mjs",
     "test:mcp": "node tests/mcp-smoke.mjs",
@@ -41,5 +44,8 @@
     "react": "19.2.5",
     "react-dom": "19.2.5",
     "vite": "8.0.10"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.3"
   }
 }

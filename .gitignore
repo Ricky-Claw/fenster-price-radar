@@ -10,3 +10,6 @@ rueckhol-automatik/data/*.sqlite*
 public/janela-wissen-anleitung.html
 public/janela-wissen-anleitung.md
 .env.cron
+tools/banner-maker/out/
+tools/banner-maker/motive/*
+!tools/banner-maker/motive/README.md

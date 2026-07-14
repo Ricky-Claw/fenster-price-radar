@@ -1,0 +1,14 @@
+{
+  "colors": {
+    "blue": "#0C2D57",
+    "orange": "#F47B20",
+    "ice": "#f5fbff",
+    "white": "#FFFFFF",
+    "textOnDark": "#FFFFFF"
+  },
+  "logo": "src/Logo-Freigestellt.png",
+  "partnerLogos": {
+    "ruhiges-heimspiel": "src/drutex-logo-m.png"
+  },
+  "ctaDefault": "Jetzt entdecken"
+}
