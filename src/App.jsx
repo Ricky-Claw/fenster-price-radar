@@ -21,14 +21,12 @@ const layouts = [
 const LAYOUT_TILE_HINT = {'1flg':'Einflügelige Standardfenster','2flg_pfosten':'Zweiflügelig mit Mittelpfosten','2flg_stulp_dk_dreh':'Zweiflügelig mit Stulp','balkontuer':'Bislang nur bei Fensterblick verifiziert'};
 const UPDATE_POLL_MAX_MS = 15 * 60 * 1000;
 // Bump this id when there's a new "what's new" banner to show again.
-const LATEST_UPDATE_ID = '2026-07-05-alu-balkontuer';
+const LATEST_UPDATE_ID = '2026-07-14-zufallsstichprobe';
 const LATEST_UPDATE_ITEMS = [
-  'Aluminium-Fenster und Balkontür sind jetzt eigene Vergleichstypen',
-  'Preisentwicklung: 3-Monats-Diagramm je Anbieter',
-  'Stichproben-Verifizierung sichtbar direkt im Wochenvergleich',
-  'Janela-Chatbot: erkennt jetzt den Seiten-Kontext für Begrüßung und Vorschläge',
-  'Aufmaß per Sprache: Dokument-Kopf/Fußzeile editierbar, Eingaben werden automatisch lokal gespeichert',
-  'Rückhol-Automatik: neues Popup-System zum Testen — Verwaltung, Testseite und Übersicht jetzt live'
+  'Wöchentliches Preisupdate repariert: lief seit Tagen nicht, Preise sind wieder tagesaktuell',
+  'Stichprobe geht ab jetzt auf echte Zufallsauswahl — bei jedem Update (Cron & manuell) werden 7 zufällige Konfigurationen live bei allen 3 Anbietern nachgeprüft, inklusive laufender Rabatte/Aktionen',
+  'Einkaufspreise (eko4u) als 4. Datenquelle eingebunden — jetzt für 104 Konfigurationen sichtbar',
+  'Wochen-Update heilt sich künftig selbst statt bei einer Kleinigkeit hängen zu bleiben'
 ];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const formatPercent = value => Number(value || 0).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
