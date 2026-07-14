@@ -53,7 +53,7 @@ export function renderBannerHtml({
   const textOnDark = colors.textOnDark || white;
   const hasMotif = Boolean(dataUri(motifDataUri));
   const isCompactWide = sizeClass === 'wide' && size.height < 200;
-  const isNarrowTall = sizeClass === 'tall' && size.width <= 160;
+  const isNarrowTall = sizeClass === 'tall' && size.width <= 140;
   const showOffer = Boolean(brief.offer) && sizeClass !== 'thin' && !(sizeClass === 'tall' && size.width < 250);
   const showBadge = (Boolean(brief.badge) && sizeClass !== 'thin')
     || (sizeClass === 'thin' && size.width >= 600 && String(brief.badge || '').length <= 20);
@@ -121,6 +121,10 @@ body { position: relative; background: ${blue}; color: ${textOnDark}; }
 .tall .actions { display: flex; flex-direction: column; width: 100%; margin-top: 1em; }
 .tall .cta { width: 100%; margin-top: 1em; padding: .85em; }
 .tall .partner-logo { margin-top: .7em; }
+.tall.narrow .content { padding-left: 10px; padding-right: 10px; }
+.tall.narrow .logo { width: 80%; max-width: 80%; height: auto; right: 10%; }
+.tall.narrow .claim { font-size: clamp(12px, 9vw, 18px); overflow-wrap: anywhere; }
+.tall.narrow .badge { max-width: 100%; white-space: normal; overflow-wrap: anywhere; text-align: center; }
 .tall.narrow .partner-logo { height: 16px; }
 </style>
 </head>

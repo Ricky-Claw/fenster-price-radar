@@ -166,6 +166,14 @@ const tallHtml = renderBannerHtml({
   logoDataUri,
   partnerLogoDataUri,
 });
+const narrowTallHtml = renderBannerHtml({
+  brief: heimspiel,
+  size: { width: 120, height: 600 },
+  branding,
+  fontsCss,
+  logoDataUri,
+});
+assert.ok(narrowTallHtml.includes('banner tall narrow') && !tallHtml.includes('banner tall narrow'));
 assert.ok(tallHtml.includes(partnerLogoDataUri));
 assert.match(tallHtml, /class="partner-logo"[^>]*src="data:image\/png;base64,PARTNER"/);
 assert.ok(!tallHtml.includes('partner-chip'));
