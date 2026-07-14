@@ -244,7 +244,9 @@ const args=Object.fromEntries(process.argv.slice(2).map(a=>a.replace(/^--/,'').s
 const limit=args.limit?+args.limit:30;
 await fs.mkdir(OUT_DIR,{recursive:true});
 const catalogRaw=await readJson(path.join(ROOT,'data/comparison-catalog.json'));
-const catalog=(Array.isArray(catalogRaw)?catalogRaw:catalogRaw.configs||[]).slice(0,limit);
+const fullCatalog=Array.isArray(catalogRaw)?catalogRaw:catalogRaw.configs||[];
+// --indices=1,45,102 waehlt gezielte (z.B. zufaellige) Katalog-Zeilen statt der ersten N (fuer Stichproben-Verifikation).
+const catalog=args.indices ? args.indices.split(',').map(i=>fullCatalog[+i]).filter(Boolean) : fullCatalog.slice(0,limit);
 const profiles=[...await readJson(path.join(ROOT,'data/dfs/data_window_1_profile.json')), ...await readJson(path.join(ROOT,'data/dfs/data_window_2_profile.json'))];
 const results=[];
 for (const c of catalog) { try { results.push({...c, dfs: await priceOne(c, profiles)}); } catch(e){ results.push({...c, dfs:{status:'error', error:e.message}}); } }

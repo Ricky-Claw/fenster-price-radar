@@ -26,12 +26,22 @@ git pull --ff-only origin main
 npm ci
 trap 'rc=$?; if [ "$rc" -ne 0 ]; then echo "WARN: run failed (rc=$rc), restoring working tree"; git checkout -- public/data 2>/dev/null || true; git clean -fd public/data/history 2>/dev/null || true; fi' EXIT
 npm run prices:update
+# Stichproben-Verifikation: 7 zufaellige Konfigurationen live bei allen 3
+# Anbietern nachpruefen (inkl. aktuell laufender Rabatte/Aktionen), damit die
+# ANGEZEIGTEN Preise vertrauenswuerdig bleiben -- danach erneut syncen, damit
+# die frischen Verifikations-Ergebnisse im veroeffentlichten Datensatz landen.
+if npm run verify:sample -- --n=7; then
+  npm run data:sync
+  npm run trend:build
+else
+  echo "WARN: Stichproben-Verifikation fehlgeschlagen (z.B. Anbieter-Ausfall) — fahre mit vorheriger verification.json fort, Preisdaten selbst sind unberuehrt."
+fi
 npm run build
 
 STAMP="$(date +%F)"
 # price-trend-index.json wird von prices:update mitgeneriert — ohne git add
 # bleibt sie dirty liegen und blockiert den naechsten Wochenlauf (Vorfall 2026-07-13).
-git add public/data/price-radar.json public/data/price-trend-index.json "public/data/history/price-radar-${STAMP}.json"
+git add public/data/price-radar.json public/data/price-trend-index.json data/verification.json "public/data/history/price-radar-${STAMP}.json"
 
 if git diff --cached --quiet; then
   echo "No price data changes to commit."

@@ -11,11 +11,14 @@ const aluTemplate = JSON.parse(await fs.readFile(path.join(root, 'data/fensterve
 const aluAliases = JSON.parse(await fs.readFile(path.join(root, 'data/fensterversand/aluminium-profile-aliases.json'), 'utf8'));
 
 const limit = Number(process.argv.find(a => a.startsWith('--limit='))?.split('=')[1] || 20);
+const indicesArg = process.argv.find(a => a.startsWith('--indices='))?.split('=')[1];
 const outDir = path.join(root, 'results', `fensterversand-mapped-pvc-${new Date().toISOString().replace(/[:.]/g, '-')}`);
 await fs.mkdir(outDir, { recursive: true });
 
 const results = [];
-for (const cfg of catalog.slice(0, limit)) {
+// --indices=1,45,102 waehlt gezielte (z.B. zufaellige) Katalog-Zeilen statt der ersten N (fuer Stichproben-Verifikation).
+const scope = indicesArg ? indicesArg.split(',').map(i => catalog[+i]).filter(Boolean) : catalog.slice(0, limit);
+for (const cfg of scope) {
   if (cfg.productType === 'balkontuer') { results.push({ provider:'Fensterversand', input:cfg, status:'unmatched', reason:'nicht_im_angebot' }); continue; }
   const isAlu = cfg.productType === 'aluminium';
   const mapped = isAlu ? mapAluProfile(cfg) : mapProfile(cfg);

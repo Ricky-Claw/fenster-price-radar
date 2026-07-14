@@ -8,10 +8,13 @@ const aliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/pro
 const doorAliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/balkontuer-profile-aliases.json'),'utf8'));
 const aluAliases=JSON.parse(await fs.readFile(path.join(root,'data/fensterblick/aluminium-profile-aliases.json'),'utf8'));
 const limit=Number(process.argv.find(a=>a.startsWith('--limit='))?.split('=')[1]||30);
+const indicesArg=process.argv.find(a=>a.startsWith('--indices='))?.split('=')[1];
 const outDir=path.join(root,'results',`fensterblick-mapped-pvc-${new Date().toISOString().replace(/[:.]/g,'-')}`);
 await fs.mkdir(outDir,{recursive:true});
 const results=[];
-for(const cfg of catalog.slice(0,limit)){
+// --indices=1,45,102 waehlt gezielte (z.B. zufaellige) Katalog-Zeilen statt der ersten N (fuer Stichproben-Verifikation).
+const scope=indicesArg?indicesArg.split(',').map(i=>catalog[+i]).filter(Boolean):catalog.slice(0,limit);
+for(const cfg of scope){
  const isDoor=cfg.productType==='balkontuer';
  const isAlu=cfg.productType==='aluminium';
  const mapped=isAlu?mapAluProfile(cfg):(isDoor?mapDoorProfile(cfg):mapProfile(cfg));

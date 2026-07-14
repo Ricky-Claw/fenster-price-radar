@@ -9,63 +9,43 @@ const publicDataPath = path.resolve('public', 'data', 'price-radar.json');
 const catalogPath = path.resolve('data', 'comparison-catalog.json');
 const verificationPath = path.resolve('data', 'verification.json');
 const startedAt = new Date();
-const requestedLimit = parseLimit(process.argv);
-const limit = Math.max(requestedLimit, minLimitForThreeProviderCoverage(requestedLimit));
+const n = parseSampleSize(process.argv);
+const indices = pickRandomIndices(n);
+const indicesArg = indices.join(',');
 
 const jobs = [
-  { provider: 'dfs', prefix: 'dfs-mapped-pvc-', script: 'dfs:pvc:mapped', args: ['--', `--limit=${limit}`] },
-  { provider: 'fensterblick', prefix: 'fensterblick-mapped-pvc-', script: 'fb:pvc:mapped', args: ['--', `--limit=${limit}`] },
-  { provider: 'fensterversand', prefix: 'fensterversand-mapped-pvc-', script: 'fv:pvc:mapped', args: ['--', `--limit=${limit}`] },
+  { provider: 'dfs', prefix: 'dfs-mapped-pvc-', script: 'dfs:pvc:mapped', args: ['--', `--indices=${indicesArg}`] },
+  { provider: 'fensterblick', prefix: 'fensterblick-mapped-pvc-', script: 'fb:pvc:mapped', args: ['--', `--indices=${indicesArg}`] },
+  { provider: 'fensterversand', prefix: 'fensterversand-mapped-pvc-', script: 'fv:pvc:mapped', args: ['--', `--indices=${indicesArg}`] },
 ];
+const expectedCount = indices.length;
 
-function parseLimit(argv) {
+function parseSampleSize(argv) {
   const raw = argv.find(arg => arg.startsWith('--n='));
-  if (!raw) return 5;
-  const n = Number.parseInt(raw.slice('--n='.length), 10);
-  if (!Number.isFinite(n) || n < 1) {
+  if (!raw) return 7;
+  const parsed = Number.parseInt(raw.slice('--n='.length), 10);
+  if (!Number.isFinite(parsed) || parsed < 1) {
     console.error(`Invalid --n value: ${raw.slice('--n='.length)}`);
     process.exit(1);
   }
-  return n;
+  return parsed;
 }
 
-// ponytail: Provider-Skripte kennen nur --limit=N (Katalog-Praefix ab Index 0),
-// kein Profil-Filter. Statt eine Zahl zu raten, aus dem zuletzt publizierten
-// price-radar.json ableiten, welcher Katalog-Index als erster ein Profil traegt,
-// das aktuell bei allen 3 Anbietern valide ist -- und den Scrape-Umfang genau so
-// weit anheben, dass dieser Index mit erfasst wird. Kein Eingriff in die
-// Cron-kritischen Provider-Skripte selbst.
-function minLimitForThreeProviderCoverage(fallbackLimit) {
-  let publicPayload;
-  let catalog;
-  try {
-    publicPayload = JSON.parse(fs.readFileSync(publicDataPath, 'utf8'));
-    const rawCatalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
-    catalog = Array.isArray(rawCatalog) ? rawCatalog : rawCatalog.configs || [];
-  } catch {
-    return fallbackLimit;
+// Echte Zufallsauswahl statt der ersten N Katalog-Zeilen -- jeder Lauf (Cron +
+// manueller Trigger) prueft andere Konfigurationen live nach, damit sich
+// Vertrauen in die ANGEZEIGTEN Preise ueber den ganzen Katalog aufbaut
+// (inkl. aktuell laufender Rabatte/Aktionen, die live mitgescraped werden).
+function pickRandomIndices(count) {
+  const rawCatalog = JSON.parse(fs.readFileSync(catalogPath, 'utf8'));
+  const catalog = Array.isArray(rawCatalog) ? rawCatalog : rawCatalog.configs || [];
+  const pool = catalog.map((_, i) => i);
+  const picked = [];
+  const take = Math.min(count, pool.length);
+  for (let i = 0; i < take; i++) {
+    const j = Math.floor(Math.random() * pool.length);
+    picked.push(pool.splice(j, 1)[0]);
   }
-
-  const threeProviderKeys = new Set(
-    (publicPayload.configs || [])
-      .filter(config => ['dfs', 'fensterblick', 'fensterversand'].every(provider => config.providers?.[provider]?.valid))
-      .map(config => config.key)
-  );
-  if (threeProviderKeys.size === 0) return fallbackLimit;
-
-  const index = catalog.findIndex(row => threeProviderKeys.has(buildRowKey({
-    brand: row.brand || '',
-    profile: row.profile || '',
-    size: row.size || `${row.width || ''}x${row.height || ''}`,
-    glazing: row.glazing || row.glass || '',
-    opening: row.opening || 'Dreh-Kipp',
-    color: row.color || 'Weiß/Weiß',
-    layout: row.layout || '1flg'
-  })));
-  if (index === -1) return fallbackLimit;
-
-  console.log(`Stichprobe erweitert auf ${index + 1} Katalog-Zeilen, damit ein bei allen 3 Anbietern gefuehrtes Profil (Katalog-Index ${index}) mit erfasst wird.`);
-  return index + 1;
+  return picked.sort((a, b) => a - b);
 }
 
 function run(script, args = []) {
@@ -90,16 +70,16 @@ function folderTime(name, prefix) {
 function latestSample(prefix) {
   if (!fs.existsSync(resultsRoot)) return null;
   const candidates = fs.readdirSync(resultsRoot)
-    .filter(n => n.startsWith(prefix) && fs.existsSync(path.join(resultsRoot, n, 'results.json')))
-    .map(n => {
+    .filter(name => name.startsWith(prefix) && fs.existsSync(path.join(resultsRoot, name, 'results.json')))
+    .map(name => {
       try {
-        const json = readJson(path.join(resultsRoot, n, 'results.json'));
-        return { name: n, count: (json.results || []).length, time: folderTime(n, prefix) };
+        const json = readJson(path.join(resultsRoot, name, 'results.json'));
+        return { name, count: (json.results || []).length, time: folderTime(name, prefix) };
       } catch {
-        return { name: n, count: 0, time: Number.NaN };
+        return { name, count: 0, time: Number.NaN };
       }
     })
-    .filter(x => x.count === limit && Number.isFinite(x.time) && x.time > startedAt.getTime())
+    .filter(x => x.count === expectedCount && Number.isFinite(x.time) && x.time > startedAt.getTime())
     .sort((a, b) => a.name.localeCompare(b.name));
   return candidates.at(-1)?.name || null;
 }
