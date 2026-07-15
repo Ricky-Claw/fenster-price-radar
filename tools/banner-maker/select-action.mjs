@@ -36,7 +36,7 @@ function actionRanges(calendar) {
 }
 
 function calendarBrief(action, branding) {
-  const badge = action.offer.match(/\d+\s*%[^.;,]{0,24}/)?.[0]?.trim().slice(0, 18).trim() || null;
+  const badge = action.badge ?? (action.offer.match(/\d+\s*%[^.;,]{0,24}/)?.[0]?.trim().slice(0, 18).trim() || null);
   return {
     mode: 'kalender',
     id: action.id,

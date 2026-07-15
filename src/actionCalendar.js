@@ -1,4 +1,4 @@
-export const currentActionCalendarVersion = '2026-06-10';
+export const currentActionCalendarVersion = '2026-07-15';
 
 export const ACTION_CALENDAR = [
   {
@@ -45,9 +45,10 @@ export const ACTION_CALENDAR = [
     timingNote: 'Start direkt nach dem WM-Finale, damit die Kommunikation sauber von Fußball/Komfort auf Energie, Sanierung und Beratung wechselt.',
     scale: 'Große Aktion',
     channels: ['Website', 'E-Mail', 'Social Media', 'Ads'],
-    claim: 'Fenster planen. Energieberatung mitdenken.',
-    story: 'Nach der WM wird aus Aufmerksamkeit ein Sanierungsimpuls: Wer neue Fenster plant, soll Energieeffizienz, Förderfähigkeit und Beratung früh mitdenken. Förderheld wird als Partner für Orientierung und Energieberater-Anbindung positioniert.',
-    offer: 'Gemeinsame Aktionskommunikation Deutscher Fenstershop x Förderheld. Kein pauschales Förderversprechen; Fokus auf Beratung, Orientierung und saubere Projektvorbereitung.',
+    claim: 'Fenster fördern lassen — in 5 Minuten beantragt.',
+    badge: 'Bis zu 20 %',
+    story: 'Nach der WM wird aus Aufmerksamkeit ein Sanierungsimpuls: Wer neue Fenster plant, soll Energieeffizienz, Förderfähigkeit und Beratung früh mitdenken. Förderheld wird als Partner für Orientierung und Energieberater-Anbindung positioniert. Förderfähige Kosten liegen bei bis zu 30.000 € pro Wohneinheit und Jahr, mit iSFP bei bis zu 60.000 €. Neue Fenster benötigen einen U-Wert von höchstens 0,95 W/(m²K). Ein Energieeffizienz-Experte ist Pflicht und wird durch Förderheld mit zertifizierten Gebäudeenergieberatern abgedeckt. Erst den Antrag über Förderheld einreichen, die Zusage abwarten und dann bei DFS bestellen.',
+    offer: 'Bis zu 20 % BAFA-Zuschuss für neue Fenster (15 % Basis + 5 % iSFP-Bonus). Förderheld reicht Ihren Antrag binnen 24 Stunden beim BAFA ein — Bezahlung erst nach positiver Zusage. Wichtig: Antrag immer vor der Bestellung stellen.',
     designRules: [
       'Deutlich groesser und beratender als die Heimspiel-Aktion: Website-Hero, E-Mail-Header, Social-Serie und Ads muessen wie eine Hauptkampagne wirken.',
       'Visuelle Achse: modernes Zuhause, Fenster, Energieeffizienz, Beratungssituation, Dokumente/Checkliste; Förderheld dezent aber sichtbar als Partner nennen.',
@@ -61,12 +62,17 @@ export const ACTION_CALENDAR = [
         'Deutscher Fenstershop x Förderheld: Orientierung für Ihr Sanierungsprojekt.',
         'Energieberater früh einbinden und Fensterprojekt sauber vorbereiten.',
         'Prüfen lassen, welche energetischen Anforderungen für Ihr Projekt relevant sind.',
-        'Neue Fenster frühzeitig mit Energieberatung und Projektplanung verbinden.'
+        'Neue Fenster frühzeitig mit Energieberatung und Projektplanung verbinden.',
+        'Bis zu 20 % BAFA-Zuschuss — 15 % Basis plus 5 % iSFP-Bonus.',
+        'Antrag in 5 Minuten online, Einreichung beim BAFA binnen 24 Stunden.',
+        'Erst Förderantrag stellen, dann Fenster bestellen — die Reihenfolge entscheidet.'
       ],
       dont: [
         'Keine Förderzusage, keine garantierte Erstattung und keine festen Förderhöhen behaupten.',
         'Nicht schreiben: "Förderung sicher", "Geld garantiert" oder "wir sichern Ihnen die Förderung".',
-        'Keine Angstkommunikation zu Heizkosten; kompetent, hilfreich und conversionstark bleiben.'
+        'Keine Angstkommunikation zu Heizkosten; kompetent, hilfreich und conversionstark bleiben.',
+        'Nie eine feste Förderhöhe ohne "bis zu" nennen (Badge-/Ad-Texte eingeschlossen).',
+        'Nie suggerieren, dass nach der Bestellung noch beantragt werden kann — Antrag muss vor Vertragsabschluss gestellt sein.'
       ]
     },
     deliverables: [

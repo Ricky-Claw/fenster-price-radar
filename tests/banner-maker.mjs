@@ -48,6 +48,9 @@ assert.ok(!heimspiel.badge.includes('Drutex'));
 assert.ok(heimspiel.badge.length <= 20);
 assert.ok(heimspiel.wordingDont.length);
 
+const foerderheld = resolveBrief({ aktionId: 'foerderheld-energieberater', calendar: ACTION_CALENDAR, branding });
+assert.equal(foerderheld.badge, 'Bis zu 20 %');
+
 const datedBrief = resolveBrief({ calendar: ACTION_CALENDAR, branding, now: () => new Date(2026, 5, 20) });
 assert.equal(datedBrief.id, 'ruhiges-heimspiel');
 

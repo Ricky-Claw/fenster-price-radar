@@ -8,7 +8,8 @@
   },
   "logo": "src/Logo-Freigestellt.png",
   "partnerLogos": {
-    "ruhiges-heimspiel": "src/drutex-logo-m.png"
+    "ruhiges-heimspiel": "src/drutex-logo-m.png",
+    "foerderheld-energieberater": "src/foerderheld-logo.png"
   },
   "ctaDefault": "Jetzt entdecken"
 }

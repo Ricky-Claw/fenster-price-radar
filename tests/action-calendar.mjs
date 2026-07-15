@@ -5,7 +5,7 @@ import {
   currentActionCalendarVersion,
 } from '../src/actionCalendar.js';
 
-assert.equal(currentActionCalendarVersion, '2026-06-10');
+assert.equal(currentActionCalendarVersion, '2026-07-15');
 assert.ok(ACTION_CALENDAR.length >= 6, 'calendar should include the campaign pipeline through year end');
 
 const heimspiel = ACTION_CALENDAR.find(action => action.id === 'ruhiges-heimspiel');
@@ -20,9 +20,15 @@ assert.equal(foerderheld.dateRange, '20.07.2026 - 14.09.2026');
 assert.equal(foerderheld.partner, 'Deutscher Fenstershop x Förderheld');
 assert.deepEqual(foerderheld.channels, ['Website', 'E-Mail', 'Social Media', 'Ads']);
 assert.equal(foerderheld.scale, 'Große Aktion');
+assert.equal(foerderheld.badge, 'Bis zu 20 %');
+assert.match(foerderheld.claim, /^Fenster fördern/);
+assert.match(foerderheld.offer, /bis zu 20 %/i);
+assert.match(foerderheld.offer, /24 Stunden/);
 assert.ok(foerderheld.designRules.some(rule => /Foerderheld|Förderheld|Energie/i.test(rule)));
 assert.ok(foerderheld.wording.do.some(line => /Energieberater/i.test(line)));
 assert.ok(foerderheld.wording.dont.some(line => /Förderzusage|Foerderzusage|garant/i.test(line)));
+assert.ok(foerderheld.wording.dont.some(line => /bis zu/i.test(line)));
+assert.ok(!foerderheld.offer.includes('garantiert'));
 
 for (const action of ACTION_CALENDAR) {
   assert.ok(action.designRules.length >= 3, `${action.id} needs design rules`);
