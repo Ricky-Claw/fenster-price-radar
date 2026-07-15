@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-15T12:21:43.595Z",
+  "generatedAt": "2026-07-15T12:48:31.641Z",
   "comparisonBaseline": {
     "generatedAt": "2026-07-14T08:05:46.747Z",
     "snapshot": "price-radar-2026-07-14.json"
@@ -8,7 +8,7 @@
     "dfs": "dfs-mapped-pvc-2026-07-13T11-36-41-016Z",
     "fensterblick": "fensterblick-mapped-pvc-2026-07-13T11-36-53-919Z",
     "fensterversand": "fensterversand-mapped-pvc-2026-07-13T11-43-32-675Z",
-    "eko4u": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+    "eko4u": "eko4u-mapped-2026-07-15T12-42-03-194Z"
   },
   "summary": {
     "rows": 608,
@@ -18,7 +18,7 @@
     "weeklyBaselineGeneratedAt": "2026-07-14T08:05:46.747Z",
     "purchase": {
       "provider": "eko4u",
-      "source": "eko4u-mapped-2026-07-15T12-15-06-188Z",
+      "source": "eko4u-mapped-2026-07-15T12-42-03-194Z",
       "priced": 102,
       "unmatched": 48,
       "errorsSkipped": 0
@@ -248,7 +248,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 175.3,
@@ -443,7 +443,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 184.81,
@@ -638,7 +638,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 287.49,
@@ -833,7 +833,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 342.51,
@@ -1028,7 +1028,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 361.74,
@@ -1223,7 +1223,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 449.78,
@@ -1418,7 +1418,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 487.88,
@@ -1613,7 +1613,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 616.22,
@@ -1808,7 +1808,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 215.97,
@@ -2003,7 +2003,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 225.87,
@@ -2198,7 +2198,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 355.18,
@@ -2393,7 +2393,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 410.2,
@@ -2588,7 +2588,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 447.18,
@@ -2783,7 +2783,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 535.22,
@@ -2978,7 +2978,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 603.62,
@@ -3173,7 +3173,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 731.96,
@@ -3418,12 +3418,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,7",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 500×500mm | Glas STD_4/16/4 (Ug/UW 1,7) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 500×500mm | Glas STD_4/16/4 (Fenster-UW 1,7) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 151.46,
@@ -3690,12 +3690,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,5",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 500×500mm | Glas 2S_001_02 (Ug/UW 1,5) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 500×500mm | Glas 2S_001_02 (Fenster-UW 1,5) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 162.93,
@@ -3962,12 +3962,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,4",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Ug/UW 1,4) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Fenster-UW 1,4) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 231.73,
@@ -4234,12 +4234,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,1",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 285.38,
@@ -4506,12 +4506,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,3",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 275.5,
@@ -4778,12 +4778,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,0",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 358.04,
@@ -5050,12 +5050,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,3",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 326.6,
@@ -5322,12 +5322,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,98",
             "construction": "4000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Ug/UW 0,98) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Fenster-UW 0,98) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 439.86,
@@ -5594,12 +5594,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,5",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas STD_4/16/4 (Ug/UW 1,5) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas STD_4/16/4 (Fenster-UW 1,5) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 189.29,
@@ -5866,12 +5866,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,4",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas 2S_001_02 (Ug/UW 1,4) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas 2S_001_02 (Fenster-UW 1,4) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 198.81,
@@ -6138,12 +6138,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,3",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 304.24,
@@ -6410,12 +6410,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,1",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 357.89,
@@ -6682,12 +6682,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 361.67,
@@ -6954,12 +6954,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,97",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 444.21,
@@ -7226,12 +7226,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 428.78,
@@ -7498,12 +7498,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,93",
             "construction": "5000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Ug/UW 0,93) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Fenster-UW 0,93) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 542.03,
@@ -7777,12 +7777,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,4",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 500×600mm | Glas STD_4/16/4 (Ug/UW 1,4) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 500×600mm | Glas STD_4/16/4 (Fenster-UW 1,4) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 314.1,
@@ -8049,12 +8049,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 500×600mm | Glas 2S_001_02 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 500×600mm | Glas 2S_001_02 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 327.85,
@@ -8321,12 +8321,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,3",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 469.25,
@@ -8593,12 +8593,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,0",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 522.9,
@@ -8865,12 +8865,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 557.88,
@@ -9137,12 +9137,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,94",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Ug/UW 0,94) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Fenster-UW 0,94) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 640.41,
@@ -9409,12 +9409,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 661.37,
@@ -9681,12 +9681,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,90",
             "construction": "7000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Ug/UW 0,90) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Fenster-UW 0,90) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 774.62,
@@ -9953,12 +9953,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,4",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas STD_4/16/4 (Ug/UW 1,4) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas STD_4/16/4 (Fenster-UW 1,4) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 246.88,
@@ -10225,12 +10225,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,3",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas 2S_001_02 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 415×500mm | Glas 2S_001_02 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 246.88,
@@ -10497,12 +10497,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 396.83,
@@ -10769,12 +10769,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,97",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 396.83,
@@ -11041,12 +11041,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 471.78,
@@ -11313,12 +11313,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,90",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Ug/UW 0,90) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Fenster-UW 0,90) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 471.78,
@@ -11585,12 +11585,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 559.3,
@@ -11857,12 +11857,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "0,87",
             "construction": "8000SL_1SK_01@RU LEWE",
-            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Ug/UW 0,87) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Fenster-UW 0,87) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 559.3,
@@ -12083,12 +12083,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,6",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 500×500mm | Glas STD_4/16/4 (Ug/UW 1,6) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 500×500mm | Glas STD_4/16/4 (Fenster-UW 1,6) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 129.74,
@@ -12298,12 +12298,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,5",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 500×500mm | Glas 2S_001_02 (Ug/UW 1,5) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 500×500mm | Glas 2S_001_02 (Fenster-UW 1,5) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 141.2,
@@ -12520,12 +12520,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,3",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 900×1200mm | Glas STD_4/16/4 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 900×1200mm | Glas STD_4/16/4 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 242.56,
@@ -12735,12 +12735,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,1",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 900×1200mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 900×1200mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 292.08,
@@ -12950,12 +12950,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1100×1600mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1100×1600mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 342.2,
@@ -13165,12 +13165,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,97",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1100×1600mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1100×1600mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 422.9,
@@ -13380,12 +13380,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1400×1800mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1400×1800mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 449.37,
@@ -13595,12 +13595,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,92",
             "construction": "S8000_1SK_01@RU LEWE",
-            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1400×1800mm | Glas 2S_001_02 (Ug/UW 0,92) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S8000"
+            "proof": "Gealan S8000 (S8000_1SK_01@RU LEWE) | Maße 1400×1800mm | Glas 2S_001_02 (Fenster-UW 0,92) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 564.92,
@@ -13810,12 +13810,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,7",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 500×500mm | Glas 1S_038_03 (Ug/UW 1,7) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 500×500mm | Glas 1S_038_03 (Fenster-UW 1,7) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 167.68,
@@ -14025,12 +14025,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,3",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 500×500mm | Glas 2S_001_02 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 500×500mm | Glas 2S_001_02 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 179.14,
@@ -14240,12 +14240,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,3",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 1S_038_03 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 1S_038_03 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 308.17,
@@ -14455,12 +14455,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,96",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Ug/UW 0,96) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 900×1300mm | Glas 2S_001_02 (Fenster-UW 0,96) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 361.82,
@@ -14670,12 +14670,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,3",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 1S_038_03 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 1S_038_03 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 408,
@@ -14885,12 +14885,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,90",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Ug/UW 0,90) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1200×1500mm | Glas 2S_001_02 (Fenster-UW 0,90) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 490.53,
@@ -15107,12 +15107,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1400×1900mm | Glas 1S_038_03 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1400×1900mm | Glas 1S_038_03 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 550.17,
@@ -15322,12 +15322,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,85",
             "construction": "S9000_1SK_01@RU LEWE",
-            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1400×1900mm | Glas 2S_001_02 (Ug/UW 0,85) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Gealan S9000"
+            "proof": "Gealan S9000 (S9000_1SK_01@RU LEWE) | Maße 1400×1900mm | Glas 2S_001_02 (Fenster-UW 0,85) | Farbe Standard weiß | Beschlag SIEG_RU | Gealan S9000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 672.14,
@@ -15537,12 +15537,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,4",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 600×600mm | Glas STD_4/16/4 (Ug/UW 1,4) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 600×600mm | Glas STD_4/16/4 (Fenster-UW 1,4) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 225.06,
@@ -15752,12 +15752,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 600×600mm | Glas 2S_001_02 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 600×600mm | Glas 2S_001_02 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 241.57,
@@ -15967,12 +15967,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1000×1200mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1000×1200mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 329.16,
@@ -16182,12 +16182,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,99",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1000×1200mm | Glas 2S_001_02 (Ug/UW 0,99) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1000×1200mm | Glas 2S_001_02 (Fenster-UW 0,99) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 384.18,
@@ -16397,12 +16397,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1100×1700mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1100×1700mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 443.11,
@@ -16612,12 +16612,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,97",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1100×1700mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1100×1700mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 528.86,
@@ -16827,12 +16827,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 526.29,
@@ -17042,12 +17042,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,92",
             "construction": "GE763D_1SK_01@RU LEWE",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Ug/UW 0,92) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_1SK_01@RU LEWE) | Maße 1300×1900mm | Glas 2S_001_02 (Fenster-UW 0,92) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 639.55,
@@ -17257,12 +17257,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,3",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 600×600mm | Glas STD_4/16/4 (Ug/UW 1,3) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 600×600mm | Glas STD_4/16/4 (Fenster-UW 1,3) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 278.15,
@@ -17472,12 +17472,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,1",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 600×600mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 600×600mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 278.15,
@@ -17687,12 +17687,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 900×1200mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 900×1200mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 425.57,
@@ -17902,12 +17902,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,98",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 900×1200mm | Glas 2S_001_02 (Ug/UW 0,98) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 900×1200mm | Glas 2S_001_02 (Fenster-UW 0,98) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 425.57,
@@ -18117,12 +18117,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1100×1500mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1100×1500mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 473.07,
@@ -18332,12 +18332,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,92",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1100×1500mm | Glas 2S_001_02 (Ug/UW 0,92) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1100×1500mm | Glas 2S_001_02 (Fenster-UW 0,92) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 473.07,
@@ -18547,12 +18547,12 @@
             "fittings": "SIEG_RU",
             "uw": "1,2",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1200×1900mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1200×1900mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 611.06,
@@ -18762,12 +18762,12 @@
             "fittings": "SIEG_RU",
             "uw": "0,88",
             "construction": "BLUEV82SL_1SK_01@RU LEWE",
-            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1200×1900mm | Glas 2S_001_02 (Ug/UW 0,88) | Farbe RAL/Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82"
+            "proof": "Salamander BluEvolution 82 (BLUEV82SL_1SK_01@RU LEWE) | Maße 1200×1900mm | Glas 2S_001_02 (Fenster-UW 0,88) | Farbe Standard weiß | Beschlag SIEG_RU | Salamander BluEvolution 82 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 611.06,
@@ -19014,7 +19014,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 184.88,
@@ -19250,7 +19250,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 198.25,
@@ -19491,7 +19491,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 322.78,
@@ -19743,7 +19743,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 376.43,
@@ -19995,7 +19995,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 505.15,
@@ -20247,7 +20247,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 587.69,
@@ -20494,7 +20494,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 847.38,
@@ -20730,7 +20730,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 968.43,
@@ -20966,7 +20966,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 167.54,
@@ -21202,7 +21202,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 176.71,
@@ -21443,7 +21443,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 366.78,
@@ -21695,7 +21695,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 424.55,
@@ -21947,7 +21947,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 489.87,
@@ -22199,7 +22199,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 583.41,
@@ -22446,7 +22446,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 938.61,
@@ -22682,7 +22682,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1076.17,
@@ -22923,7 +22923,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 451.5,
@@ -23175,7 +23175,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 509.27,
@@ -23427,7 +23427,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 603.08,
@@ -23679,7 +23679,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 696.62,
@@ -23926,7 +23926,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1037.84,
@@ -24162,7 +24162,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1175.4,
@@ -24407,12 +24407,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,2",
             "construction": "4000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 501.67,
@@ -24679,12 +24679,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,1",
             "construction": "4000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 572.04,
@@ -24951,12 +24951,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,1",
             "construction": "4000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 646.1,
@@ -25223,12 +25223,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,0",
             "construction": "4000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 723.82,
@@ -25495,12 +25495,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,1",
             "construction": "5000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 632.54,
@@ -25767,12 +25767,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,0",
             "construction": "5000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 716.56,
@@ -26039,12 +26039,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,0",
             "construction": "5000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 804.34,
@@ -26311,12 +26311,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "0,97",
             "construction": "5000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 895.77,
@@ -26583,12 +26583,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,1",
             "construction": "7000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 930.33,
@@ -26863,12 +26863,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,0",
             "construction": "7000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1045.56,
@@ -27135,12 +27135,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "0,97",
             "construction": "7000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1164.54,
@@ -27407,12 +27407,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "0,94",
             "construction": "7000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,94) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,94) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1287.15,
@@ -27679,12 +27679,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "1,0",
             "construction": "8000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 716.19,
@@ -27951,12 +27951,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "0,97",
             "construction": "8000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 791.15,
@@ -28223,12 +28223,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "0,93",
             "construction": "8000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 0,93) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 0,93) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 866.17,
@@ -28495,12 +28495,12 @@
             "fittings": "ROTO_NX_RU + ROTO_NX_RU",
             "uw": "0,90",
             "construction": "8000SL_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,90) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,90) | Farbe Standard weiß | Beschlag ROTO_NX_RU + ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 941.16,
@@ -28717,7 +28717,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 508.34,
@@ -28912,7 +28912,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 611.55,
@@ -29114,7 +29114,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 719.04,
@@ -29313,12 +29313,12 @@
             "fittings": "SIEG_RU + SIEG_RU",
             "uw": "1,1",
             "construction": "GE763D_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 1400×1200mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 1400×1200mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 593.92,
@@ -29528,12 +29528,12 @@
             "fittings": "SIEG_RU + SIEG_RU",
             "uw": "1,0",
             "construction": "GE763D_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 739.24,
@@ -29743,12 +29743,12 @@
             "fittings": "SIEG_RU + SIEG_RU",
             "uw": "0,99",
             "construction": "GE763D_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 0,99) | Farbe RAL/Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 0,99) | Farbe Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 895.46,
@@ -29958,12 +29958,12 @@
             "fittings": "SIEG_RU + SIEG_RU",
             "uw": "0,98",
             "construction": "GE763D_2SK_01@R_RU · 2-flügelig Mittelpfosten",
-            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,98) | Farbe RAL/Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D"
+            "proof": "Salamander GreenEvo 76 3D (GE763D_2SK_01@R_RU) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,98) | Farbe Standard weiß | Beschlag SIEG_RU + SIEG_RU | Salamander GreenEvo 76 3D || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1113.12,
@@ -30219,12 +30219,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,2",
             "construction": "4000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 497.28,
@@ -30491,12 +30491,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,1",
             "construction": "4000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 567.67,
@@ -30763,12 +30763,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,1",
             "construction": "4000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 641.69,
@@ -31035,12 +31035,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,0",
             "construction": "4000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000"
+            "proof": "Aluplast Ideal 4000 (4000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 4000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 719.44,
@@ -31307,12 +31307,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,1",
             "construction": "5000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 626.77,
@@ -31579,12 +31579,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,0",
             "construction": "5000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 710.89,
@@ -31851,12 +31851,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,99",
             "construction": "5000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 0,99) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 0,99) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 798.56,
@@ -32123,12 +32123,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,96",
             "construction": "5000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,96) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000"
+            "proof": "Aluplast Ideal 5000 (5000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,96) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 5000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 890.01,
@@ -32395,12 +32395,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,1",
             "construction": "7000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,1) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,1) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 921.47,
@@ -32667,12 +32667,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,0",
             "construction": "7000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1036.74,
@@ -32939,12 +32939,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,97",
             "construction": "7000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 0,97) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 0,97) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1155.61,
@@ -33211,12 +33211,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,94",
             "construction": "7000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,94) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW"
+            "proof": "Aluplast Ideal 7000 (7000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,94) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 7000 NEW || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1278.24,
@@ -33491,12 +33491,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "1,0",
             "construction": "8000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Ug/UW 1,0) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 1400×1300mm | Glas 2S_001_02 (Fenster-UW 1,0) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 708.69,
@@ -33763,12 +33763,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,98",
             "construction": "8000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Ug/UW 0,98) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 1600×1500mm | Glas 2S_001_02 (Fenster-UW 0,98) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 783.69,
@@ -34035,12 +34035,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,94",
             "construction": "8000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Ug/UW 0,94) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 1800×1700mm | Glas 2S_001_02 (Fenster-UW 0,94) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 858.61,
@@ -34307,12 +34307,12 @@
             "fittings": "ROTO_NX_R_RU",
             "uw": "0,91",
             "construction": "8000SL_2SK_01@R_RU STULP · 2-flügelig Stulp",
-            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Ug/UW 0,91) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (8000SL_2SK_01@R_RU STULP) | Maße 2000×1900mm | Glas 2S_001_02 (Fenster-UW 0,91) | Farbe Standard weiß | Beschlag ROTO_NX_R_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System 2S_001_02, andere Anbieter können ein anderes 3fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 933.63,
@@ -34529,7 +34529,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 413.58,
@@ -34724,7 +34724,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 499.56,
@@ -34919,7 +34919,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 593.17,
@@ -35102,7 +35102,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": null,
@@ -35278,12 +35278,12 @@
             "fittings": "ROTO_NX_RU",
             "uw": "1,2",
             "construction": "BAL8000SL_01@1RU",
-            "proof": "Aluplast Ideal 8000 (BAL8000SL_01@1RU) | Maße 900×2000mm | Glas STD_4/16/4 (Ug/UW 1,2) | Farbe RAL/Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000"
+            "proof": "Aluplast Ideal 8000 (BAL8000SL_01@1RU) | Maße 900×2000mm | Glas STD_4/16/4 (Fenster-UW 1,2) | Farbe Standard weiß | Beschlag ROTO_NX_RU | Aluplast Ideal 8000 || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": null,
@@ -35466,7 +35466,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": null,
@@ -35638,7 +35638,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": null,
@@ -35810,7 +35810,7 @@
           "warnings": [],
           "reason": "nicht_im_angebot",
           "note": "Kein Eko-Okna-System für dieses Profil (z.B. Drutex/Kömmerling/Veka nicht im Herstellerprogramm)",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": null,
@@ -36018,12 +36018,12 @@
             "fittings": "AL_SIEG_RU",
             "uw": "2,9",
             "construction": "MB45_1SK_01@RU_PRAWO",
-            "proof": "Aluprof MB-45 (MB45_1SK_01@RU_PRAWO) | Maße 1000×1200mm | Glas STD_4/16/4 (Ug/UW 2,9) | Farbe RAL/Standard weiß | Beschlag AL_SIEG_RU | Aluprof MB-45, \"cold\" system"
+            "proof": "Aluprof MB-45 (MB45_1SK_01@RU_PRAWO) | Maße 1000×1200mm | Glas STD_4/16/4 (Fenster-UW 2,9) | Farbe Standard weiß | Beschlag AL_SIEG_RU | Aluprof MB-45, \"cold\" system || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [],
           "reason": "",
           "note": "",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 584.47,
@@ -36272,14 +36272,14 @@
             "fittings": "AL_SIEG_RU",
             "uw": "1,5",
             "construction": "MB79N_1SK_01@RU_PRAWO",
-            "proof": "Aluprof MB-79N (MB79N_1SK_01@RU_PRAWO) | Maße 1000×1200mm | Glas STD_4/16/4 (Ug/UW 1,5) | Farbe RAL/Standard weiß | Beschlag AL_SIEG_RU | Aluprof MB-79N, thermal break system"
+            "proof": "Aluprof MB-79N (MB79N_1SK_01@RU_PRAWO) | Maße 1000×1200mm | Glas STD_4/16/4 (Fenster-UW 1,5) | Farbe Standard weiß | Beschlag AL_SIEG_RU | Aluprof MB-79N, thermal break system || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [
             "aluprof_variante_si_nicht_explizit"
           ],
           "reason": "",
           "note": "Eko4u führt für Aluprof MB-79N nur die Standard-Kernvariante (MB79N_1SK_01); die SI-Warmkern-Variante aus dem Katalog ist dort nicht separat wählbar — Preis nicht 1:1 vergleichbar.",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 724.42,
@@ -36509,14 +36509,14 @@
             "fittings": "AL_SIEG_RU",
             "uw": "1,4",
             "construction": "MB86N_1SK_01@RU_PRAWO",
-            "proof": "Aluprof MB-86N (MB86N_1SK_01@RU_PRAWO) | Maße 1000×1200mm | Glas STD_4/16/4 (Ug/UW 1,4) | Farbe RAL/Standard weiß | Beschlag AL_SIEG_RU | Aluprof MB-86N, thermal break system"
+            "proof": "Aluprof MB-86N (MB86N_1SK_01@RU_PRAWO) | Maße 1000×1200mm | Glas STD_4/16/4 (Fenster-UW 1,4) | Farbe Standard weiß | Beschlag AL_SIEG_RU | Aluprof MB-86N, thermal break system || Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen."
           },
           "warnings": [
             "aluprof_variante_si_nicht_explizit"
           ],
           "reason": "",
           "note": "Eko4u führt für Aluprof MB-86N nur die Standard-Kernvariante (MB86N_1SK_01); die SI-Warmkern-Variante aus dem Katalog ist dort nicht separat wählbar — Preis nicht 1:1 vergleichbar.",
-          "sourceDir": "eko4u-mapped-2026-07-15T12-15-06-188Z"
+          "sourceDir": "eko4u-mapped-2026-07-15T12-42-03-194Z"
         }
       },
       "dfsPrice": 1369.08,

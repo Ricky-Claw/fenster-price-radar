@@ -101,13 +101,20 @@ async function priceConfig(cfg,mapped,lid){
   aluprof_variante_si_nicht_explizit:`Eko4u führt für ${mapped.name} nur die Standard-Kernvariante (${lid.split('@')[0]}); die SI-Warmkern-Variante aus dem Katalog ist dort nicht separat wählbar — Preis nicht 1:1 vergleichbar.`,
  };
  const note=warnings.length?warnings.map(w=>noteByWarning[w.split(':')[0]]||w).join(' | '):null;
+ // Glas ist nur auf Kategorie-Ebene normiert (2fach/3fach), nicht auf einen exakten Ug-Wert: DFS/Fensterblick/
+ // Fensterversand weisen pro Konfiguration selbst keinen exakten Ug aus (DFS führt "3fach" z.B. nur als Spanne
+ // 0,5-0,7 W/m²K), Eko4u dagegen verwendet fest 2S_001_02. Deshalb IMMER sichtbar machen statt stillschweigend
+ // als 1:1 gleich zu behandeln (Elvis-Feedback: "zu ungenau").
+ const glasHinweis=is3fach
+  ?`Glas nur auf Kategorie-Ebene (3fach) normiert, nicht auf exakten Ug-Wert — Eko4u nutzt System ${glazingEcho}, andere Anbieter können ein anderes 3fach-Glaspaket wählen.`
+  :`Glas nur auf Kategorie-Ebene (2fach) normiert, nicht auf exakten Ug-Wert — andere Anbieter können ein anderes 2fach-Glaspaket wählen.`;
  return {
   provider:'Eko4u',input:cfg,mappedProfile:mapped.name,status:200,
   comparePrice:{listTotal:price,currency:'EUR',discountApplied:false,valid},
   customerPrice:{total:price,currency:'EUR'},
   priceType:'einkauf_netto_hersteller',
   note,
-  equivalence:{layout:cfg.layout||'1flg',opening:cfg.opening||'Dreh-Kipp',glazing:cfg.glazing,glazingCode:glazingEcho,fittings:[fit1,fit2].filter(Boolean).join(' + '),uw:res.UW||'',construction:`${lid}${cfg.layout==='2flg_pfosten'?' · 2-flügelig Mittelpfosten':''}${cfg.layout==='2flg_stulp_dk_dreh'?' · 2-flügelig Stulp':''}`,proof:`${mapped.name} (${lid}) | Maße ${w}×${h}mm | Glas ${glazingEcho} (Ug/UW ${res.UW||'?'}) | Farbe RAL/Standard weiß | Beschlag ${[fit1,fit2].filter(Boolean).join(' + ')||'Standard'}${res.details_info?` | ${res.details_info}`:''}`},
+  equivalence:{layout:cfg.layout||'1flg',opening:cfg.opening||'Dreh-Kipp',glazing:cfg.glazing,glazingCode:glazingEcho,fittings:[fit1,fit2].filter(Boolean).join(' + '),uw:res.UW||'',construction:`${lid}${cfg.layout==='2flg_pfosten'?' · 2-flügelig Mittelpfosten':''}${cfg.layout==='2flg_stulp_dk_dreh'?' · 2-flügelig Stulp':''}`,proof:`${mapped.name} (${lid}) | Maße ${w}×${h}mm | Glas ${glazingEcho} (Fenster-UW ${res.UW||'?'}) | Farbe Standard weiß | Beschlag ${[fit1,fit2].filter(Boolean).join(' + ')||'Standard'}${res.details_info?` | ${res.details_info}`:''} || ${glasHinweis}`},
   discountMetadata:{observed:false,note:'Einkaufspreis netto laut Eko4u-Konfigurator (Herstellerpreis); Rabatte/Konditionen nicht enthalten'},
   warnings
  };
