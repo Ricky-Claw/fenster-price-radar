@@ -26,7 +26,9 @@ const LATEST_UPDATE_ITEMS = [
   'Wöchentliches Preisupdate repariert: lief seit Tagen nicht, Preise sind wieder tagesaktuell',
   'Stichprobe geht ab jetzt auf echte Zufallsauswahl — bei jedem Update (Cron & manuell) werden 7 zufällige Konfigurationen live bei allen 3 Anbietern nachgeprüft, inklusive laufender Rabatte/Aktionen',
   'Einkaufspreise (eko4u) als 4. Datenquelle eingebunden — jetzt für 104 Konfigurationen sichtbar',
-  'Wochen-Update heilt sich künftig selbst statt bei einer Kleinigkeit hängen zu bleiben'
+  'Janela-Chatbot: Claude Haiku 4.5 als Haupt-Antwort-Modell, Nemotron/Kimi als Rückfallebene',
+  'Janela-Chatbot: Antwort-Regeln jetzt direkt in GitHub pflegbar, wie das Firmenwissen',
+  'Aufmaß per Sprache: Rate-Limit bürotauglich gemacht (funktionierte zuvor nicht zuverlässig über Büro-NAT/VPN)'
 ];
 const eur = v => typeof v === 'number' ? v.toLocaleString('de-DE',{style:'currency',currency:'EUR'}) : '—';
 const formatPercent = value => Number(value || 0).toLocaleString('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
