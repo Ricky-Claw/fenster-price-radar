@@ -124,9 +124,10 @@ function purchaseCell(row){
   const p=row.providers?.eko4u;
   const change=row.weeklyChange?.eko4u;
   if(!p) return <td className="muted purchase">—</td>;
-  if(!p.valid) return <td className="purchase"><span className="pill warn" title={p.note||''}>{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span>{p.note?<small className="purchaseNote">{p.note}</small>:null}</td>;
+  const konfigTitle=p.equivalence?.proof||p.note||'';
+  if(!p.valid) return <td className="purchase" title={konfigTitle}><span className="pill warn">{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span>{p.note?<small className="purchaseNote">{p.note}</small>:null}</td>;
   const margin=typeof row.purchaseMargin==='number'?row.purchaseMargin:null;
-  return <td className="price purchase"><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
+  return <td className="price purchase" title={konfigTitle}><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
 }
 function providerCell(row, id, cheapestIds){
   const p=row.providers[id];

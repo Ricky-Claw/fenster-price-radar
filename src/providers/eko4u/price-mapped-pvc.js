@@ -92,13 +92,22 @@ async function priceConfig(cfg,mapped,lid){
  if(cfg.layout==='2flg_pfosten' && (!fit1||!/RU$/.test(fit1)||fit1!==fit2)) warnings.push(`pfosten_fittings_unbestaetigt:${fit1}/${fit2}`);
  if(cfg.layout==='2flg_stulp_dk_dreh' && !(fit1&&/R_?RU/i.test(fit1))) warnings.push(`stulp_fittings_unbestaetigt:${fit1||'-'}`); // Stulp trägt EIN kombiniertes Fitting, z.B. ROTO_NX_R_RU (Dreh + Dreh-Kipp)
  if(mapped.alias.varianteHinweis) warnings.push('aluprof_variante_si_nicht_explizit');
- const valid=price>0 && warnings.every(x=>x==='aluprof_variante_si_nicht_explizit');
+ // Vorher wurde aluprof_variante_si_nicht_explizit als einzige Warnung durchgewunken (valid=true) --
+ // das verglich MB-79N/MB-86N SI (Katalog) faelschlich mit Eko4us MB79N_STANDARD/MB86N_STANDARD-Kern
+ // (bestaetigt: HTML nennt die Bibliothek explizit "MB79N_STANDARD"). Kein Warnung-Whitelisting mehr:
+ // jede Abweichung macht den Einkaufspreis "prüfen" statt einer falschen 1:1-Vergleichbarkeit.
+ const valid=price>0 && warnings.length===0;
+ const noteByWarning={
+  aluprof_variante_si_nicht_explizit:`Eko4u führt für ${mapped.name} nur die Standard-Kernvariante (${lid.split('@')[0]}); die SI-Warmkern-Variante aus dem Katalog ist dort nicht separat wählbar — Preis nicht 1:1 vergleichbar.`,
+ };
+ const note=warnings.length?warnings.map(w=>noteByWarning[w.split(':')[0]]||w).join(' | '):null;
  return {
   provider:'Eko4u',input:cfg,mappedProfile:mapped.name,status:200,
   comparePrice:{listTotal:price,currency:'EUR',discountApplied:false,valid},
   customerPrice:{total:price,currency:'EUR'},
   priceType:'einkauf_netto_hersteller',
-  equivalence:{layout:cfg.layout||'1flg',opening:cfg.opening||'Dreh-Kipp',glazing:cfg.glazing,glazingCode:glazingEcho,fittings:[fit1,fit2].filter(Boolean).join(' + '),uw:res.UW||'',construction:`${lid}${cfg.layout==='2flg_pfosten'?' · 2-flügelig Mittelpfosten':''}${cfg.layout==='2flg_stulp_dk_dreh'?' · 2-flügelig Stulp':''}`,proof:`${res.details_info||''} | ${lid}${cfg.layout==='2flg_pfosten'?` | Pfosten, Beschlag ${fit1} + ${fit2}`:''}${cfg.layout==='2flg_stulp_dk_dreh'?` | Stulp, Beschlag ${fit1}`:''} | Glas ${glazingEcho} | UW ${res.UW||'?'}`},
+  note,
+  equivalence:{layout:cfg.layout||'1flg',opening:cfg.opening||'Dreh-Kipp',glazing:cfg.glazing,glazingCode:glazingEcho,fittings:[fit1,fit2].filter(Boolean).join(' + '),uw:res.UW||'',construction:`${lid}${cfg.layout==='2flg_pfosten'?' · 2-flügelig Mittelpfosten':''}${cfg.layout==='2flg_stulp_dk_dreh'?' · 2-flügelig Stulp':''}`,proof:`${mapped.name} (${lid}) | Maße ${w}×${h}mm | Glas ${glazingEcho} (Ug/UW ${res.UW||'?'}) | Farbe RAL/Standard weiß | Beschlag ${[fit1,fit2].filter(Boolean).join(' + ')||'Standard'}${res.details_info?` | ${res.details_info}`:''}`},
   discountMetadata:{observed:false,note:'Einkaufspreis netto laut Eko4u-Konfigurator (Herstellerpreis); Rabatte/Konditionen nicht enthalten'},
   warnings
  };
