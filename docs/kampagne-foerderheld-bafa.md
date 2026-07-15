@@ -2,7 +2,7 @@
 
 ## Kernbotschaft & Mechanik
 
-Wer neue Fenster plant, stellt ERST den Förderantrag über Förderheld (5 Minuten, digital), wartet die Förderzusage ab und bestellt DANN bei Deutscher Fenstershop. Förderheld reicht Anträge binnen 24 Stunden beim BAFA ein; bezahlt wird bei Förderheld erst nach positiver Förderzusage. Compliance-Kern: Der BAFA-Antrag muss vor Vertragsabschluss/Bestellung gestellt sein (Vorhabenbeginn) — ein bloßes Kontakt-/Lead-Formular ist NICHT der Antrag; kommuniziert wird immer „Antrag eingereicht, dann bestellen", empfohlen „Zusage abwarten, dann bestellen".
+Wer neue Fenster plant, geht mit Förderheld diese vier Schritte: 1. Daten in 5 Minuten auf förderheld.com eingeben — Förderheld übernimmt den gesamten Förderprozess inklusive Antragstellung. 2. Förderzusage abwarten, dann Fenster bei Deutscher Fenstershop bestellen. 3. Fenster einbauen lassen. 4. Rechnung und Zahlungsnachweis bei Förderheld hochladen — die Förderung wird ausgezahlt. Kein Papierkram, keine Kommunikation mit dem BAFA nötig — Förderheld begleitet bis zur Auszahlung. Compliance-Kern: Der BAFA-Antrag muss vor Vertragsabschluss/Bestellung gestellt sein (Vorhabenbeginn) — ein bloßes Kontakt-/Lead-Formular ist NICHT der Antrag; kommuniziert wird immer „Antrag eingereicht, dann bestellen", empfohlen „Zusage abwarten, dann bestellen".
 
 ## BAFA-Faktenblatt
 
@@ -109,15 +109,16 @@ Brevo, Versand nur mit Elvis-GO.
 
 Planen Sie einen Fenstertausch? Dann lohnt sich ein Blick auf die aktuelle BAFA-Förderung, bevor Sie bestellen.
 
-Über unseren Partner Förderheld — zertifizierte Energieeffizienz-Experten — stellen Sie Ihren Förderantrag in nur 5 Minuten online, ganz ohne Papierkram. Förderheld reicht den Antrag binnen 24 Stunden beim BAFA ein. Bezahlt wird erst, wenn die Förderzusage tatsächlich vorliegt.
+Über unseren Partner Förderheld — zertifizierte Energieeffizienz-Experten — geben Sie Ihre Daten in nur 5 Minuten online ein, ganz ohne Papierkram und ohne Behörden-Schriftverkehr. Förderheld übernimmt den gesamten Förderprozess inklusive Antragstellung und reicht den Antrag binnen 24 Stunden beim BAFA ein. Bezahlt wird erst, wenn die Förderzusage tatsächlich vorliegt.
 
 Wichtig ist die Reihenfolge: Der Antrag muss vor Vertragsabschluss gestellt werden. Deshalb funktioniert die Zusammenarbeit so:
 
-1. Sie stellen den Antrag über Förderheld — 5 Minuten, digital.
-2. Sie warten die Förderzusage ab.
-3. Erst danach bestellen Sie Ihre neuen Fenster bei Deutscher Fenstershop.
+1. Sie geben Ihre Daten über Förderheld ein — 5 Minuten, digital. Förderheld übernimmt die Antragstellung.
+2. Sie warten die Förderzusage ab und bestellen dann Ihre neuen Fenster bei Deutscher Fenstershop.
+3. Sie lassen die Fenster einbauen.
+4. Sie laden Rechnung und Zahlungsnachweis bei Förderheld hoch — die Förderung wird kurz darauf ausgezahlt.
 
-So verlieren Sie keinen Fördereuro und haben trotzdem in kurzer Zeit alles erledigt.
+So begleitet Förderheld den Prozess bis zur Auszahlung, ohne Papierkram und ohne Behörden-Schriftverkehr.
 
 Zur Einordnung: Bei einem Fensterprojekt von 20.000 € sind mit individuellem Sanierungsfahrplan bis zu 20 % Zuschuss möglich — das entspricht bis zu 4.000 €.
 
@@ -135,11 +136,11 @@ Fenstertausch planen? 5 Fakten zur BAFA-Förderung, die Sie kennen sollten: Bis 
 
 Bild: ruhige Infografik, 5 nummerierte Fakten auf DFS-Dunkelblau, Orange-Akzent nur bei „5 Minuten".
 
-### Post 2: Mechanik, „3 Schritte"
+### Post 2: Mechanik, „4 Schritte"
 
-So kombinieren Sie Förderung und neue Fenster richtig: Erst den Antrag über Förderheld stellen — 5 Minuten, digital. Dann die Förderzusage abwarten. Erst danach bei Deutscher Fenstershop bestellen. Diese Reihenfolge ist wichtig, denn der Antrag muss vor Vertragsabschluss gestellt sein. Förderheld reicht ihn binnen 24 Stunden beim BAFA ein — bezahlt wird erst nach Zusage.
+So kombinieren Sie Förderung und neue Fenster richtig: Erst geben Sie Ihre Daten über Förderheld ein — 5 Minuten, digital; Förderheld übernimmt die Antragstellung. Dann die Förderzusage abwarten und bei Deutscher Fenstershop bestellen. Anschließend die Fenster einbauen lassen. Nach Abschluss der Arbeiten laden Sie Rechnung und Zahlungsnachweis bei Förderheld hoch — die Förderung wird kurz darauf ausgezahlt. Diese Reihenfolge ist wichtig, denn der Antrag muss vor Vertragsabschluss gestellt sein. Kein Papierkram, keine Kommunikation mit dem BAFA nötig.
 
-Bild: drei Icons (Antrag → Zusage → Bestellung) mit Pfeilen, DFS-Farbwelt.
+Bild: vier Icons (Daten eingeben → Zusage → Bestellung & Einbau → Auszahlung) mit Pfeilen, DFS-Farbwelt.
 
 ### Post 3: Partner-Vorstellung
 
@@ -165,11 +166,15 @@ Zuerst der Antrag — er muss vor Vertragsabschluss gestellt sein. Also: Antrag 
 
 ### Was übernimmt Förderheld?
 
-Zertifizierte Gebäudeenergieberater; kompletter Online-Antrag in rund 5 Minuten, Einreichung beim BAFA binnen 24 Stunden, Begleitung bis zur Förderzusage.
+Zertifizierte Gebäudeenergieberater; kompletter Online-Antrag in rund 5 Minuten, Einreichung beim BAFA binnen 24 Stunden und Begleitung des gesamten Förderprozesses bis zur Auszahlung — kein Papierkram, keine Kommunikation mit dem BAFA nötig.
 
 ### Was kostet Förderheld?
 
 Bezahlt wird erst nach positiver Förderzusage — kein Risiko bei Ablehnung. Konkrete Konditionen direkt im Antragsprozess bei Förderheld.
+
+### Wie erhalte ich die Förderung ausgezahlt?
+
+Nach Abschluss der Arbeiten laden Sie Rechnung und Zahlungsnachweis bei Förderheld hoch; die Auszahlung folgt kurz darauf, typischerweise 8–12 Wochen nach Einreichung (Angabe Förderheld).
 
 ## Kanäle & Zeitplan
 
