@@ -64,6 +64,7 @@
       "quelle": "allgemeine Lieferzeit",
       "stichwoerter": ["lieferzeit", "versandzeit", "wie lange.*liefer", "wann.*geliefert", "spedition", "tracking|sendungsverfolgung"],
       "antwort": "Die Lieferzeit hängt von Produkt, Profil, Hersteller und Ausstattung ab. Die voraussichtliche Lieferzeit sehen Sie am Produkt oder im Warenkorb. Mehr dazu: {{links.delivery}}",
+      "kontakte": [{ "type": "phone", "label": "Logistik", "wert": "{{contacts.logisticsPhone}}" }],
       "links": [{ "label": "Versand und Lieferzeiten", "url": "{{links.delivery}}" }]
     },
     {
@@ -84,6 +85,7 @@
       "quelle": "Reklamation",
       "stichwoerter": ["reklamation", "reklamieren", "mangel", "ersatz", "defekt"],
       "antwort": "Für Reklamationen nutzen Sie bitte das Reklamationsformular. Bitte übermitteln Sie Fotos und personenbezogene Angaben nur dort, nicht hier im Chat.",
+      "kontakte": [{ "type": "email", "label": "Logistik", "wert": "{{contacts.logisticsEmail}}" }],
       "links": [{ "label": "Reklamationsformular", "url": "{{links.complaint}}" }]
     },
     {
@@ -92,6 +94,7 @@
       "quelle": "Montage",
       "stichwoerter": ["montage", "montier", "konnen sie.*einbau", "einbau.*(anbieten|moglich|service|buchen)", "machen sie.*aufmass"],
       "antwort": "Wir führen selbst keine Montage aus. Wenn Sie eine Montage wünschen, geben Sie dies bitte direkt in Ihrer Anfrage über das „Anfrage senden“-Formular mit an — wir prüfen dann, ob wir Ihnen in Ihrem Postleitzahlengebiet einen Montagepartner empfehlen können. Eine Empfehlung ist je nach Region nicht immer möglich.",
+      "kontakte": [{ "type": "phone", "label": "Technik", "wert": "{{contacts.technicalPhone}}" }],
       "links": [{ "label": "Anfrage senden / Callback", "url": "{{links.callback}}" }]
     },
     {
@@ -101,6 +104,7 @@
       "stichwoerter": ["was kostet", "preis.*(wissen|berechnen|erfahren)", "schnell.*preis", "preis.*(fenster|tur|haustur|rollladen)"],
       "nicht": ["versand|liefer"],
       "antwort": "Für eine schnelle Preisermittlung nutzen Sie am besten direkt unseren Konfigurator: Dort wählen Sie Größe, Profil, Farbe, Verglasung und Zubehör aus und erhalten sofort eine Preisberechnung.\n\n{{links.configurator}}\n\nFür größere Anfragen mit mehreren Elementen nutzen Sie gerne das „Anfrage senden“-Formular im Hauptmenü.",
+      "kontakte": [{ "type": "email", "label": "Anfrage", "wert": "{{contacts.inquiryEmail}}" }],
       "links": [{ "label": "Fenster-Konfigurator", "url": "{{links.configurator}}" }]
     },
     {
@@ -108,7 +112,8 @@
       "action": "answer_self_pickup",
       "quelle": "Selbstabholung",
       "stichwoerter": ["abholung", "abholen", "selbst.*holen", "mitnahmegestell"],
-      "antwort": "Eine Abholung ist grundsätzlich möglich. Bitte bringen Sie ausreichend Personen für die manuelle Beladung mit. Beladung durch unsere Mitarbeiter: pauschal 50 € pro 5 Fenster. Mitnahmegestell (Einweg-Holzgestell): zusätzlich 60 € pro Gestell. Bitte geeignetes Fahrzeug und Material zur Ladungssicherung einplanen — Fenster und Bauelemente sind schwer, sperrig und empfindlich."
+      "antwort": "Eine Abholung ist grundsätzlich möglich. Bitte bringen Sie ausreichend Personen für die manuelle Beladung mit. Beladung durch unsere Mitarbeiter: pauschal 50 € pro 5 Fenster. Mitnahmegestell (Einweg-Holzgestell): zusätzlich 60 € pro Gestell. Bitte geeignetes Fahrzeug und Material zur Ladungssicherung einplanen — Fenster und Bauelemente sind schwer, sperrig und empfindlich.",
+      "kontakte": [{ "type": "phone", "label": "Logistik", "wert": "{{contacts.logisticsPhone}}" }]
     }
   ]
 }

@@ -98,6 +98,7 @@
   var fileInput = document.getElementById('file');
   var fileList = document.getElementById('files');
   var sessionFiles = [];
+  var turnCount = 0;
 
   function esc(v){ return String(v||'').replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 
@@ -149,10 +150,11 @@
     addMsg('bot', 'Ich prüfe das kurz…');
     var loading = log.lastElementChild;
     try {
+      turnCount += 1;
       var res = await fetch('/api/chatbot', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ message: clean, knowledge: sessionFiles })
+        body: JSON.stringify({ message: clean, knowledge: sessionFiles, turn: turnCount })
       });
       var data = await res.json();
       loading.remove();

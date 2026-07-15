@@ -7,6 +7,7 @@
   const accent = currentScript?.dataset.accent || '#004b93';
   const sessionKey = 'dfs_chatbot_session';
   if (!localStorage.getItem(sessionKey)) localStorage.setItem(sessionKey, crypto.randomUUID?.() || String(Date.now()));
+  const turnKey = 'dfs_chatbot_turn';
 
   const PAGE_CONTEXTS = [
     { key: 'konfigurator', match: /konfigurator/, greeting: 'Hallo, ich bin Janela. Ich sehe, Sie sind gerade im Konfigurator – ich helfe bei der Konfiguration, technischen Begriffen oder leite an die richtige Abteilung weiter.', chips: ['Hilfe beim Konfigurator', 'Uw-Wert erklären', 'Technische Frage stellen'] },
@@ -73,8 +74,10 @@
     const clean = String(text || input.value || '').trim(); if(!clean) return;
     input.value=''; addMessage('user', clean); addMessage('bot','Ich prüfe das kurz…');
     const loading = log.lastElementChild;
+    const turn = Number(localStorage.getItem(turnKey) || 0) + 1;
+    localStorage.setItem(turnKey, String(turn));
     try{
-      const res = await fetch(endpoint,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message:clean,sessionId:localStorage.getItem(sessionKey)})});
+      const res = await fetch(endpoint,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({message:clean,sessionId:localStorage.getItem(sessionKey),turn})});
       const data = await res.json();
       loading.remove(); addMessage('bot', data.answer || 'Keine sichere Antwort gefunden.', data);
     }catch(error){ loading.remove(); addMessage('bot','Ich bin gerade nicht erreichbar. Bitte versuchen Sie es später erneut.'); }

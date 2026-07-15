@@ -110,7 +110,10 @@ export default async function handler(req, res) {
   try {
     const body = await readBody(req);
     const message = String(body.message || body.question || body.text || '').slice(0, MESSAGE_MAX_CHARS);
-    return sendJson(res, 200, await answerFenstershopChatbotWithLlm({ message, extraChunks: extraChunksFromBody(body) }));
+    // turn = wievielte Nutzer-Nachricht in dieser Sitzung (vom Widget mitgezählt, Server ist stateless).
+    // Ab turn>=3 muss die Antwort verbindlich an die richtige Abteilung leiten (Telefon/Mail).
+    const turn = Math.max(0, Math.min(999, Number.parseInt(body.turn, 10) || 0));
+    return sendJson(res, 200, await answerFenstershopChatbotWithLlm({ message, extraChunks: extraChunksFromBody(body), turn }));
   } catch (error) {
     return sendJson(res, 400, { ok: false, error: 'invalid_request', message: error.message });
   }

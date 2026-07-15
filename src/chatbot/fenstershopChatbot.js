@@ -158,6 +158,41 @@ export function retrieveFenstershopKnowledge(query, { limit = 3, extraChunks = [
     .map(({ score, ...chunk }) => chunk);
 }
 
+// Abteilungs-Routing: spätestens ab der 3. Nachricht einer Sitzung bekommt jede
+// Antwort verbindlich Telefon/Mail der passenden Abteilung mit — auch wenn Regel
+// oder RAG-Fallback selbst keine Kontakte vorsehen (Elvis-Anfrage: Kunde soll
+// nicht endlos mit dem Bot kreisen, sondern spätestens dann an einen Menschen).
+const DEPARTMENT_RULES = [
+  { label: 'Technik', match: /technik|konfigurator|montage|einbau|uw[-\s]?wert|ug[-\s]?wert|profil|schallschutz|einbruch|rc\d/, contacts: () => [{ type: 'phone', label: 'Technik', value: CONTACTS.technicalPhone }, { type: 'email', label: 'Technik', value: CONTACTS.technicalEmail }] },
+  { label: 'Logistik', match: /liefer|versand|spedition|transport|schaden|abholung|abholen|fahrer|lkw|avis/, contacts: () => [{ type: 'phone', label: 'Logistik', value: CONTACTS.logisticsPhone }, { type: 'email', label: 'Logistik', value: CONTACTS.logisticsEmail }] },
+  { label: 'Bestellstatus', match: /bestellstatus|bestellung|produktionsstand|auftragsbestatigung/, contacts: () => [{ type: 'email', label: 'Bestellstatus', value: CONTACTS.orderStatusEmail }] },
+  { label: 'Zahlung', match: /zahlung|rechnung|paypal|uberweisung|bezahlt/, contacts: () => [{ type: 'email', label: 'Zahlung', value: CONTACTS.paymentEmail }] },
+];
+const DEFAULT_DEPARTMENT_CONTACTS = () => [{ type: 'phone', label: 'Logistik', value: CONTACTS.logisticsPhone }, { type: 'email', label: 'Anfrage', value: CONTACTS.inquiryEmail }];
+
+function departmentContactsFor(normalized) {
+  const hit = DEPARTMENT_RULES.find((rule) => rule.match.test(normalized));
+  return (hit ? hit.contacts() : DEFAULT_DEPARTMENT_CONTACTS()).filter((contact) => contact.value);
+}
+
+function mergeContacts(existing = [], extra = []) {
+  const merged = [...existing];
+  for (const contact of extra) {
+    if (!merged.some((c) => c.value === contact.value)) merged.push(contact);
+  }
+  return merged;
+}
+
+function withDepartmentRouting(draft, normalized) {
+  const contacts = mergeContacts(draft.contacts, departmentContactsFor(normalized));
+  const contactLine = contacts.map((c) => `${c.label}: ${c.value}`).join(' · ');
+  const alreadyMentions = contacts.every((c) => draft.answer.includes(c.value));
+  const answer = alreadyMentions
+    ? draft.answer
+    : `${draft.answer}\n\nFür eine schnelle, persönliche Klärung wenden Sie sich gerne direkt an: ${contactLine}`;
+  return { ...draft, contacts, answer };
+}
+
 function sourceLinksForQuery(normalized) {
   const links = [];
   if (/liefer|versand|spedition|avis/.test(normalized)) links.push({ label: 'Versand und Lieferzeiten', url: LINKS.delivery });
@@ -219,10 +254,13 @@ function conciseKnowledgeAnswer(query, chunks, links) {
   return `${snippet}\n\nMehr dazu: ${link?.url || chunks[0]?.url || LINKS.knowledge}`;
 }
 
-export function answerFenstershopChatbot({ message = '', extraChunks = [] } = {}) {
+export function answerFenstershopChatbot({ message = '', extraChunks = [], turn = 0 } = {}) {
   const text = String(message || '').trim();
   const n = lower(text);
   const sensitive = hasSensitiveData(text);
+  // Ab der 3. Nachricht (turn>=3) bekommt JEDE Antwort verbindlich die passende
+  // Abteilung mit — unabhängig davon, ob Regel/RAG/Fallback selbst Kontakte vorsehen.
+  const finalize = (draft) => (Number(turn) >= 3 ? withDepartmentRouting(draft, n) : draft);
 
   if (!text) {
     return result({
@@ -236,34 +274,34 @@ export function answerFenstershopChatbot({ message = '', extraChunks = [] } = {}
   for (const rule of loadHardRules()) {
     if (rule.notPatterns.some((pattern) => pattern.test(n))) continue;
     if (!hasAny(n, rule.patterns)) continue;
-    return result({
+    return finalize(result({
       intent: rule.intent, action: rule.action, sensitive,
       answer: rule.answer,
       contacts: rule.contacts,
       links: rule.links,
       sources: rule.sources,
-    });
+    }));
   }
 
   const chunks = retrieveFenstershopKnowledge(text, { limit: 2, extraChunks });
   const links = sourceLinksForQuery(n);
   if (chunks.length) {
-    return result({
+    return finalize(result({
       intent: 'knowledge_rag', action: 'answer_from_knowledge', sensitive,
       confidence: 0.82,
       answer: conciseKnowledgeAnswer(text, chunks, links),
       links,
       sources: chunks.map((chunk) => ({ title: chunk.title, url: chunk.url || 'programmierlogik_chatbot_final_mit_anfrage_status.md', type: chunk.sourceType || 'knowledge' })),
-    });
+    }));
   }
 
-  return result({
+  return finalize(result({
     intent: 'fallback', action: 'escalate_or_link', sensitive,
     confidence: 0.45,
     answer: `Dazu habe ich keine sichere freigegebene Antwort gefunden. Für technische Fragen erreichen Sie unsere technische Abteilung unter ${CONTACTS.technicalPhone}. Für allgemeine Anfragen können Sie auch den Callback nutzen.`,
     contacts: [{ type: 'phone', label: 'Technik', value: CONTACTS.technicalPhone }],
     links: [{ label: 'Callback / Anfrage senden', url: LINKS.callback }, { label: 'Wissenswertes', url: LINKS.knowledge }],
-  });
+  }));
 }
 
 
@@ -314,8 +352,8 @@ const LLM_PROVIDERS = [
   { name: 'moonshot', polish: polishFenstershopAnswer },
 ];
 
-export async function answerFenstershopChatbotWithLlm({ message = '', extraChunks = [], env = process.env } = {}) {
-  const draft = answerFenstershopChatbot({ message, extraChunks });
+export async function answerFenstershopChatbotWithLlm({ message = '', extraChunks = [], env = process.env, turn = 0 } = {}) {
+  const draft = answerFenstershopChatbot({ message, extraChunks, turn });
   if (mustKeepGuardrailDraft(draft)) return draft;
   const knowledge = retrieveFenstershopKnowledge(message, { limit: 3, extraChunks });
   for (const provider of LLM_PROVIDERS) {
