@@ -8,12 +8,6 @@ globalThis.fetch = async (url) => {
   if (String(url).includes('api.anthropic.com')) {
     return { ok: true, json: async () => ({ model: 'claude-haiku-4-5', stop_reason: 'end_turn', content: [{ type: 'text', text: 'Claude-Antwort direkt aus Atlas.' }] }) };
   }
-  if (String(url).includes('integrate.api.nvidia.com')) {
-    return { ok: true, json: async () => ({ choices: [{ message: { content: '<think>\nIch überlege kurz, wie ich am besten antworte.\n</think>\n\n```\nNemotron-Antwort direkt aus Atlas.\n```' } }] }) };
-  }
-  if (String(url).includes('api.moonshot.ai')) {
-    return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kurz poliert aus Atlas.' }) } }] }) };
-  }
   throw new Error(`unexpected fetch ${url}`);
 };
 
@@ -72,71 +66,58 @@ assert.ok(['knowledge_rag', 'technical_specific'].includes(answer.intent));
 assert.ok(answer.links.some((link) => /fensterbegriffe|profilschnitte/.test(link.url)));
 
 
-const llmAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
-assert.equal(llmAnswer.llm.used, true);
-assert.equal(llmAnswer.llm.provider, 'moonshot');
-assert.match(llmAnswer.answer, /Kurz poliert aus Atlas\./);
-assert.match(llmAnswer.answer, /https:\/\/deutscher-fenstershop\.de\/fensterbegriffe/);
-
-const nemotronAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
-assert.equal(nemotronAnswer.llm.used, true);
-assert.equal(nemotronAnswer.llm.provider, 'nemotron');
-assert.match(nemotronAnswer.answer, /Nemotron-Antwort direkt aus Atlas\./);
-assert.doesNotMatch(nemotronAnswer.answer, /<think>|```/i, 'Reasoning-Block/Codefences muessen gestrippt sein');
-
-// Claude hat Vorrang, sobald ANTHROPIC_API_KEY gesetzt ist
-const claudeAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test', NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
+// Claude Haiku 4.5 ist der einzige LLM-Provider (Nemotron/Moonshot abgeschaltet, Elvis-Wunsch)
+const claudeAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test' } });
 assert.equal(claudeAnswer.llm.used, true);
 assert.equal(claudeAnswer.llm.provider, 'claude');
 assert.match(claudeAnswer.answer, /Claude-Antwort direkt aus Atlas\./);
 
-// Claude-Ausfall kaskadiert sauber zu Nemotron
+// OAuth-Token hat Vorrang vor ANTHROPIC_API_KEY, wenn beide gesetzt sind
+const oauthAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { CLAUDE_CODE_OAUTH_TOKEN: 'test-oauth', ANTHROPIC_API_KEY: 'test' } });
+assert.equal(oauthAnswer.llm.used, true);
+assert.equal(oauthAnswer.llm.provider, 'claude');
+
+// Claude-Ausfall -> kein Fremd-LLM-Fallback mehr, sauberer Regel-/RAG-Entwurf ohne Politur
 {
   const beforeFetch = globalThis.fetch;
   globalThis.fetch = async (url) => {
     if (String(url).includes('api.anthropic.com')) return { ok: false, status: 529 };
     return beforeFetch(url);
   };
-  const cascade = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test', NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
-  assert.equal(cascade.llm.provider, 'nemotron');
+  const cascade = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test' } });
+  assert.equal(cascade.llm.used, false);
+  assert.equal(cascade.llm.reason, 'all_providers_failed_or_unconfigured');
   globalThis.fetch = beforeFetch;
 }
 
-const originalFetch = globalThis.fetch;
-globalThis.fetch = async (url) => {
-  if (String(url).includes('integrate.api.nvidia.com')) return { ok: false, status: 500 };
-  if (String(url).includes('api.moonshot.ai')) return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Kimi rettet die Antwort.' }) } }] }) };
-  throw new Error(`unexpected fetch ${url}`);
-};
-const fallbackAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { NVIDIA_API_KEY: 'test', KIMI_API_KEY: 'test' } });
-assert.equal(fallbackAnswer.llm.used, true);
-assert.equal(fallbackAnswer.llm.provider, 'moonshot');
-assert.match(fallbackAnswer.answer, /Kimi rettet die Antwort\./);
-globalThis.fetch = originalFetch;
-
 const noProviderAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: {} });
 assert.equal(noProviderAnswer.llm.used, false);
+assert.equal(noProviderAnswer.llm.reason, 'all_providers_failed_or_unconfigured');
 
+const originalFetch = globalThis.fetch;
 globalThis.fetch = async (url) => {
-  if (String(url).includes('api.moonshot.ai')) return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Der Uw-Wert 体现了整体的隔热性 ist wichtig.' }) } }] }) };
+  if (String(url).includes('api.anthropic.com')) {
+    return { ok: true, json: async () => ({ model: 'claude-haiku-4-5', stop_reason: 'end_turn', content: [{ type: 'text', text: 'Der Uw-Wert 体现了整体的隔热性 ist wichtig.' }] }) };
+  }
   throw new Error(`unexpected fetch ${url}`);
 };
-const chineseLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test' } });
+const chineseLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test' } });
 assert.equal(chineseLeakAnswer.llm.used, false, 'Antwort mit chinesischen Zeichen darf nicht durchgehen');
 assert.doesNotMatch(chineseLeakAnswer.answer, /[一-鿿]/, 'Draft-Fallback darf keine chinesischen Zeichen enthalten');
 globalThis.fetch = originalFetch;
 
 globalThis.fetch = async (url) => {
-  if (String(url).includes('api.moonshot.ai')) return { ok: true, json: async () => ({ choices: [{ message: { content: JSON.stringify({ answer: 'Rufen Sie uns gerne unter +49 7221 3022 333 an.' }) } }] }) };
+  if (String(url).includes('api.anthropic.com')) {
+    return { ok: true, json: async () => ({ model: 'claude-haiku-4-5', stop_reason: 'end_turn', content: [{ type: 'text', text: 'Rufen Sie uns gerne unter +49 7221 3022 333 an.' }] }) };
+  }
   throw new Error(`unexpected fetch ${url}`);
 };
-const phoneLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { KIMI_API_KEY: 'test' } });
-assert.equal(phoneLeakAnswer.llm.used, false, 'erfundene Telefonnummer muss blockiert werden');
-assert.doesNotMatch(phoneLeakAnswer.answer, /3022 333/, 'erfundene Nummer darf nicht in der Antwort landen');
+const phoneLeakAnswer = await answerFenstershopChatbotWithLlm({ message: 'Was bedeutet Ug Wert bei Fenstern?', env: { ANTHROPIC_API_KEY: 'test' } });
+assert.equal(phoneLeakAnswer.llm.used, true, 'die Zentrale-Nummer ist jetzt in CONTACTS bekannt und darf durch');
+assert.match(phoneLeakAnswer.answer, /3022 333/);
 globalThis.fetch = originalFetch;
-assert.equal(noProviderAnswer.llm.reason, 'all_providers_failed_or_unconfigured');
 
-const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { KIMI_API_KEY: 'test', FENSTERSHOP_LLM_MODEL: 'kimi-test' } });
+const llmGuardrail = await answerFenstershopChatbotWithLlm({ message: 'Wie ist der Status meiner Bestellung 123456?', env: { ANTHROPIC_API_KEY: 'test' } });
 assert.equal(llmGuardrail.intent, 'order_status');
 assert.equal(llmGuardrail.llm, null);
 assert.match(llmGuardrail.answer, /keinen Zugriff/i);
@@ -152,6 +133,13 @@ const uploadChunks = retrieveFenstershopKnowledge('Sonderrabatt Messeaktion Okto
   extraChunks: [{ title: 'Messeaktion', text: 'Zur Messeaktion im Oktober gibt es einen Sonderrabatt von 5 Prozent auf alle Drutex-Fenster.', url: 'upload:messe.md', sourceType: 'upload' }],
 });
 assert.ok(uploadChunks.some((chunk) => chunk.sourceType === 'upload'), 'hochgeladenes Sitzungs-Wissen muss ins Retrieval einfließen');
+
+// Regression: "Fenster klemmt" traf frueher nur den Seiten-Kopfzeilen-Boilerplate
+// (Telefonnummer, Anfrage senden/stellen, Oeffnungszeiten) einer dfs_website-Seite
+// und gab ihn als "Antwort" aus, statt ehrlich in den Fallback zu gehen.
+answer = ask('Mein Fenster klemmt beim Öffnen, was kann ich tun?');
+assert.equal(answer.intent, 'fallback', 'ohne echten Wissenstreffer muss der ehrliche Fallback greifen, nicht Seiten-Boilerplate');
+assert.doesNotMatch(answer.answer, /Anfrage (senden|stellen)|Whatsapp|Live Chat|Mo\s*[–-]\s*Fr\./, 'Kopfzeilen-Boilerplate darf nie als Antwort erscheinen');
 
 answer = answerFenstershopChatbot({
   message: 'Gibt es einen Sonderrabatt zur Messeaktion?',

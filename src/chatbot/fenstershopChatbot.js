@@ -1,7 +1,5 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { polishFenstershopAnswer } from './kimiClient.js';
-import { polishFenstershopAnswerNemotron } from './nemotronClient.js';
 import { polishFenstershopAnswerClaude } from './claudeClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
@@ -9,6 +7,7 @@ const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', impor
 const COMPANY_KNOWLEDGE_DIR = fileURLToPath(new URL('../../knowledge/', import.meta.url));
 
 export const CONTACTS = {
+  centralPhone: '+49 7221 3022 333',
   logisticsPhone: '+49 7221 3022 157',
   technicalPhone: '+49 7221 3022 126',
   logisticsEmail: 'logistik@deutscher-fenstershop.de',
@@ -168,7 +167,7 @@ const DEPARTMENT_RULES = [
   { label: 'Bestellstatus', match: /bestellstatus|bestellung|produktionsstand|auftragsbestatigung/, contacts: () => [{ type: 'email', label: 'Bestellstatus', value: CONTACTS.orderStatusEmail }] },
   { label: 'Zahlung', match: /zahlung|rechnung|paypal|uberweisung|bezahlt/, contacts: () => [{ type: 'email', label: 'Zahlung', value: CONTACTS.paymentEmail }] },
 ];
-const DEFAULT_DEPARTMENT_CONTACTS = () => [{ type: 'phone', label: 'Logistik', value: CONTACTS.logisticsPhone }, { type: 'email', label: 'Anfrage', value: CONTACTS.inquiryEmail }];
+const DEFAULT_DEPARTMENT_CONTACTS = () => [{ type: 'phone', label: 'Zentrale', value: CONTACTS.centralPhone }, { type: 'email', label: 'Anfrage', value: CONTACTS.inquiryEmail }];
 
 function departmentContactsFor(normalized) {
   const hit = DEPARTMENT_RULES.find((rule) => rule.match.test(normalized));
@@ -231,17 +230,32 @@ function result({ intent, answer, links = [], contacts = [], confidence = 0.95, 
 }
 
 
+// Gibt null zurück statt irgendeiner Notlösung, wenn KEIN Satz einen Suchbegriff
+// enthält -- sonst rutscht rohes Seiten-Menü/Navigations-Boilerplate durch, das
+// jede DFS-Seite im Kopf trägt ("Fensterkonfigurator ... Warenkorb ist leer ...").
+// Aufgetreten bei "Fenster klemmt beim Öffnen" (kein echter Wissenstreffer,
+// alle 3 LLMs fehlgeschlagen -> Nutzer sah Navigationsmüll statt Fallback).
+// Jede dfs_website-Seite beginnt mit demselben Kopfzeilen-Block (Telefon, Anfrage
+// senden/stellen, Whatsapp/Live-Chat, Öffnungszeiten, Konfigurator-Links,
+// Warenkorb). "Mo – Fr." erzeugt dabei per Satzzeichen-Split eine kurze,
+// scheinbare "Antwort" ohne echten Inhalt (Bug: "Fenster klemmt" bekam nur
+// diesen Kopfzeilen-Fetzen zurück). Deshalb den ganzen Block vor dem Satz-Split
+// entfernen, nicht nur Einzelphrasen.
+const DFS_BOILERPLATE = /(Deutscher-FensterShop|\+?49\s?7221[\s/-]*3022[\s-]*333|Anfrage senden|Anfrage stellen|Whatsapp|Live Chat|Mo\s*[–-]\s*Fr\.?\s*\d{1,2}:\d{2}\s*[–-]\s*\d{1,2}:\d{2}|Ihr Warenkorb ist leer|Gesamtpreis\s*[\d.,]+\s*EUR|Newsletter abonnieren|Fensterkonfigurator|Türenkonfigurator)/gi;
+
 function cleanSnippet(text = '', query = '') {
   const qTerms = terms(query);
   const cleaned = String(text)
-    .replace(/(Deutscher-FensterShop|Anfrage senden|Whatsapp|Live Chat|Warenkorb|Newsletter abonnieren|Fensterkonfigurator|Türenkonfigurator)/gi, ' ')
+    .replace(DFS_BOILERPLATE, ' ')
     .replace(/\s+/g, ' ')
     .trim();
   const sentences = cleaned.split(/(?<=[.!?])\s+/).filter((s) => s.length > 35 && s.length < 260);
   const ranked = sentences
     .map((sentence) => ({ sentence, score: qTerms.reduce((sum, term) => sum + (lower(sentence).includes(term) ? 1 : 0), 0) }))
     .sort((a, b) => b.score - a.score);
-  const best = (ranked.find((row) => row.score > 0)?.sentence || sentences[0] || cleaned.slice(0, 220)).trim();
+  const hit = ranked.find((row) => row.score > 0);
+  if (!hit) return null;
+  const best = hit.sentence.trim();
   return `${best}${best.length > 260 ? '…' : ''}`.slice(0, 320);
 }
 
@@ -250,6 +264,7 @@ function conciseKnowledgeAnswer(query, chunks, links) {
   if (/\bug\b|ug[-\s]?wert/.test(nq)) return `Der Ug-Wert beschreibt die Wärmedämmung der Verglasung. Für das gesamte Fenster ist der Uw-Wert entscheidend, weil er Glas, Rahmen und Randverbund berücksichtigt.\n\nMehr dazu: ${LINKS.glossary}`;
   if (/schallschutz/.test(nq)) return `Schallschutzfenster reduzieren Außenlärm und sorgen für mehr Ruhe im Wohnraum. Wichtig sind passende Schallschutzverglasung, Rahmen und fachgerechter Einbau.\n\nMehr dazu: https://deutscher-fenstershop.de/schallschutzfenster`;
   const snippet = cleanSnippet(chunks[0]?.text || '', query);
+  if (!snippet) return null;
   const link = links?.[0];
   return `${snippet}\n\nMehr dazu: ${link?.url || chunks[0]?.url || LINKS.knowledge}`;
 }
@@ -285,11 +300,15 @@ export function answerFenstershopChatbot({ message = '', extraChunks = [], turn 
 
   const chunks = retrieveFenstershopKnowledge(text, { limit: 2, extraChunks });
   const links = sourceLinksForQuery(n);
-  if (chunks.length) {
+  const knowledgeAnswer = chunks.length ? conciseKnowledgeAnswer(text, chunks, links) : null;
+  // conciseKnowledgeAnswer liefert null, wenn kein Satz im besten Treffer die
+  // Suchbegriffe enthält -- dann lieber ehrlich in den Fallback statt Seiten-
+  // Navigationsmüll als "Antwort" auszugeben.
+  if (knowledgeAnswer) {
     return finalize(result({
       intent: 'knowledge_rag', action: 'answer_from_knowledge', sensitive,
       confidence: 0.82,
-      answer: conciseKnowledgeAnswer(text, chunks, links),
+      answer: knowledgeAnswer,
       links,
       sources: chunks.map((chunk) => ({ title: chunk.title, url: chunk.url || 'programmierlogik_chatbot_final_mit_anfrage_status.md', type: chunk.sourceType || 'knowledge' })),
     }));
@@ -346,10 +365,11 @@ function answerStillSafe(polished, draft) {
   return true;
 }
 
+// Nemotron/Moonshot abgeschaltet (Elvis-Wunsch) -- nur noch Claude Haiku 4.5.
+// Schlägt Claude fehl (Auth/Timeout/Guardrail), bleibt der geprüfte Regel-/RAG-
+// Entwurf ohne KI-Politur stehen (llm.used:false) statt eines Fremd-LLM-Fallbacks.
 const LLM_PROVIDERS = [
   { name: 'claude', polish: polishFenstershopAnswerClaude },
-  { name: 'nemotron', polish: polishFenstershopAnswerNemotron },
-  { name: 'moonshot', polish: polishFenstershopAnswer },
 ];
 
 export async function answerFenstershopChatbotWithLlm({ message = '', extraChunks = [], env = process.env, turn = 0 } = {}) {
