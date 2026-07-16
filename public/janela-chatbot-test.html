@@ -7,7 +7,7 @@
 <style>
   :root { --blue:#003A66; --blue2:#005A8F; --orange:#F47C26; --line:#dbe4ee; --muted:#667089; --bg:#f5f7fa; }
   * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:#18212f; font-family:system-ui,-apple-system,"Segoe UI",sans-serif; line-height:1.5; }
+  body { margin:0; background:var(--bg); color:#18212f; font-family:Arial,"Helvetica Neue",Helvetica,sans-serif; line-height:1.5; }
   header { background:var(--blue); color:#fff; padding:18px 24px; }
   header .wrap { max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; gap:14px; flex-wrap:wrap; }
   header h1 { margin:0; font-size:20px; font-family:Helvetica,Arial,sans-serif; }
@@ -21,22 +21,29 @@
   .chatHead b { font-size:15px; }
   .chatHead small { color:var(--muted); }
   .chatLog { flex:1; overflow:auto; padding:18px; background:#f6f9fc; display:flex; flex-direction:column; gap:12px; }
-  .msg { border-radius:16px; padding:12px 14px; max-width:88%; white-space:pre-wrap; font-size:14.5px; line-height:1.45; }
-  .msg.user { align-self:flex-end; background:var(--blue); color:#fff; }
-  .msg.bot { align-self:flex-start; background:#fff; border:1px solid #e3ebf3; }
+  .msg { border-radius:12px; padding:12px 14px; max-width:88%; white-space:pre-wrap; font-size:14.5px; line-height:1.45; box-shadow:0 1px 2px rgba(0,27,63,.06); }
+  .msg.user { align-self:flex-end; background:var(--orange); color:#fff; border-bottom-right-radius:3px; }
+  .msg.bot { align-self:flex-start; background:#fff; border:1px solid #e3ebf3; border-bottom-left-radius:3px; }
   .msg .meta { display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
   .metaChip { border-radius:999px; padding:4px 9px; font-size:11px; font-weight:800; background:#EAF6FF; color:var(--blue); }
   .metaChip.upload { background:#e7f3ec; color:#1f7a4d; }
   .metaChip.llm { background:#fff2df; color:#9a5700; }
   .msg .links { display:grid; gap:5px; margin-top:9px; }
   .msg .links a { color:var(--blue); font-weight:800; text-decoration:none; font-size:13px; }
-  .chatForm { display:flex; gap:8px; padding:14px; border-top:1px solid var(--line); background:#fff; }
-  .chatForm textarea { flex:1; resize:none; border:1px solid var(--line); border-radius:12px; padding:11px; font:14.5px system-ui; height:52px; }
-  .chatForm button { border:0; border-radius:12px; background:var(--orange); color:#fff; font-weight:900; padding:0 20px; cursor:pointer; font-size:14.5px; }
-  .chatForm button:hover { background:#D86818; }
+  .chatForm { display:flex; gap:8px; padding:14px; border-top:1px solid var(--line); background:#fff; align-items:flex-end; }
+  .chatForm textarea { flex:1; resize:none; border:1px solid var(--line); border-radius:8px; padding:11px; font:14.5px Arial,sans-serif; height:52px; }
+  .chatForm textarea:focus { outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(0,58,102,.12); }
+  .micBtn { border:1px solid var(--line); border-radius:8px; background:#fff; width:52px; height:52px; flex:0 0 auto; cursor:pointer; display:flex; align-items:center; justify-content:center; color:var(--blue); padding:0; }
+  .micBtn:hover { background:#f0f4f9; }
+  .micBtn.recording { background:#e5342c; border-color:#e5342c; color:#fff; animation:micPulse 1.1s ease-in-out infinite; }
+  .micBtn[hidden] { display:none; }
+  @keyframes micPulse { 0%,100%{ box-shadow:0 0 0 0 rgba(229,52,44,.5);} 50%{ box-shadow:0 0 0 6px rgba(229,52,44,0);} }
+  .sendBtn { border:0; border-radius:8px; background:var(--orange); color:#fff; font-weight:700; padding:0 20px; cursor:pointer; font-size:14.5px; height:52px; flex:0 0 auto; font-family:Arial,sans-serif; }
+  .sendBtn:hover { background:#D86818; }
+  .micLive { font-size:12px; color:var(--muted); padding:0 14px 10px; min-height:0; }
   .chiprow { display:flex; flex-wrap:wrap; gap:6px; }
-  .chip { border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 10px; font-size:12px; cursor:pointer; color:#26384d; }
-  .chip:hover { background:#EAF6FF; }
+  .chip { border:1px solid var(--line); background:#fff; border-radius:8px; padding:7px 10px; font-size:12px; cursor:pointer; color:var(--blue); font-weight:600; font-family:Arial,sans-serif; }
+  .chip:hover { background:#EAF6FF; border-color:var(--blue); }
 
   /* Wissen */
   .sidePanel { padding:18px; display:grid; gap:14px; }
@@ -69,9 +76,11 @@
       <div><b>Janela</b> <small>· Chat wie auf der Website, plus Test-Details (Intent, KI-Modell, Quellen)</small></div>
     </div>
     <div class="chatLog" id="log"></div>
+    <div class="micLive" id="micLive" hidden></div>
     <form class="chatForm" id="form">
       <textarea id="input" placeholder="Ihre Frage an Janela…" aria-label="Chatnachricht"></textarea>
-      <button type="submit">Senden</button>
+      <button type="button" class="micBtn" id="mic" aria-label="Per Sprache eingeben" title="Per Sprache eingeben" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button>
+      <button type="submit" class="sendBtn">Senden</button>
     </form>
   </section>
 
@@ -199,6 +208,44 @@
   drop.ondrop = function(e){ e.preventDefault(); drop.classList.remove('over'); takeFiles(e.dataTransfer.files); };
 
   form.onsubmit = function(e){ e.preventDefault(); ask(); };
+
+  // Spracheingabe über die Browser-Web-Speech-API (gleiches Muster wie Aufmaß per Sprache).
+  (function(){
+    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    var micBtn = document.getElementById('mic');
+    var micLive = document.getElementById('micLive');
+    if (!SR) return;
+    var recognition = null, recording = false, baseText = '';
+    micBtn.hidden = false;
+    function setLive(t){ micLive.hidden = !t; micLive.textContent = t || ''; }
+    function stopUi(){ recording = false; micBtn.classList.remove('recording'); setLive(''); }
+    micBtn.addEventListener('click', function(){
+      if (recording) { try { recognition.stop(); } catch(err){} return; }
+      recognition = new SR();
+      recognition.lang = 'de-DE';
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      baseText = input.value ? input.value.replace(/\s*$/, '') + ' ' : '';
+      recognition.onresult = function(event){
+        var finalText = '', interim = '';
+        for (var i = event.resultIndex; i < event.results.length; i += 1) {
+          var r = event.results[i];
+          if (r.isFinal) finalText += r[0].transcript; else interim += r[0].transcript;
+        }
+        if (finalText) baseText += finalText + ' ';
+        input.value = (baseText + interim).replace(/^\s+/, '');
+        setLive(interim.trim() ? '… hört zu: ' + interim.trim() : '… hört zu');
+      };
+      recognition.onerror = function(event){
+        var err = event && event.error;
+        setLive(err === 'not-allowed' || err === 'service-not-allowed' ? 'Mikrofon-Zugriff nicht erlaubt. Bitte im Browser erlauben.' : '');
+        stopUi();
+      };
+      recognition.onend = function(){ stopUi(); input.focus(); };
+      recording = true; micBtn.classList.add('recording'); setLive('… hört zu');
+      try { recognition.start(); } catch(err){ stopUi(); }
+    });
+  })();
   input.addEventListener('keydown', function(e){ if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ask(); } });
 
   addMsg('bot', 'Hallo, ich bin Janela! Ich beantworte Fragen zu Lieferung, Reklamation, Konfigurator, Montage, Aufmaß und technischen Begriffen — und zu allem, was Sie mir rechts als Wissensdatei geben.');
