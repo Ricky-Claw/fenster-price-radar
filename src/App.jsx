@@ -125,9 +125,12 @@ function purchaseCell(row){
   const change=row.weeklyChange?.eko4u;
   if(!p) return <td className="muted purchase">—</td>;
   const konfigTitle=p.equivalence?.proof||p.note||'';
-  if(!p.valid) return <td className="purchase" title={konfigTitle}><span className="pill warn">{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span>{p.note?<small className="purchaseNote">{p.note}</small>:null}</td>;
+  // data-tip statt title: natives title hat ~0,5-1s Browser-Verzoegerung (Elvis-Feedback,
+  // "etwas schneller"). CSS-Tooltip in styles.css erscheint sofort beim Hover; title bleibt
+  // zusaetzlich als Fallback fuer Tastatur/Screenreader erhalten.
+  if(!p.valid) return <td className="purchase fastTip" data-tip={konfigTitle} title={konfigTitle}><span className="pill warn">{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span>{p.note?<small className="purchaseNote">{p.note}</small>:null}</td>;
   const margin=typeof row.purchaseMargin==='number'?row.purchaseMargin:null;
-  return <td className="price purchase" title={konfigTitle}><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
+  return <td className="price purchase fastTip" data-tip={konfigTitle} title={konfigTitle}><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
 }
 function providerCell(row, id, cheapestIds){
   const p=row.providers[id];

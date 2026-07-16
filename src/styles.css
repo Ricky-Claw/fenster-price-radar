@@ -440,3 +440,8 @@ button,.download{border-radius:var(--dfs-radius-sm);font-family:Arial,'Helvetica
 #radar td.purchase small{color:#3d7a54}
 .providerBox.purchaseBox{background:#F2FBF5;border-color:#bfe8cc}
 #radar td.purchase .purchaseNote{display:block;margin-top:6px;font-size:10px;line-height:1.3;color:#3d7a54;white-space:normal}
+
+/* Sofort erscheinender Tooltip statt nativem title (das hat ~0,5-1s Browser-Verzoegerung, Elvis-Feedback). */
+.fastTip{position:relative}
+.fastTip::after{content:attr(data-tip);position:absolute;z-index:40;left:0;right:0;bottom:calc(100% + 6px);background:#16241D;color:#FEFDF9;font-size:11px;line-height:1.4;font-weight:500;text-align:left;white-space:normal;padding:8px 10px;border-radius:10px;box-shadow:0 8px 20px rgba(0,0,0,.25);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .08s ease}
+.fastTip:hover::after{opacity:1;visibility:visible}
