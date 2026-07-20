@@ -9,7 +9,7 @@ description: Use when creating a complete ad-creative package for a Deutscher Fe
 
 1. **Voll-Generierung, nie Komposition.** Jedes Motiv wird KOMPLETT vom Codex-Bildtool generiert (inkl. aller Texte im Bild). Programmatisch gezeichnete Flächen/Layouts (sharp/SVG-artig) erzeugen den „Flat-/SVG-Look", den Elvis explizit ablehnt. sharp ist NUR erlaubt für: exakten Größen-Crop + Logo-Composite.
 2. **Stil-Anker Pflicht.** Bei jeder Generierung/Änderung ein Referenzbild angeben („sieh dir <datei> an — exakt dieser Look"). Kleine Textänderung = trotzdem Voll-Regeneration mit Anker, nie ins Bild hineineditieren.
-3. **Logo IMMER als Composite, nie KI-malen lassen** (KI-Logos variieren pro Bild → Inkonsistenz-Beschwerde). Im generierten Bild eine LEERE dunkle Logo-Zone einplanen (nie einen weißen Kasten generieren!). Danach montieren:
+3. **Logo IMMER als Composite, nie KI-malen lassen** (KI-Logos variieren pro Bild → Inkonsistenz-Beschwerde). Im generierten Bild eine LEERE dunkle Logo-Zone einplanen — nie einen weißen Kasten und **keinerlei sichtbare Markierung** (kein Rahmen, kein gestrichelter Platzhalter — Codex malt sonst die „Zone" als orange-gestricheltes Rechteck ins Motiv, passiert 20.07. bei Story-Format; im Prompt formulieren: „ruhiger ungestörter Hintergrund, dort wird später das Logo montiert"). Danach montieren:
    - Dunkler Grund: `tools/banner-maker/out/_logo-weiss.png` (weiße „DEUTSCHER-"-Zeile, orange „FENSTERSHOP.DE") — Elvis' Standard.
    - Helle Panels (Foto-Stil): Original `src/Logo-Freigestellt.png`.
    - lanczos3 direkt vom Asset; NIE über ein bereits eingebranntes Logo legen (Doppel-Logo!) — ohne saubere Roh-Basis aus dem Codex-Cache: neu generieren.
