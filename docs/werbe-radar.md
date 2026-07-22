@@ -12,13 +12,19 @@
 
 Kein Spend/CTR — gibt die API für kommerzielle Anzeigen nicht her. Ehrliche Leerstände, wenn ein Wettbewerber nichts schaltet (Stand 22.07.: Fensterversand ~12 Ads, Fensterblick/Neuffer 0).
 
-## Blocker: Meta-Entwicklerzugang (Elvis, einmalig, ~15 Min + 1–3 Tage Wartezeit)
+## Blocker: Meta-Entwicklerzugang (Elvis, einmalig, ~15 Min + 1–3 Tage bzw. länger Wartezeit)
 
-1. Auf https://developers.facebook.com mit deinem Facebook-Konto anmelden → Entwicklerkonto anlegen.
-2. **Identitätsbestätigung** durchführen (Ausweis-Upload, von Meta für den Ad-Library-API-Zugriff verlangt) — Meta führt dich unter https://www.facebook.com/ID durch. Bestätigung dauert typisch 1–3 Tage.
-3. Auf https://www.facebook.com/ads/library/api den Zugangs-/Nutzungsbedingungen zustimmen.
-4. Eine App anlegen (Typ „Sonstiges" reicht) und im Graph API Explorer einen Access Token erzeugen (langlebig tauschen zeigen wir beim Einrichten).
-5. Token via Codex-Secrets-Weg übergeben (nie Chat) — Env-Name: `META_ADLIB_TOKEN`.
+Verifiziert per Websuche 22.07. (vorherige Fassung hatte „App-Typ Sonstiges" falsch geraten — korrigiert):
+
+1. Bereitlegen: Facebook-Login, Ausweis (Perso/Reisepass), evtl. Firmennachweis (Gewerbeanmeldung/Handelsregisterauszug/Rechnung an DFS) für die Unternehmensverifizierung.
+2. https://developers.facebook.com öffnen, mit Facebook-Konto einloggen.
+3. „Meine Apps" → „App erstellen". App-Typ **Business** (nicht „Sonstiges"). Name z. B. „DFS Werbe-Radar".
+4. Im App-Dashboard „Produkt hinzufügen" → **Ads Library API** hinzufügen → `ads_archive`-Endpunkt grundsätzlich verfügbar.
+5. Für vollen Zugriff auf normale (nicht-politische) Anzeigen Berechtigung **ads_read** anfragen: „App-Überprüfung" → „Berechtigungen und Funktionen". Meta verlangt: Nutzungszweck-Beschreibung, Daten-Erklärung (nicht weiterverkauft/nicht fürs Targeting), Bildschirm-Video vom Datenfluss (bauen wir zusammen, sobald Elvis an dem Punkt ist).
+6. Zusätzlich meist **Identitätsbestätigung** (Ausweis-Upload, führt selbst durch) und/oder **Unternehmensverifizierung** (Firmendokument) — läuft in Metas Oberfläche, nicht durch mich ausfüllbar.
+7. Wartezeit: Identität meist 1–3 Werktage, ads_read-Review Tage bis wenige Wochen.
+8. Nach Freigabe: Graph API Explorer (developers.facebook.com/tools/explorer) → App wählen → Access Token mit ads_read generieren.
+9. Token via Codex-Secrets-Weg übergeben (nie Chat) — Env-Name: `META_ADLIB_TOKEN`.
 
 Hinweis: Meta ändert diese Abläufe gelegentlich — falls ein Schritt anders aussieht, Screenshot an die Session, wir führen durch.
 
