@@ -1,0 +1,17 @@
+{
+  "hinweis": "Meta Ad Library (Werbebibliothek) — öffentlich einsehbar, ohne Login. Der Report enthält je Eintrag einen Deeplink auf alle aktiven DE-Anzeigen.",
+  "eigene": [
+    { "name": "Deutscher Fenstershop", "query": "Deutscher Fenstershop" }
+  ],
+  "wettbewerber": [
+    { "name": "Fensterversand (fensterversand.com)", "query": "fensterversand" },
+    { "name": "Fensterblick (fensterblick.de)", "query": "fensterblick" },
+    { "name": "Neuffer Fenster + Türen", "query": "Neuffer Fenster" },
+    { "name": "Sparfenster", "query": "Sparfenster" },
+    { "name": "fenster24.de", "query": "fenster24" },
+    { "name": "Aroundhome (Fenster-Leadgen)", "query": "Aroundhome Fenster" }
+  ],
+  "partner": [
+    { "name": "Förderheld", "query": "Förderheld" }
+  ]
+}
