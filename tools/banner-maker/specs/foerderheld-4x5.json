@@ -1,0 +1,152 @@
+{
+  "$schema": "internes Prompt-Schema für die Codex-Bildpipeline (Skill dfs-kampagnen-design)",
+  "auftrag": "Drei Meta-Feed-Motive im Format 4:5 (1080x1350) für die Förderheld-Kampagne des Deutschen Fenstershops",
+  "erzeugung": {
+    "modus": "voll_generiert",
+    "regel": "Bild inklusive aller Texte in EINEM Generierungsschritt erzeugen. Keine programmatische Komposition, keine nachträglich aufgesetzten Textebenen, keine gezeichneten Flächen. sharp ist ausschließlich für den exakten Zuschnitt auf 1080x1350 und das Logo-Composite erlaubt.",
+    "stil_anker": [
+      "tools/banner-maker/out/foerderheld-meta/dfs-meta-feed-fensterliste-1080.jpg",
+      "tools/banner-maker/out/foerderheld-meta/dfs-meta-aktion-feed-1080.jpg"
+    ],
+    "anker_hinweis": "Diese beiden Dateien vor der Generierung ansehen. Der neue Satz muss aussehen, als käme er aus derselben Serie — gleiche Lichtstimmung, gleiche Linienstärke der Blaupause, gleiche Schriftanmutung, gleiche Orange-Dosierung."
+  },
+
+  "format": {
+    "breite": 1080,
+    "hoehe": 1350,
+    "seitenverhaeltnis": "4:5",
+    "dateityp": "jpeg",
+    "qualitaet": 88,
+    "max_dateigroesse_kb": 900,
+    "generierungs_hinweis": "Im nächstgelegenen unterstützten Hochformat generieren, Motiv crop-sicher anlegen, danach per sharp extract exakt auf 1080x1350 schneiden. Nie strecken oder stauchen."
+  },
+
+  "designsystem": {
+    "grundfarbe": "#0C2D57",
+    "grundfarbe_beschreibung": "tiefes Nachtblau, nach unten hin dunkler, weiche Vignette an den Ecken",
+    "akzent": "#F47B20",
+    "akzent_regel": "Orange ausschließlich für CTA-Button, Aktions-Störer und Fensterglühen. Niemals für Fließtext oder Überschriften.",
+    "textfarbe_primaer": "#FFFFFF",
+    "textfarbe_sekundaer": "#C7D4E4",
+    "schrift": "kräftige serifenlose Grotesk, sehr fetter Schnitt für die Überschrift, normaler Schnitt für die Unterzeile, halbfett für die Belegzeile. Enge Zeilenabstände in der Überschrift.",
+    "bildwelt": "fotorealistisch-atmosphärische Blaupausen-Architektur: ein modernes Wohnhaus als feine hellblaue Konstruktionszeichnung, deren Fensterflächen als real ausgeleuchtete Innenräume erscheinen — warmes Licht, sichtbare Möblierung, Tiefe. Zarte Hilfslinien und Maßhilfslinien laufen ins Bild aus.",
+    "verboten_im_motiv": [
+      "Bemaßungszahlen oder Maßangaben an den Hilfslinien",
+      "Menschen, Gesichter, Hände",
+      "fremde Logos, Wappen, Siegel, Behördensymbole",
+      "flache Vektor- oder Clipart-Optik",
+      "Farbverläufe in Lila oder Türkis",
+      "Schlagschatten unter dem Text"
+    ]
+  },
+
+  "layout": {
+    "raster": "Vertikal geteilt: Text links und unten, Architektur rechts und oben. Die Blaupause läuft aus der rechten oberen Ecke diagonal nach unten und wird zum Textbereich hin dunkler, damit die Schrift überall auf ruhigem Grund steht.",
+    "sicherheitsabstand_px": 72,
+    "zonen": [
+      {
+        "name": "logozone",
+        "position": "oben links",
+        "bereich_px": { "x": 72, "y": 64, "breite": 330, "hoehe": 100 },
+        "inhalt": "LEER LASSEN",
+        "regel": "Ruhiger, ungestörter dunkler Hintergrund. Kein Logo malen, kein weißer Kasten, keine Umrandung, kein gestrichelter Platzhalter, keine Markierung jeglicher Art. Dort wird anschließend das echte Logo montiert."
+      },
+      {
+        "name": "stoerer",
+        "position": "über der Überschrift",
+        "optional": true,
+        "form": "abgerundete Pille in #F47B20, weiße Versalien, kompakt",
+        "regel": "Nur bei Motiven mit Aktionsfrist. Sonst entfällt die Zone ersatzlos und die Überschrift rückt nach oben."
+      },
+      {
+        "name": "headline",
+        "position": "linke Bildhälfte, oberes Drittel bis Bildmitte",
+        "regel": "Maximal drei Zeilen. Umbrüche exakt wie in der Textvorgabe. Große Schriftgröße, sehr fett, Weiß."
+      },
+      {
+        "name": "subline",
+        "position": "direkt unter der Überschrift",
+        "regel": "Zwei Zeilen, deutlich kleiner, in #C7D4E4."
+      },
+      {
+        "name": "belegzeile",
+        "position": "unter der Unterzeile, mit Abstand",
+        "regel": "Eine Zeile, halbfett, Weiß, klein. Trägt die belegbaren Zahlen."
+      },
+      {
+        "name": "cta",
+        "position": "unten links, mindestens 96 px über der Unterkante",
+        "form": "abgerundeter Vollton-Button in #F47B20, weiße halbfette Schrift, großzügiger Innenabstand",
+        "regel": "Der Button muss vollständig im Bild liegen und darf die Architektur nicht überlappen."
+      }
+    ]
+  },
+
+  "compliance": {
+    "quelle": "docs/kampagne-foerderheld-bafa.md",
+    "harte_regeln": [
+      "Das Wort BAFA kommt nirgends vor.",
+      "Zuschuss immer als 'bis zu 15 %'. Nie ein fester Prozentsatz, nie 'garantiert' oder 'sicher'.",
+      "Die Reihenfolge nie verdrehen: erst Antrag, dann bestellen.",
+      "Der Claim 'Deutschlands schnellster Förderservice' ist gesperrt.",
+      "Kein Partner-Logo, auch nicht von Förderheld.",
+      "Kein 'Link in Bio' — das sind bezahlte Anzeigen."
+    ]
+  },
+
+  "motive": [
+    {
+      "id": "4x5-fensterliste",
+      "datei": "dfs-meta-feed-fensterliste-1080x1350.jpg",
+      "kampagne": "K1 Kalt",
+      "stoerer": null,
+      "headline": "Fensterliste schicken\nund Förderung\nerhalten",
+      "subline": "Ganz ohne Papierkram —\nwir kümmern uns um alles",
+      "belegzeile": "Antrag in 5 Min — Einreichung in 24 h",
+      "cta": "Jetzt Förderhöhe in 2 Min checken",
+      "bildmotiv": "Modernes zweigeschossiges Flachdachhaus mit großen Fensterfronten und Balkon, von schräg vorne rechts. Untergeschoss zeigt einen warm beleuchteten Wohn- und Essbereich, Obergeschoss einen hell erleuchteten Raum hinter der Fensterfront."
+    },
+    {
+      "id": "4x5-papierkram",
+      "datei": "dfs-meta-feed-papierkram-1080x1350.jpg",
+      "kampagne": "K1 Kalt",
+      "stoerer": null,
+      "headline": "Bis zu 15 %\nZuschuss für\nneue Fenster",
+      "subline": "Den Antrag übernimmt unser\nPartner — Sie bestellen danach",
+      "belegzeile": "20.000 € Projekt = bis zu 3.000 € zurück",
+      "cta": "Jetzt Förderhöhe in 2 Min checken",
+      "bildmotiv": "Modernes Satteldachhaus mit bodentiefer Fensterfront und Terrasse, von schräg vorne links. Warm ausgeleuchteter Wohnraum hinter dem Glas, im Vordergrund angedeutete Terrassenplatten mit feinen orangen Rasterpunkten."
+    },
+    {
+      "id": "4x5-aktion",
+      "datei": "dfs-meta-aktion-feed-1080x1350.jpg",
+      "kampagne": "K3 Retargeting",
+      "stoerer": "NUR BIS 15.08.",
+      "headline": "Bis zu 70 €\nGebühren-\nErstattung",
+      "subline": "Bei erfolgreicher Förderung —\nFördercheck in 2 Minuten",
+      "belegzeile": null,
+      "cta": "Jetzt Fördercheck starten",
+      "bildmotiv": "Wie das Satteldachhaus des Anker-Motivs dfs-meta-aktion-feed-1080.jpg — gleiche Perspektive und Lichtstimmung, nur für das höhere Format neu komponiert."
+    }
+  ],
+
+  "nachbearbeitung": {
+    "logo_composite": {
+      "asset": "tools/banner-maker/out/_logo-weiss.png",
+      "begruendung": "Das Logo wird bewusst NICHT mitgeneriert. KI-gemalte Logos fallen pro Bild unterschiedlich aus — genau das war die letzte Kundenbeschwerde. Nur so bleibt es über alle Motive identisch.",
+      "breite_px": 300,
+      "position_px": { "x": 72, "y": 64 },
+      "verfahren": "sharp composite, Skalierung lanczos3 direkt vom Original-Asset. Niemals über ein bereits eingebranntes Logo legen.",
+      "kontrolle": "Wenn im generierten Bild bereits irgendein Logo, Kasten oder Rahmen in der Logozone steht: Bild verwerfen und neu generieren, nicht überdecken."
+    },
+    "verifikation": {
+      "werkzeug": "tools/banner-maker/image-meta.mjs",
+      "pruefungen": [
+        "Maße exakt 1080x1350",
+        "echtes JPEG (Magic Bytes)",
+        "Dateigröße unter 900 KB",
+        "Sichtprüfung: keine Textfehler, nichts am Rand angeschnitten, CTA vollständig, Logo einmal vorhanden, keine Maßzahlen an den Hilfslinien"
+      ]
+    }
+  }
+}
