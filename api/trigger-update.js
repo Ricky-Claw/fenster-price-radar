@@ -1,4 +1,4 @@
-import crypto from 'node:crypto';
+import { cookieValue, validSession } from '../src/auth/session.js';
 
 const COOKIE = 'fenster_radar_session';
 const DEFAULT_TRIGGER_URL = 'https://srv1332950.hstgr.cloud/fpr';
@@ -7,35 +7,6 @@ const TIMEOUT_MS = 10000;
 function json(res, status, payload, headers = {}) {
   res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...headers });
   res.end(JSON.stringify(payload));
-}
-
-function cookieValue(header = '', name) {
-  return String(header).split(';').map((part) => part.trim()).find((part) => part.startsWith(`${name}=`))?.slice(name.length + 1) || '';
-}
-
-function secret() {
-  return process.env.FENSTER_RADAR_AUTH_SECRET || process.env.FENSTER_RADAR_PASSWORD || '';
-}
-
-function sign(value) {
-  return crypto.createHmac('sha256', secret()).update(value).digest('base64url');
-}
-
-function safeEqual(left, right) {
-  const leftBuffer = Buffer.from(String(left), 'utf8');
-  const rightBuffer = Buffer.from(String(right), 'utf8');
-  if (leftBuffer.length !== rightBuffer.length) return false;
-  return crypto.timingSafeEqual(leftBuffer, rightBuffer);
-}
-
-function validSession(cookie) {
-  if (!cookie || !secret()) return false;
-  const parts = cookie.split('.');
-  if (parts.length !== 3 || parts[0] !== 'v1') return false;
-  const payload = `${parts[0]}.${parts[1]}`;
-  const expires = Number(parts[1]);
-  if (!Number.isFinite(expires) || expires < Math.floor(Date.now() / 1000)) return false;
-  return safeEqual(parts[2], sign(payload));
 }
 
 function endpoint(base, path) {
