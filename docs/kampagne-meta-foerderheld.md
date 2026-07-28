@@ -43,13 +43,13 @@ Alle drei mit Kampagnenziel **Leads**, 1 Anzeigengruppe je Kampagne (Budget zu k
 Primärtexte — Hook ist der sichtbare Teil, Langfassung folgt nach Absatz:
 
 **PT1 (123 Z.):** „Neue Fenster geplant? Der Staat gibt bis zu 15 % Zuschuss dazu. Antrag in 5 Minuten — ohne Papierkram, ohne Behördenstress."
-Langfassung: „So einfach geht's: Fensterliste oder Sanierungsplan einreichen, Fördercheck in 2 Minuten machen — den Antrag übernimmt unser Partner Förderheld und reicht ihn binnen 24 Stunden ein. Wichtig ist die Reihenfolge: erst Antrag, dann bestellen. Bezahlt wird bei Förderheld erst nach positiver Förderzusage. Beispiel: 20.000-€-Fensterprojekt = bis zu 3.000 € zurück."
+Langfassung: „So einfach geht's: Fensterliste oder Sanierungsplan einreichen, Fördercheck in 2 Minuten machen — den Antrag übernimmt unser Partner Förderheld und reicht ihn binnen 24 Stunden ein. Wichtig ist die Reihenfolge: erst Antrag, dann bestellen. Beispiel: 20.000-€-Fensterprojekt = bis zu 3.000 € zurück."
 
 **PT2 (111 Z.):** „Günstige Fenster + schnelle Förderung = mehr Geld für Sie. Bis zu 15 % Zuschuss — Antrag in 5 Minuten erledigt."
 Langfassung: „Fenster & Türen direkt vom Shop, die Förderung läuft über unseren Partner Förderheld: Antrag in 5 Minuten, Einreichung in 24 Stunden, bezahlt wird erst nach positiver Zusage. Wichtig: erst Antrag stellen, dann bestellen. Jetzt Fensterliste einreichen und Förderhöhe in 2 Minuten checken."
 
 **PT3 (121 Z.):** „20.000 € Fensterprojekt? Bis zu 3.000 € Zuschuss möglich. Erst Antrag (5 Min), dann bestellen — wir erklären Ihnen alles."
-Langfassung: „Der Zuschuss von bis zu 15 % gilt für energieeffiziente Fenster, wie sie bei uns Standard sind. Den Förderantrag übernimmt unser Partner Förderheld — digital, in 5 Minuten, ohne Papierkram. Bezahlt wird dort erst nach positiver Förderzusage. Senden Sie uns Ihre Fensterliste oder Ihren Sanierungsplan und starten Sie mit dem 2-Minuten-Fördercheck."
+Langfassung: „Der Zuschuss von bis zu 15 % gilt für energieeffiziente Fenster, wie sie bei uns Standard sind. Den Förderantrag übernimmt unser Partner Förderheld — digital, in 5 Minuten, ohne Papierkram. Senden Sie uns Ihre Fensterliste oder Ihren Sanierungsplan und starten Sie mit dem 2-Minuten-Fördercheck."
 
 Headlines: „Bis zu 15 % Zuschuss auf Fenster" (32) · „Förderantrag in 5 Minuten" (25) · „Fenster & Türen mit Förderung" (29)
 Beschreibungen: „Erst Antrag, dann bestellen." (28) · „Fördercheck in 2 Minuten." (25)
@@ -75,7 +75,7 @@ CTA-Button: **„Angebot anfordern"**
 ### Ad-Copy
 
 **PT1 (124 Z.):** „Wichtig: erst Förderantrag, dann Fenster bestellen. Der Antrag? 5 Minuten, digital — den Papierkram übernimmt unser Partner."
-Langfassung: „In 4 Schritten: 1. Daten eingeben (5 Minuten) — Förderheld übernimmt die Antragstellung und reicht binnen 24 Stunden ein. 2. Zusage abwarten, dann bei Deutscher Fenstershop bestellen. 3. Fenster einbauen lassen. 4. Rechnung hochladen — die Förderung wird ausgezahlt. Kein Risiko: Bezahlt wird bei Förderheld erst nach positiver Zusage."
+Langfassung: „In 4 Schritten: 1. Daten eingeben (5 Minuten) — Förderheld übernimmt die Antragstellung und reicht binnen 24 Stunden ein. 2. Zusage abwarten, dann bei Deutscher Fenstershop bestellen. 3. Fenster einbauen lassen. 4. Rechnung hochladen — die Förderung wird ausgezahlt."
 
 **PT2 (97 Z.):** „Maximale Förderung. Kein Papierkram. Kein Risiko — bezahlt wird erst nach positiver Förderzusage."
 Langfassung: „Unser Partner Förderheld übernimmt den kompletten Förderprozess für Ihre neuen Fenster: Antrag in 5 Minuten, Einreichung in 24 Stunden, Begleitung bis zur Auszahlung (typisch 8–12 Wochen nach Einreichung, Angabe Förderheld). Wichtig ist nur die Reihenfolge: erst Antrag, dann bestellen. Jetzt Förderhöhe in 2 Minuten checken."
@@ -148,7 +148,7 @@ Ein Basis-Formular für K1+K2, ein Klon mit Aktions-Intro für K3.
 - **Name:** „DFS Fensterliste/Sanierungsplan — Förderheld 2026" (K3-Klon: „… — Aktion 15.08.")
 - **Typ:** Höhere Absicht (mit Prüfschritt vor dem Absenden) — bewusst Qualität vor Volumen bei 500 €-Budget.
 - **Intro-Headline:** „Bis zu 15 % Förderung für Ihre neuen Fenster" (44 Z.) · K3: „Bis 15.08.: bis zu 70 € Antragsgebühr-Erstattung" (48 Z.)
-- **Intro-Text:** „So funktioniert's: Kontakt hinterlassen — wir melden uns mit den nächsten Schritten. Der Förderantrag läuft über unseren Partner Förderheld (5 Minuten, digital) und muss vor der Bestellung gestellt sein. Bezahlt wird bei Förderheld erst nach positiver Förderzusage."
+- **Intro-Text:** „So funktioniert's: Kontakt hinterlassen — wir melden uns mit den nächsten Schritten. Der Förderantrag läuft über unseren Partner Förderheld (5 Minuten, digital) und muss vor der Bestellung gestellt sein."
 - **Fragen:**
   1. Auswahl: „Haben Sie schon eine Fensterliste oder einen Sanierungsplan?" → „Ja, liegt vor" / „In Arbeit" / „Nein — ich brauche Hilfe bei der Planung" *(Qualifizierungs-Frage)*
   2. Auswahl: „Wie viele Fenster planen Sie zu tauschen?" → „1–5" / „6–10" / „Mehr als 10" / „Weiß ich noch nicht"
