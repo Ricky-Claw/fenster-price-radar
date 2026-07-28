@@ -229,6 +229,27 @@ const html = `<!doctype html>
   <title>${escapeHtml(config.title)} – Deutscher Fenstershop E-Book</title>
   <meta name="description" content="${escapeHtml(config.claim || config.subtitle || config.title)}">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Cover-Motiv v2 (generator-owned): elegantes Fenster statt Sofa/Fussball aus "Ruhiges Heimspiel" */
+    .fx-window { position: absolute; right: 0; top: 10mm; width: 70mm; height: 96mm; border-radius: 22px; background: #fff; box-shadow: var(--shadow); }
+    .fx-glass { position: absolute; inset: 7px; border-radius: 16px; border: 6px solid #d9ecfb; background: linear-gradient(180deg, #cfe6fa 0%, #eaf4fd 55%, #f8fbff 100%); overflow: hidden; }
+    .fx-glass::before, .fx-glass::after { content: ""; position: absolute; background: #fff; box-shadow: 0 0 6px rgba(12,45,87,.12); z-index: 3; }
+    .fx-glass::before { left: 50%; top: 0; bottom: 0; width: 6px; transform: translateX(-50%); }
+    .fx-glass::after { left: 0; right: 0; top: 58%; height: 6px; transform: translateY(-50%); }
+    .fx-hill { position: absolute; left: -12%; right: -6%; bottom: -7mm; height: 20mm; background: rgba(12,45,87,.09); border-radius: 50% 50% 0 0; }
+    .fx-hill.two { left: 34%; right: -22%; height: 26mm; background: rgba(12,45,87,.13); }
+    .fx-sun { position: absolute; right: 8mm; top: 8mm; width: 15mm; height: 15mm; background: var(--orange); border-radius: 50%; box-shadow: 0 0 0 12px rgba(244,123,32,.16), 0 0 0 22px rgba(244,123,32,.07); z-index: 1; }
+    .fx-shine { position: absolute; top: -12%; bottom: -12%; left: 10%; width: 11mm; background: rgba(255,255,255,.34); transform: skewX(-18deg); border-radius: 8px; z-index: 2; }
+    .fx-shine::after { content: ""; position: absolute; top: 0; bottom: 0; left: 15mm; width: 4mm; background: rgba(255,255,255,.26); }
+    .fx-sill { position: absolute; right: -3mm; top: 105mm; width: 80mm; height: 6.5mm; background: #fff; border-radius: 6px; box-shadow: 0 14px 30px rgba(0,0,0,.22); }
+    .fx-plant { position: absolute; top: 87mm; right: 46mm; width: 16mm; height: 18mm; z-index: 4; }
+    .fx-plant i { position: absolute; bottom: 7mm; left: 50%; width: 5.5mm; height: 11mm; background: var(--blue); border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; transform-origin: 50% 100%; }
+    .fx-plant i:nth-child(1) { transform: translateX(-50%) rotate(-30deg); }
+    .fx-plant i:nth-child(2) { transform: translateX(-50%); height: 13mm; }
+    .fx-plant i:nth-child(3) { transform: translateX(-50%) rotate(30deg); }
+    .fx-plant b { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 9mm; height: 7.5mm; background: var(--orange); border-radius: 4px 4px 9px 9px; }
+    .cover .quiet-badge { bottom: auto; top: 116mm; left: auto; right: 14mm; }
+  </style>
 </head>
 <body>
   <main class="ebook" aria-label="${escapeHtml(config.title)}">
@@ -242,7 +263,7 @@ const html = `<!doctype html>
           <p class="claim">${escapeHtml(config.claim)}</p>
           <div class="pill-row">${(config.topics || []).map((topic) => `<span>${escapeHtml(topic)}</span>`).join('')}</div>
         </div>
-        <div class="home-visual" aria-hidden="true"><div class="window-graphic"><span class="sun"></span><span class="ball"></span></div><div class="sofa"></div><div class="quiet-badge"><strong>Guide</strong><span>DFS</span></div></div>
+        <div class="home-visual" aria-hidden="true"><div class="fx-window"><div class="fx-glass"><span class="fx-hill"></span><span class="fx-hill two"></span><span class="fx-sun"></span><span class="fx-shine"></span></div></div><div class="fx-sill"></div><div class="fx-plant"><i></i><i></i><i></i><b></b></div><div class="quiet-badge"><strong>Guide</strong><span>DFS</span></div></div>
       </div>
       <footer class="page-footer"><span>deutscher-fenstershop.de</span><span>01</span></footer>
     </section>
