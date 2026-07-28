@@ -173,11 +173,15 @@ Ein Basis-Formular für K1+K2, ein Klon mit Aktions-Intro für K3.
 ## 8. Offene Punkte (Elvis)
 
 *Erledigt durch Kundin-Mail + Prüfung 20.07.: Aktionsbedingungen (Abschnitt 4) · Landing-/Danke-Screen-Ziel (foerdermittel-check, live) · Datenschutz-URL (`/datenschutzerklaerung`, verifiziert).*
+*Erledigt 28.07.: **Natascha-Go liegt vor** — Start-Gate offen. · Lesezugriff Marketing API steht (`npm run meta:radar`, Werbekonto `act_1036360495706797` „Schwarzwald-Agent", `ads_read`).*
 
-1. **Natascha-Go abwarten** (Mo/Di 21./22.07.) — vorher nichts schalten. Dabei bestätigen, dass die 15.08.-Deadline trotz verschobenem Start hält.
-2. K3-Wortlaut absegnen: präzise Fassung „bis zu 70 € Gebühren-Erstattung" (Empfehlung, so gebaut) — oder alter Störer explizit gewünscht → Regeneration.
-3. Förderheld-Bestätigung „Deutschlands schnellster Förderservice" einholen → schaltet 3 Bestands-Assets für K1 frei.
-4. Co-Branding-Freigabe Förderheld-Logo (bis dahin: nur Namensnennung im Text).
-5. Meta-Pixel auf deutscher-fenstershop.de installieren (optional, empfohlen: K3-Website-Audience + Messung auf der Fördercheck-Seite).
-6. FB-Seite + IG-Konto von DFS in Elvis' Business Manager verfügbar machen (Schaltungs-Voraussetzung).
-7. Lead-CSV-Empfänger bestätigen (Vorschlag: info@deutscher-fenstershop.de).
+1. **Werbeguthaben prüfen, bevor der erste Euro läuft** — Konto hat `amount_spent = 0`, Neukunden-Guthaben greift nur auf ausgabenfreien Konten. Banner im Ads Manager suchen.
+2. FB-Seite + IG-Konto von DFS im Business-Portfolio „Schwarzwald Agent" verfügbar machen (harte Schaltungs-Voraussetzung).
+3. K3-Wortlaut absegnen: präzise Fassung „bis zu 70 € Gebühren-Erstattung" (Empfehlung, so gebaut) — oder alter Störer explizit gewünscht → Regeneration.
+4. Bestätigen, dass die 15.08.-Deadline trotz verschobenem Start hält (K3 hat bei Start Ende Juli nur noch ~3 Wochen Flight).
+5. Förderheld-Bestätigung „Deutschlands schnellster Förderservice" einholen → schaltet 3 Bestands-Assets für K1 frei.
+6. Co-Branding-Freigabe Förderheld-Logo (bis dahin: nur Namensnennung im Text).
+7. Meta-Pixel auf deutscher-fenstershop.de installieren (optional, empfohlen: K3-Website-Audience + Messung auf der Fördercheck-Seite).
+8. Lead-CSV-Empfänger bestätigen (Vorschlag: info@deutscher-fenstershop.de).
+
+**Start-Cockpit zum Abtippen** (Einstellungen, Copy-Blöcke, Motive): Artifact `c1be270b-f515-4583-9910-df872af98701`, Quelle `<scratchpad>/meta-start-cockpit.template.html` + `thumbs.json`-Injektion. Bei Änderungen denselben Dateipfad republishen — Link muss stabil bleiben.
