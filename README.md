@@ -82,7 +82,7 @@ Attribute am Script-Tag:
 
 Das Widget ist ein reines Single-File-Script ohne Abhängigkeiten. Ist die API nicht erreichbar, zeigt es eine Kontakt-Antwort statt eines Fehlers — die Kundenseite bricht nie.
 
-Serverseitig vor Produktivbetrieb auf einer fremden Domain: `CHATBOT_ALLOW_ORIGIN` auf die Shop-Domain setzen (Default ist `*`). Direktzugriff ohne Widget: `POST /api/chatbot` mit `{"message": "...", "page": "..."}` → `{"answer": ...}` (Rate-Limit pro IP).
+Serverseitig vor Produktivbetrieb auf einer fremden Domain: `CHATBOT_ALLOW_ORIGIN` auf die Shop-Domain setzen (Default ist `https://deutscher-fenstershop.de`). Direktzugriff ohne Widget: `POST /api/chatbot` mit `{"message": "...", "page": "..."}` → `{"answer": ...}` (Rate-Limit pro IP).
 
 **Firmenwissen pflegen ohne Code:** Markdown-Dateien unter `knowledge/` direkt in GitHub bearbeiten → automatischer Deploy, der Bot kennt den neuen Stand nach wenigen Minuten. Anleitung: `public/janela-wissen-anleitung.md`. Gecrawltes Website-Wissen aktualisieren: `npm run knowledge:crawl`.
 
@@ -90,7 +90,7 @@ Serverseitig vor Produktivbetrieb auf einer fremden Domain: `CHATBOT_ALLOW_ORIGI
 
 MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
 
-LLM-Polierung: primär NVIDIA Nemotron (`NVIDIA_API_KEY`, Modell via `FENSTERSHOP_NEMOTRON_MODEL`), Fallback Kimi/Moonshot (`KIMI_API_KEY`). Ohne Keys bleibt die reine Regelantwort bestehen.
+LLM-Polierung: primär GPT-5.6 Luna (`OPENAI_API_KEY` oder `OPENAI_OAUTH_TOKEN`, optional mit `OPENAI_ACCOUNT_ID`), mit Claude Haiku 4.5 (`CLAUDE_CODE_OAUTH_TOKEN` oder `ANTHROPIC_API_KEY`, OAuth-Token hat Vorrang) als Ausweichpfad; GPT-Ausgabebudget und Denkaufwand sind über `FENSTERSHOP_GPT_MAX_OUTPUT_TOKENS` und `FENSTERSHOP_GPT_REASONING_EFFORT` einstellbar. Ohne Keys bleibt die reine Regelantwort bestehen.
 
 Test:
 
@@ -141,4 +141,3 @@ Einbau auf der Kundenseite ist ein Script-Tag:
 ## Maschinenzugang für Agents/Automationen
 
 Preisdaten, Popup-CRUD und Chatbot sind auch per Token-API/MCP erreichbar — Endpunkte, Auth und Beispiele in `docs/AGENT_API.md`.
-

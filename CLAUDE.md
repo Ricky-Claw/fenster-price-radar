@@ -31,7 +31,7 @@ Vergleicht **eigene Brutto-Listenpreise** gegen **Fensterblick** und **Fensterve
 
 ### 1b. Website-Chatbot-MVP
 Widget/Snippet für `deutscher-fenstershop.de`. **Rule-first RAG**: harte Regeln zuerst, dann lokale Wissenssuche, LLM formuliert nur aus gefundenem Kontext, bei Unsicherheit → Kontakt/Link statt raten.
-- **API:** `POST /api/chatbot` (`api/chatbot.js`) · **Widget:** `public/chatbot-widget.js` · **Logik:** `src/chatbot/fenstershopChatbot.js` + `src/chatbot/kimiClient.js` · **Regelwerk:** `programmierlogik_chatbot_final_mit_anfrage_status.md` + `FENSTERSHOP_CHATBOT_PLAN.md`.
+- **API:** `POST /api/chatbot` (`api/chatbot.js`) · **Widget:** `public/chatbot-widget.js` · **Logik:** `src/chatbot/fenstershopChatbot.js` mit GPT-5.6 Luna primär über `OPENAI_API_KEY` oder `OPENAI_OAUTH_TOKEN` (optional mit `OPENAI_ACCOUNT_ID`), konfigurierbar über `FENSTERSHOP_GPT_MAX_OUTPUT_TOKENS` und `FENSTERSHOP_GPT_REASONING_EFFORT`, und Claude Haiku 4.5 als Ausweichpfad · **Regelwerk:** `programmierlogik_chatbot_final_mit_anfrage_status.md` + `FENSTERSHOP_CHATBOT_PLAN.md`.
 - **Out of Scope MVP (hart):** kein Zugriff auf Bestellungen, Tickets, Zahlungen, Lieferstatus, Kundendaten; keine verbindlichen Liefertermine/Zusagen; fragt nie sensible Daten ab (Bestellnr., Adresse, Zahlung, Fotos, voller Name); legt keine Reklamation automatisch an.
 - **Test:** `npm run test:chatbot`.
 
@@ -58,7 +58,7 @@ Lebt im Repo `~/Schwarzwald-Agent Fable 5` (Frontend `src/frontend`, Next.js App
 ---
 
 ## 3. Sicherheit (Pflicht, beide Welten)
-- **Secrets nur aus Env**, nie in Code/Repo/Chat/Log. Welt A: `FENSTER_RADAR_PASSWORD` + `FENSTER_RADAR_AUTH_SECRET` (Radar-Login), `RADAR_AGENT_TOKEN` (Maschinen-Lesezugang `/data/*`), `MCP_AGENT_TOKEN` (MCP-Server `/api/mcp` für Agents wie Alpha) + `RUECKHOL_ADMIN_TOKEN` (MCP→Popup-CRUD), `EKO4U_LOGIN`/`EKO4U_PASSWORD` (Einkaufspreise), LLM-Keys (`NVIDIA_API_KEY`, `KIMI_API_KEY`). Rückhol-Automatik auf VPS: `ADMIN_TOKEN` für Agent-CRUD. Agent-/MCP-Zugänge dokumentiert in `docs/AGENT_API.md` (MCP-Endpoint `POST /api/mcp`, Tools: radar_*, popup_*, dfs_chatbot_ask; Handler `api/mcp.js`, Logik `src/mcp/tools.js`, Test `npm run test:mcp`). Welt B: siehe Schwarzwald-Repo.
+- **Secrets nur aus Env**, nie in Code/Repo/Chat/Log. Welt A: `FENSTER_RADAR_PASSWORD` + `FENSTER_RADAR_AUTH_SECRET` (Radar-Login), `RADAR_AGENT_TOKEN` (Maschinen-Lesezugang `/data/*`), `MCP_AGENT_TOKEN` (MCP-Server `/api/mcp` für Agents wie Alpha) + `RUECKHOL_ADMIN_TOKEN` (MCP→Popup-CRUD), `EKO4U_LOGIN`/`EKO4U_PASSWORD` (Einkaufspreise), `NVIDIA_API_KEY`/`KIMI_API_KEY` (Aufmaß-Sprachkonfigurator), `OPENAI_API_KEY`/`OPENAI_OAUTH_TOKEN`/`ANTHROPIC_API_KEY`/`CLAUDE_CODE_OAUTH_TOKEN` (Chatbot), `CHATBOT_KNOWLEDGE_TOKEN` (Wissens-Upload am Chatbot). Nicht-geheime Chatbot-Einstellungen: `OPENAI_ACCOUNT_ID`, `FENSTERSHOP_GPT_MODEL`, `FENSTERSHOP_GPT_TIMEOUT_MS`, `FENSTERSHOP_GPT_MAX_OUTPUT_TOKENS`, `FENSTERSHOP_GPT_REASONING_EFFORT`. Rückhol-Automatik auf VPS: `ADMIN_TOKEN` für Agent-CRUD. Agent-/MCP-Zugänge dokumentiert in `docs/AGENT_API.md` (MCP-Endpoint `POST /api/mcp`, Tools: radar_*, popup_*, dfs_chatbot_ask; Handler `api/mcp.js`, Logik `src/mcp/tools.js`, Test `npm run test:mcp`). Welt B: siehe Schwarzwald-Repo.
 - Chatbot **darf nie** sensible Kundendaten abfragen oder Backend-Zugriff vortäuschen (siehe 1b Out-of-Scope).
 - Kein roher HTML-Inject ins Widget ohne Escape. Eingaben an Systemgrenzen validieren.
 
