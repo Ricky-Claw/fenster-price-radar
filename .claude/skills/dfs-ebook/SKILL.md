@@ -33,14 +33,16 @@ Jedes DFS-E-Book entsteht aus einer JSON-Config über `tools/ebook-maker/make-eb
 
 ## Mockbild (Buch-Vorschaubild für die Freebie-Seite)
 
-**Wird komplett von Codex generiert — in EINEM Durchgang. Nie Text nachträglich hinzufügen.**
+**Wird komplett von Codex ImageGen 2 generiert — in EINEM Durchgang durchs Bild-Generierungs-Tool. Nie Compositing, nie Text nachträglich.**
 
-1. Der Generator legt automatisch ab: `assets/cover.png` (echtes Cover als A4-Render) + `mockup-prompt.txt` (fertiger Prompt).
-2. Generieren: `codex exec -i public/ebooks/<slug>/assets/cover.png "$(cat public/ebooks/<slug>/mockup-prompt.txt)"`
+1. Der Generator legt automatisch ab: `assets/cover.png` (echtes Cover als A4-Render) + `mockup-job.json` (fertige JSON-Spec: Engine, Stil, harte Regeln, Zielablage).
+2. Generieren: `codex exec -i public/ebooks/<slug>/assets/cover.png - < public/ebooks/<slug>/mockup-job.json`
+   (Prompt via stdin — `-i` ist variadisch und frisst sonst das Prompt-Argument als Datei.)
 3. Ablage: `public/ebooks/<slug>/assets/mockup.png` (quadratisch 1024×1024).
 4. Sichtcheck: Titeltext im Mockbild muss **buchstabengleich** mit dem Cover sein. Weicht er ab → neu generieren, **nicht** nachbearbeiten.
+5. **Compositing-Check:** Meldet Codex etwas wie „Cover als Textur montiert" / „programmatisch zusammengesetzt" → Ergebnis verwerfen, neu generieren. Das Bild muss aus ImageGen 2 kommen (Roh-PNG unter `~/.codex/generated_images/<id>/`), erlaubt ist danach nur Skalieren auf 1024×1024.
 
-Verboten: Text-Overlays, Compositing, Badges/Sticker, Canva-Nachbearbeitung, Prompt frei umformulieren. Der Prompt kommt aus dem Generator — Textquelle ist ausschließlich das mitgegebene Cover.
+Verboten: Text-Overlays, Compositing/Textur-Mapping (sharp/Canvas), Badges/Sticker, Canva-Nachbearbeitung, JSON-Spec frei umformulieren. Die Spec kommt aus dem Generator — Textquelle ist ausschließlich das mitgegebene Cover.
 
 ## Inhaltsregeln (nicht automatisierbar — selbst prüfen)
 

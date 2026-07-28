@@ -288,20 +288,31 @@ const html = `<!doctype html>
 const htmlPath = path.join(outDir, 'index.html');
 writeFileSync(htmlPath, html);
 
-// Mockbild-Prompt für Codex: Cover als Referenzbild, Bild entsteht in EINEM
-// Durchgang — Text stammt nur aus dem Cover, nachträgliche Overlays verboten.
-const mockupPrompt = `Erzeuge das Mockbild für das DFS-E-Book „${config.title}".
-
-Das beigefügte Bild ist das ECHTE Cover (Seite 1) des E-Books. Stelle dieses Cover als hochwertiges 3D-Buch-/Broschüren-Mockup dar: leicht schräge 3/4-Ansicht von vorne, weiches Licht von links oben, dezenter Schlagschatten.
-
-Harte Regeln:
-- Cover-Inhalt (Text, Logo, Farben, Layout) 1:1 vom Referenzbild übernehmen — Text NICHT neu setzen, NICHTS hinzufügen, NICHTS weglassen, keine Schreibweise „korrigieren".
-- Kein zusätzlicher Text, keine Badges, keine Sticker, kein Wasserzeichen.
-- Hintergrund hell und neutral (#FFFFFF bis #F5F5F5), kein Farbverlauf, kein Showroom-Kitsch.
-- Format quadratisch 1024x1024, Buch mittig, ca. 70–80% der Bildhöhe.
-
-Speichere das Ergebnis als PNG nach: public/ebooks/${config.slug}/assets/mockup.png`;
-writeFileSync(path.join(outDir, 'mockup-prompt.txt'), mockupPrompt);
+// Mockbild-Job für Codex ImageGen 2: Cover als Referenzbild, Bild entsteht in
+// EINEM Durchgang komplett durchs Bild-Generierungs-Tool — programmatische
+// Komposition (sharp/Canvas/Textur-Mapping) ist verboten, nur Skalieren erlaubt.
+const mockupJob = {
+  task: 'dfs-ebook-mockup',
+  engine: 'codex-imagegen-2',
+  ebook: { slug: config.slug, titel: config.title },
+  input: { cover: 'assets/cover.png', beschreibung: 'Echtes A4-Cover (Seite 1) des E-Books, als Bild beigefuegt' },
+  output: { datei: `public/ebooks/${config.slug}/assets/mockup.png`, groesse: '1024x1024', format: 'png' },
+  stil: {
+    ansicht: '3D-Buch-/Broschueren-Mockup, leicht schraege 3/4-Ansicht von vorne, Softcover',
+    licht: 'weiches Licht von links oben, dezenter Schlagschatten',
+    hintergrund: 'hell und neutral (#FFFFFF bis #F5F5F5), kein Farbverlauf, kein Showroom-Kitsch',
+    bildaufbau: 'Buch mittig, ca. 70-80% der Bildhoehe',
+  },
+  harteRegeln: [
+    'Das Bild entsteht in EINEM Durchgang komplett ueber das interne Bild-Generierungs-Tool (ImageGen 2).',
+    'KEINE programmatische Komposition: kein sharp/Canvas/Textur-Mapping des Covers auf eine Buchform. Nach der Generierung ist nur Skalieren/Zuschneiden auf exakt 1024x1024 erlaubt.',
+    'Cover-Inhalt (Text, Logo, Farben, Layout) 1:1 vom Referenzbild uebernehmen — Text NICHT neu setzen, NICHTS hinzufuegen, NICHTS weglassen, keine Schreibweise korrigieren.',
+    'Titeltext muss buchstabengleich mit dem Cover sein. Abweichung = komplett neu generieren, NIE nachbearbeiten.',
+    'Kein zusaetzlicher Text, keine Badges, keine Sticker, kein Wasserzeichen.',
+  ],
+  ablage: 'Roh-PNG aus ~/.codex/generated_images/<id>/ auf 1024x1024 bringen und als output.datei speichern.',
+};
+writeFileSync(path.join(outDir, 'mockup-job.json'), `${JSON.stringify(mockupJob, null, 2)}\n`);
 
 if (!noPdf) {
   const chromeCandidates = [
@@ -338,7 +349,7 @@ if (!noPdf) {
   console.log(`HTML: ${htmlPath}`);
   console.log(`PDF: ${pdfPath} (${pdf.length} bytes, ${pdfPages} Seiten)`);
   console.log(`Cover: ${coverPath}`);
-  console.log(`Mockup-Prompt: ${path.join(outDir, 'mockup-prompt.txt')} (Codex: codex exec -i assets/cover.png "$(cat mockup-prompt.txt)")`);
+  console.log(`Mockup-Job: ${path.join(outDir, 'mockup-job.json')} (Codex ImageGen 2: codex exec -i ${path.join(outDir, 'assets/cover.png')} - < ${path.join(outDir, 'mockup-job.json')})`);
 } else {
   console.log(`HTML: ${htmlPath}`);
   console.log('PDF: übersprungen (--no-pdf)');
