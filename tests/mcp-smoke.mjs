@@ -27,7 +27,7 @@ await client.connect(transport);
 
 const tools = await client.listTools();
 const names = tools.tools.map((t) => t.name).sort();
-const expected = ['dfs_chatbot_ask', 'popup_analytics', 'popup_create', 'popup_delete', 'popup_list', 'popup_update', 'radar_get_config', 'radar_get_summary', 'radar_get_trend', 'radar_list_configs'];
+const expected = ['dfs_chatbot_ask', 'ebook_status', 'ebook_validate', 'popup_analytics', 'popup_create', 'popup_delete', 'popup_list', 'popup_update', 'radar_get_config', 'radar_get_summary', 'radar_get_trend', 'radar_list_configs'];
 assert.deepEqual(names, expected, `Tool-Liste stimmt nicht: ${names.join(',')}`);
 
 const summary = await client.callTool({ name: 'radar_get_summary', arguments: {} });
@@ -44,7 +44,24 @@ const one = await client.callTool({ name: 'radar_get_config', arguments: { brand
 const oneData = JSON.parse(one.content[0].text);
 assert.equal(oneData.found, true, 'radar_get_config findet die Zeile');
 
-// 3) Popup ohne konfiguriertes Token -> sauberer isError, kein Crash
+// 3) ebook_validate: gültige Beispiel-Config -> valid, kaputte Config -> Fehlerliste
+const { readFileSync } = await import('node:fs');
+const exampleConfig = JSON.parse(readFileSync(new URL('../tools/ebook-maker/example-ebook.json', import.meta.url), 'utf8'));
+const validRes = await client.callTool({ name: 'ebook_validate', arguments: { config: exampleConfig } });
+const validData = JSON.parse(validRes.content[0].text);
+assert.equal(validData.valid, true, `example-ebook.json muss gültig sein: ${JSON.stringify(validData.errors)}`);
+
+const brokenRes = await client.callTool({ name: 'ebook_validate', arguments: { config: { slug: 'Kaputt!', pages: [] } } });
+const brokenData = JSON.parse(brokenRes.content[0].text);
+assert.equal(brokenData.valid, false, 'kaputte Config muss invalid sein');
+assert.ok(brokenData.errors.some((e) => /kebab-case/.test(e)), 'meldet slug-Fehler');
+assert.ok(brokenData.errors.some((e) => /Pflichtfeld/.test(e)), 'meldet Pflichtfelder');
+
+// 4) ebook_status: falscher slug -> isError; HEAD-Checks werden gemockt nicht — nur Slug-Validierung testen
+const badSlug = await client.callTool({ name: 'ebook_status', arguments: { slug: 'NÖ!' } });
+assert.equal(badSlug.isError, true, 'ebook_status mit kaputtem slug muss isError sein');
+
+// 5) Popup ohne konfiguriertes Token -> sauberer isError, kein Crash
 const popup = await client.callTool({ name: 'popup_list', arguments: {} });
 assert.equal(popup.isError, true, 'popup_list ohne Token muss isError sein');
 assert.match(popup.content[0].text, /RUECKHOL_ADMIN_TOKEN/, 'nennt fehlende Env');

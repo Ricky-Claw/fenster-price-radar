@@ -8,7 +8,7 @@ import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/
 import {
   radarGetSummary, radarListConfigs, radarGetConfig, radarGetTrend,
   popupList, popupAnalytics, popupCreate, popupUpdate, popupDelete,
-  dfsChatbotAsk,
+  dfsChatbotAsk, ebookValidate, ebookStatus,
 } from '../src/mcp/tools.js';
 
 const BODY_MAX_BYTES = 262144;
@@ -116,6 +116,20 @@ function buildServer() {
   server.registerTool('popup_delete',
     { description: 'Rückhol-Popup löschen (per id).', inputSchema: { id: z.string() } },
     async (args) => run(() => popupDelete(args)));
+
+  server.registerTool('ebook_validate',
+    {
+      description: 'E-Book-Config gegen die harten Generator-Regeln prüfen (Pflichtfelder, Längen-Limits, Block-Regeln, A4-Höhenbudget). Vor dem Ablegen in den ebook-inbox-Ordner aufrufen. Struktur: siehe tools/ebook-maker/example-ebook.json.',
+      inputSchema: { config: z.record(z.any()).describe('E-Book-Config-Objekt (slug, title, subtitle, claim, pages, …)') },
+    },
+    async (args) => run(() => ebookValidate(args)));
+
+  server.registerTool('ebook_status',
+    {
+      description: 'Status eines E-Books: generiert + live deployt? Prüft Cover und Mockbild auf der Live-Seite.',
+      inputSchema: { slug: z.string().describe('E-Book-Slug, z.B. "fenster-foerderung"') },
+    },
+    async (args) => run(() => ebookStatus(args)));
 
   server.registerTool('dfs_chatbot_ask',
     {
