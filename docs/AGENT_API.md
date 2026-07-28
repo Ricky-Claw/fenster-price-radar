@@ -72,6 +72,17 @@ Tools:
 | `popup_analytics` | Popup-Analytics | nein |
 | `popup_create` / `popup_update` / `popup_delete` | Popup-CRUD | **ja** |
 | `dfs_chatbot_ask` | Frage an den Website-Chatbot von deutscher-fenstershop.de (Janela) | nein (fragt) |
+| `ebook_validate` | E-Book-Config gegen die harten Generator-Regeln prüfen (vor dem Inbox-Ablegen) | nein |
+| `ebook_status` | E-Book-Status: Cover/Mockbild live deployt? | nein |
+
+### E-Book-Pipeline (Frank)
+
+Content-Agent (Frank, nexus-host) liefert nur Config + Mockbild, der Rest läuft automatisch:
+
+1. Frank prüft seine Config mit `ebook_validate` und legt sie als `<slug>.json` in seine Inbox `frank-dfs/ebook-inbox/`.
+2. VPS-Worker (`tools/ebook-maker/vps-ebook-worker.mjs`, Cron alle 5 Min auf nexus-host, Repo `/opt/fenster-price-radar`, `CHROME_PATH=/usr/bin/chromium-browser`) validiert, generiert (inkl. PDF), committet + pusht NUR `tools/ebook-maker/<slug>.json` + `public/ebooks/<slug>/` und schreibt `<slug>.result.txt` in die Inbox.
+3. Frank holt das Cover von der Live-URL, generiert das Mockbild mit seinem eigenen Bild-Tool (Regeln wie `mockup-job.json`) und legt es als `<slug>.mockup.png` in die Inbox — der Worker veröffentlicht es nach.
+4. `ebook_status {slug}` bestätigt Cover + Mockbild live. Frank-Anleitung: `EBOOK_SKILL.md` in Franks Workspace.
 
 ### Einrichtung (Betreiber)
 
