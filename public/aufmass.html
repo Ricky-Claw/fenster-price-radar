@@ -1155,6 +1155,31 @@
           }
         }
 
+        function clearReviewForField(row, fieldKey) {
+          if (!row || !fieldKey) return;
+          var reasons = reviewReasons(row);
+          if (!reasons.length) return;
+          var remaining = reasons.filter(function (reason) {
+            return REASON_FIELD[reason.replace(/_(unklar|geklemmt)$/, '')] !== fieldKey;
+          });
+          if (remaining.length === reasons.length) return;
+          row.dataset.reviewReasons = JSON.stringify(remaining);
+          row.dataset.needsReview = remaining.length ? 'true' : 'false';
+          row.classList.toggle('needs-review', remaining.length > 0);
+          var badge = row.querySelector('.review-cell .badge');
+          if (badge) {
+            if (remaining.length) badge.title = remaining.join(', ');
+            else badge.remove();
+          }
+          renderRueckfragen();
+        }
+
+        function handleReviewFieldEdit(event) {
+          var control = event.target.closest ? event.target.closest('[data-field]') : null;
+          if (!control) return;
+          clearReviewForField(control.closest('tr'), control.dataset.field);
+        }
+
         function currentRows() {
           return Array.prototype.map.call(rowsEl.querySelectorAll('tr'), function (row) {
             var item = {};
@@ -1552,6 +1577,8 @@
         });
         transcriptEl.addEventListener('input', scheduleSave);
         submitNoteEl.addEventListener('input', scheduleSave);
+        rowsEl.addEventListener('input', handleReviewFieldEdit);
+        rowsEl.addEventListener('change', handleReviewFieldEdit);
         rowsEl.addEventListener('input', scheduleSave);
         rowsEl.addEventListener('change', scheduleSave);
         discardDraftBtn.addEventListener('click', function () {
