@@ -31,20 +31,65 @@ function parseSiteOrigins(raw) {
   }
 }
 
-function createRateLimiter(limit = 80, windowMs = 60_000) {
+function createRateLimiter(limit = 80, windowMs = 60_000, maxKeys = 10_000) {
   const hits = new Map();
 
-  return (key) => {
+  const check = (key, record = true) => {
     const now = Date.now();
     const recent = (hits.get(key) || []).filter((timestamp) => now - timestamp < windowMs);
     if (recent.length >= limit) {
       hits.set(key, recent);
       return false;
     }
-    recent.push(now);
-    hits.set(key, recent);
+    if (record) {
+      // IP-derived keys are externally influenced. Keep the in-memory store
+      // bounded by dropping its oldest key before accepting a new one.
+      if (!hits.has(key) && hits.size >= maxKeys) {
+        hits.delete(hits.keys().next().value);
+      }
+      recent.push(now);
+      hits.set(key, recent);
+    } else if (recent.length) {
+      hits.set(key, recent);
+    } else {
+      hits.delete(key);
+    }
     return true;
   };
+  check.reset = (key) => hits.delete(key);
+  check.size = () => hits.size;
+  return check;
+}
+
+function firstHeaderValue(value) {
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function lastForwardedValue(value) {
+  const joined = Array.isArray(value) ? value.join(',') : value;
+  if (typeof joined !== 'string') return '';
+  return joined.split(',').at(-1)?.trim() || '';
+}
+
+function clientIp(req) {
+  const headers = req.headers || {};
+  // The reverse proxy is the trust boundary: it appends the real remote address,
+  // so using the last hop makes client-prepended spoofed values ineffective.
+  const forwarded = lastForwardedValue(headers['x-forwarded-for']);
+  if (forwarded) return forwarded;
+  const real = firstHeaderValue(headers['x-real-ip']);
+  if (typeof real === 'string' && real.trim()) return real.trim();
+  const vercel = lastForwardedValue(headers['x-vercel-forwarded-for']);
+  if (vercel) return vercel;
+  return req.socket?.remoteAddress || 'unknown';
+}
+
+function csvCell(value) {
+  let cell = String(value ?? '');
+  // Keep this helper independently safe even if callers pass unsanitized cells.
+  if (/^[=+\-@\t\r]/.test(cell)) cell = `'${cell}`;
+  if (/[;,"\r\n]/.test(cell)) cell = `"${cell.replace(/"/g, '""')}"`;
+  return cell;
 }
 
 function sendFile(res, filePath, contentType) {
@@ -65,6 +110,10 @@ function createApp(options = {}) {
   const siteOrigins = options.siteOrigins || parseSiteOrigins(process.env.SITE_ORIGINS);
   const allowOpenCors = !siteOrigins;
   const checkRateLimit = createRateLimiter(80, 60_000);
+  const checkLoginRateLimit = createRateLimiter(10, 15 * 60_000);
+  // High global ceiling: bounds distributed password-check abuse without being
+  // part of the normal per-visitor login budget. Only failed logins consume it.
+  const checkGlobalLoginCost = createRateLimiter(100, 15 * 60_000);
 
   if (!adminToken && !isConfigured() && options.warnOnOpenAdmin !== false) {
     console.warn('[Conversion Rescue] Neither ADMIN_TOKEN nor FENSTER_RADAR_PASSWORD is set. Dashboard/API routes are open for local development.');
@@ -122,6 +171,18 @@ function createApp(options = {}) {
       theme: campaign.theme,
       custom_css: campaign.custom_css,
       created_at: campaign.created_at,
+    };
+  }
+
+  function publicSubmission(submission) {
+    return {
+      id: submission.id,
+      campaignId: submission.campaign_id,
+      type: submission.kind,
+      email: submission.payload.email || '',
+      name: submission.payload.name || '',
+      message: submission.payload.message || '',
+      createdAt: submission.created_at,
     };
   }
 
@@ -205,7 +266,11 @@ function createApp(options = {}) {
               .then(function (res) {
                 if (res.ok) { window.location = 'dashboard/'; return; }
                 var err = document.getElementById('err');
-                err.textContent = res.d.error === 'login_not_configured' ? 'Login ist noch nicht eingerichtet.' : 'Falsches Passwort.';
+                err.textContent = res.d.error === 'login_not_configured'
+                  ? 'Login ist noch nicht eingerichtet.'
+                  : res.d.error === 'too_many_login_attempts'
+                    ? 'Zu viele Versuche. Bitte in ein paar Minuten erneut anmelden.'
+                    : 'Falsches Passwort.';
                 err.style.display = 'block';
               });
           });
@@ -217,9 +282,30 @@ function createApp(options = {}) {
   app.post('/api/login', (req, res) => {
     res.set('cache-control', 'no-store');
     if (!isConfigured()) { res.status(503).json({ error: 'login_not_configured' }); return; }
-    if (!checkPassword(req.body && req.body.password)) { res.status(401).json({ error: 'invalid_password' }); return; }
-    res.set('set-cookie', sessionCookie());
-    res.json({ ok: true });
+    const ip = clientIp(req);
+    if (!checkLoginRateLimit(ip, false)) {
+      res.set('retry-after', String(15 * 60));
+      res.status(429).json({ error: 'too_many_login_attempts' });
+      return;
+    }
+    const passwordMatches = checkPassword(req.body && req.body.password);
+    // Ein gültiges Passwort darf nie an einem Zähler scheitern — sonst ist die
+    // Aussperrung des Kunden ein Einzeiler.
+    if (passwordMatches) {
+      checkLoginRateLimit.reset(ip);
+      res.set('set-cookie', sessionCookie());
+      res.json({ ok: true });
+      return;
+    }
+
+    checkLoginRateLimit(ip);
+    const globalCostAvailable = checkGlobalLoginCost('global');
+    if (!globalCostAvailable) {
+      res.set('retry-after', String(15 * 60));
+      res.status(429).json({ error: 'too_many_login_attempts' });
+      return;
+    }
+    res.status(401).json({ error: 'invalid_password' });
   });
 
   app.post('/api/logout', (req, res) => {
@@ -258,7 +344,7 @@ function createApp(options = {}) {
   app.post('/api/events', (req, res) => {
     const siteId = cleanId(req.body.siteId || req.body.site_id || 'default', 'default');
     applyCors(req, res, siteId);
-    const ip = req.socket.remoteAddress || 'unknown';
+    const ip = clientIp(req);
     if (!checkRateLimit(ip)) {
       res.status(429).json({ error: 'Too many events' });
       return;
@@ -278,7 +364,7 @@ function createApp(options = {}) {
     applyCors(req, res, siteId);
     // Same throttle as /api/events — this is the endpoint that fires the
     // customer's webhook and fills the submissions table.
-    const ip = req.socket.remoteAddress || 'unknown';
+    const ip = clientIp(req);
     if (!checkRateLimit(ip)) {
       res.status(429).json({ error: 'Too many submissions' });
       return;
@@ -333,6 +419,35 @@ function createApp(options = {}) {
     const submissions = db.listSubmissions(siteId);
     const summary = summarizeAnalytics({ campaigns, events, submissions }, { siteId });
     res.json({ siteId, ...summary });
+  });
+
+  app.get('/api/submissions', requireDashboardAuth, (req, res) => {
+    const siteId = cleanId(req.query.site || '', '');
+    if (!siteId) {
+      res.status(400).json({ error: 'Site is required' });
+      return;
+    }
+    const format = cleanText(req.query.format || 'json', 20).toLowerCase();
+    if (!['json', 'csv'].includes(format)) {
+      res.status(400).json({ error: 'Format must be json or csv' });
+      return;
+    }
+
+    const submissions = db.listSubmissions(siteId).map(publicSubmission);
+    if (format === 'json') {
+      res.json({ ok: true, submissions });
+      return;
+    }
+
+    const columns = ['id', 'campaignId', 'type', 'email', 'name', 'message', 'createdAt'];
+    const lines = [
+      columns.join(';'),
+      ...submissions.map((submission) => columns.map((column) => csvCell(submission[column])).join(';')),
+    ];
+    const date = new Date().toISOString().slice(0, 10);
+    res.set('content-type', 'text/csv; charset=utf-8');
+    res.set('content-disposition', `attachment; filename="leads-${siteId}-${date}.csv"`);
+    res.send('\uFEFF' + lines.join('\r\n'));
   });
 
   app.get('/api/campaigns', requireDashboardAuth, (req, res) => {
@@ -428,5 +543,7 @@ function startServer() {
 if (require.main === module) startServer();
 
 module.exports = {
+  csvCell,
   createApp,
+  createRateLimiter,
 };

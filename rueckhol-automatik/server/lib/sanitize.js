@@ -41,6 +41,21 @@ function cleanUrl(value, max = 1000) {
   }
 }
 
+function cleanDownloadUrl(value, max = 500) {
+  const raw = cleanText(value, max + 1);
+  if (!raw || raw.length > max || raw.includes('\\')) return '';
+  if (raw.startsWith('/') && !raw.startsWith('//')) return raw;
+  try {
+    const url = new URL(raw);
+    if (url.protocol !== 'https:') return '';
+    url.hash = '';
+    const cleaned = url.toString();
+    return cleaned.length <= max ? cleaned : '';
+  } catch (_) {
+    return '';
+  }
+}
+
 function cleanCsvList(value, maxItemLength = 140, maxItems = 8) {
   return String(value ?? '')
     .split(/\r?\n|,/)
@@ -167,6 +182,8 @@ function sanitizeAction(actionTypeInput, configInput = {}) {
       ...common,
       label: cleanText(config.label || 'Subscribe', 120),
       placeholder: cleanText(config.placeholder || 'name@example.com', 120),
+      downloadUrl: cleanDownloadUrl(config.downloadUrl),
+      privacyUrl: cleanDownloadUrl(config.privacyUrl),
       consentLabel: cleanText(
         config.consentLabel || 'I agree to receive updates related to this offer.',
         220,
@@ -177,6 +194,7 @@ function sanitizeAction(actionTypeInput, configInput = {}) {
     actionConfig = {
       ...common,
       label: cleanText(config.label || 'Send request', 120),
+      privacyUrl: cleanDownloadUrl(config.privacyUrl),
       consentLabel: cleanText(
         config.consentLabel || 'I agree that my details may be used to respond to this request.',
         220,
@@ -295,6 +313,7 @@ module.exports = {
   asBool,
   cleanCsvList,
   cleanCustomCss,
+  cleanDownloadUrl,
   cleanEmail,
   cleanId,
   cleanMetadata,

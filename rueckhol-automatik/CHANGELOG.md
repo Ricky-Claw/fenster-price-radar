@@ -3,6 +3,18 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.1.0 — 2026-07-29
+
+**Neu**
+- Leads-Tab im Dashboard mit sicherer Tabellenansicht und CSV-Download.
+- Optionaler Freebie-Download-Link für Newsletter-Anmeldungen.
+- Optionaler Datenschutz-Link für Newsletter- und Kontaktformulare.
+
+**Verbessert**
+- Mobile-Fixes im Widget für besser bedienbare Popups auf kleinen Bildschirmen.
+- Seitenweiter Frequenz-Deckel verhindert zu häufige Popups über Kampagnen hinweg.
+- Der Seiten-Deckel blockiert nur andere Kampagnen; die zuletzt gezeigte folgt ihrer eigenen Wiederholungszeit. Produktions-Trigger respektieren Deckel, Test-Trigger können sie gezielt umgehen.
+
 ## 1.0.0 — 2026-07-06
 
 Erste auslieferbare Version (Testphase beim Kunden).

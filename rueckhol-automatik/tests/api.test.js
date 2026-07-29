@@ -1,6 +1,10 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { createApp } = require('../server/index');
+const { createApp, createRateLimiter, csvCell } = require('../server/index');
+
+test('CSV cells guard leading tabs independently', () => {
+  assert.equal(csvCell('\t=SUM(1,2)'), '"\'\t=SUM(1,2)"');
+});
 
 test('campaign CRUD, config, events, and analytics work together', async () => {
   const appContext = createApp({
@@ -75,6 +79,142 @@ test('campaign CRUD, config, events, and analytics work together', async () => {
   }
 });
 
+test('submissions API requires auth and returns JSON and injection-safe CSV', async () => {
+  const appContext = createApp({
+    dbPath: ':memory:',
+    adminToken: 'test-token',
+    webhookUrl: '',
+    warnOnOpenAdmin: false,
+  });
+  try {
+    const submit = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/submit',
+      headers: { 'content-type': 'application/json' },
+      body: {
+        siteId: 'demo',
+        campaignId: 'lead-campaign',
+        kind: 'contact',
+        payload: {
+          email: '"buyer,one"@example.com',
+          name: '=SUM(1+1)',
+          message: 'Bitte, Angebot senden',
+          consent: true,
+        },
+      },
+    });
+    assert.equal(submit.status, 200);
+
+    for (const [index, formula] of ['+SUM', '-2', '@cmd', '=HYPERLINK('].entries()) {
+      const formulaSubmit = await appContext.app.inject({
+        method: 'POST',
+        url: '/api/submit',
+        headers: { 'content-type': 'application/json' },
+        body: {
+          siteId: 'demo',
+          campaignId: `formula-${index}`,
+          kind: 'contact',
+          payload: {
+            email: `formula-${index}@example.com`,
+            name: formula,
+            message: 'Formeltest',
+            consent: true,
+          },
+        },
+      });
+      assert.equal(formulaSubmit.status, 200);
+    }
+
+    const unauthenticated = await appContext.app.inject({
+      method: 'GET',
+      url: '/api/submissions?site=demo',
+    });
+    assert.equal(unauthenticated.status, 401);
+
+    const jsonResponse = await appContext.app.inject({
+      method: 'GET',
+      url: '/api/submissions?site=demo',
+      headers: { authorization: 'Bearer test-token' },
+    });
+    assert.equal(jsonResponse.status, 200);
+    const json = jsonResponse.json();
+    assert.equal(json.ok, true);
+    assert.equal(json.submissions.length, 5);
+    const originalLead = json.submissions.find((submission) => submission.campaignId === 'lead-campaign');
+    assert.ok(originalLead);
+    assert.deepEqual(
+      {
+        campaignId: originalLead.campaignId,
+        type: originalLead.type,
+        email: originalLead.email,
+        name: originalLead.name,
+        message: originalLead.message,
+      },
+      {
+        campaignId: 'lead-campaign',
+        type: 'contact',
+        email: '"buyer,one"@example.com',
+        name: '=SUM(1+1)',
+        message: 'Bitte, Angebot senden',
+      },
+    );
+
+    const csvResponse = await appContext.app.inject({
+      method: 'GET',
+      url: '/api/submissions?site=demo&format=csv',
+      headers: { authorization: 'Bearer test-token' },
+    });
+    assert.equal(csvResponse.status, 200);
+    assert.match(csvResponse.headers['content-type'], /^text\/csv; charset=utf-8/);
+    assert.match(csvResponse.headers['content-disposition'], /^attachment; filename="leads-demo-\d{4}-\d{2}-\d{2}\.csv"$/);
+    const csv = csvResponse.body;
+    assert.deepEqual([...Buffer.from(csv).subarray(0, 3)], [0xef, 0xbb, 0xbf]);
+    assert.match(csv, /^\uFEFFid;campaignId;type;email;name;message;createdAt\r\n/);
+    assert.match(csv, /"""buyer,one""@example\.com"/);
+    assert.match(csv, /;'=SUM\(1\+1\);/);
+    assert.match(csv, /;'\+SUM;/);
+    assert.match(csv, /;'-2;/);
+    assert.match(csv, /;'@cmd;/);
+    assert.match(csv, /;'=HYPERLINK\(/);
+    assert.match(csv, /;"Bitte, Angebot senden";/);
+  } finally {
+    appContext.close();
+  }
+});
+
+test('widget config includes sanitized newsletter download and privacy URLs', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    const createResponse = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/campaigns',
+      headers: { 'content-type': 'application/json', authorization: 'Bearer test-token' },
+      body: {
+        siteId: 'demo',
+        name: 'Freebie',
+        enabled: true,
+        actionType: 'newsletter',
+        actionConfig: {
+          downloadUrl: 'https://example.com/freebie.pdf',
+          privacyUrl: '/datenschutz',
+        },
+      },
+    });
+    assert.equal(createResponse.status, 200);
+
+    const configResponse = await appContext.app.inject({
+      method: 'GET',
+      url: '/api/config?siteId=demo',
+    });
+    assert.equal(configResponse.status, 200);
+    const actionConfig = configResponse.json().campaigns[0].action_config;
+    assert.equal(actionConfig.downloadUrl, 'https://example.com/freebie.pdf');
+    assert.equal(actionConfig.privacyUrl, '/datenschutz');
+  } finally {
+    appContext.close();
+  }
+});
+
 test('health endpoint reports ok with version', async () => {
   const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', webhookUrl: '', warnOnOpenAdmin: false });
   try {
@@ -144,6 +284,131 @@ test('password login flow: reject wrong, accept right, cookie grants API access'
 
     const withCookie = await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers: { cookie } });
     assert.equal(withCookie.status, 200);
+
+    const otherSiteSubmissions = await appContext.app.inject({
+      method: 'GET', url: '/api/submissions?site=andere-site', headers: { cookie },
+    });
+    assert.equal(otherSiteSubmissions.status, 200);
+    assert.deepEqual(otherSiteSubmissions.json().submissions, []);
+  } finally {
+    delete process.env.FENSTER_RADAR_PASSWORD;
+    appContext.close();
+  }
+});
+
+test('login counts only failures per proxy-derived client IP and resets after success', async () => {
+  process.env.FENSTER_RADAR_PASSWORD = 'geheim123';
+  const appContext = createApp({ dbPath: ':memory:', adminToken: '', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    const wrongBody = { password: 'falsch' };
+    const headersFor = (client) => ({ 'content-type': 'application/json', 'x-real-ip': client });
+
+    for (let i = 0; i < 10; i += 1) {
+      const response = await appContext.app.inject({
+        method: 'POST', url: '/api/login',
+        headers: headersFor('client-a.invalid'), body: wrongBody,
+      });
+      assert.equal(response.status, 401);
+    }
+    const blockedAttacker = await appContext.app.inject({
+      method: 'POST', url: '/api/login',
+      headers: headersFor('client-a.invalid'), body: { password: 'geheim123' },
+    });
+    assert.equal(blockedAttacker.status, 429);
+    assert.equal(blockedAttacker.headers['retry-after'], '900');
+
+    const independentIp = await appContext.app.inject({
+      method: 'POST', url: '/api/login',
+      headers: headersFor('client-b.invalid'), body: { password: 'geheim123' },
+    });
+    assert.equal(independentIp.status, 200);
+
+    for (let i = 0; i < 9; i += 1) {
+      const response = await appContext.app.inject({
+        method: 'POST', url: '/api/login',
+        headers: headersFor('client-c.invalid'), body: wrongBody,
+      });
+      assert.equal(response.status, 401);
+    }
+    const successfulTenthAttempt = await appContext.app.inject({
+      method: 'POST', url: '/api/login',
+      headers: headersFor('client-c.invalid'), body: { password: 'geheim123' },
+    });
+    assert.equal(successfulTenthAttempt.status, 200);
+
+    const wrongAfterReset = await appContext.app.inject({
+      method: 'POST', url: '/api/login',
+      headers: headersFor('client-c.invalid'), body: wrongBody,
+    });
+    assert.equal(wrongAfterReset.status, 401);
+  } finally {
+    delete process.env.FENSTER_RADAR_PASSWORD;
+    appContext.close();
+  }
+});
+
+test('login rate limit uses the last X-Forwarded-For hop despite spoofed prefixes', async () => {
+  process.env.FENSTER_RADAR_PASSWORD = 'geheim123';
+  const appContext = createApp({ dbPath: ':memory:', adminToken: '', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    for (let i = 0; i < 10; i += 1) {
+      const response = await appContext.app.inject({
+        method: 'POST',
+        url: '/api/login',
+        headers: {
+          'content-type': 'application/json',
+          'x-forwarded-for': `${i % 2 ? 'proxy-b.invalid' : 'proxy-a.invalid'}, client-1.invalid`,
+          'x-real-ip': `spoof-${i}.invalid`,
+          'x-vercel-forwarded-for': `vercel-spoof-${i}.invalid`,
+        },
+        body: { password: 'falsch' },
+      });
+      assert.equal(response.status, 401);
+    }
+
+    const blocked = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/login',
+      headers: {
+        'content-type': 'application/json',
+        'x-forwarded-for': 'another-spoof.invalid, client-1.invalid',
+      },
+      body: { password: 'geheim123' },
+    });
+    assert.equal(blocked.status, 429);
+  } finally {
+    delete process.env.FENSTER_RADAR_PASSWORD;
+    appContext.close();
+  }
+});
+
+test('rate limiter store remains below its hard key cap', () => {
+  const limiter = createRateLimiter(80, 60_000, 25);
+  for (let i = 0; i < 500; i += 1) limiter(`client-${i}.invalid`);
+  assert.equal(limiter.size(), 25);
+});
+
+test('valid password succeeds from a fresh client after global failed-login budget is exhausted', async () => {
+  process.env.FENSTER_RADAR_PASSWORD = 'geheim123';
+  const appContext = createApp({ dbPath: ':memory:', adminToken: '', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    for (let i = 0; i < 101; i += 1) {
+      const response = await appContext.app.inject({
+        method: 'POST',
+        url: '/api/login',
+        headers: { 'content-type': 'application/json', 'x-real-ip': `attacker-${i}.invalid` },
+        body: { password: 'falsch' },
+      });
+      assert.equal(response.status, i < 100 ? 401 : 429);
+    }
+
+    const validLogin = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/login',
+      headers: { 'content-type': 'application/json', 'x-real-ip': 'fresh-client.invalid' },
+      body: { password: 'geheim123' },
+    });
+    assert.equal(validLogin.status, 200);
   } finally {
     delete process.env.FENSTER_RADAR_PASSWORD;
     appContext.close();

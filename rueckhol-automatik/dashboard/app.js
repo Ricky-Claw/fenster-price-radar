@@ -19,6 +19,7 @@
     device: 'desktop',
     dirty: false,        // unsaved changes in the editor
     window: 'allTime',   // analytics window: allTime | last7Days
+    leadsGen: 0,         // ignores stale lead responses after a site switch
   };
 
   function setDirty(on) {
@@ -97,7 +98,9 @@
     setVal('a-url', a.url); setChk('a-url-newtab', a.newTab);
     setVal('a-pdf', a.pdfUrl);
     setVal('a-code', a.code);
-    setVal('a-news-ph', a.placeholder); setVal('a-news-consent', a.consentLabel); setVal('a-news-ok', a.successMessage);
+    setVal('a-news-ph', a.placeholder); setVal('a-news-download', a.downloadUrl);
+    setVal('a-news-consent', a.consentLabel); setVal('a-news-ok', a.successMessage);
+    setVal('a-privacy', a.privacyUrl);
     setVal('a-con-consent', a.consentLabel); setVal('a-con-ok', a.successMessage);
     // design
     var th = c.theme || {}; var col = th.colors || {};
@@ -130,8 +133,8 @@
     if (action === 'url') ac = { url: v('a-url'), newTab: chk('a-url-newtab'), label: cta };
     else if (action === 'pdf') ac = { pdfUrl: v('a-pdf'), label: cta, newTab: true };
     else if (action === 'coupon') ac = { code: v('a-code'), label: cta };
-    else if (action === 'newsletter') ac = { label: cta, placeholder: v('a-news-ph') || 'name@example.com', consentLabel: v('a-news-consent') || 'Ich stimme zu.', successMessage: v('a-news-ok') || 'Danke!' };
-    else ac = { label: cta, consentLabel: v('a-con-consent') || 'Ich stimme zu.', successMessage: v('a-con-ok') || 'Danke!' };
+    else if (action === 'newsletter') ac = { label: cta, placeholder: v('a-news-ph') || 'name@example.com', downloadUrl: v('a-news-download'), privacyUrl: v('a-privacy'), consentLabel: v('a-news-consent') || 'Ich stimme zu.', successMessage: v('a-news-ok') || 'Danke!' };
+    else ac = { label: cta, privacyUrl: v('a-privacy'), consentLabel: v('a-con-consent') || 'Ich stimme zu.', successMessage: v('a-con-ok') || 'Danke!' };
 
     var colors = clone((d.theme && d.theme.colors) || {});
     ['accent', 'accent_text', 'text', 'muted', 'surface', 'border'].forEach(function (k) {
@@ -178,6 +181,7 @@
     var trigger = ($('#triggerChoice input:checked') || {}).value || 'exit_intent';
     $('#wrap-seconds').classList.toggle('hidden', !(trigger === 'idle' || trigger === 'time_on_page'));
     $('#wrap-percent').classList.toggle('hidden', trigger !== 'scroll_depth');
+    $('#mobileInterstitialHint').classList.toggle('hidden', !(v('f-position') === 'center' && trigger !== 'exit_intent'));
   }
 
   // ---- list ----
@@ -245,6 +249,10 @@
     if (payload.action_type === 'url' && !a.url) return { msg: 'Bitte die Ziel-URL angeben.', field: 'a-url' };
     if (payload.action_type === 'pdf' && !a.pdfUrl) return { msg: 'Bitte die PDF-URL angeben.', field: 'a-pdf' };
     if (payload.action_type === 'coupon' && !a.code) return { msg: 'Bitte den Rabattcode angeben.', field: 'a-code' };
+    if (a.downloadUrl && (a.downloadUrl.indexOf('\\') !== -1 || a.downloadUrl.length > 500)) return { msg: 'Der Freebie-Link darf keinen Backslash enthalten und höchstens 500 Zeichen lang sein.', field: 'a-news-download' };
+    if (a.privacyUrl && (a.privacyUrl.indexOf('\\') !== -1 || a.privacyUrl.length > 500)) return { msg: 'Der Datenschutz-Link darf keinen Backslash enthalten und höchstens 500 Zeichen lang sein.', field: 'a-privacy' };
+    if (a.downloadUrl && !(/^https:\/\//i.test(a.downloadUrl) || /^\/(?!\/)/.test(a.downloadUrl))) return { msg: 'Bitte für den Freebie-Download einen https-Link oder wurzelrelativen Pfad angeben.', field: 'a-news-download' };
+    if (a.privacyUrl && !(/^https:\/\//i.test(a.privacyUrl) || /^\/(?!\/)/.test(a.privacyUrl))) return { msg: 'Bitte für den Datenschutz einen https-Link oder wurzelrelativen Pfad angeben.', field: 'a-privacy' };
     return null;
   }
 
@@ -425,12 +433,114 @@
       '<div class="bar"><span style="width:' + pct + '%"></span></div></div>';
   }
 
+  // ---- leads (all foreign input is written via textContent) ----
+  function renderLeads() {
+    var view = $('#view-leads');
+    var gen = ++state.leadsGen;
+    var site = state.site || (visibleCampaigns()[0] && visibleCampaigns()[0].site_id) || (state.campaigns[0] && state.campaigns[0].site_id) || (state.sites[0] && (state.sites[0].id || state.sites[0].site_id || state.sites[0]));
+    if (!site) {
+      renderLeadRows([], '');
+      return;
+    }
+    var loading = document.createElement('div');
+    loading.className = 'panel empty';
+    var loadingText = document.createElement('p');
+    loadingText.textContent = 'Lädt …';
+    loading.appendChild(loadingText);
+    view.replaceChildren(loading);
+
+    apiCall('/api/submissions?site=' + encodeURIComponent(site)).then(function (d) {
+      if (gen !== state.leadsGen) return;
+      renderLeadRows(d.submissions || [], site);
+    }).catch(function () {
+      if (gen !== state.leadsGen) return;
+      var error = document.createElement('div');
+      error.className = 'panel empty err';
+      error.textContent = 'Leads konnten nicht geladen werden. Bitte später erneut versuchen.';
+      view.replaceChildren(error);
+    });
+  }
+
+  function renderLeadRows(leads, site) {
+    var view = $('#view-leads');
+    var panel = document.createElement('div');
+    panel.className = 'panel leads-panel';
+
+    var head = document.createElement('div');
+    head.className = 'leads-head';
+    var title = document.createElement('h2');
+    title.textContent = 'Leads';
+    var download = document.createElement('a');
+    download.className = 'btn';
+    download.textContent = 'CSV herunterladen';
+    if (site) {
+      download.href = APP_BASE + '/api/submissions?site=' + encodeURIComponent(site) + '&format=csv';
+    } else {
+      download.setAttribute('aria-disabled', 'true');
+      download.removeAttribute('href');
+    }
+    head.appendChild(title);
+    head.appendChild(download);
+    panel.appendChild(head);
+
+    if (!leads.length) {
+      var empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.textContent = 'Noch keine Leads — sobald ein Besucher im Popup seine E-Mail lässt, erscheint sie hier.';
+      panel.appendChild(empty);
+      view.replaceChildren(panel);
+      return;
+    }
+
+    leads.sort(function (a, b) {
+      return new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime();
+    });
+    var campaignNames = {};
+    state.campaigns.forEach(function (campaign) { campaignNames[campaign.id] = campaign.name; });
+
+    var scroll = document.createElement('div');
+    scroll.className = 'leads-table-scroll';
+    var table = document.createElement('table');
+    table.className = 'leads-table';
+    var thead = document.createElement('thead');
+    var headerRow = document.createElement('tr');
+    ['Datum', 'Typ', 'E-Mail', 'Name', 'Nachricht', 'Kampagne'].forEach(function (label) {
+      var th = document.createElement('th');
+      th.textContent = label;
+      headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+    leads.forEach(function (lead) {
+      var message = String(lead.message || '');
+      if (message.length > 120) message = message.slice(0, 117) + '…';
+      var date = lead.createdAt ? new Date(lead.createdAt).toLocaleString('de-DE') : '—';
+      var type = lead.type === 'newsletter' ? 'Newsletter' : (lead.type === 'contact' ? 'Kontakt' : lead.type);
+      var values = [date, type || '—', lead.email || '—', lead.name || '—', message || '—', campaignNames[lead.campaignId] || lead.campaignId || '—'];
+      var row = document.createElement('tr');
+      values.forEach(function (value) {
+        var cell = document.createElement('td');
+        cell.textContent = value;
+        row.appendChild(cell);
+      });
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+    scroll.appendChild(table);
+    panel.appendChild(scroll);
+    view.replaceChildren(panel);
+  }
+
   // ---- views ----
   function switchView(view) {
     $$('.tabs button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-view') === view); });
     $('#view-campaigns').classList.toggle('hidden', view !== 'campaigns');
     $('#view-analytics').classList.toggle('hidden', view !== 'analytics');
+    $('#view-leads').classList.toggle('hidden', view !== 'leads');
     if (view === 'analytics') renderAnalytics();
+    if (view === 'leads') renderLeads();
   }
 
   // ---- wire up ----
@@ -449,6 +559,7 @@
       if (!confirmDiscard()) { this.value = state.site; return; } // revert on cancel
       state.site = this.value; renderList();
       var first = visibleCampaigns()[0]; if (first) editCampaign(first.id); else newCampaign();
+      if ($('#view-leads') && !$('#view-leads').classList.contains('hidden')) renderLeads();
     });
 
     // any form input → live preview + mark unsaved

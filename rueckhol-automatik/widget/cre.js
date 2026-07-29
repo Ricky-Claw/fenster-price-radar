@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.0.0 (keep in sync with package.json)
+ * Version: 1.1.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -30,10 +30,39 @@
     if (/^https?:\/\//i.test(v) || /^\//.test(v) || /^mailto:/i.test(v)) return v;
     return '';
   }
+  function safeActionUrl(u) {
+    var v = String(u || '').trim();
+    if (v.indexOf('\\') !== -1) return '';
+    if (/^https:\/\//i.test(v) || /^\/(?!\/)/.test(v)) return v;
+    return '';
+  }
   function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '')); }
 
   // ---- suppression (don't nag) ----
+  // Fixed site-wide cap; make configurable only when a real use case needs it.
+  var ANY_CAMPAIGN_COOLDOWN_MS = 6 * 60 * 60 * 1000;
   function suppressKey(id) { return 'cre_seen_' + SITE + '_' + id; }
+  function anyCampaignKey() { return 'cre_any_' + SITE; }
+  function isAnyCampaignSuppressed(c) {
+    try {
+      var raw = localStorage.getItem(anyCampaignKey());
+      if (!raw) return false;
+      var stored;
+      try { stored = JSON.parse(raw); } catch (e) { stored = parseInt(raw, 10); }
+      var until = stored && typeof stored === 'object' ? Number(stored.until) : Number(stored);
+      var lastId = stored && typeof stored === 'object' ? stored.id : '';
+      if (lastId && c && lastId === c.id) return false;
+      return isFinite(until) && Date.now() < until;
+    } catch (e) { return false; }
+  }
+  function suppressAnyCampaign(c) {
+    try {
+      localStorage.setItem(anyCampaignKey(), JSON.stringify({
+        until: Date.now() + ANY_CAMPAIGN_COOLDOWN_MS,
+        id: c && c.id || ''
+      }));
+    } catch (e) {}
+  }
   function isSuppressed(c) {
     try {
       var raw = localStorage.getItem(suppressKey(c.id));
@@ -102,9 +131,26 @@
   }
 
   var openHost = null;
+  var openCleanup = null;
+  var scrollLocked = false;
+  var overflowBeforeOpen = '';
+  function lockPageScroll() {
+    if (scrollLocked) return;
+    overflowBeforeOpen = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    scrollLocked = true;
+  }
+  function unlockPageScroll() {
+    if (!scrollLocked) return;
+    document.documentElement.style.overflow = overflowBeforeOpen;
+    scrollLocked = false;
+  }
   function closeAll() {
+    if (openCleanup) openCleanup();
+    openCleanup = null;
     if (openHost && openHost.parentNode) openHost.parentNode.removeChild(openHost);
     openHost = null;
+    unlockPageScroll();
   }
 
   // ---- action UIs ----
@@ -112,7 +158,7 @@
     var a = c.action_config || {};
     var label = esc(c.cta_label || 'Weiter');
     var btn = 'display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 18px;border:0;border-radius:' + t.radius + ';background:' + t.accent + ';color:' + t.accentText + ';font-weight:700;font:inherit;cursor:pointer;text-decoration:none;';
-    var inp = 'width:100%;box-sizing:border-box;min-height:46px;padding:11px 13px;border:1px solid ' + t.border + ';border-radius:' + t.radius + ';font:inherit;color:' + t.text + ';background:#fff;';
+    var inp = 'width:100%;box-sizing:border-box;min-height:46px;padding:11px 13px;border:1px solid ' + t.border + ';border-radius:' + t.radius + ';font:inherit;font-size:16px;color:' + t.text + ';background:#fff;';
     var consent = '<label style="display:flex;gap:8px;align-items:flex-start;color:' + t.muted + ';font-size:12px;line-height:1.4;margin-top:2px"><input type="checkbox" data-cre-consent style="margin-top:3px"><span>' + esc(a.consentLabel || 'Ich stimme der Kontaktaufnahme zu.') + '</span></label>';
     var status = '<p data-cre-status aria-live="polite" style="margin:6px 0 0;font-size:13px;font-weight:600;color:' + t.accent + '"></p>';
 
@@ -133,9 +179,25 @@
   }
 
   function bindActions(root, c) {
+    var actionConfig = c.action_config || {};
     function setStatus(msg, ok) {
       var el = root.querySelector('[data-cre-status]');
       if (el) { el.textContent = msg; el.style.color = ok ? '#1a7f4b' : '#b3261e'; }
+    }
+    var privacyHref = safeActionUrl(actionConfig.privacyUrl);
+    var consentInput = root.querySelector('[data-cre-consent]');
+    if (privacyHref && consentInput && consentInput.parentNode) {
+      var consentText = consentInput.parentNode.querySelector('span');
+      if (consentText) {
+        consentText.appendChild(document.createTextNode(' '));
+        var privacyLink = document.createElement('a');
+        privacyLink.textContent = 'Datenschutz';
+        privacyLink.href = privacyHref;
+        privacyLink.target = '_blank';
+        privacyLink.rel = 'noopener noreferrer';
+        privacyLink.style.color = 'inherit';
+        consentText.appendChild(privacyLink);
+      }
     }
     var url = root.querySelector('[data-cre-action="url"], [data-cre-action="pdf"]');
     if (url) url.addEventListener('click', function () {
@@ -175,8 +237,24 @@
             // conversion is recorded server-side (/api/submit -> newsletter_opt_in / contact_submit)
             suppress(c);
             var form = root.querySelector('[data-cre-form]');
-            var okMsg = (c.action_config && c.action_config.successMessage) || 'Danke! Wir melden uns.';
-            if (form) form.innerHTML = '<p style="margin:0;font-weight:700;color:#1a7f4b">' + esc(okMsg) + '</p>';
+            var okMsg = actionConfig.successMessage || 'Danke! Wir melden uns.';
+            if (form) {
+              form.textContent = '';
+              var success = document.createElement('p');
+              success.textContent = okMsg;
+              success.style.cssText = 'margin:0;font-weight:700;color:#1a7f4b';
+              form.appendChild(success);
+              var downloadHref = kind === 'newsletter' ? safeActionUrl(actionConfig.downloadUrl) : '';
+              if (downloadHref) {
+                var downloadLink = document.createElement('a');
+                downloadLink.textContent = 'Jetzt herunterladen';
+                downloadLink.href = downloadHref;
+                downloadLink.target = '_blank';
+                downloadLink.rel = 'noopener noreferrer';
+                downloadLink.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 18px;border-radius:10px;background:#0d4a3c;color:#fff;font-weight:700;text-decoration:none';
+                form.appendChild(downloadLink);
+              }
+            }
           } else { b.disabled = false; setStatus('Etwas ging schief. Bitte später erneut.', false); }
         });
       });
@@ -194,13 +272,14 @@
     var backPos = contained ? 'position:absolute' : 'position:fixed';
     var anim = contained ? '' : 'animation:creFade .2s ease';
     var boxAnim = contained ? '' : ';animation:crePop .28s cubic-bezier(.16,1,.3,1)';
+    var safeArea = t.position === 'bar' ? ';padding-bottom:calc(22px + env(safe-area-inset-bottom))' : '';
     return '<style>' +
       ':host,*{box-sizing:border-box}' +
-      '.cre-back{' + backPos + ';inset:0;background:' + t.backdrop + ';display:flex;padding:16px;' + flexAlign(t.position) + anim + '}' +
-      '.cre-box{position:relative;max-width:' + (t.position === 'bar' ? 'none' : '400px') + ';width:100%;background:' + t.surface + ';color:' + t.text + ';font-family:' + t.font + ';border:1px solid ' + t.border + ';border-radius:' + (t.position === 'bar' ? '0' : t.radius) + ';box-shadow:0 24px 60px rgba(0,0,0,.28);padding:22px 20px' + boxAnim + '}' +
-      '.cre-x{position:absolute;top:10px;right:10px;width:34px;height:34px;border:1px solid ' + t.border + ';background:' + t.surface + ';color:' + t.muted + ';border-radius:10px;font-size:18px;line-height:1;cursor:pointer}' +
+      '.cre-back{' + backPos + ';inset:0;background:' + t.backdrop + ';display:flex;padding:16px;overflow-y:auto;' + flexAlign(t.position) + anim + '}' +
+      '.cre-box{position:relative;max-width:' + (t.position === 'bar' ? 'none' : '400px') + ';width:100%;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow-y:auto;background:' + t.surface + ';color:' + t.text + ';font-family:' + t.font + ';border:1px solid ' + t.border + ';border-radius:' + (t.position === 'bar' ? '0' : t.radius) + ';box-shadow:0 24px 60px rgba(0,0,0,.28);padding:22px 20px' + safeArea + boxAnim + '}' +
+      '.cre-x{position:absolute;top:10px;right:10px;width:44px;height:44px;border:1px solid ' + t.border + ';background:' + t.surface + ';color:' + t.muted + ';border-radius:10px;font-size:18px;line-height:1;cursor:pointer}' +
       '.cre-x:hover{background:' + t.border + '}' +
-      '.cre-h{margin:0 30px 8px 0;font-size:21px;line-height:1.2;color:' + t.text + '}' +
+      '.cre-h{margin:0 50px 8px 0;font-size:21px;line-height:1.2;color:' + t.text + '}' +
       '.cre-b{margin:0 0 16px;color:' + t.muted + ';line-height:1.5;font-size:15px}' +
       '@keyframes creFade{from{opacity:0}to{opacity:1}}@keyframes crePop{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}' +
       '@media (prefers-reduced-motion:reduce){.cre-back,.cre-box{animation:none}}' +
@@ -216,7 +295,8 @@
   }
 
   function show(c, trigger, force) {
-    if (openHost || (!force && isSuppressed(c))) return;
+    if (!force && isAnyCampaignSuppressed(c)) dbg('site-wide cap active');
+    if (openHost || (!force && (isAnyCampaignSuppressed(c) || isSuppressed(c)))) return;
     var t = theme(c);
     var host = document.createElement('div');
     host.setAttribute('data-cre-host', '');
@@ -227,7 +307,6 @@
 
     function focusables() { return Array.prototype.slice.call(shadow.querySelectorAll('input,button,a,textarea,select,[tabindex]')); }
     function close(reason) {
-      document.removeEventListener('keydown', onKey);
       track(c.id, 'close', { reason: reason || 'x', trigger: trigger });
       suppress(c);
       closeAll();
@@ -246,10 +325,13 @@
     var backEl = shadow.querySelector('[data-cre-back]');
     backEl.addEventListener('click', function (e) { if (e.target === backEl) close('backdrop'); });
     document.addEventListener('keydown', onKey);
+    openCleanup = function () { document.removeEventListener('keydown', onKey); };
     bindActions(shadow, c);
 
     document.body.appendChild(host);
     openHost = host;
+    lockPageScroll();
+    if (!force) suppressAnyCampaign(c);
     track(c.id, 'popup_shown', { trigger: trigger });
     var focusEl = shadow.querySelector('input,button,a');
     if (focusEl) try { focusEl.focus(); } catch (e) {}
@@ -285,7 +367,7 @@
         var sampleY = window.scrollY;
         var scrollSampler = setInterval(function () {
           var y = window.scrollY;
-          if (sampleY - y > 70) { fire(c, 'exit_intent'); clearInterval(scrollSampler); }
+          if (sampleY - y > 70 && window.scrollY < 200) { fire(c, 'exit_intent'); clearInterval(scrollSampler); }
           sampleY = y;
         }, 120);
       } else if (c.trigger === 'idle') {
@@ -308,7 +390,11 @@
     window.CRE = window.CRE || {};
     window.CRE.trigger = function (id) {
       var c = campaigns.filter(function (x) { return x.id === id; })[0];
-      if (c) { closeAll(); show(c, 'manual', true); }
+      if (c) { closeAll(); show(c, 'manual', false); }
+    };
+    window.CRE.triggerTest = function (id) {
+      var c = campaigns.filter(function (x) { return x.id === id; })[0];
+      if (c) { closeAll(); show(c, 'manual_test', true); }
     };
     window.CRE.close = closeAll;
   }
