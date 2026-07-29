@@ -1,0 +1,7 @@
+{
+  "name": "narrow-data-tool",
+  "title": "Narrow Data Tool",
+  "description": "Negativ-Fixture für einen engen data-Include.",
+  "version": "1.0.0",
+  "files": ["narrow-tool/data/**"]
+}

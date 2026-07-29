@@ -1,0 +1,7 @@
+{
+  "name": "rsync-host-tool",
+  "title": "rsync Host Tool",
+  "description": "Fixture für ein rsync-Host-Ziel.",
+  "version": "1.0.0",
+  "files": ["rsync-host-tool/**/*"]
+}

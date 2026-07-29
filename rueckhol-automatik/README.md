@@ -28,7 +28,7 @@ danach nur die Snippet-URLs auf der Kundenseite anpassen.
 
 | Was | Wo |
 |---|---|
-| Server | VPS `nexus-host` (76.13.143.100), systemd-Dienst `rueckhol-automatik`, Port 8791 (nur localhost) |
+| Server | VPS `<VPS-IP>`, systemd-Dienst `rueckhol-automatik`, Port 8791 (nur localhost) |
 | Direkt-Domain | https://rueckhol.schwarzwald-agent.de (Caddy, Auto-TLS) |
 | Kunden-URL | https://fenster-price-radar.vercel.app/rueckhol/* (Vercel-Proxy-Rewrite in `../vercel.json`) |
 | Dashboard | `/dashboard/` — Passwort = `FENSTER_RADAR_PASSWORD` |
@@ -97,11 +97,13 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
 
 ## Betrieb & Update (VPS)
 
+Konkrete Zugangsdaten und Hosts stehen in den privaten Betriebsnotizen (nicht im Repo).
+
 ```bash
 # Deploy/Update vom kanonischen Stand (data/ NIE mitkopieren — dort lebt die Kunden-DB):
 rsync -az --delete --exclude='.git' --exclude='node_modules' --exclude='data' --exclude='.DS_Store' \
-  ./ root@76.13.143.100:/opt/rueckhol-automatik/
-ssh root@76.13.143.100 'chown -R fensterradar:fensterradar /opt/rueckhol-automatik \
+  ./ <BENUTZER>@<VPS-IP>:/opt/rueckhol-automatik/
+ssh <BENUTZER>@<VPS-IP> 'chown -R fensterradar:fensterradar /opt/rueckhol-automatik \
   && sudo -u fensterradar bash -c "cd /opt/rueckhol-automatik && npm install --no-audit --no-fund && npm test" \
   && systemctl restart rueckhol-automatik'
 curl -s https://<rueckhol-host>/api/health   # muss ok:true + neue Version zeigen

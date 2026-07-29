@@ -1,0 +1,1 @@
+Diese Datei wird im Test nach UTF-16LE mit BOM umkodiert.

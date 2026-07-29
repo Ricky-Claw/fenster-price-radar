@@ -1,0 +1,7 @@
+{
+  "name": "ipv4-tool",
+  "title": "IPv4 Tool",
+  "description": "Negativ-Fixture für IPv4-Leaks.",
+  "version": "1.0.0",
+  "files": ["ipv4-tool/**/*"]
+}

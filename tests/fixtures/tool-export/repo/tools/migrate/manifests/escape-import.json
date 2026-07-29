@@ -1,0 +1,7 @@
+{
+  "name": "escape-import-tool",
+  "title": "Escape Import Tool",
+  "description": "Negativ-Fixture für aufgelöste relative Imports.",
+  "version": "1.0.0",
+  "files": ["escape-tool/**/*"]
+}

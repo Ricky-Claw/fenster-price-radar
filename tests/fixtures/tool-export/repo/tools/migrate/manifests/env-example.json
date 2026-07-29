@@ -1,0 +1,7 @@
+{
+  "name": "env-example-tool",
+  "title": "Env Example Tool",
+  "description": "Positiv-Fixture für die erlaubte .env.example.",
+  "version": "1.0.0",
+  "files": ["env-example-tool/**/*"]
+}

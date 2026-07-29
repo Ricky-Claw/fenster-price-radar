@@ -1,0 +1,7 @@
+{
+  "name": "skproj-tool",
+  "title": "sk-proj Tool",
+  "description": "Negativ-Fixture für OpenAI-Projektschlüssel.",
+  "version": "1.0.0",
+  "files": ["skproj-tool/**/*"]
+}

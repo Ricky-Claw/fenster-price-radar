@@ -1,0 +1,1 @@
+rsync -avz ./dist buildhost:/srv/app

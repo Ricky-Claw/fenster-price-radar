@@ -1,0 +1,7 @@
+{
+  "name": "null-glob-tool",
+  "title": "Null Glob Tool",
+  "description": "Negativ-Fixture für einen leeren Einzel-Glob.",
+  "version": "1.0.0",
+  "files": ["mini-tool/**/*", "mini-tool/fehlt/**/*.js"]
+}

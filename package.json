@@ -6,6 +6,8 @@
   "scripts": {
     "banner:check": "node --check tools/banner-maker/select-action.mjs && node --check tools/banner-maker/image-meta.mjs && node --check tools/banner-maker/fonts.mjs && node --check tools/banner-maker/banner-template.mjs && node --check tools/banner-maker/render.mjs && node --check tools/banner-maker/compress.mjs && node --check tools/banner-maker/make-banner.mjs && node --check tools/lib/find-chrome.mjs",
     "banner:make": "node tools/banner-maker/make-banner.mjs",
+    "tool:export": "node tools/migrate/export.mjs",
+    "test:export": "node --test tests/tool-export.mjs",
     "predev": "node scripts/build-anleitung.js",
     "dev": "vite --host 0.0.0.0",
     "prebuild": "node scripts/build-anleitung.js",

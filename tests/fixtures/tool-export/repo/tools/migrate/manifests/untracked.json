@@ -1,0 +1,7 @@
+{
+  "name": "untracked-tool",
+  "title": "Untracked Tool",
+  "description": "Negativ-Fixture für nicht versionierte Dateien.",
+  "version": "1.0.0",
+  "files": ["untracked-tool/**/*"]
+}

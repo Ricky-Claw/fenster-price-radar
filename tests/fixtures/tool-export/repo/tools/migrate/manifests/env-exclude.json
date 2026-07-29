@@ -1,0 +1,8 @@
+{
+  "name": "env-tool",
+  "title": "Env Tool",
+  "description": "Exclude wird vor der Denylist angewendet.",
+  "version": "1.0.0",
+  "files": ["env-tool/**/*"],
+  "exclude": ["env-tool/.env", "env-tool/.env.example"]
+}

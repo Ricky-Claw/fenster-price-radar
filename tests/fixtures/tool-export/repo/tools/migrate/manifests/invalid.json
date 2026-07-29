@@ -1,0 +1,6 @@
+{
+  "name": "invalid-tool",
+  "description": "Dieses Manifest hat absichtlich keinen Titel.",
+  "version": "1.0.0",
+  "files": ["mini-tool/**/*"]
+}

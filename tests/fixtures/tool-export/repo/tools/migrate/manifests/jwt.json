@@ -1,0 +1,7 @@
+{
+  "name": "jwt-tool",
+  "title": "JWT Tool",
+  "description": "Negativ-Fixture für JWTs.",
+  "version": "1.0.0",
+  "files": ["jwt-tool/**/*"]
+}

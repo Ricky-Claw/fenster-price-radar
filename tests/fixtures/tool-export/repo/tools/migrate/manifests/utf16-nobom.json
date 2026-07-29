@@ -1,0 +1,7 @@
+{
+  "name": "utf16-nobom-tool",
+  "title": "UTF-16 ohne BOM Tool",
+  "description": "Negativ-Fixture für UTF-16LE ohne BOM.",
+  "version": "1.0.0",
+  "files": ["utf16-nobom-tool/**/*"]
+}

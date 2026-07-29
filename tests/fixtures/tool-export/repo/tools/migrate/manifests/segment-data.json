@@ -1,0 +1,7 @@
+{
+  "name": "segment-data-tool",
+  "title": "Segment Data Tool",
+  "description": "Negativ-Fixture für ein data-Verzeichnis ohne Datenbankdatei.",
+  "version": "1.0.0",
+  "files": ["data-tool/data/leads.json"]
+}

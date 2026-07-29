@@ -1,0 +1,7 @@
+{
+  "name": "utf16-tool",
+  "title": "UTF-16 Tool",
+  "description": "Negativ-Fixture für UTF-16-Secrets.",
+  "version": "1.0.0",
+  "files": ["utf16-tool/**/*"]
+}
