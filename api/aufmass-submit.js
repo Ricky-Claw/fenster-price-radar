@@ -1,5 +1,5 @@
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
-import { normalizeWindowList, MAX_WINDOWS } from '../src/aufmass/normalizeWindows.js';
+import { normalizeWindowList, MAX_WINDOWS, TRANSCRIPT_MAX } from '../src/aufmass/normalizeWindows.js';
 
 const BODY_MAX_BYTES = 65536;
 const ALLOW_ORIGIN = process.env.AUFMASS_ALLOW_ORIGIN || '';
@@ -120,9 +120,10 @@ export default async function handler(req, res) {
     }
 
     const note = String(body.note || '').slice(0, 2000);
+    const transcript = typeof body.transcript === 'string' ? body.transcript.slice(0, TRANSCRIPT_MAX) : '';
     const submittedAt = new Date().toISOString();
     const reference = makeReference({ windows, note, maxWindows: MAX_WINDOWS }, submittedAt);
-    const outbound = { reference, submittedAt, windowCount: windows.length, windows, note };
+    const outbound = { reference, submittedAt, windowCount: windows.length, windows, note, transcript };
 
     let forwarded = false;
     // WEBHOOK_URL comes only from our own env, not user input, so this is not an SSRF vector.

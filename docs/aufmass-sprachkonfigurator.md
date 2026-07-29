@@ -10,6 +10,7 @@
 
 1. **🎤 Sprachaufnahme** tippen und Fensterliste einsprechen (oder Mikrofon-Taste der Handy-Tastatur). Android/Chrome am besten; iPhone stoppt evtl. nach Pause → einfach wieder tippen.
 2. **In Fensterliste umwandeln** → KI zeigt zuerst einen kurzen **Fließtext zum Bestätigen**, dann die Tabelle.
+   Die Zusammenfassung lässt sich mit **🔊 Vorlesen** anhören; die optionale Nachricht/Kontakt-Notiz kann über ihr eigenes Mikrofon diktiert werden.
 3. **Prüfen & editieren.** Orange „prüfen"-Zeilen = KI unsicher. Hinweis: **alle** Werte gegenchecken, KI kann sich auch bei unmarkierten verschätzen.
 4. **📄 Dokument-Kopf bearbeiten** (Titel, Firma, Fußzeile) → bestimmt, wie das PDF aussieht.
 5. **Speichern (JSON) / Drucken / Als PDF speichern** oder **Absenden** (Anfrage).
@@ -23,7 +24,8 @@ Eingaben werden **lokal automatisch gespeichert** (überleben Neuladen/Netzausfa
 - **Frontend:** eine statische Seite `public/aufmass.html` (Vanilla JS, kein Framework).
 - **KI-Extraktion:** Primär NVIDIA **Nemotron** (`nvidia/nemotron-3-nano-omni-30b-a3b-reasoning`) über NVIDIA API; automatischer Fallback auf Moonshot **Kimi** (`moonshot-v1-8k`) über `api/aufmass.js` → `src/aufmass/extractWindows.js`.
 - **Feld-Schema (Single Source of Truth):** `src/aufmass/schema.js` treibt Normalizer (`normalizeWindows.js`), KI-Prompt und Tabelle. Format ändern = hier + inline `FIELDS` in der HTML (Drift-Guard-Test sichert Sync).
-- **Absenden:** `api/aufmass-submit.js` — nimmt die Liste an, vergibt Referenz `AUF-…`, leitet an Webhook weiter (siehe Env).
+- **Felder:** Die Liste enthält unter anderem **Teilung** und **Marke/Profil**; bei fehlender Verglasungsangabe gilt **2fach** als Default.
+- **Absenden:** `api/aufmass-submit.js` — nimmt die Liste an, vergibt Referenz `AUF-…`, leitet an Webhook weiter (siehe Env). Der Payload enthält zusätzlich `transcript` (Roh-Diktat, auf 6000 Zeichen gekappt). Die Ticket-/CMS-Seite muss `notiz` und `transcript` bei der Anzeige escapen, da beides Freitext vom Nutzer bzw. LLM enthält.
 - **Rate-Limiting:** In-Memory pro-IP + global (`src/aufmass/rateLimit.js`).
 - **Persistenz:** Browser-`localStorage` (kein Backend/DB).
 
@@ -57,7 +59,7 @@ Optional: `CHECK_LIVE_KI=1 npm run check:live` für einen echten KI-Testcall (ko
 
 ## Offen / nicht in dieser Seite
 
-- **Webdesigner:** Kontaktformular (Name/Mail/Tel), DSGVO-Einwilligung, Mail/Telegram-Anbindung, finales Branding/Logo.
+- **Webdesigner:** Kontaktformular (Name/Mail/Tel), DSGVO-Einwilligung, Mail/Telegram-Anbindung, finales Branding/Logo. Das Rohtranskript wird mitgesendet und kann Namen, Nummern oder Umgebungsgespräche enthalten; deshalb einen Einwilligungs-Hinweis am Mikrofon einplanen.
 - **ITler:** `AUFMASS_TICKET_WEBHOOK` = eure CMS-/Ticket-URL setzen → ab dann echter Versand (UI zeigt automatisch „gesendet").
 - **Vor echtem Kundenstart:** Testphase-Banner oben entfernen (ein `<div class="test-banner">` in `public/aufmass.html`).
 

@@ -15,9 +15,11 @@ const FIELD_DESCRIPTIONS = Object.freeze({
   anzahl: 'Stückzahl. "zwei mal"/"3 Stück" -> anzahl erhöhen, NICHT duplizieren.',
   breiteMm: 'Breite in Millimetern. "1,20 m" / "ein Meter zwanzig" / "120 cm" -> 1200.',
   hoeheMm: 'Höhe in Millimetern, gleiche Umrechnung.',
+  teilung: 'Teilung: "einteilig" bedeutet ein Element; "mehrteilig" bedeutet mehrere Flügel/Elemente, z.B. "zweiflügelig" oder "mit festem Seitenteil". Nur setzen, wenn ausgesprochen, sonst "—".',
   oeffnungsart: '"DK"/"dreh kipp"/"drehkipp"->"Dreh-Kipp"; "festverglast"/"fix"->"Fest".',
   anschlag: '"DIN links"/"DIN rechts" nur wenn eindeutig genannt, sonst "—".',
   material: 'Freier deutscher String, z.B. "Kunststoff","Kunststoff-Aluminium","Aluminium","Holz". "PVC"->"Kunststoff". "" wenn nicht genannt.',
+  marke: 'Marke oder konkretes Profil, z.B. "Veka", "Rehau", "Kömmerling", "Salamander bluEvolution 82". Nur eintragen, wenn genannt, sonst "".',
   verglasung: '"zweifach"->"2fach", "dreifach"->"3fach".',
   farbe: 'Freier deutscher String, z.B. "Weiß","Anthrazit".',
   notiz: 'Wörtliche Restinfo oder Unklarheit, sonst "".',
@@ -147,6 +149,8 @@ Zusätzlich immer ausgeben:
 Regeln:
 - Maße immer ganze Millimeter-Zahlen. Wenn Breite ODER Höhe nicht eindeutig erkennbar: Wert 0 setzen und Grund in notiz vermerken.
 - Denkpausen, Füllwörter und Wiederholungen ignorieren.
+- Sonderform: Nennt das Transkript eine Sonderform (rund, Rundbogen, schräg, Dreieck, Trapez o.ä.), Maße als umschließendes Rechteckmaß eintragen (Durchmesser → Breite UND Höhe) und die Sonderform wörtlich in notiz vermerken (z.B. "Sonderform: rund, Durchmesser 800 mm").
+- Restinfo: Jede Aussage, die keinem Feld zuordenbar ist, wörtlich in notiz des betreffenden Fensters aufnehmen — nichts verwerfen.
 - Nichts erfinden, das nicht im Transkript steht; fehlende Pflichtfelder mit den genannten Standardwerten füllen.
 
 Transkript:

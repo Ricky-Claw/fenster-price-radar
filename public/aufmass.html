@@ -229,17 +229,17 @@
         font-size: 14px;
       }
 
-      #micBtn.recording {
+      .speech-record-button.recording {
         border-color: #d92d20;
         color: #fff;
         background: #d92d20;
       }
 
-      #micBtn.recording:hover:not(:disabled) {
+      .speech-record-button.recording:hover:not(:disabled) {
         background: #b42318;
       }
 
-      #micBtn.recording::before {
+      .speech-record-button.recording::before {
         content: "";
         display: inline-block;
         width: 8px;
@@ -341,7 +341,7 @@
       table {
         width: 100%;
         border-collapse: collapse;
-        min-width: 1180px;
+        min-width: 1360px;
         background: #fff;
       }
 
@@ -401,7 +401,7 @@
         display: none;
       }
 
-      @media (max-width: 720px) {
+      @media screen and (max-width: 720px) {
         main {
           width: min(100% - 18px, 1180px);
           padding-top: 18px;
@@ -414,6 +414,74 @@
 
         h1 {
           font-size: 30px;
+        }
+
+        .table-wrap {
+          overflow-x: visible;
+          border: 0;
+          border-radius: 0;
+        }
+
+        table,
+        tbody {
+          display: block;
+          width: 100%;
+          min-width: 0;
+        }
+
+        thead {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border: 0;
+        }
+
+        tbody tr {
+          display: block;
+          margin-bottom: 14px;
+          overflow: hidden;
+          border: 1px solid var(--line);
+          border-radius: 8px;
+          background: #fff;
+          box-shadow: 0 4px 14px rgba(24, 33, 47, 0.06);
+        }
+
+        tbody tr.needs-review {
+          border-left: 5px solid #f79009;
+        }
+
+        tbody td {
+          display: block;
+          width: 100%;
+          border-bottom: 1px solid var(--line);
+          padding: 10px 12px;
+        }
+
+        tbody td:last-child {
+          border-bottom: 0;
+        }
+
+        tbody td::before {
+          display: block;
+          margin-bottom: 5px;
+          color: var(--muted);
+          content: attr(data-label);
+          font-size: 12px;
+          font-weight: 700;
+        }
+
+        tbody input,
+        tbody select,
+        tbody textarea.field-control,
+        tbody button {
+          width: 100%;
+          min-width: 0;
+          min-height: 44px;
         }
       }
 
@@ -500,13 +568,13 @@
         table {
           min-width: 0;
           border-collapse: collapse;
-          font-size: 9pt;
+          font-size: 8pt;
         }
 
         th,
         td {
           border: 1px solid #777;
-          padding: 5px;
+          padding: 4px;
         }
 
         tbody tr.needs-review {
@@ -578,7 +646,7 @@
         <label for="transcript">Diktiertes Aufmaß</label>
         <textarea id="transcript" placeholder="z.B. Wohnzimmer zwei Fenster ca. 1,20 auf 1,40 Dreh-Kipp weiss Kunststoff dreifach; Bad eins fest 60 auf 40 ..."></textarea>
         <div id="speechControls" class="speech-controls">
-          <button id="micBtn" class="secondary" type="button" aria-label="Sprachaufnahme starten" aria-pressed="false" hidden>🎤 Sprachaufnahme starten</button>
+          <button id="micBtn" class="secondary speech-record-button" type="button" aria-label="Sprachaufnahme starten" aria-pressed="false" hidden>🎤 Sprachaufnahme starten</button>
           <div id="micStatus" class="speech-status" aria-live="polite"></div>
         </div>
         <div class="actions">
@@ -592,6 +660,7 @@
         <div class="actions">
           <button id="confirmSummary" type="button">✓ Bestätigen, Liste anzeigen</button>
           <button id="rejectSummary" class="secondary" type="button">↩ Nochmal diktieren</button>
+          <button id="speakSummary" class="secondary" type="button" hidden>🔊 Vorlesen</button>
         </div>
       </section>
 
@@ -636,6 +705,10 @@
         <div class="submit-note">
           <label for="submitNote">Nachricht / Kontakt (optional)</label>
           <textarea id="submitNote" rows="2" placeholder="z.B. Name, Rückrufnummer oder Anmerkung"></textarea>
+          <div class="speech-controls">
+            <button id="noteMicBtn" class="secondary speech-record-button" type="button" aria-label="Notiz aufsprechen" aria-pressed="false" hidden>🎤 Notiz aufsprechen</button>
+            <div id="noteMicStatus" class="speech-status" aria-live="polite"></div>
+          </div>
         </div>
 
         <div class="table-actions">
@@ -644,6 +717,7 @@
           <button id="printPage" class="secondary" type="button">Drucken</button>
           <button id="savePdf" class="secondary" type="button">Als PDF speichern</button>
           <button id="ticket" type="button">Absenden / Anfrage senden</button>
+          <span id="submitStatus" class="stub-note" role="status" aria-live="polite"></span>
           <span class="stub-note">Tipp: Im Druck-Dialog "Als PDF speichern" als Ziel wählen.</span>
         </div>
 
@@ -660,10 +734,12 @@
           { key: 'anzahl', label: 'Anzahl', control: 'number', default: 1 },
           { key: 'breiteMm', label: 'Breite (mm)', control: 'number', default: 0 },
           { key: 'hoeheMm', label: 'Höhe (mm)', control: 'number', default: 0 },
+          { key: 'teilung', label: 'Teilung', control: 'select', options: ['einteilig', 'mehrteilig', '—'], default: '—' },
           { key: 'oeffnungsart', label: 'Öffnungsart', control: 'select', options: ['Dreh', 'Kipp', 'Dreh-Kipp', 'Fest'], default: 'Dreh-Kipp' },
           { key: 'anschlag', label: 'Anschlag', control: 'select', options: ['DIN links', 'DIN rechts', '—'], default: '—' },
           { key: 'material', label: 'Material', control: 'text', default: '' },
-          { key: 'verglasung', label: 'Verglasung', control: 'select', options: ['2fach', '3fach'], default: '3fach' },
+          { key: 'marke', label: 'Marke/Profil', control: 'text', default: '' },
+          { key: 'verglasung', label: 'Verglasung', control: 'select', options: ['2fach', '3fach'], default: '2fach' },
           { key: 'farbe', label: 'Farbe', control: 'text', default: 'Weiß' },
           { key: 'notiz', label: 'Notiz', control: 'textarea', default: '' },
         ];
@@ -673,11 +749,14 @@
         var convertBtn = document.getElementById('convert');
         var micBtn = document.getElementById('micBtn');
         var micStatus = document.getElementById('micStatus');
+        var noteMicBtn = document.getElementById('noteMicBtn');
+        var noteMicStatus = document.getElementById('noteMicStatus');
         var addRowBtn = document.getElementById('addRow');
         var saveBtn = document.getElementById('saveJson');
         var printBtn = document.getElementById('printPage');
         var savePdfBtn = document.getElementById('savePdf');
         var ticketBtn = document.getElementById('ticket');
+        var submitStatusEl = document.getElementById('submitStatus');
         var submitNoteEl = document.getElementById('submitNote');
         var errorBanner = document.getElementById('errorBanner');
         var warningBanner = document.getElementById('warningBanner');
@@ -686,6 +765,7 @@
         var summaryTextEl = document.getElementById('summaryText');
         var confirmSummaryBtn = document.getElementById('confirmSummary');
         var rejectSummaryBtn = document.getElementById('rejectSummary');
+        var speakSummaryBtn = document.getElementById('speakSummary');
         var draftNote = document.getElementById('draftNote');
         var discardDraftBtn = document.getElementById('discardDraft');
         var docTitle = document.getElementById('docTitle');
@@ -699,8 +779,8 @@
         var printRef = document.getElementById('printRef');
         var printFooter = document.getElementById('printFooter');
         var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-        var recognition = null;
-        var recording = false;
+        var speechInputHandles = [];
+        var summaryUtterance = null;
         var pendingWindows = null;
         var saveTimer;
         var docSaveTimer;
@@ -863,6 +943,7 @@
         }
 
         function hideSummary() {
+          stopSummarySpeech();
           summarySection.hidden = true;
           summaryTextEl.textContent = '';
           pendingWindows = null;
@@ -881,8 +962,9 @@
           return span;
         }
 
-        function appendTextInput(row, key, value, inputType) {
+        function appendTextInput(row, key, label, value, inputType) {
           var cell = document.createElement('td');
+          cell.dataset.label = label;
           var input = document.createElement('input');
           input.className = 'field-control';
           input.dataset.field = key;
@@ -894,8 +976,9 @@
           row.appendChild(cell);
         }
 
-        function appendTextarea(row, key, value) {
+        function appendTextarea(row, key, label, value) {
           var cell = document.createElement('td');
+          cell.dataset.label = label;
           var textarea = document.createElement('textarea');
           textarea.className = 'field-control';
           textarea.dataset.field = key;
@@ -910,8 +993,9 @@
           row.appendChild(cell);
         }
 
-        function appendSelect(row, key, value, options) {
+        function appendSelect(row, key, label, value, options, defaultValue) {
           var cell = document.createElement('td');
+          cell.dataset.label = label;
           var select = document.createElement('select');
           select.className = 'field-control';
           select.dataset.field = key;
@@ -921,7 +1005,7 @@
             option.textContent = optionValue;
             select.appendChild(option);
           });
-          select.value = options.indexOf(value) >= 0 ? value : options[0];
+          select.value = options.indexOf(value) >= 0 ? value : defaultValue;
           cell.appendChild(select);
           cell.appendChild(makePrintValue(select, select.value));
           row.appendChild(cell);
@@ -930,6 +1014,7 @@
         function appendStatus(row, item) {
           var cell = document.createElement('td');
           cell.className = 'review-cell';
+          cell.dataset.label = 'Status';
           if (item.needsReview) {
             var badge = document.createElement('span');
             badge.className = 'badge';
@@ -943,6 +1028,7 @@
         function appendRemove(row) {
           var cell = document.createElement('td');
           cell.className = 'remove-cell';
+          cell.dataset.label = 'Aktion';
           var button = document.createElement('button');
           button.className = 'danger';
           button.type = 'button';
@@ -965,14 +1051,14 @@
           appendStatus(row, data);
           FIELDS.forEach(function (field) {
             if (field.control === 'select') {
-              appendSelect(row, field.key, data[field.key], field.options || []);
+              appendSelect(row, field.key, field.label, data[field.key], field.options || [], field.default);
               return;
             }
             if (field.control === 'textarea') {
-              appendTextarea(row, field.key, data[field.key]);
+              appendTextarea(row, field.key, field.label, data[field.key]);
               return;
             }
-            appendTextInput(row, field.key, data[field.key], field.control === 'number' ? 'number' : 'text');
+            appendTextInput(row, field.key, field.label, data[field.key], field.control === 'number' ? 'number' : 'text');
           });
           appendRemove(row);
           rowsEl.appendChild(row);
@@ -997,6 +1083,7 @@
           oeffnungsart_unklar: 'Wie soll sich das Fenster oeffnen (Dreh-Kipp, Dreh, Kipp oder festverglast)?',
           anschlag_unklar: 'Anschlag links oder rechts (von innen gesehen)?',
           verglasung_unklar: '2-fach oder 3-fach verglast?',
+          teilung_unklar: 'Ist das Fenster einteilig oder mehrteilig?',
           anzahl_unklar: 'Wie viele Fenster dieser Art sind es?',
           anzahl_geklemmt: 'Die Anzahl wirkt ungewoehnlich — bitte bestaetigen oder korrigieren.',
         };
@@ -1006,6 +1093,7 @@
           oeffnungsart: 'oeffnungsart',
           anschlag: 'anschlag',
           verglasung: 'verglasung',
+          teilung: 'teilung',
           anzahl: 'anzahl',
         };
 
@@ -1090,55 +1178,129 @@
             Number(item.hoeheMm) > 0);
         }
 
-        function appendTranscript(text) {
+        function appendTranscript(targetEl, text) {
           var finalText = String(text || '').trim();
           if (!finalText) return;
-          var existingText = transcriptEl.value;
+          var existingText = targetEl.value;
           var spacer = existingText && !/\s$/.test(existingText) ? ' ' : '';
-          transcriptEl.value = existingText + spacer + finalText;
+          targetEl.value = existingText + spacer + finalText;
+          targetEl.dispatchEvent(new Event('input', { bubbles: true }));
         }
 
-        function setMicIdle() {
-          recording = false;
-          micBtn.classList.remove('recording');
-          micBtn.textContent = '🎤 Sprachaufnahme starten';
-          micBtn.setAttribute('aria-label', 'Sprachaufnahme starten');
-          micBtn.setAttribute('aria-pressed', 'false');
-          micStatus.textContent = '';
-        }
-
-        function setMicRecording() {
-          micBtn.classList.add('recording');
-          micBtn.textContent = '⏹ Aufnahme stoppen';
-          micBtn.setAttribute('aria-label', 'Aufnahme stoppen');
-          micBtn.setAttribute('aria-pressed', 'true');
-        }
-
-        function setupSpeechRecognition() {
-          if (!SR) {
-            micStatus.textContent = 'Sprachaufnahme in diesem Browser nicht verfuegbar — bitte die Mikrofon-Taste der Tastatur nutzen.';
+        function stopAllRecording(onAllStopped) {
+          var done = typeof onAllStopped === 'function' ? onAllStopped : function () {};
+          var remaining = speechInputHandles.length;
+          var completed = false;
+          function handleStopped() {
+            if (completed) return;
+            remaining -= 1;
+            if (remaining > 0) return;
+            completed = true;
+            done();
+          }
+          if (!remaining) {
+            completed = true;
+            done();
             return;
+          }
+          speechInputHandles.forEach(function (handle) {
+            handle.stop(handleStopped);
+          });
+        }
+
+        function attachSpeechInput(btn, statusEl, targetEl) {
+          var recognition = null;
+          var recording = false;
+          var recognitionActive = false;
+          var startPending = false;
+          var stopWaiters = [];
+          var idleText = btn.textContent;
+          var idleLabel = btn.getAttribute('aria-label') || idleText;
+
+          function setMicIdle() {
+            recording = false;
+            btn.classList.remove('recording');
+            btn.textContent = idleText;
+            btn.setAttribute('aria-label', idleLabel);
+            btn.setAttribute('aria-pressed', 'false');
+            statusEl.textContent = '';
+          }
+
+          function setMicRecording() {
+            btn.classList.add('recording');
+            btn.textContent = '⏹ Aufnahme stoppen';
+            btn.setAttribute('aria-label', 'Aufnahme stoppen');
+            btn.setAttribute('aria-pressed', 'true');
+          }
+
+          function finishStopWaiters() {
+            var waiters = stopWaiters.splice(0);
+            waiters.forEach(function (done) { done(); });
+          }
+
+          function stop(onStopped) {
+            var callback = typeof onStopped === 'function' ? onStopped : function () {};
+            var callbackCalled = false;
+            var fallbackTimer = null;
+            function done() {
+              if (callbackCalled) return;
+              callbackCalled = true;
+              if (fallbackTimer !== null) {
+                clearTimeout(fallbackTimer);
+                fallbackTimer = null;
+              }
+              callback();
+            }
+            if (!recognitionActive || !recognition) {
+              done();
+              return;
+            }
+            stopWaiters.push(done);
+            fallbackTimer = setTimeout(function () {
+              if (callbackCalled) return;
+              recognitionActive = false;
+              setMicIdle();
+              finishStopWaiters();
+            }, 800);
+            try {
+              recognition.stop();
+            } catch (error) {
+              recognitionActive = false;
+              setMicIdle();
+              finishStopWaiters();
+            }
+          }
+
+          if (!SR) {
+            statusEl.textContent = 'Sprachaufnahme in diesem Browser nicht verfuegbar — bitte die Mikrofon-Taste der Tastatur nutzen.';
+            return { stop: stop, isRecording: function () { return false; } };
           }
 
           recognition = new SR();
           recognition.lang = 'de-DE';
           recognition.continuous = true;
           recognition.interimResults = true;
-          micBtn.hidden = false;
+          btn.hidden = false;
 
-          micBtn.addEventListener('click', function () {
-            if (recording) {
-              recognition.stop();
+          btn.addEventListener('click', function () {
+            if (recognitionActive) {
+              stop();
               return;
             }
-
-            recording = true;
-            setMicRecording();
-            try {
-              recognition.start();
-            } catch (error) {
-              setMicIdle();
-            }
+            if (startPending) return;
+            startPending = true;
+            stopAllRecording(function () {
+              startPending = false;
+              recording = true;
+              recognitionActive = true;
+              setMicRecording();
+              try {
+                recognition.start();
+              } catch (error) {
+                recognitionActive = false;
+                setMicIdle();
+              }
+            });
           });
 
           recognition.onresult = function (event) {
@@ -1148,7 +1310,7 @@
               var result = event.results[i];
               var transcript = result[0] && result[0].transcript ? result[0].transcript : '';
               if (result.isFinal) {
-                appendTranscript(transcript);
+                appendTranscript(targetEl, transcript);
                 hasFinal = true;
               } else {
                 interimText += transcript;
@@ -1156,11 +1318,11 @@
             }
 
             if (hasFinal) {
-              micStatus.textContent = '';
+              statusEl.textContent = '';
             } else if (interimText.trim()) {
-              micStatus.textContent = '… hört zu: ' + interimText.trim();
+              statusEl.textContent = '… hört zu: ' + interimText.trim();
             } else {
-              micStatus.textContent = '';
+              statusEl.textContent = '';
             }
           };
 
@@ -1180,14 +1342,60 @@
           };
 
           recognition.onend = function () {
+            recognitionActive = false;
             setMicIdle();
+            finishStopWaiters();
+          };
+
+          return {
+            stop: stop,
+            isRecording: function () { return recognitionActive; },
           };
         }
 
-        async function convertTranscript() {
-          if (recording && recognition) {
-            try { recognition.stop(); } catch (error) { /* ignore */ }
+        function setSummarySpeechIdle() {
+          summaryUtterance = null;
+          speakSummaryBtn.textContent = '🔊 Vorlesen';
+        }
+
+        function stopSummarySpeech() {
+          if (!('speechSynthesis' in window)) return;
+          window.speechSynthesis.cancel();
+          setSummarySpeechIdle();
+        }
+
+        function setupSummarySpeech() {
+          if (!('speechSynthesis' in window)) {
+            speakSummaryBtn.hidden = true;
+            return;
           }
+          speakSummaryBtn.hidden = false;
+          speakSummaryBtn.addEventListener('click', function () {
+            if (summaryUtterance || window.speechSynthesis.speaking) {
+              stopSummarySpeech();
+              return;
+            }
+            var text = summaryTextEl.textContent.trim();
+            if (!text) return;
+            var utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            utterance.rate = 1.0;
+            utterance.onend = setSummarySpeechIdle;
+            utterance.onerror = setSummarySpeechIdle;
+            summaryUtterance = utterance;
+            speakSummaryBtn.textContent = '⏹ Stopp';
+            window.speechSynthesis.speak(utterance);
+          });
+        }
+
+        async function convertTranscript() {
+          stopAllRecording(function () {
+            if (convertBtn.disabled) return;
+            continueConvertTranscript();
+          });
+        }
+
+        async function continueConvertTranscript() {
           hideBanners();
           hideSummary();
           var transcript = transcriptEl.value.trim();
@@ -1230,7 +1438,27 @@
           }
         }
 
-        async function submitAufmass() {
+        function submitAufmass() {
+          if (ticketBtn.disabled) return;
+          var wasRecording = speechInputHandles.some(function (handle) {
+            return typeof handle.isRecording === 'function' && handle.isRecording();
+          });
+          if (wasRecording) {
+            ticketBtn.disabled = true;
+            ticketBtn.textContent = 'Aufnahme wird beendet …';
+            submitStatusEl.textContent = 'Aufnahme wird beendet …';
+          }
+          stopAllRecording(function () {
+            if (wasRecording) {
+              ticketBtn.disabled = false;
+              ticketBtn.textContent = 'Absenden / Anfrage senden';
+              submitStatusEl.textContent = '';
+            }
+            continueSubmitAufmass();
+          });
+        }
+
+        async function continueSubmitAufmass() {
           var rows = currentRows();
           if (!rows.some(hasSubmitContent)) {
             showBanner(errorBanner, 'Bitte zuerst mindestens ein Fenster erfassen.');
@@ -1253,7 +1481,7 @@
             var response = await fetch('/api/aufmass-submit', {
               method: 'POST',
               headers: { 'content-type': 'application/json' },
-              body: JSON.stringify({ windows: rows, note: submitNoteEl.value }),
+              body: JSON.stringify({ windows: rows, note: submitNoteEl.value, transcript: transcriptEl.value.slice(0, 6000) }),
             });
             var payload = await response.json().catch(function () {
               return null;
@@ -1313,7 +1541,9 @@
 
         renderHeader();
         initDocSettings();
-        setupSpeechRecognition();
+        speechInputHandles.push(attachSpeechInput(micBtn, micStatus, transcriptEl));
+        speechInputHandles.push(attachSpeechInput(noteMicBtn, noteMicStatus, submitNoteEl));
+        setupSummarySpeech();
         [docTitle, docDate, docRef, docCompany, docFooter].forEach(function (field) {
           field.addEventListener('input', function () {
             syncDocPreview();
