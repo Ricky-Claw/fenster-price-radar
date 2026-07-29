@@ -50,6 +50,17 @@ before(async () => {
   await cp(fixtureRoot, temporaryRepo, { recursive: true });
   fixtureTrackedFiles = await listFiles(fixtureRoot);
 
+  const envFixtures = [
+    ['env-tool/.env', 'SECRET=nicht-echt\n'],
+    ['env-tool/.env.example', 'PUBLIC_VALUE=\n'],
+    ['env-example-tool/.env.example', 'PUBLIC_VALUE=\n'],
+  ];
+  for (const [relativePath, content] of envFixtures) {
+    await mkdir(path.dirname(path.join(temporaryRepo, relativePath)), { recursive: true });
+    await writeFile(path.join(temporaryRepo, relativePath), content);
+    if (!fixtureTrackedFiles.includes(relativePath)) fixtureTrackedFiles.push(relativePath);
+  }
+
   const utf16Secret = Buffer.concat([
     Buffer.from([0xff, 0xfe]),
     Buffer.from("export const apiTokenValue = 'ABCDEFGHIJKLMNOPQRSTUVWX';\n", 'utf16le'),
