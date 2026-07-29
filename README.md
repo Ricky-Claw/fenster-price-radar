@@ -90,7 +90,7 @@ Serverseitig vor Produktivbetrieb auf einer fremden Domain: `CHATBOT_ALLOW_ORIGI
 
 MVP-Regel: harte Kontakt-/Eskalationslogik zuerst, danach lokale Wissenssuche aus dem freigegebenen Regelwerk. Kein Zugriff auf Bestellungen, Tickets, Zahlungen oder Lieferstatus.
 
-LLM-Polierung: primär GPT-5.6 Luna (`OPENAI_API_KEY` oder `OPENAI_OAUTH_TOKEN`, optional mit `OPENAI_ACCOUNT_ID`), mit Claude Haiku 4.5 (`CLAUDE_CODE_OAUTH_TOKEN` oder `ANTHROPIC_API_KEY`, OAuth-Token hat Vorrang) als Ausweichpfad; GPT-Ausgabebudget und Denkaufwand sind über `FENSTERSHOP_GPT_MAX_OUTPUT_TOKENS` und `FENSTERSHOP_GPT_REASONING_EFFORT` einstellbar. Ohne Keys bleibt die reine Regelantwort bestehen.
+LLM-Polierung in drei Stufen: zuerst die **Codex-Brücke** (`JANELA_BRIDGE_URL` + `JANELA_BRIDGE_TOKEN`) — ein schmaler Dienst auf dem VPS, der die dort angemeldete Codex-CLI nutzt und damit über das Abo-Kontingent statt über eine API-Abrechnung läuft (Einrichtung: `tools/janela-bridge/README.md`). Dann **GPT-5.6 Luna** (`OPENAI_API_KEY` oder `OPENAI_OAUTH_TOKEN`, optional mit `OPENAI_ACCOUNT_ID`), zuletzt **Claude Haiku 4.5** (`CLAUDE_CODE_OAUTH_TOKEN` oder `ANTHROPIC_API_KEY`, OAuth-Token hat Vorrang). GPT-Ausgabebudget und Denkaufwand sind über `FENSTERSHOP_GPT_MAX_OUTPUT_TOKENS` und `FENSTERSHOP_GPT_REASONING_EFFORT` einstellbar. Ohne Zugang bleibt die reine Regelantwort bestehen. Welcher Anbieter tatsächlich bedient, zeigt `npm run check:llm` (mit `-- --gegen-produktion` gegen die Live-Seite).
 
 Test:
 

@@ -2,6 +2,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { polishFenstershopAnswerClaude } from './claudeClient.js';
 import { polishFenstershopAnswerGpt } from './gptClient.js';
+import { polishFenstershopAnswerCodex } from './codexBridgeClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
 const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', import.meta.url);
@@ -376,15 +377,18 @@ function answerStillSafe(polished, draft) {
   return true;
 }
 
-// GPT-5.6 Luna ist primär, Claude Haiku 4.5 der Ausweichpfad.
-// Ohne Schlüssel bleibt der geprüfte Regel-/RAG-Entwurf ohne KI-Politur stehen.
+// Reihenfolge: Codex-Brücke (VPS-CLI, Abo-Kontingent), dann GPT-5.6 Luna über die
+// öffentliche API, dann Claude Haiku 4.5. Ohne Zugang bleibt der geprüfte
+// Regel-/RAG-Entwurf ohne KI-Politur stehen.
 const LLM_PROVIDERS = [
+  { name: 'codex', polish: polishFenstershopAnswerCodex },
   { name: 'gpt', polish: polishFenstershopAnswerGpt },
   { name: 'claude', polish: polishFenstershopAnswerClaude },
 ];
 
 function llmProviderConfigured(provider, env) {
   if (env.FENSTERSHOP_LLM_ENABLED === '0') return false;
+  if (provider === 'codex') return Boolean(env.JANELA_BRIDGE_URL && env.JANELA_BRIDGE_TOKEN);
   if (provider === 'gpt') return Boolean(env.OPENAI_API_KEY || env.OPENAI_OAUTH_TOKEN);
   if (provider === 'claude') return Boolean(env.CLAUDE_CODE_OAUTH_TOKEN || env.ANTHROPIC_API_KEY);
   return false;

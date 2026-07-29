@@ -152,7 +152,7 @@ await assert.rejects(
     },
   });
   assert.equal(capturedBody.max_output_tokens, 2000);
-  assert.equal(capturedBody.reasoning.effort, 'minimal');
+  assert.equal(capturedBody.reasoning.effort, 'none');
 }
 
 {

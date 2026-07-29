@@ -1,0 +1,40 @@
+[Unit]
+Description=Janela-Bruecke (Codex-CLI als Chatbot-Politur)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=janela
+Group=janela
+WorkingDirectory=/opt/janela-bridge
+ExecStart=/usr/bin/node /opt/janela-bridge/server.mjs
+EnvironmentFile=/etc/janela-bridge.env
+Restart=always
+RestartSec=5
+
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+PrivateDevices=yes
+LockPersonality=yes
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+# Rückfallebenen gegen einen Schub paralleler codex-exec-Prozesse (Prompt-Flut):
+TasksMax=64
+MemoryMax=1500M
+CPUQuota=200%
+# Die Codex-CLI liest ihre Anmeldung aus ~/.codex und legt dort Sitzungsdateien ab,
+# deshalb kein ProtectHome=read-only, sondern gezielter Schreibzugriff nur auf das
+# Home des Dienstnutzers. PrivateTmp deckt das Wegwerf-Arbeitsverzeichnis ab.
+ProtectHome=tmpfs
+BindPaths=/home/janela
+ReadWritePaths=/home/janela
+
+[Install]
+WantedBy=multi-user.target

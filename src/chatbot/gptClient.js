@@ -49,7 +49,9 @@ export async function polishFenstershopAnswerGpt({ message, draft, knowledge = [
         input: prompt,
         max_output_tokens: Number(env.FENSTERSHOP_GPT_MAX_OUTPUT_TOKENS) || 2000,
         reasoning: {
-          effort: env.FENSTERSHOP_GPT_REASONING_EFFORT || 'minimal',
+          // Umformulieren braucht kein Nachdenken. 'minimal' lehnt gpt-5.6-luna mit HTTP 400 ab;
+          // gueltig sind none/low/medium/high/xhigh/max.
+          effort: env.FENSTERSHOP_GPT_REASONING_EFFORT || 'none',
         },
       }),
       signal: controller.signal,

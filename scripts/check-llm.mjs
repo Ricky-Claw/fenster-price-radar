@@ -1,3 +1,4 @@
+import { polishFenstershopAnswerCodex } from '../src/chatbot/codexBridgeClient.js';
 import { polishFenstershopAnswerGpt } from '../src/chatbot/gptClient.js';
 import { polishFenstershopAnswerClaude } from '../src/chatbot/claudeClient.js';
 
@@ -86,6 +87,11 @@ async function checkLocalProvider({ name, configured, polish }) {
 
 async function checkLocal() {
   const providers = [
+    {
+      name: 'codex',
+      configured: reportAccess('codex', ['JANELA_BRIDGE_URL', 'JANELA_BRIDGE_TOKEN']),
+      polish: polishFenstershopAnswerCodex,
+    },
     {
       name: 'gpt',
       configured: reportAccess('gpt', ['OPENAI_API_KEY', 'OPENAI_OAUTH_TOKEN']),
