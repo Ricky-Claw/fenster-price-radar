@@ -77,10 +77,12 @@ function clientIp(req) {
   // so using the last hop makes client-prepended spoofed values ineffective.
   const forwarded = lastForwardedValue(headers['x-forwarded-for']);
   if (forwarded) return forwarded;
-  const real = firstHeaderValue(headers['x-real-ip']);
-  if (typeof real === 'string' && real.trim()) return real.trim();
-  const vercel = lastForwardedValue(headers['x-vercel-forwarded-for']);
-  if (vercel) return vercel;
+  if (process.env.TRUST_PROXY_HEADERS === '1') {
+    const real = firstHeaderValue(headers['x-real-ip']);
+    if (typeof real === 'string' && real.trim()) return real.trim();
+    const vercel = lastForwardedValue(headers['x-vercel-forwarded-for']);
+    if (vercel) return vercel;
+  }
   return req.socket?.remoteAddress || 'unknown';
 }
 
@@ -111,8 +113,8 @@ function createApp(options = {}) {
   const allowOpenCors = !siteOrigins;
   const checkRateLimit = createRateLimiter(80, 60_000);
   const checkLoginRateLimit = createRateLimiter(10, 15 * 60_000);
-  // High global ceiling: bounds distributed password-check abuse without being
-  // part of the normal per-visitor login budget. Only failed logins consume it.
+  // High global ceiling: caps the response budget for mass guessing by changing
+  // further failed-login responses from 401 to 429. Only failures consume it.
   const checkGlobalLoginCost = createRateLimiter(100, 15 * 60_000);
 
   if (!adminToken && !isConfigured() && options.warnOnOpenAdmin !== false) {
@@ -282,23 +284,23 @@ function createApp(options = {}) {
   app.post('/api/login', (req, res) => {
     res.set('cache-control', 'no-store');
     if (!isConfigured()) { res.status(503).json({ error: 'login_not_configured' }); return; }
-    const ip = clientIp(req);
-    if (!checkLoginRateLimit(ip, false)) {
-      res.set('retry-after', String(15 * 60));
-      res.status(429).json({ error: 'too_many_login_attempts' });
-      return;
-    }
     const passwordMatches = checkPassword(req.body && req.body.password);
-    // Ein gültiges Passwort darf nie an einem Zähler scheitern — sonst ist die
-    // Aussperrung des Kunden ein Einzeiler.
+    // Ein gültiges Passwort passiert nie ein Rate-Gate — sonst kann ein Dritter
+    // über einen geteilten Proxy-Key den Kunden aussperren.
     if (passwordMatches) {
+      const ip = clientIp(req);
       checkLoginRateLimit.reset(ip);
       res.set('set-cookie', sessionCookie());
       res.json({ ok: true });
       return;
     }
 
-    checkLoginRateLimit(ip);
+    const ip = clientIp(req);
+    if (!checkLoginRateLimit(ip)) {
+      res.set('retry-after', String(15 * 60));
+      res.status(429).json({ error: 'too_many_login_attempts' });
+      return;
+    }
     const globalCostAvailable = checkGlobalLoginCost('global');
     if (!globalCostAvailable) {
       res.set('retry-after', String(15 * 60));

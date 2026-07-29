@@ -296,49 +296,36 @@ test('password login flow: reject wrong, accept right, cookie grants API access'
   }
 });
 
-test('login counts only failures per proxy-derived client IP and resets after success', async () => {
+test('shared proxy key cannot lock out a valid login and success resets its failure counter', async () => {
   process.env.FENSTER_RADAR_PASSWORD = 'geheim123';
   const appContext = createApp({ dbPath: ':memory:', adminToken: '', webhookUrl: '', warnOnOpenAdmin: false });
   try {
     const wrongBody = { password: 'falsch' };
-    const headersFor = (client) => ({ 'content-type': 'application/json', 'x-real-ip': client });
+    const headersFor = (client) => ({ 'content-type': 'application/json', 'x-forwarded-for': `visitor.invalid, ${client}` });
 
     for (let i = 0; i < 10; i += 1) {
       const response = await appContext.app.inject({
         method: 'POST', url: '/api/login',
-        headers: headersFor('client-a.invalid'), body: wrongBody,
+        headers: headersFor('shared-proxy.invalid'), body: wrongBody,
       });
       assert.equal(response.status, 401);
     }
-    const blockedAttacker = await appContext.app.inject({
+    const blockedFailure = await appContext.app.inject({
       method: 'POST', url: '/api/login',
-      headers: headersFor('client-a.invalid'), body: { password: 'geheim123' },
+      headers: headersFor('shared-proxy.invalid'), body: wrongBody,
     });
-    assert.equal(blockedAttacker.status, 429);
-    assert.equal(blockedAttacker.headers['retry-after'], '900');
+    assert.equal(blockedFailure.status, 429);
+    assert.equal(blockedFailure.headers['retry-after'], '900');
 
-    const independentIp = await appContext.app.inject({
+    const validThroughSharedProxy = await appContext.app.inject({
       method: 'POST', url: '/api/login',
-      headers: headersFor('client-b.invalid'), body: { password: 'geheim123' },
+      headers: headersFor('shared-proxy.invalid'), body: { password: 'geheim123' },
     });
-    assert.equal(independentIp.status, 200);
-
-    for (let i = 0; i < 9; i += 1) {
-      const response = await appContext.app.inject({
-        method: 'POST', url: '/api/login',
-        headers: headersFor('client-c.invalid'), body: wrongBody,
-      });
-      assert.equal(response.status, 401);
-    }
-    const successfulTenthAttempt = await appContext.app.inject({
-      method: 'POST', url: '/api/login',
-      headers: headersFor('client-c.invalid'), body: { password: 'geheim123' },
-    });
-    assert.equal(successfulTenthAttempt.status, 200);
+    assert.equal(validThroughSharedProxy.status, 200);
 
     const wrongAfterReset = await appContext.app.inject({
       method: 'POST', url: '/api/login',
-      headers: headersFor('client-c.invalid'), body: wrongBody,
+      headers: headersFor('shared-proxy.invalid'), body: wrongBody,
     });
     assert.equal(wrongAfterReset.status, 401);
   } finally {
@@ -366,7 +353,18 @@ test('login rate limit uses the last X-Forwarded-For hop despite spoofed prefixe
       assert.equal(response.status, 401);
     }
 
-    const blocked = await appContext.app.inject({
+    const blockedFailure = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/login',
+      headers: {
+        'content-type': 'application/json',
+        'x-forwarded-for': 'another-spoof.invalid, client-1.invalid',
+      },
+      body: { password: 'falsch' },
+    });
+    assert.equal(blockedFailure.status, 429);
+
+    const validLogin = await appContext.app.inject({
       method: 'POST',
       url: '/api/login',
       headers: {
@@ -375,10 +373,72 @@ test('login rate limit uses the last X-Forwarded-For hop despite spoofed prefixe
       },
       body: { password: 'geheim123' },
     });
-    assert.equal(blocked.status, 429);
+    assert.equal(validLogin.status, 200);
   } finally {
     delete process.env.FENSTER_RADAR_PASSWORD;
     appContext.close();
+  }
+});
+
+test('fallback proxy headers require explicit trust', async () => {
+  process.env.FENSTER_RADAR_PASSWORD = 'geheim123';
+  const originalTrust = process.env.TRUST_PROXY_HEADERS;
+  delete process.env.TRUST_PROXY_HEADERS;
+  const untrustedContext = createApp({ dbPath: ':memory:', adminToken: '', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    for (let i = 0; i < 10; i += 1) {
+      const response = await untrustedContext.app.inject({
+        method: 'POST',
+        url: '/api/login',
+        headers: {
+          'content-type': 'application/json',
+          'x-real-ip': `real-${i}.invalid`,
+          'x-vercel-forwarded-for': `vercel-${i}.invalid`,
+        },
+        body: { password: 'falsch' },
+      });
+      assert.equal(response.status, 401);
+    }
+    const sharedSocketBlocked = await untrustedContext.app.inject({
+      method: 'POST',
+      url: '/api/login',
+      headers: {
+        'content-type': 'application/json',
+        'x-real-ip': 'real-new.invalid',
+        'x-vercel-forwarded-for': 'vercel-new.invalid',
+      },
+      body: { password: 'falsch' },
+    });
+    assert.equal(sharedSocketBlocked.status, 429);
+  } finally {
+    untrustedContext.close();
+  }
+
+  process.env.TRUST_PROXY_HEADERS = '1';
+  const trustedContext = createApp({ dbPath: ':memory:', adminToken: '', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    for (let i = 0; i < 11; i += 1) {
+      const realIpResponse = await trustedContext.app.inject({
+        method: 'POST',
+        url: '/api/login',
+        headers: { 'content-type': 'application/json', 'x-real-ip': `trusted-real-${i}.invalid` },
+        body: { password: 'falsch' },
+      });
+      assert.equal(realIpResponse.status, 401);
+
+      const vercelResponse = await trustedContext.app.inject({
+        method: 'POST',
+        url: '/api/login',
+        headers: { 'content-type': 'application/json', 'x-vercel-forwarded-for': `trusted-vercel-${i}.invalid` },
+        body: { password: 'falsch' },
+      });
+      assert.equal(vercelResponse.status, 401);
+    }
+  } finally {
+    if (originalTrust === undefined) delete process.env.TRUST_PROXY_HEADERS;
+    else process.env.TRUST_PROXY_HEADERS = originalTrust;
+    delete process.env.FENSTER_RADAR_PASSWORD;
+    trustedContext.close();
   }
 });
 
@@ -396,7 +456,7 @@ test('valid password succeeds from a fresh client after global failed-login budg
       const response = await appContext.app.inject({
         method: 'POST',
         url: '/api/login',
-        headers: { 'content-type': 'application/json', 'x-real-ip': `attacker-${i}.invalid` },
+        headers: { 'content-type': 'application/json', 'x-forwarded-for': `attacker-${i}.invalid` },
         body: { password: 'falsch' },
       });
       assert.equal(response.status, i < 100 ? 401 : 429);
@@ -405,7 +465,7 @@ test('valid password succeeds from a fresh client after global failed-login budg
     const validLogin = await appContext.app.inject({
       method: 'POST',
       url: '/api/login',
-      headers: { 'content-type': 'application/json', 'x-real-ip': 'fresh-client.invalid' },
+      headers: { 'content-type': 'application/json', 'x-forwarded-for': 'fresh-client.invalid' },
       body: { password: 'geheim123' },
     });
     assert.equal(validLogin.status, 200);

@@ -44,7 +44,7 @@ Der Fensterradar-`middleware.js` nimmt `/rueckhol/*` vom seitenweiten Passwort-G
 
 ```bash
 npm run rueckhol         # aus dem Fensterradar-Repo-Root — Server auf :8080
-npm run rueckhol:test    # 33 Tests (Node Test Runner)
+npm run rueckhol:test    # 34 Tests (Node Test Runner)
 ```
 
 Oder in diesem Ordner: `npm install && npm start` / `npm test`. `better-sqlite3` und
@@ -61,6 +61,7 @@ Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
 | `ADMIN_TOKEN` | Alternativ/zusätzlich: Bearer-Token für API-Zugriff ohne Cookie (Skripte/Seeding) | leer |
 | `SITE_ORIGINS` | JSON `{"siteId":["https://origin",…]}` — CORS-Allowlist der Widget-Endpunkte. **Ungesetzt = allow-all (nur Test!)** | leer |
 | `WEBHOOK_URL` | Push-Kanal: bekommt POST bei jeder Lead-Submission; Pull-Zugriff zusätzlich im Dashboard-Leads-Tab und per CSV-Export | leer |
+| `TRUST_PROXY_HEADERS` | `1` = nach fehlendem `X-Forwarded-For` auch `X-Real-IP` bzw. `X-Vercel-Forwarded-For` vertrauen. Nur setzen, wenn ein eigener Proxy diese Header bereinigt. | aus (sicher) |
 | `DISABLE_DEMO` | `1` = `/demo/*` wird nicht ausgeliefert (Kunden-Produktivbetrieb) | aus |
 
 ## API
@@ -105,8 +106,10 @@ Konkrete Zugangsdaten und Hosts stehen in den privaten Betriebsnotizen (nicht im
 ausschließlich über den Reverse-Proxy erreichbar. Die Zählung pro Besucher verwendet
 den letzten Eintrag in `X-Forwarded-For`, also den vom eigenen Proxy angehängten Hop.
 Voraussetzung ist, dass der Proxy `X-Forwarded-For` anhängt (Caddy tut das
-standardmäßig) und clientseitig gesetzte `X-Real-IP`- sowie
-`X-Vercel-Forwarded-For`-Header entfernt. Beispiel für Caddy:
+standardmäßig). Fehlt dieser Header, wird sicher auf die Socket-Adresse
+zurückgefallen. `X-Real-IP` und `X-Vercel-Forwarded-For` werden nur mit
+`TRUST_PROXY_HEADERS=1` ausgewertet; dann muss der eigene Proxy clientseitig gesetzte
+Werte entfernen. Beispiel für Caddy:
 
 ```caddyfile
 reverse_proxy localhost:<PORT> {
@@ -159,7 +162,7 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 - `widget/cre.js` — Embed-Widget (Shadow DOM, Trigger, Consent, Frequency-Cap, Debug-Modus)
 - `dashboard/` — Kampagnen-Editor mit Live-Vorschau, Auswertung und Leads-Export (mobil-tauglich)
 - `demo/demo-test.html` — Test-Shop (simulierter E-Commerce, Popups feuern live) · `demo/alle-popups.html` — Typen-Galerie
-- `tests/` — 33 Tests insgesamt
+- `tests/` — 34 Tests insgesamt
 - `tests/api.test.js` — API/CRUD, Auth, Rate-Limits und CSV-Export
 - `tests/sanitize.test.js` — Input-, URL- und Formular-Sanitizing
 - `tests/widget.test.js` — Widget-Regressionsguards
