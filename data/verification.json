@@ -1,40 +1,58 @@
 {
   "verifiedAt": "2026-07-31",
-  "samples": 1,
-  "note": "1 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
+  "samples": 5,
+  "note": "5 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
   "verifiedKeys": [
     {
-      "key": "Aluplast|Ideal 4000, 3fach|2000x1900|3fach|Dreh-Kipp + Dreh-Kipp|weiß|2flg_pfosten",
-      "verifiedAt": "2026-07-31T14:54:42.498Z",
+      "key": "Aluplast|Ideal 5000, 2fach|1200x1500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-31T15:15:11.206Z",
       "result": "mismatch",
       "prices": {
-        "dfs": 615.25,
-        "fensterblick": 817.82,
-        "fensterversand": 1177.19
+        "dfs": 307.42,
+        "fensterblick": 392.95,
+        "fensterversand": 311
       }
     },
     {
-      "key": "Aluplast|Ideal 8000, 3fach|2000x1900|3fach|Dreh-Kipp + Dreh-Kipp|weiß|2flg_pfosten",
-      "verifiedAt": "2026-07-31T14:54:42.499Z",
-      "result": "mismatch",
+      "key": "Aluplast|Ideal 5000, 2fach|415x500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-31T15:15:11.207Z",
+      "result": "verified",
       "prices": {
-        "dfs": 799.99,
-        "fensterblick": 928.49,
-        "fensterversand": 1293.24
+        "dfs": 160.9,
+        "fensterversand": 281.24
       }
     },
     {
-      "key": "Gealan|Gealan S8000, 2fach|900x1200|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-31T14:54:42.499Z",
+      "key": "Aluplast|Ideal 8000, 3fach|1400x1300|3fach|Dreh-Kipp + Dreh-Kipp|weiß|2flg_pfosten",
+      "verifiedAt": "2026-07-31T15:15:11.207Z",
+      "result": "verified",
+      "prices": {
+        "dfs": 608.76,
+        "fensterblick": 598.01,
+        "fensterversand": 708.11
+      }
+    },
+    {
+      "key": "Drutex|Iglo Energy Classic, 2fach|1200x1600|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-31T15:15:11.207Z",
       "result": "mismatch",
       "prices": {
-        "dfs": 242.56,
-        "fensterblick": 241.88
+        "dfs": 357.74,
+        "fensterblick": 354.63
+      }
+    },
+    {
+      "key": "Kömmerling|Kömmerling 70, 2fach|400x500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-31T15:15:11.207Z",
+      "result": "verified",
+      "prices": {
+        "dfs": 142.41,
+        "fensterversand": 231.57
       }
     },
     {
       "key": "Kömmerling|Kömmerling 88, 3fach|1500x2000|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-31T14:54:42.499Z",
+      "verifiedAt": "2026-07-31T15:15:11.207Z",
       "result": "verified",
       "prices": {
         "dfs": 999.09,
@@ -42,22 +60,12 @@
       }
     },
     {
-      "key": "Salamander|Salamander 82, 3fach|1100x1500|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-31T14:54:42.499Z",
-      "result": "mismatch",
+      "key": "Salamander|Salamander 82, 2fach|1100x1500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-07-31T15:15:11.207Z",
+      "result": "verified",
       "prices": {
         "dfs": 331.15,
-        "fensterblick": 310.51
-      }
-    },
-    {
-      "key": "Veka|Veka 82 MD, 2fach|900x1300|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-31T14:54:42.499Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 258.22,
-        "fensterblick": 253.48,
-        "fensterversand": 271.1
+        "fensterblick": 309.64
       }
     }
   ]
