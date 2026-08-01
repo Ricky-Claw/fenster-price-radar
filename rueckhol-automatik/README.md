@@ -44,12 +44,13 @@ Der Fensterradar-`middleware.js` nimmt `/rueckhol/*` vom seitenweiten Passwort-G
 
 ```bash
 npm run rueckhol         # aus dem Fensterradar-Repo-Root — Server auf :8080
-npm run rueckhol:test    # 34 Tests (Node Test Runner)
+npm run rueckhol:test    # Node Test Runner
 ```
 
 Oder in diesem Ordner: `npm install && npm start` / `npm test`. `better-sqlite3` und
 `express` sind Node-Stdlib-Shims unter `vendor/` — kein echter Download nötig.
-Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
+Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log). Der
+Verschlüsselungs-Key ist dagegen auch lokal verpflichtend, siehe unten.
 
 ## Env-Variablen
 
@@ -61,8 +62,47 @@ Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
 | `ADMIN_TOKEN` | Alternativ/zusätzlich: Bearer-Token für API-Zugriff ohne Cookie (Skripte/Seeding) | leer |
 | `SITE_ORIGINS` | JSON `{"siteId":["https://origin",…]}` — CORS-Allowlist der Widget-Endpunkte. **Ungesetzt = allow-all (nur Test!)** | leer |
 | `WEBHOOK_URL` | Push-Kanal: bekommt POST bei jeder Lead-Submission; Pull-Zugriff zusätzlich im Dashboard-Leads-Tab und per CSV-Export | leer |
+| `RUECKHOL_DATA_KEY` | Verpflichtender AES-256-GCM-Key für `submissions.payload` und `events.metadata`: exakt 32 Byte, kanonisch Base64-kodiert | **kein Default; Start bricht ohne gültigen Key ab** |
 | `TRUST_PROXY_HEADERS` | `1` = nach fehlendem `X-Forwarded-For` auch `X-Real-IP` bzw. `X-Vercel-Forwarded-For` vertrauen. Nur setzen, wenn ein eigener Proxy diese Header bereinigt. | aus (sicher) |
 | `DISABLE_DEMO` | `1` = `/demo/*` wird nicht ausgeliefert (Kunden-Produktivbetrieb) | aus |
+
+### Verschlüsselungs-Key und Bestandsmigration
+
+Lead-Payloads und Event-Metadaten werden vollständig als AES-256-GCM-Blob gespeichert,
+damit neben `email`, `name` und `message` auch zusätzliche oder künftig hinzukommende
+PII-Felder geschützt sind. Dashboard, Analytics und CSV-Export erhalten nach dem Lesen
+weiterhin normale JSON-Daten. Bestehende unverschlüsselte JSON-Zeilen bleiben lesbar.
+
+Einen neuen Key einmalig erzeugen:
+
+```bash
+openssl rand -base64 32
+```
+
+Die Ausgabe unverändert als `RUECKHOL_DATA_KEY` setzen. Lokal beispielsweise über die
+Shell-Umgebung; auf der VPS als eigene Zeile in der nur für den Dienst lesbaren Datei
+`/etc/rueckhol-automatik/service.env`:
+
+```dotenv
+RUECKHOL_DATA_KEY=<Ausgabe-von-openssl-rand-base64-32>
+```
+
+Den Key sicher außerhalb der VPS sichern. Bei Verlust sind verschlüsselte Daten nicht
+wiederherstellbar; ein anderer Key darf nicht als Ersatz eingesetzt werden. Vor der
+ersten In-place-Migration Dienst stoppen und SQLite-Datei sichern, dann im
+Installationsordner ausführen:
+
+```bash
+set -a
+. /etc/rueckhol-automatik/service.env
+set +a
+npm run migrate:encrypt -- data/conversion-rescue.sqlite
+```
+
+Das Skript verschlüsselt Klartextzeilen in `submissions.payload` und `events.metadata`
+in einer Transaktion, überspringt bereits verschlüsselte Zeilen und kann daher erneut
+ausgeführt werden. Anschließend den Dienst wieder starten. Neue Installationen brauchen
+keine Migration.
 
 ## API
 
@@ -97,6 +137,53 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
   warum kein Popup erscheint (Server nicht erreichbar / CORS / keine aktive Kampagne).
 - Der Server darf tot sein — das Widget schluckt alle Fehler, die Kundenseite bricht nie.
 - `CRE.trigger(id)` respektiert Kampagnen- und Seiten-Deckel; `CRE.triggerTest(id)` umgeht beide ausschließlich für Vorschau-/Testknöpfe. Der 6h-Seiten-Deckel sperrt andere Kampagnen, nicht die zuletzt gezeigte Kampagne mit ihrer eigenen kürzeren Wiederholungszeit.
+
+### Für den Webdesigner der Kundenseite
+
+Zwei Handgriffe, einmalig. Danach ist die Seite fertig und muss nie wieder angefasst
+werden — Kampagnen, Auslöser, Texte, Farben, Logo und Auswertung laufen komplett über
+das Dashboard, ohne Deploy.
+
+**1. Eigene Subdomain des Kunden anlegen**
+
+DNS-A-Record `rueckhol.<kunden-domain>` → IP des Rückhol-Servers. Das TLS-Zertifikat
+holt der Reverse-Proxy automatisch, es ist nichts weiter einzurichten. Grund für die
+eigene Subdomain: Das Widget lädt dann von der Kundendomain, im Quelltext der Seite
+steht kein fremder Firmenname, und der Kunde behält die Hoheit über seine URL.
+
+**2. Eine Zeile ins globale Layout-/Footer-Template**
+
+```html
+<script async src="https://rueckhol.<kunden-domain>/cre.js" data-cre-site="<siteId>"></script>
+```
+
+- Gehört in das Template, das auf **allen** Seiten ausgeliefert wird — ausdrücklich
+  auch Warenkorb, Kasse, Produkt- und Kategorieseiten. Genau dort brechen Käufe ab,
+  dort verdient das Werkzeug sein Geld.
+- `async` — das Script blockiert den Seitenaufbau nicht und lädt nach dem Inhalt.
+- `data-cre-api` kann entfallen, solange Script-Host und API-Host identisch sind
+  (Regelfall bei eigener Subdomain).
+- Einbau über einzelne Seiteninhalte im CMS ist **kein** Ersatz: das erreicht nur
+  Seiten mit HTML-Inhaltsfeld, nicht die Kaufstrecke.
+
+**Falls das Template nicht angefasst werden darf:** Google Tag Manager, ein
+Custom-HTML-Tag mit demselben Script und Trigger „All Pages". Gleichwertig in der
+Wirkung, hängt aber am GTM-Zugang.
+
+**Vorher zu klären:**
+
+- **CSP:** Hat die Seite eine Content-Security-Policy, muss `script-src` die
+  Rückhol-Subdomain erlauben, `connect-src` ebenfalls (das Widget sendet Ereignisse
+  per `sendBeacon`/`fetch` dorthin).
+- **Consent:** Das Widget setzt keine Cookies — der Wiederholungs-Deckel liegt im
+  `localStorage` —, überträgt aber Ereignisdaten. Ob es hinter das Consent-Tool
+  gehört, entscheidet der Datenschutzverantwortliche der Seite.
+- **CORS:** Die Origins der Kundenseite mit und ohne `www.` müssen im
+  `SITE_ORIGINS`-Eintrag des Servers stehen. Das wird serverseitig gesetzt, nicht
+  vom Webdesigner.
+- **Lead-Zustellung:** `WEBHOOK_URL` muss gesetzt sein, sonst erreicht keine
+  Formular-Anfrage den Kunden (die Daten liegen dann nur in der Datenbank). Ebenfalls
+  serverseitig.
 
 ## Betrieb & Update (VPS)
 
@@ -136,9 +223,10 @@ curl -s https://<rueckhol-host>/api/health   # muss ok:true + neue Version zeige
 ```
 
 - Die SQLite-DB liegt in `data/` (gitignored, rsync-excluded) — sie überlebt jedes Code-Update.
-- Schema-Änderungen: aktuell nur additiv per `CREATE TABLE IF NOT EXISTS` — es gibt
-  **keinen Migrationsmechanismus**. Neue Spalten brauchen einen bewussten Migrationsschritt
-  (dokumentieren, bevor 1.x eine Spalte ändert!).
+- Schema-Änderungen: aktuell nur additiv per `CREATE TABLE IF NOT EXISTS`. Das
+  einmalige Verschlüsselungsskript migriert Dateninhalte, ist aber kein allgemeiner
+  Schema-Migrationsmechanismus. Neue Spalten brauchen weiterhin einen bewussten,
+  dokumentierten Migrationsschritt.
 - Monitoring: `GET /api/health` extern anpingen (z.B. Uptime-Robot auf die Direkt-Domain).
 
 ## Multi-Kunde / Vermarktung (v1-Modell)
@@ -170,8 +258,8 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 
 ## Offene Punkte (bewusst, Stand v1.1)
 
-- Leads werden per `WEBHOOK_URL` aktiv an CRM/Zapier/Mail-Bridge gepusht und können
-  im Dashboard-Leads-Tab als JSON/CSV abgerufen werden.
+- Leads werden per `WEBHOOK_URL` aktiv an CRM/Zapier/Mail-Bridge gepusht, at rest
+  verschlüsselt und können im Dashboard-Leads-Tab als JSON/CSV abgerufen werden.
 - Kein DB-Backup-Cron auf der VPS (eine Datei, `data/conversion-rescue.sqlite`).
 - Der Leads-Export enthält personenbezogene Daten: nur zweckgebunden verarbeiten und
   Zugriff, Rechtsgrundlage sowie Aufbewahrungsfrist vor dem Kundenbetrieb klären.
