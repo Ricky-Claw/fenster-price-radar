@@ -138,52 +138,28 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
 - Der Server darf tot sein — das Widget schluckt alle Fehler, die Kundenseite bricht nie.
 - `CRE.trigger(id)` respektiert Kampagnen- und Seiten-Deckel; `CRE.triggerTest(id)` umgeht beide ausschließlich für Vorschau-/Testknöpfe. Der 6h-Seiten-Deckel sperrt andere Kampagnen, nicht die zuletzt gezeigte Kampagne mit ihrer eigenen kürzeren Wiederholungszeit.
 
-### Für den Webdesigner der Kundenseite
+### Einbau ins Kunden-CMS (für den Webdesigner)
 
-Zwei Handgriffe, einmalig. Danach ist die Seite fertig und muss nie wieder angefasst
-werden — Kampagnen, Auslöser, Texte, Farben, Logo und Auswertung laufen komplett über
-das Dashboard, ohne Deploy.
+1. Dieses Script **einmal im globalen Layout/Footer** einbauen, damit es auch auf
+   Produktseiten, Warenkorb und Kasse geladen wird:
 
-**1. Eigene Subdomain des Kunden anlegen**
+   ```html
+   <script async src="https://rueckhol.<kunden-domain>/cre.js" data-cre-site="<siteId>"></script>
+   ```
 
-DNS-A-Record `rueckhol.<kunden-domain>` → IP des Rückhol-Servers. Das TLS-Zertifikat
-holt der Reverse-Proxy automatisch, es ist nichts weiter einzurichten. Grund für die
-eigene Subdomain: Das Widget lädt dann von der Kundendomain, im Quelltext der Seite
-steht kein fremder Firmenname, und der Kunde behält die Hoheit über seine URL.
+2. Falls das globale Template nicht bearbeitet werden kann: denselben Code im Google
+   Tag Manager als Custom-HTML-Tag mit Trigger **„All Pages"** einbauen. Nicht nur in
+   einzelne CMS-Inhaltsseiten einsetzen.
+3. Bei vorhandener Content-Security-Policy die Rückhol-Subdomain unter `script-src`
+   und `connect-src` erlauben.
+4. Auf Staging und anschließend live prüfen: Desktop + Mobil, Produktseite,
+   Warenkorb und Kasse; das Popup darf Layout und Kaufabschluss nicht stören.
 
-**2. Eine Zeile ins globale Layout-/Footer-Template**
-
-```html
-<script async src="https://rueckhol.<kunden-domain>/cre.js" data-cre-site="<siteId>"></script>
-```
-
-- Gehört in das Template, das auf **allen** Seiten ausgeliefert wird — ausdrücklich
-  auch Warenkorb, Kasse, Produkt- und Kategorieseiten. Genau dort brechen Käufe ab,
-  dort verdient das Werkzeug sein Geld.
-- `async` — das Script blockiert den Seitenaufbau nicht und lädt nach dem Inhalt.
-- `data-cre-api` kann entfallen, solange Script-Host und API-Host identisch sind
-  (Regelfall bei eigener Subdomain).
-- Einbau über einzelne Seiteninhalte im CMS ist **kein** Ersatz: das erreicht nur
-  Seiten mit HTML-Inhaltsfeld, nicht die Kaufstrecke.
-
-**Falls das Template nicht angefasst werden darf:** Google Tag Manager, ein
-Custom-HTML-Tag mit demselben Script und Trigger „All Pages". Gleichwertig in der
-Wirkung, hängt aber am GTM-Zugang.
-
-**Vorher zu klären:**
-
-- **CSP:** Hat die Seite eine Content-Security-Policy, muss `script-src` die
-  Rückhol-Subdomain erlauben, `connect-src` ebenfalls (das Widget sendet Ereignisse
-  per `sendBeacon`/`fetch` dorthin).
-- **Consent:** Das Widget setzt keine Cookies — der Wiederholungs-Deckel liegt im
-  `localStorage` —, überträgt aber Ereignisdaten. Ob es hinter das Consent-Tool
-  gehört, entscheidet der Datenschutzverantwortliche der Seite.
-- **CORS:** Die Origins der Kundenseite mit und ohne `www.` müssen im
-  `SITE_ORIGINS`-Eintrag des Servers stehen. Das wird serverseitig gesetzt, nicht
-  vom Webdesigner.
-- **Lead-Zustellung:** `WEBHOOK_URL` muss gesetzt sein, sonst erreicht keine
-  Formular-Anfrage den Kunden (die Daten liegen dann nur in der Datenbank). Ebenfalls
-  serverseitig.
+**Vor dem Livegang serverseitig erledigen:** eigene Rückhol-Subdomain mit HTTPS,
+Kampagne mit passender `siteId`, Shop-Domains mit und ohne `www` in `SITE_ORIGINS`,
+`WEBHOOK_URL` für CRM/Newsletter und `DISABLE_DEMO=1`. Das Widget nutzt keine Cookies,
+aber `localStorage` und Ereignisübertragung; die Einordnung im Consent-Manager muss der
+Datenschutzverantwortliche freigeben.
 
 ## Betrieb & Update (VPS)
 
@@ -250,7 +226,7 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 - `widget/cre.js` — Embed-Widget (Shadow DOM, Trigger, Consent, Frequency-Cap, Debug-Modus)
 - `dashboard/` — Kampagnen-Editor mit Live-Vorschau, Auswertung und Leads-Export (mobil-tauglich)
 - `demo/demo-test.html` — Test-Shop (simulierter E-Commerce, Popups feuern live) · `demo/alle-popups.html` — Typen-Galerie
-- `tests/` — 34 Tests insgesamt
+- `tests/` — 40 Tests insgesamt
 - `tests/api.test.js` — API/CRUD, Auth, Rate-Limits und CSV-Export
 - `tests/sanitize.test.js` — Input-, URL- und Formular-Sanitizing
 - `tests/widget.test.js` — Widget-Regressionsguards
