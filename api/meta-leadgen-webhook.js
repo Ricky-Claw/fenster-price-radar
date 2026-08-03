@@ -80,9 +80,9 @@ function mapLeadToDfsMetaBody(lead, formName) {
     phone: fields.phone_number,
     postCode: fields.post_code,
     hasFensterliste:
-      fields['haben sie schon eine fensterliste oder einen sanierungsplan?'] ||
+      fields['haben_sie_schon_eine_fensterliste_oder_einen_sanierungsplan?'] ||
       undefined,
-    windowCount: fields['wie viele fenster planen sie zu tauschen?'] || undefined,
+    windowCount: fields['wie_viele_fenster_planen_sie_zu_tauschen?'] || undefined,
     submittedAt: lead.created_time,
   };
 }
