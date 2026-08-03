@@ -5,7 +5,6 @@
   "versionFrom": "rueckhol-automatik/package.json",
   "files": [
     "rueckhol-automatik/server/**/*",
-    "rueckhol-automatik/scripts/**/*",
     "rueckhol-automatik/widget/**/*",
     "rueckhol-automatik/dashboard/**/*",
     "rueckhol-automatik/tests/**/*",
@@ -27,11 +26,6 @@
     "76.13.143.100"
   ],
   "envVars": [
-    {
-      "name": "RUECKHOL_DATA_KEY",
-      "required": true,
-      "description": "AES-256-GCM-Key für gespeicherte Lead-Daten; erzeugen mit: openssl rand -base64 32."
-    },
     {
       "name": "FENSTER_RADAR_AUTH_SECRET",
       "required": true,

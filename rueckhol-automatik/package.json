@@ -4,7 +4,6 @@
   "private": true,
   "description": "Standalone Conversion Rescue widget product with Express, SQLite, dashboard, and embeddable popup script.",
   "scripts": {
-    "migrate:encrypt": "node scripts/encrypt-existing-data.js",
     "start": "node server/index.js",
     "test": "node --test"
   },

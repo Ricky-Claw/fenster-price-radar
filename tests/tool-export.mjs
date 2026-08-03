@@ -301,7 +301,6 @@ test('rueckhol-manifest ist strukturell und statisch auflösbar', async () => {
       'FENSTER_RADAR_AUTH_SECRET',
       'FENSTER_RADAR_PASSWORD',
       'PORT',
-      'RUECKHOL_DATA_KEY',
       'SITE_ORIGINS',
       'WEBHOOK_URL',
     ],

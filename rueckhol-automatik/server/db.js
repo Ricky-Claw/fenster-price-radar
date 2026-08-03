@@ -1,7 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const Database = require('better-sqlite3');
-const { createDataEncryption } = require('./lib/data-encryption');
 
 function parseJson(value, fallback) {
   if (!value) return fallback;
@@ -23,40 +22,25 @@ function hydrateCampaign(row) {
   };
 }
 
-function hydrateEvent(row, dataEncryption, onDecryptError) {
+function hydrateEvent(row) {
   if (!row) return null;
-  let metadata;
-  try {
-    metadata = dataEncryption.decryptJson(row.metadata, 'events.metadata', row.site_id);
-  } catch {
-    metadata = {};
-    onDecryptError();
-  }
   return {
     ...row,
-    metadata,
+    metadata: parseJson(row.metadata, {}),
   };
 }
 
-function hydrateSubmission(row, dataEncryption, onDecryptError) {
+function hydrateSubmission(row) {
   if (!row) return null;
-  let payload;
-  try {
-    payload = dataEncryption.decryptJson(row.payload, 'submissions.payload', row.site_id);
-  } catch {
-    payload = {};
-    onDecryptError();
-  }
   return {
     ...row,
-    payload,
+    payload: parseJson(row.payload, {}),
   };
 }
 
 function createDatabase(options = {}) {
   const dbPath = options.dbPath || path.join(process.cwd(), 'data', 'conversion-rescue.sqlite');
   const eventLimit = Number.isFinite(Number(options.eventLimit)) ? Number(options.eventLimit) : 5000;
-  const dataEncryption = createDataEncryption();
   fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
   const db = new Database(dbPath);
@@ -230,7 +214,7 @@ function createDatabase(options = {}) {
       site_id: event.site_id,
       campaign_id: event.campaign_id || '',
       type: event.type,
-      metadata: dataEncryption.encryptJson(event.metadata || {}, 'events.metadata', event.site_id),
+      metadata: JSON.stringify(event.metadata || {}),
       created_at: event.created_at,
     });
     statements.purgeEvents.run({ limit: eventLimit });
@@ -242,7 +226,7 @@ function createDatabase(options = {}) {
       site_id: submission.site_id,
       campaign_id: submission.campaign_id || '',
       kind: submission.kind,
-      payload: dataEncryption.encryptJson(submission.payload || {}, 'submissions.payload', submission.site_id),
+      payload: JSON.stringify(submission.payload || {}),
       created_at: submission.created_at,
     });
   }
@@ -262,21 +246,13 @@ function createDatabase(options = {}) {
     insertSubmission,
     listCampaigns,
     listEvents(siteId = '') {
-      let decryptErrors = 0;
-      const rows = statements.listEvents.all({ site_id: siteId })
-        .map((row) => hydrateEvent(row, dataEncryption, () => { decryptErrors += 1; }));
-      if (decryptErrors) console.warn(`Rueckhol data encryption: events decrypt_error count=${decryptErrors}`);
-      return rows;
+      return statements.listEvents.all({ site_id: siteId }).map(hydrateEvent);
     },
     listSites() {
       return statements.listSites.all();
     },
     listSubmissions(siteId = '') {
-      let decryptErrors = 0;
-      const rows = statements.listSubmissions.all({ site_id: siteId })
-        .map((row) => hydrateSubmission(row, dataEncryption, () => { decryptErrors += 1; }));
-      if (decryptErrors) console.warn(`Rueckhol data encryption: submissions decrypt_error count=${decryptErrors}`);
-      return rows;
+      return statements.listSubmissions.all({ site_id: siteId }).map(hydrateSubmission);
     },
     saveCampaign,
   };
