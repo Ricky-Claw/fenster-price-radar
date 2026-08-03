@@ -1,9 +1,5 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const crypto = require('node:crypto');
-
-process.env.RUECKHOL_DATA_KEY = crypto.randomBytes(32).toString('base64');
-
 const { createApp, createRateLimiter, csvCell } = require('../server/index');
 
 test('CSV cells guard leading tabs independently', () => {

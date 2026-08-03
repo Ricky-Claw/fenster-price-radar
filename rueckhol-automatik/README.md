@@ -44,13 +44,12 @@ Der Fensterradar-`middleware.js` nimmt `/rueckhol/*` vom seitenweiten Passwort-G
 
 ```bash
 npm run rueckhol         # aus dem Fensterradar-Repo-Root — Server auf :8080
-npm run rueckhol:test    # Node Test Runner
+npm run rueckhol:test    # 34 Tests (Node Test Runner)
 ```
 
 Oder in diesem Ordner: `npm install && npm start` / `npm test`. `better-sqlite3` und
 `express` sind Node-Stdlib-Shims unter `vendor/` — kein echter Download nötig.
-Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log). Der
-Verschlüsselungs-Key ist dagegen auch lokal verpflichtend, siehe unten.
+Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
 
 ## Env-Variablen
 
@@ -62,47 +61,8 @@ Verschlüsselungs-Key ist dagegen auch lokal verpflichtend, siehe unten.
 | `ADMIN_TOKEN` | Alternativ/zusätzlich: Bearer-Token für API-Zugriff ohne Cookie (Skripte/Seeding) | leer |
 | `SITE_ORIGINS` | JSON `{"siteId":["https://origin",…]}` — CORS-Allowlist der Widget-Endpunkte. **Ungesetzt = allow-all (nur Test!)** | leer |
 | `WEBHOOK_URL` | Push-Kanal: bekommt POST bei jeder Lead-Submission; Pull-Zugriff zusätzlich im Dashboard-Leads-Tab und per CSV-Export | leer |
-| `RUECKHOL_DATA_KEY` | Verpflichtender AES-256-GCM-Key für `submissions.payload` und `events.metadata`: exakt 32 Byte, kanonisch Base64-kodiert | **kein Default; Start bricht ohne gültigen Key ab** |
 | `TRUST_PROXY_HEADERS` | `1` = nach fehlendem `X-Forwarded-For` auch `X-Real-IP` bzw. `X-Vercel-Forwarded-For` vertrauen. Nur setzen, wenn ein eigener Proxy diese Header bereinigt. | aus (sicher) |
 | `DISABLE_DEMO` | `1` = `/demo/*` wird nicht ausgeliefert (Kunden-Produktivbetrieb) | aus |
-
-### Verschlüsselungs-Key und Bestandsmigration
-
-Lead-Payloads und Event-Metadaten werden vollständig als AES-256-GCM-Blob gespeichert,
-damit neben `email`, `name` und `message` auch zusätzliche oder künftig hinzukommende
-PII-Felder geschützt sind. Dashboard, Analytics und CSV-Export erhalten nach dem Lesen
-weiterhin normale JSON-Daten. Bestehende unverschlüsselte JSON-Zeilen bleiben lesbar.
-
-Einen neuen Key einmalig erzeugen:
-
-```bash
-openssl rand -base64 32
-```
-
-Die Ausgabe unverändert als `RUECKHOL_DATA_KEY` setzen. Lokal beispielsweise über die
-Shell-Umgebung; auf der VPS als eigene Zeile in der nur für den Dienst lesbaren Datei
-`/etc/rueckhol-automatik/service.env`:
-
-```dotenv
-RUECKHOL_DATA_KEY=<Ausgabe-von-openssl-rand-base64-32>
-```
-
-Den Key sicher außerhalb der VPS sichern. Bei Verlust sind verschlüsselte Daten nicht
-wiederherstellbar; ein anderer Key darf nicht als Ersatz eingesetzt werden. Vor der
-ersten In-place-Migration Dienst stoppen und SQLite-Datei sichern, dann im
-Installationsordner ausführen:
-
-```bash
-set -a
-. /etc/rueckhol-automatik/service.env
-set +a
-npm run migrate:encrypt -- data/conversion-rescue.sqlite
-```
-
-Das Skript verschlüsselt Klartextzeilen in `submissions.payload` und `events.metadata`
-in einer Transaktion, überspringt bereits verschlüsselte Zeilen und kann daher erneut
-ausgeführt werden. Anschließend den Dienst wieder starten. Neue Installationen brauchen
-keine Migration.
 
 ## API
 
@@ -199,10 +159,9 @@ curl -s https://<rueckhol-host>/api/health   # muss ok:true + neue Version zeige
 ```
 
 - Die SQLite-DB liegt in `data/` (gitignored, rsync-excluded) — sie überlebt jedes Code-Update.
-- Schema-Änderungen: aktuell nur additiv per `CREATE TABLE IF NOT EXISTS`. Das
-  einmalige Verschlüsselungsskript migriert Dateninhalte, ist aber kein allgemeiner
-  Schema-Migrationsmechanismus. Neue Spalten brauchen weiterhin einen bewussten,
-  dokumentierten Migrationsschritt.
+- Schema-Änderungen: aktuell nur additiv per `CREATE TABLE IF NOT EXISTS` — es gibt
+  **keinen Migrationsmechanismus**. Neue Spalten brauchen einen bewussten Migrationsschritt
+  (dokumentieren, bevor 1.x eine Spalte ändert!).
 - Monitoring: `GET /api/health` extern anpingen (z.B. Uptime-Robot auf die Direkt-Domain).
 
 ## Multi-Kunde / Vermarktung (v1-Modell)
@@ -234,8 +193,8 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 
 ## Offene Punkte (bewusst, Stand v1.1)
 
-- Leads werden per `WEBHOOK_URL` aktiv an CRM/Zapier/Mail-Bridge gepusht, at rest
-  verschlüsselt und können im Dashboard-Leads-Tab als JSON/CSV abgerufen werden.
+- Leads werden per `WEBHOOK_URL` aktiv an CRM/Zapier/Mail-Bridge gepusht und können
+  im Dashboard-Leads-Tab als JSON/CSV abgerufen werden.
 - Kein DB-Backup-Cron auf der VPS (eine Datei, `data/conversion-rescue.sqlite`).
 - Der Leads-Export enthält personenbezogene Daten: nur zweckgebunden verarbeiten und
   Zugriff, Rechtsgrundlage sowie Aufbewahrungsfrist vor dem Kundenbetrieb klären.
