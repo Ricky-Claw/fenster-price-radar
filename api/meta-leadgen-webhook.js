@@ -82,7 +82,10 @@ function mapLeadToDfsMetaBody(lead, formName) {
     hasFensterliste:
       fields['haben_sie_schon_eine_fensterliste_oder_einen_sanierungsplan?'] ||
       undefined,
-    windowCount: fields['wie_viele_fenster_planen_sie_zu_tauschen?'] || undefined,
+    windowCount:
+      fields['anzahl_fenster'] ||
+      fields['wie_viele_fenster_planen_sie_zu_tauschen?'] ||
+      undefined,
     submittedAt: lead.created_time,
   };
 }
