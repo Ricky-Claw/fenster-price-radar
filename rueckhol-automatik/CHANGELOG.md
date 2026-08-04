@@ -3,6 +3,10 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.2.0 — 2026-08-04
+
+- Mehrere Einschlussmuster und Seitenausschlüsse für Kampagnen.
+
 ## 1.1.0 — 2026-07-29
 
 **Neu**

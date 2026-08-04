@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.1.0 (keep in sync with package.json)
+ * Version: 1.2.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -341,8 +341,25 @@
   function matchesPage(c) {
     // '*' is the server/dashboard default for "all pages" — must match everything,
     // not be substring-searched in the URL (that silently killed every auto-trigger).
+    function matchesPattern(pattern, value) {
+      var parts = pattern.split('*');
+      if (parts.length === 1) return value.indexOf(pattern) !== -1;
+      var cursor = 0;
+      for (var i = 0; i < parts.length; i += 1) {
+        var at = value.indexOf(parts[i], cursor);
+        if (at === -1) return false;
+        cursor = at + parts[i].length;
+      }
+      return true;
+    }
+    function matchesAny(patterns) {
+      return patterns.split(',').map(function (pattern) { return pattern.trim(); }).filter(Boolean).some(function (pattern) {
+        return matchesPattern(pattern, location.href) || matchesPattern(pattern, location.pathname);
+      });
+    }
+    if (c.page_exclude && matchesAny(c.page_exclude)) return false;
     if (!c.page_pattern || c.page_pattern === '*') return true;
-    return location.href.indexOf(c.page_pattern) !== -1 || location.pathname.indexOf(c.page_pattern) !== -1;
+    return matchesAny(c.page_pattern);
   }
   function arm(campaigns) {
     var fired = {};

@@ -6,6 +6,24 @@ const path = require('node:path');
 const source = fs.readFileSync(path.join(__dirname, '..', 'widget', 'cre.js'), 'utf8');
 const packageVersion = require('../package.json').version;
 
+function extractMatchesPage() {
+  const start = source.indexOf('function matchesPage(c) {');
+  assert.notEqual(start, -1, 'matchesPage is present');
+  let depth = 0;
+  let end = start;
+  for (; end < source.length; end += 1) {
+    if (source[end] === '{') depth += 1;
+    if (source[end] === '}') {
+      depth -= 1;
+      if (depth === 0) break;
+    }
+  }
+  assert.equal(depth, 0, 'matchesPage function is complete');
+  return source.slice(start, end + 1);
+}
+
+const matchesPage = new Function('location', `return (${extractMatchesPage()});`);
+
 test('widget header version matches package version', () => {
   const headerVersion = source.match(/\* Version:\s*([0-9]+\.[0-9]+\.[0-9]+)/);
   assert.ok(headerVersion, 'widget version header is present');
@@ -34,6 +52,40 @@ test('widget includes site-wide frequency and safe action links', () => {
   assert.match(source, /privacyUrl/);
   assert.match(source, /v\.indexOf\('\\\\'\) !== -1/);
   assert.doesNotMatch(source, /innerHTML\s*=[^;\n]*(?:downloadUrl|privacyUrl)/);
+});
+
+test('widget supports literal, wildcard, comma-separated, and excluding page patterns', () => {
+  assert.match(source, /function matchesPattern\(pattern, value\)/);
+  assert.match(source, /pattern\.split\('\*'\)/);
+  assert.match(source, /patterns\.split\(', '\)|patterns\.split\(','\)/);
+  assert.match(source, /if \(c\.page_exclude && matchesAny\(c\.page_exclude\)\) return false/);
+  assert.match(source, /if \(!c\.page_pattern \|\| c\.page_pattern === '\*'\) return true/);
+  assert.match(source, /value\.indexOf\(pattern\) !== -1/);
+});
+
+test('page patterns work by behavior, including literal matching and exclusion precedence', () => {
+  const page = (href, pathname = href) => ({ href, pathname });
+  const campaign = (page_pattern, page_exclude) => ({ page_pattern, page_exclude });
+  const matches = (location, c) => matchesPage(location)(c);
+
+  assert.equal(matches(page('https://shop.test/konfigurator'), campaign('/konfigurator')), true);
+  assert.equal(matches(page('https://shop.test/checkout'), campaign('/konfigurator')), false);
+  assert.equal(matches(page('https://shop.test/anything'), campaign('*')), true);
+  assert.equal(matches(page('https://shop.test/anything'), campaign(undefined)), true);
+  assert.equal(matches(page('https://shop.test/anything'), campaign('')), true);
+  assert.equal(matches(page('https://shop.test/checkout'), campaign('/warenkorb, /checkout')), true);
+  assert.equal(matches(page('https://shop.test/konfigurator/3'), campaign('/konfigurator/*')), true);
+
+  assert.equal(matches(page('https://shop.test/preis(neu)'), campaign('/preis(neu)')), true);
+  assert.equal(matches(page('https://shop.test/preisneu'), campaign('/preis(neu)')), false);
+  assert.equal(matches(page('https://shop.test/a.b'), campaign('/a.b')), true);
+  assert.equal(matches(page('https://shop.test/axb'), campaign('/a.b')), false);
+  assert.equal(matches(page('https://shop.test/x+y'), campaign('/x+y')), true);
+  assert.equal(matches(page('https://shop.test/xxxy'), campaign('/x+y')), false);
+
+  assert.equal(matches(page('https://shop.test/aaaa'), campaign('/aa*aa')), true);
+  assert.equal(matches(page('https://shop.test/anything'), campaign('*', '/anything')), false);
+  assert.equal(matches(page('https://shop.test/anything'), campaign('*', ' , ')), true);
 });
 
 test('manual production triggers respect caps while test triggers force display', () => {

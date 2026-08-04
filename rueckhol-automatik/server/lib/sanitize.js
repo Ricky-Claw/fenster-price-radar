@@ -258,6 +258,7 @@ const CAMPAIGN_FIELD_ALIASES = [
   ['actionType', 'action_type'],
   ['triggerConfig', 'trigger_config'],
   ['pagePattern', 'page_pattern'],
+  ['pageExclude', 'page_exclude'],
   ['ctaLabel', 'cta_label'],
   ['customCss', 'custom_css'],
   ['siteId', 'site_id'],
@@ -278,6 +279,7 @@ function sanitizeCampaignInput(input = {}, existing = {}) {
   const { actionType, actionConfig } = sanitizeAction(merged.action_type || merged.actionType, merged.action_config || merged.actionConfig);
   const id = cleanId(merged.id || existing.id || cleanText(merged.name || 'conversion-rescue', 80).toLowerCase().replace(/\s+/g, '-') || randomId());
   const pagePattern = cleanText(merged.page_pattern || merged.pagePattern || '', 320);
+  const pageExclude = cleanText(merged.page_exclude || merged.pageExclude || '', 320);
 
   return {
     id,
@@ -290,6 +292,7 @@ function sanitizeCampaignInput(input = {}, existing = {}) {
     action_type: actionType,
     action_config: actionConfig,
     page_pattern: pagePattern || '*',
+    page_exclude: pageExclude,
     headline: cleanText(merged.headline || 'Wait before you leave', 180),
     body: cleanText(merged.body || 'A well-timed offer can rescue the visit.', 700),
     cta_label: cleanText(merged.cta_label || merged.ctaLabel || actionConfig.label || 'Continue', 120),

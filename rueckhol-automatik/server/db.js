@@ -62,6 +62,7 @@ function createDatabase(options = {}) {
       action_type TEXT NOT NULL,
       action_config TEXT NOT NULL,
       page_pattern TEXT NOT NULL,
+      page_exclude TEXT NOT NULL DEFAULT '',
       headline TEXT NOT NULL,
       body TEXT NOT NULL,
       cta_label TEXT NOT NULL,
@@ -90,6 +91,11 @@ function createDatabase(options = {}) {
     );
   `);
 
+  const campaignColumns = db.prepare('PRAGMA table_info(campaigns)').all();
+  if (!campaignColumns.some((column) => column.name === 'page_exclude')) {
+    db.exec("ALTER TABLE campaigns ADD COLUMN page_exclude TEXT NOT NULL DEFAULT ''");
+  }
+
   const statements = {
     upsertSite: db.prepare(`
       INSERT INTO sites (id, name)
@@ -111,10 +117,10 @@ function createDatabase(options = {}) {
     insertCampaign: db.prepare(`
       INSERT INTO campaigns (
         id, site_id, name, enabled, trigger, trigger_config, action_type, action_config,
-        page_pattern, headline, body, cta_label, theme, custom_css, created_at
+        page_pattern, page_exclude, headline, body, cta_label, theme, custom_css, created_at
       ) VALUES (
         @id, @site_id, @name, @enabled, @trigger, @trigger_config, @action_type, @action_config,
-        @page_pattern, @headline, @body, @cta_label, @theme, @custom_css, @created_at
+        @page_pattern, @page_exclude, @headline, @body, @cta_label, @theme, @custom_css, @created_at
       )
     `),
     updateCampaign: db.prepare(`
@@ -127,6 +133,7 @@ function createDatabase(options = {}) {
           action_type = @action_type,
           action_config = @action_config,
           page_pattern = @page_pattern,
+          page_exclude = @page_exclude,
           headline = @headline,
           body = @body,
           cta_label = @cta_label,
@@ -176,6 +183,7 @@ function createDatabase(options = {}) {
       action_type: campaign.action_type,
       action_config: JSON.stringify(campaign.action_config || {}),
       page_pattern: campaign.page_pattern,
+      page_exclude: campaign.page_exclude || '',
       headline: campaign.headline,
       body: campaign.body,
       cta_label: campaign.cta_label,

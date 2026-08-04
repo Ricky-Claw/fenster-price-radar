@@ -167,6 +167,7 @@ function createApp(options = {}) {
       action_type: campaign.action_type,
       action_config: campaign.action_config,
       page_pattern: campaign.page_pattern,
+      page_exclude: campaign.page_exclude,
       headline: campaign.headline,
       body: campaign.body,
       cta_label: campaign.cta_label,

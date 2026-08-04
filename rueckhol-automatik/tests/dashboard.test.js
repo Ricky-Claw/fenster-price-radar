@@ -2,6 +2,7 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const { createApp } = require('../server/index');
 
 const dashboardDir = path.join(__dirname, '..', 'dashboard');
 const html = fs.readFileSync(path.join(dashboardDir, 'index.html'), 'utf8');
@@ -47,4 +48,41 @@ test('Leads renderer ignores stale success and error responses after site change
 test('dashboard rejects lossy download and privacy URLs before saving', () => {
   assert.match(app, /a\.downloadUrl\.indexOf\('\\\\'\) !== -1 \|\| a\.downloadUrl\.length > 500/);
   assert.match(app, /a\.privacyUrl\.indexOf\('\\\\'\) !== -1 \|\| a\.privacyUrl\.length > 500/);
+});
+
+test('public config includes a campaign page exclusion pattern', async () => {
+  const appContext = createApp({
+    dbPath: ':memory:',
+    adminToken: 'test-token',
+    webhookUrl: '',
+    warnOnOpenAdmin: false,
+  });
+
+  try {
+    await appContext.app.inject({
+      method: 'POST',
+      url: '/api/campaigns',
+      headers: {
+        'content-type': 'application/json',
+        authorization: 'Bearer test-token',
+      },
+      body: {
+        siteId: 'config-test',
+        name: 'Excluded page campaign',
+        enabled: true,
+        pageExclude: '/warenkorb',
+      },
+    });
+
+    const configResponse = await appContext.app.inject({
+      method: 'GET',
+      url: '/api/config?siteId=config-test',
+    });
+    assert.equal(configResponse.status, 200);
+    const campaign = configResponse.json().campaigns[0];
+    assert.ok(campaign.page_exclude, 'page_exclude must be present and non-empty');
+    assert.equal(campaign.page_exclude, '/warenkorb');
+  } finally {
+    appContext.close();
+  }
 });

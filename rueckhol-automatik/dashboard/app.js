@@ -74,6 +74,7 @@
       trigger: 'exit_intent', trigger_config: { frequencyHours: 24 },
       action_type: 'coupon', action_config: { code: '', label: 'Code kopieren' },
       page_pattern: '*', headline: '', body: '', cta_label: '',
+      page_exclude: '',
       theme: defaultTheme(), custom_css: '',
     };
   }
@@ -82,6 +83,7 @@
   function writeForm(c) {
     setVal('f-name', c.name); setVal('f-site', c.site_id); setVal('f-sitename', c.site_name);
     setVal('f-pattern', c.page_pattern === '*' ? '' : c.page_pattern); setChk('f-enabled', c.enabled);
+    setVal('f-exclude', c.page_exclude || '');
     // trigger
     var trig = c.trigger || 'exit_intent';
     var radio = $('#triggerChoice input[value="' + trig + '"]'); if (radio) radio.checked = true;
@@ -145,7 +147,7 @@
       id: d.id || '', site_id: v('f-site') || 'default', site_name: v('f-sitename'),
       name: v('f-name') || 'Neue Kampagne', enabled: chk('f-enabled'),
       trigger: trigger, trigger_config: tc, action_type: action, action_config: ac,
-      page_pattern: v('f-pattern') || '*', headline: v('f-headline'), body: v('f-body'), cta_label: cta,
+      page_pattern: v('f-pattern') || '*', page_exclude: v('f-exclude'), headline: v('f-headline'), body: v('f-body'), cta_label: cta,
       theme: {
         name: (d.theme && d.theme.name) || 'Eigen', position: v('f-position') || 'center', colors: colors,
         font_family: v('f-font') || (d.theme && d.theme.font_family) || '',

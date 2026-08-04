@@ -7,9 +7,19 @@ const {
   cleanText,
   cleanUrl,
   sanitizeAction,
+  sanitizeCampaignInput,
   sanitizeSubmission,
   sanitizeTrigger,
 } = require('../server/lib/sanitize');
+
+test('sanitizeCampaignInput cleans page exclusions and supports camelCase', () => {
+  assert.equal(sanitizeCampaignInput({ name: 'Default' }).page_exclude, '');
+  assert.equal(
+    sanitizeCampaignInput({ pageExclude: ' /warenkorb, /kasse ' }).page_exclude,
+    '/warenkorb, /kasse',
+  );
+  assert.equal(sanitizeCampaignInput({ page_exclude: 'x'.repeat(321) }).page_exclude.length, 320);
+});
 
 test('cleanText strips control characters and collapses whitespace', () => {
   assert.equal(cleanText('  hi\u0000\tthere \n friend  ', 40), 'hi there friend');

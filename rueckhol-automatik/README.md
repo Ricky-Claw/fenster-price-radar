@@ -1,4 +1,4 @@
-# Rückhol-Automatik (Conversion Rescue) — v1.1
+# Rückhol-Automatik (Conversion Rescue) — v1.2.0
 
 > **Dies ist die einzige kanonische Quelle dieses Produkts.**
 > Das alte Standalone-Repo `~/conversion-rescue` ist eingefroren (DEPRECATED) und

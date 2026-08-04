@@ -73,8 +73,13 @@
             </div>
             <div class="f">
               <label for="f-pattern">Nur auf Seiten mit …</label>
-              <input type="text" id="f-pattern" maxlength="320" placeholder="* = alle Seiten">
-              <span class="hint">Textstück in der URL, z. B. /checkout. „*“ = überall.</span>
+              <input type="text" id="f-pattern" maxlength="320" placeholder="* = alle Seiten, mehrere Muster mit Komma">
+              <span class="hint">Textstück in der URL, z. B. /checkout; mehrere Muster kommagetrennt. „*“ = überall.</span>
+            </div>
+            <div class="f">
+              <label for="f-exclude">Nicht auf Seiten mit …</label>
+              <input type="text" id="f-exclude" maxlength="320" placeholder="/warenkorb, /kasse">
+              <span class="hint">Diese Seiten werden immer ausgeschlossen.</span>
             </div>
             <div class="f" style="align-self:end">
               <label class="toggle"><input type="checkbox" id="f-enabled"><span class="track"></span><span>Aktiv (wird angezeigt)</span></label>
