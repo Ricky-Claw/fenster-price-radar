@@ -7,7 +7,7 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import {
   radarGetSummary, radarListConfigs, radarGetConfig, radarGetTrend,
-  popupList, popupAnalytics, popupCreate, popupUpdate, popupDelete,
+  popupList, popupAnalytics, popupCreate, popupUpdate, popupDesign, popupDelete,
   dfsChatbotAsk, ebookValidate, ebookStatus,
 } from '../src/mcp/tools.js';
 
@@ -112,6 +112,21 @@ function buildServer() {
       inputSchema: { campaign: z.record(z.any()).describe('Kampagnen-Objekt inkl. id') },
     },
     async ({ campaign }) => run(() => popupUpdate(campaign)));
+
+  server.registerTool('popup_design',
+    {
+      description: 'DFS-Markendesign für Rückhol-Popups: bringt die korrekten Farben, Schrift und das Logo des Deutschen Fenstershops mit. Mit vorschau: true nur ansehen, mit id auf eine Kampagne anwenden oder mit siteId auf alle Kampagnen einer Site.',
+      inputSchema: {
+        variante: z.enum(['blau', 'orange', 'hell']).optional(),
+        id: z.string().optional(),
+        siteId: z.string().optional(),
+        position: z.enum(['center', 'corner', 'bar']).optional(),
+        radius: z.number().min(0).max(32).optional(),
+        mitLogo: z.boolean().optional(),
+        vorschau: z.boolean().optional(),
+      },
+    },
+    async (args) => run(() => popupDesign(args)));
 
   server.registerTool('popup_delete',
     { description: 'Rückhol-Popup löschen (per id).', inputSchema: { id: z.string() } },

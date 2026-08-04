@@ -108,6 +108,48 @@ async function rueckholFetch(method, pathname, { env = process.env, fetchImpl = 
   return data;
 }
 
+const DFS_POPUP_VARIANTS = {
+  blau: {
+    name: 'DFS Blau',
+    colors: {
+      accent: '#003a66',
+      accent_text: '#ffffff',
+      text: '#12212e',
+      muted: '#5b6b7a',
+      surface: '#ffffff',
+      border: '#d7e0e8',
+      backdrop: 'rgba(0,58,102,0.55)',
+    },
+  },
+  orange: {
+    name: 'DFS Orange',
+    colors: {
+      // #c45f00 gives white text approximately 5.1:1 contrast (WCAG AA >= 4.5:1).
+      accent: '#c45f00',
+      accent_text: '#ffffff',
+      text: '#12212e',
+      muted: '#5b6b7a',
+      surface: '#ffffff',
+      border: '#f2ddc4',
+      backdrop: 'rgba(0,58,102,0.55)',
+    },
+  },
+  hell: {
+    name: 'DFS Hell',
+    colors: {
+      accent: '#c45f00',
+      accent_text: '#ffffff',
+      text: '#003a66',
+      muted: '#5b6b7a',
+      surface: '#f5f5f5',
+      border: '#e2e9eb',
+      backdrop: 'rgba(0,58,102,0.5)',
+    },
+  },
+};
+const DFS_POPUP_POSITIONS = new Set(['center', 'corner', 'bar']);
+const DFS_POPUP_LOGO_URL = 'https://deutscher-fenstershop.de/grafik/logo/fenster-online-kaufen-logo.png';
+
 export function popupList({ siteId } = {}, deps = {}) {
   const query = siteId ? `?siteId=${encodeURIComponent(siteId)}` : '';
   return rueckholFetch('GET', `/api/campaigns${query}`, deps);
@@ -121,6 +163,80 @@ export function popupCreate(campaign, deps = {}) {
 export function popupUpdate(campaign, deps = {}) {
   if (!campaign?.id) throw new Error('popup_update braucht eine campaign.id');
   return rueckholFetch('PUT', '/api/campaigns', { ...deps, body: campaign });
+}
+export async function popupDesign({ variante = 'blau', id, siteId, position = 'center', radius = 14, mitLogo = true, vorschau } = {}, deps = {}) {
+  const cleanId = typeof id === 'string' ? id.trim() : id;
+  const cleanSiteId = typeof siteId === 'string' ? siteId.trim() : siteId;
+  if (!Object.prototype.hasOwnProperty.call(DFS_POPUP_VARIANTS, variante)) {
+    throw new Error(`Unbekannte popup_design-Variante "${variante}". Erlaubt sind: blau, orange, hell`);
+  }
+  if (!DFS_POPUP_POSITIONS.has(position)) {
+    throw new Error(`Unbekannte popup_design-Position "${position}". Erlaubt sind: center, corner, bar`);
+  }
+  if (typeof radius !== 'number' || !Number.isInteger(radius) || radius < 0 || radius > 32) {
+    throw new Error('popup_design radius muss eine Ganzzahl zwischen 0 und 32 sein');
+  }
+  if (cleanSiteId === '') throw new Error('popup_design siteId darf nicht leer sein');
+  if (cleanSiteId === '*') throw new Error('popup_design unterstützt keinen siteId-Platzhalter "*"');
+
+  const preset = DFS_POPUP_VARIANTS[variante];
+  const theme = {
+    name: preset.name,
+    position,
+    colors: { ...preset.colors },
+    font_family: 'Arial, Helvetica, sans-serif',
+    radius,
+    logo_url: mitLogo === false ? '' : DFS_POPUP_LOGO_URL,
+    logo_max_height: 44,
+  };
+  const isPreview = vorschau === true || (!cleanId && !cleanSiteId);
+  if (isPreview) return { variante, theme, angewendetAuf: [], vorschau: true };
+
+  const listed = await popupList(cleanId || cleanSiteId ? { siteId: cleanSiteId } : {}, deps);
+  const campaigns = Array.isArray(listed?.campaigns) ? listed.campaigns : [];
+  const campaignSite = (campaign) => campaign?.site_id ?? campaign?.siteId;
+  if (cleanSiteId && campaigns.some((campaign) => campaignSite(campaign) !== cleanSiteId)) {
+    throw new Error(`popup_design: Auflistung enthält eine Kampagne außerhalb von siteId "${cleanSiteId}"`);
+  }
+  let targets = cleanSiteId ? campaigns.filter((campaign) => campaignSite(campaign) === cleanSiteId) : campaigns;
+  if (cleanId) {
+    const campaign = campaigns.find((item) => item?.id === cleanId);
+    if (!campaign) throw new Error(`popup_design: Kampagne mit id "${cleanId}" nicht gefunden`);
+    if (cleanSiteId && campaignSite(campaign) !== cleanSiteId) {
+      throw new Error(`popup_design: Kampagne "${cleanId}" gehört nicht zu siteId "${cleanSiteId}"`);
+    }
+    targets = [campaign];
+  }
+  if (!targets.length) {
+    if (cleanSiteId) throw new Error(`popup_design: keine Kampagne für siteId ${cleanSiteId} gefunden`);
+    throw new Error('popup_design: keine Kampagne gefunden');
+  }
+
+  const sites = Array.isArray(listed?.sites) ? listed.sites : [];
+  const updates = [];
+  for (let index = 0; index < targets.length; index += 3) {
+    const batch = targets.slice(index, index + 3).map(async (campaign) => {
+      const site = sites.find((entry) => (entry?.id ?? entry?.site_id ?? entry?.siteId) === campaignSite(campaign));
+      const body = { id: campaign.id, theme };
+      if (site?.name) body.site_name = site.name;
+      const response = await popupUpdate(body, deps);
+      return { campaign, response };
+    });
+    const settled = await Promise.allSettled(batch);
+    updates.push(...settled.map((result, offset) => result.status === 'fulfilled'
+      ? result.value
+      : { campaign: targets[index + offset], error: result.reason }));
+  }
+  const successful = updates.filter((item) => !item.error);
+  const failed = updates.filter((item) => item.error);
+  const returnedTheme = successful.map((item) => item.response?.campaign?.theme || item.response?.theme).find(Boolean) || theme;
+  return {
+    variante,
+    theme: returnedTheme,
+    angewendetAuf: successful.map((item) => item.campaign.id),
+    ...(failed.length ? { fehlgeschlagen: failed.map((item) => ({ id: item.campaign.id, grund: item.error?.message || String(item.error) })), unvollstaendig: true } : {}),
+    vorschau: false,
+  };
 }
 export function popupDelete({ id } = {}, deps = {}) {
   if (!id) throw new Error('popup_delete braucht eine id');

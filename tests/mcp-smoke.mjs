@@ -8,6 +8,8 @@ process.env.MCP_AGENT_TOKEN = 'test-mcp-token';
 delete process.env.RUECKHOL_ADMIN_TOKEN;
 
 const { default: handler } = await import('../api/mcp.js');
+const { popupDesign } = await import('../src/mcp/tools.js');
+const { sanitizeCampaignInput } = await import('../rueckhol-automatik/server/lib/sanitize.js');
 
 const server = http.createServer((req, res) => handler(req, res));
 await new Promise((resolve) => server.listen(0, resolve));
@@ -27,7 +29,7 @@ await client.connect(transport);
 
 const tools = await client.listTools();
 const names = tools.tools.map((t) => t.name).sort();
-const expected = ['dfs_chatbot_ask', 'ebook_status', 'ebook_validate', 'popup_analytics', 'popup_create', 'popup_delete', 'popup_list', 'popup_update', 'radar_get_config', 'radar_get_summary', 'radar_get_trend', 'radar_list_configs'];
+const expected = ['dfs_chatbot_ask', 'ebook_status', 'ebook_validate', 'popup_analytics', 'popup_create', 'popup_delete', 'popup_design', 'popup_list', 'popup_update', 'radar_get_config', 'radar_get_summary', 'radar_get_trend', 'radar_list_configs'];
 assert.deepEqual(names, expected, `Tool-Liste stimmt nicht: ${names.join(',')}`);
 
 const summary = await client.callTool({ name: 'radar_get_summary', arguments: {} });
@@ -65,6 +67,120 @@ assert.equal(badSlug.isError, true, 'ebook_status mit kaputtem slug muss isError
 const popup = await client.callTool({ name: 'popup_list', arguments: {} });
 assert.equal(popup.isError, true, 'popup_list ohne Token muss isError sein');
 assert.match(popup.content[0].text, /RUECKHOL_ADMIN_TOKEN/, 'nennt fehlende Env');
+
+// 6) popup_design: DFS-Theme vorschauen und gezielt anwenden, ohne Kampagneninhalte zu überschreiben
+const noPopupFetch = async () => { throw new Error('Vorschau darf fetchImpl nicht aufrufen'); };
+const preview = await popupDesign({}, { fetchImpl: noPopupFetch, env: {} });
+assert.deepEqual(preview, {
+  variante: 'blau',
+  theme: {
+    name: 'DFS Blau',
+    position: 'center',
+    colors: {
+      accent: '#003a66',
+      accent_text: '#ffffff',
+      text: '#12212e',
+      muted: '#5b6b7a',
+      surface: '#ffffff',
+      border: '#d7e0e8',
+      backdrop: 'rgba(0,58,102,0.55)',
+    },
+    font_family: 'Arial, Helvetica, sans-serif',
+    radius: 14,
+    logo_url: 'https://deutscher-fenstershop.de/grafik/logo/fenster-online-kaufen-logo.png',
+    logo_max_height: 44,
+  },
+  angewendetAuf: [],
+  vorschau: true,
+});
+
+const orangePreview = await popupDesign({ variante: 'orange' }, { fetchImpl: noPopupFetch, env: {} });
+assert.equal(orangePreview.theme.colors.accent, '#c45f00', 'orange nutzt den kontrasttauglichen DFS-Orangeton');
+
+const existingCampaign = {
+  id: 'kampagne-1',
+  headline: 'Bestehende Überschrift',
+  body: 'Bestehender Text',
+  trigger: 'exit_intent',
+  trigger_config: { frequencyHours: 6 },
+  action_type: 'coupon',
+  action_config: { code: 'BLEIB10' },
+  cta_label: 'Jetzt sichern',
+  page_pattern: '/angebot/*',
+  enabled: true,
+  custom_css: '.popup { color: red; }',
+};
+let storedCampaign = { ...existingCampaign };
+const idRequests = [];
+const popupJsonResponse = (data) => ({
+  ok: true,
+  status: 200,
+  text: async () => JSON.stringify(data),
+});
+const idFetch = async (requestUrl, init = {}) => {
+  const request = {
+    url: String(requestUrl),
+    method: init.method,
+    body: init.body ? JSON.parse(init.body) : undefined,
+  };
+  idRequests.push(request);
+  if (request.method === 'GET') return popupJsonResponse({ campaigns: [storedCampaign] });
+  if (request.method === 'PUT') {
+    storedCampaign = sanitizeCampaignInput(request.body, storedCampaign);
+    return popupJsonResponse({ campaign: storedCampaign });
+  }
+  throw new Error(`Unerwarteter Popup-Aufruf: ${request.method}`);
+};
+const popupDeps = {
+  fetchImpl: idFetch,
+  env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' },
+};
+const applied = await popupDesign({ id: existingCampaign.id }, popupDeps);
+const idUpdates = idRequests.filter((request) => request.method === 'PUT');
+assert.equal(idRequests.filter((request) => request.method === 'GET').length, 1, 'Kampagne wird vor dem Anwenden gelesen');
+assert.equal(idUpdates.length, 1, 'id löst genau ein Update aus');
+assert.deepEqual(Object.keys(idUpdates[0].body).sort(), ['id', 'theme'], 'Update sendet nur id und theme');
+for (const key of ['name', 'position', 'font_family', 'radius', 'logo_url', 'logo_max_height']) {
+  assert.equal(idUpdates[0].body.theme[key], applied.theme[key], `Theme-${key} wird unverändert übernommen`);
+}
+for (const key of ['accent', 'accent_text', 'text', 'muted', 'surface', 'border', 'backdrop']) {
+  assert.equal(idUpdates[0].body.theme.colors[key], applied.theme.colors[key], `Theme-Farbe ${key} wird unverändert übernommen`);
+}
+assert.deepEqual(applied.angewendetAuf, [existingCampaign.id]);
+assert.equal(applied.vorschau, false);
+assert.equal(storedCampaign.headline, existingCampaign.headline, 'Überschrift bleibt erhalten');
+assert.equal(storedCampaign.body, existingCampaign.body, 'Text bleibt erhalten');
+assert.equal(storedCampaign.trigger, existingCampaign.trigger, 'Trigger bleibt erhalten');
+assert.equal(storedCampaign.trigger_config.frequencyHours, existingCampaign.trigger_config.frequencyHours, 'Trigger-Daten bleiben erhalten');
+assert.equal(storedCampaign.action_config.code, 'BLEIB10', 'Aktionsdaten bleiben erhalten');
+for (const field of ['headline', 'body', 'cta_label', 'page_pattern', 'enabled', 'custom_css']) {
+  assert.deepEqual(storedCampaign[field], existingCampaign[field], `${field} bleibt erhalten`);
+}
+
+const siteRequests = [];
+const siteFetch = async (requestUrl, init = {}) => {
+  const url = new URL(requestUrl);
+  const body = init.body ? JSON.parse(init.body) : undefined;
+  siteRequests.push({ url, method: init.method, body });
+  if (init.method === 'GET') {
+    assert.equal(url.searchParams.get('siteId'), 'dfs-shop', 'Site-Filter wird an popup_list übergeben');
+    return popupJsonResponse({ campaigns: [{ id: 'site-kampagne-1', site_id: 'dfs-shop' }, { id: 'site-kampagne-2', site_id: 'dfs-shop' }] });
+  }
+  if (init.method === 'PUT') return popupJsonResponse({ campaign: body });
+  throw new Error(`Unerwarteter Popup-Aufruf: ${init.method}`);
+};
+const siteApplied = await popupDesign({ siteId: 'dfs-shop' }, {
+  fetchImpl: siteFetch,
+  env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' },
+});
+assert.deepEqual(siteApplied.angewendetAuf, ['site-kampagne-1', 'site-kampagne-2']);
+assert.equal(siteRequests.filter((request) => request.method === 'PUT').length, 2, 'siteId aktualisiert jede Kampagne einmal');
+
+await assert.rejects(
+  () => popupDesign({ variante: 'lila' }),
+  /Erlaubt sind: blau, orange, hell/,
+  'unbekannte Variante nennt die erlaubten Werte',
+);
 
 await client.close();
 await new Promise((resolve) => server.close(resolve));
