@@ -4,6 +4,7 @@
 
 import fsSync from 'node:fs';
 import path from 'node:path';
+import { loeseMarkenprofil } from './markenprofile.js';
 
 const RADAR_DATA = 'public/data/price-radar.json';
 const TREND_DATA = 'public/data/price-trend-index.json';
@@ -108,47 +109,7 @@ async function rueckholFetch(method, pathname, { env = process.env, fetchImpl = 
   return data;
 }
 
-const DFS_POPUP_VARIANTS = {
-  blau: {
-    name: 'DFS Blau',
-    colors: {
-      accent: '#003a66',
-      accent_text: '#ffffff',
-      text: '#12212e',
-      muted: '#5b6b7a',
-      surface: '#ffffff',
-      border: '#d7e0e8',
-      backdrop: 'rgba(0,58,102,0.55)',
-    },
-  },
-  orange: {
-    name: 'DFS Orange',
-    colors: {
-      // #c45f00 gives white text approximately 5.1:1 contrast (WCAG AA >= 4.5:1).
-      accent: '#c45f00',
-      accent_text: '#ffffff',
-      text: '#12212e',
-      muted: '#5b6b7a',
-      surface: '#ffffff',
-      border: '#f2ddc4',
-      backdrop: 'rgba(0,58,102,0.55)',
-    },
-  },
-  hell: {
-    name: 'DFS Hell',
-    colors: {
-      accent: '#c45f00',
-      accent_text: '#ffffff',
-      text: '#003a66',
-      muted: '#5b6b7a',
-      surface: '#f5f5f5',
-      border: '#e2e9eb',
-      backdrop: 'rgba(0,58,102,0.5)',
-    },
-  },
-};
 const DFS_POPUP_POSITIONS = new Set(['center', 'corner', 'bar']);
-const DFS_POPUP_LOGO_URL = 'https://deutscher-fenstershop.de/grafik/logo/fenster-online-kaufen-logo.png';
 
 export function popupList({ siteId } = {}, deps = {}) {
   const query = siteId ? `?siteId=${encodeURIComponent(siteId)}` : '';
@@ -164,11 +125,12 @@ export function popupUpdate(campaign, deps = {}) {
   if (!campaign?.id) throw new Error('popup_update braucht eine campaign.id');
   return rueckholFetch('PUT', '/api/campaigns', { ...deps, body: campaign });
 }
-export async function popupDesign({ variante = 'blau', id, siteId, position = 'center', radius = 14, mitLogo = true, vorschau } = {}, deps = {}) {
+export async function popupDesign({ variante = 'blau', id, siteId, position = 'center', radius = 14, mitLogo = true, vorschau, marke = 'dfs', profil } = {}, deps = {}) {
+  const markenprofil = loeseMarkenprofil(marke, profil);
   const cleanId = typeof id === 'string' ? id.trim() : id;
   const cleanSiteId = typeof siteId === 'string' ? siteId.trim() : siteId;
-  if (!Object.prototype.hasOwnProperty.call(DFS_POPUP_VARIANTS, variante)) {
-    throw new Error(`Unbekannte popup_design-Variante "${variante}". Erlaubt sind: blau, orange, hell`);
+  if (!Object.prototype.hasOwnProperty.call(markenprofil.varianten, variante)) {
+    throw new Error(`Unbekannte popup_design-Variante "${variante}". Erlaubt sind: ${Object.keys(markenprofil.varianten).join(', ')}`);
   }
   if (!DFS_POPUP_POSITIONS.has(position)) {
     throw new Error(`Unbekannte popup_design-Position "${position}". Erlaubt sind: center, corner, bar`);
@@ -179,18 +141,18 @@ export async function popupDesign({ variante = 'blau', id, siteId, position = 'c
   if (cleanSiteId === '') throw new Error('popup_design siteId darf nicht leer sein');
   if (cleanSiteId === '*') throw new Error('popup_design unterstützt keinen siteId-Platzhalter "*"');
 
-  const preset = DFS_POPUP_VARIANTS[variante];
+  const preset = markenprofil.varianten[variante];
   const theme = {
     name: preset.name,
     position,
     colors: { ...preset.colors },
-    font_family: 'Arial, Helvetica, sans-serif',
+    font_family: markenprofil.schrift,
     radius,
-    logo_url: mitLogo === false ? '' : DFS_POPUP_LOGO_URL,
+    logo_url: mitLogo === false ? '' : markenprofil.logo,
     logo_max_height: 44,
   };
   const isPreview = vorschau === true || (!cleanId && !cleanSiteId);
-  if (isPreview) return { variante, theme, angewendetAuf: [], vorschau: true };
+  if (isPreview) return { marke, variante, theme, angewendetAuf: [], vorschau: true };
 
   const listed = await popupList(cleanId || cleanSiteId ? { siteId: cleanSiteId } : {}, deps);
   const campaigns = Array.isArray(listed?.campaigns) ? listed.campaigns : [];
@@ -231,6 +193,7 @@ export async function popupDesign({ variante = 'blau', id, siteId, position = 'c
   const failed = updates.filter((item) => item.error);
   const returnedTheme = successful.map((item) => item.response?.campaign?.theme || item.response?.theme).find(Boolean) || theme;
   return {
+    marke,
     variante,
     theme: returnedTheme,
     angewendetAuf: successful.map((item) => item.campaign.id),

@@ -69,7 +69,7 @@ Tools:
 | `radar_get_config` | eine Konfiguration im Detail (key ODER brand+profile+size) | nein |
 | `radar_get_trend` | 3-Monats-Preistrend je Anbieter | nein |
 | `popup_list` | Rückhol-Popups + Sites + Theme-Presets | nein |
-| `popup_design` | DFS-Theme auf Kampagnen anwenden oder vorschauen; ein `siteId`-Aufruf ist eine Massenoperation über alle Kampagnen dieser Site | **ja** |
+| `popup_design` | Mandantenfähiges Marken-Theme anwenden oder vorschauen; `marke` wählt ein registriertes Profil, `profil` erlaubt ein eigenes Profil für nicht registrierte Firmen; DFS ist nur eines von mehreren hinterlegten Profilen. Ein `siteId`-Aufruf ist eine Massenoperation über alle Kampagnen dieser Site | **ja** |
 | `popup_analytics` | Popup-Analytics | nein |
 | `popup_create` / `popup_update` / `popup_delete` | Popup-CRUD | **ja** |
 | `dfs_chatbot_ask` | Frage an den Website-Chatbot von deutscher-fenstershop.de (Janela) | nein (fragt) |

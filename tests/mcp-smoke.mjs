@@ -72,17 +72,18 @@ assert.match(popup.content[0].text, /RUECKHOL_ADMIN_TOKEN/, 'nennt fehlende Env'
 const noPopupFetch = async () => { throw new Error('Vorschau darf fetchImpl nicht aufrufen'); };
 const preview = await popupDesign({}, { fetchImpl: noPopupFetch, env: {} });
 assert.deepEqual(preview, {
+  marke: 'dfs',
   variante: 'blau',
   theme: {
     name: 'DFS Blau',
     position: 'center',
     colors: {
-      accent: '#003a66',
-      accent_text: '#ffffff',
-      text: '#12212e',
-      muted: '#5b6b7a',
-      surface: '#ffffff',
-      border: '#d7e0e8',
+      accent: '#003A66',
+      accent_text: '#FFFFFF',
+      text: '#333333',
+      muted: '#6B7280',
+      surface: '#FFFFFF',
+      border: '#E5E7EB',
       backdrop: 'rgba(0,58,102,0.55)',
     },
     font_family: 'Arial, Helvetica, sans-serif',
@@ -95,7 +96,8 @@ assert.deepEqual(preview, {
 });
 
 const orangePreview = await popupDesign({ variante: 'orange' }, { fetchImpl: noPopupFetch, env: {} });
-assert.equal(orangePreview.theme.colors.accent, '#c45f00', 'orange nutzt den kontrasttauglichen DFS-Orangeton');
+assert.equal(orangePreview.theme.colors.accent, '#F47C26', 'orange nutzt den offiziellen DFS-Orangeton');
+assert.equal(orangePreview.theme.colors.accent_text, '#333333', 'orange nutzt den kontrasttauglichen DFS-Texttoken');
 
 const existingCampaign = {
   id: 'kampagne-1',
@@ -176,11 +178,56 @@ const siteApplied = await popupDesign({ siteId: 'dfs-shop' }, {
 assert.deepEqual(siteApplied.angewendetAuf, ['site-kampagne-1', 'site-kampagne-2']);
 assert.equal(siteRequests.filter((request) => request.method === 'PUT').length, 2, 'siteId aktualisiert jede Kampagne einmal');
 
+for (const invalidSiteId of ['   ', '*']) {
+  let writes = 0;
+  await assert.rejects(() => popupDesign({ siteId: invalidSiteId }, {
+    fetchImpl: async (_url, init = {}) => { if (init.method === 'PUT') writes += 1; throw new Error('darf nicht aufgerufen werden'); },
+    env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' },
+  }), /siteId/);
+  assert.equal(writes, 0, `siteId ${JSON.stringify(invalidSiteId)} darf nicht schreiben`);
+}
+
+const foreignFetch = async (_url, init = {}) => {
+  if (init.method === 'PUT') throw new Error('PUT darf nach fremder Kampagne nicht erfolgen');
+  return popupJsonResponse({ campaigns: [{ id: 'fremd', site_id: 'andere-site' }] });
+};
+await assert.rejects(() => popupDesign({ siteId: 'meine-site' }, { fetchImpl: foreignFetch, env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' } }), /außerhalb von siteId/);
+await assert.rejects(() => popupDesign({ id: 'fremd', siteId: 'meine-site' }, { fetchImpl: foreignFetch, env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' } }), /außerhalb von siteId|gehört nicht zu siteId/);
+
+const massRequests = [];
+const massFetch = async (_url, init = {}) => {
+  const body = init.body ? JSON.parse(init.body) : undefined;
+  massRequests.push({ method: init.method, body });
+  if (init.method === 'GET') return popupJsonResponse({ campaigns: [{ id: 'ok-1', site_id: 'mass-site' }, { id: 'bad-1', site_id: 'mass-site' }, { id: 'ok-2', site_id: 'mass-site' }] });
+  if (body.id === 'bad-1') return { ok: false, status: 500, text: async () => 'kaputt' };
+  return popupJsonResponse({ campaign: body });
+};
+const massApplied = await popupDesign({ siteId: 'mass-site' }, { fetchImpl: massFetch, env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' } });
+assert.deepEqual(massApplied.angewendetAuf.sort(), ['ok-1', 'ok-2']);
+assert.deepEqual(massApplied.fehlgeschlagen.map((item) => item.id), ['bad-1']);
+assert.equal(massApplied.unvollstaendig, true);
+
+let namedBody;
+const namedFetch = async (_url, init = {}) => init.method === 'GET'
+  ? popupJsonResponse({ campaigns: [{ id: 'named', site_id: 'named-site' }], sites: [{ id: 'named-site', name: 'Deutscher Fenstershop' }] })
+  : (namedBody = JSON.parse(init.body), popupJsonResponse({ campaign: namedBody }));
+await popupDesign({ siteId: 'named-site' }, { fetchImpl: namedFetch, env: { RUECKHOL_BASE_URL: 'https://popup.test', RUECKHOL_ADMIN_TOKEN: 'test-token' } });
+assert.equal(namedBody.site_name, 'Deutscher Fenstershop');
+
+await assert.rejects(() => popupDesign({ profil: { name: 'Eigene Firma', schrift: 'Verdana', logo: '', varianten: { eigen: { name: 'Eigen', colors: { accent: 'not-a-color', accent_text: '#FFFFFF', text: '#333333', muted: '#6B7280', surface: '#FFFFFF', border: '#E5E7EB', backdrop: 'rgba(0,0,0,0.5)' } } } } }), /accent.*not-a-color/);
+
 await assert.rejects(
   () => popupDesign({ variante: 'lila' }),
   /Erlaubt sind: blau, orange, hell/,
   'unbekannte Variante nennt die erlaubten Werte',
 );
+
+await assert.rejects(() => popupDesign({ marke: 'unbekannt' }), /Bekannte Kennungen: dfs/);
+const eigenesProfil = { name: 'Eigene Firma', schrift: 'Verdana', logo: '', varianten: { eigen: { name: 'Eigen', colors: { accent: '#123456', accent_text: '#FFFFFF', text: '#333333', muted: '#6B7280', surface: '#FFFFFF', border: '#E5E7EB', backdrop: 'rgba(0,0,0,0.5)' } } } };
+const eigeneVorschau = await popupDesign({ marke: 'dfs', profil: eigenesProfil, variante: 'eigen' }, { fetchImpl: noPopupFetch, env: {} });
+assert.equal(eigeneVorschau.theme.name, 'Eigen');
+await assert.rejects(() => popupDesign({ profil: { name: 'Unvollständig' } }), /schrift/);
+await assert.rejects(() => popupDesign({ profil: eigenesProfil, variante: 'blau' }), /Erlaubt sind: eigen/);
 
 await client.close();
 await new Promise((resolve) => server.close(resolve));

@@ -115,9 +115,11 @@ function buildServer() {
 
   server.registerTool('popup_design',
     {
-      description: 'DFS-Markendesign für Rückhol-Popups: bringt die korrekten Farben, Schrift und das Logo des Deutschen Fenstershops mit. Mit vorschau: true nur ansehen, mit id auf eine Kampagne anwenden oder mit siteId auf alle Kampagnen einer Site.',
+      description: 'Mandantenfähiges Markendesign für Rückhol-Popups: marke wählt ein hinterlegtes Profil (dfs ist eines von mehreren), profil erlaubt ein eigenes Profil für nicht registrierte Firmen. Mit vorschau: true nur ansehen, mit id auf eine Kampagne anwenden oder mit siteId auf alle Kampagnen einer Site.',
       inputSchema: {
-        variante: z.enum(['blau', 'orange', 'hell']).optional(),
+        variante: z.string().optional(),
+        marke: z.string().optional(),
+        profil: z.record(z.any()).optional(),
         id: z.string().optional(),
         siteId: z.string().optional(),
         position: z.enum(['center', 'corner', 'bar']).optional(),
