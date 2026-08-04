@@ -1,0 +1,7 @@
+{
+  "name": "glob-class-tool",
+  "title": "Glob Class Tool",
+  "description": "Negativ-Fixture für Zeichenklassen.",
+  "version": "1.0.0",
+  "files": ["mini-tool/[ab].js"]
+}

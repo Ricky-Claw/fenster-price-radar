@@ -1,6 +1,8 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { polishFenstershopAnswerClaude } from './claudeClient.js';
+import { polishFenstershopAnswerGpt } from './gptClient.js';
+import { polishFenstershopAnswerCodex } from './codexBridgeClient.js';
 
 const KNOWLEDGE_FILE = new URL('../../programmierlogik_chatbot_final_mit_anfrage_status.md', import.meta.url);
 const DFS_KNOWLEDGE_FILE = new URL('../../public/data/dfs-knowledge.json', import.meta.url);
@@ -79,6 +81,15 @@ function hasAny(text, patterns) {
 function hasSensitiveData(text) {
   return /\b(bestell(?:nummer|nr)|auftrags(?:nummer|nr)|ticket|anfrage[-\s]?id|rechnung|iban|adresse|lieferadresse|telefonnummer)\b/i.test(text)
     || /\b\d{5,}\b/.test(text);
+}
+
+function mustSkipLlmForPrivacy(text) {
+  return /\b(bestell(?:nummer|nr)|auftrags(?:nummer|nr)|ticket|anfrage[-\s]?id|rechnung|iban|adresse|lieferadresse|telefonnummer)/i.test(text)
+    || /\b\d{6,}\b/.test(text)
+    || /\b[A-Z]{2}(?:[\s-]*\d){10,}\b/i.test(text)
+    || /\b[\p{L}][\p{L}-]*(?:straße|strasse|str\.|weg|allee|platz|gasse|ring|damm)\s+\d+[a-z]?\b/iu.test(text)
+    || /\b\d(?:[\s/-]*\d){8,}\b/.test(text)
+    || /\b[^\s@]+@[^\s@.]+\.[^\s@]+\b/.test(text);
 }
 
 export function chunkKnowledgeText(raw, { fallbackHeading = 'Wissen', url = '', sourceType = 'firmenwissen', minLength = 60 } = {}) {
@@ -210,6 +221,7 @@ function result({ intent, answer, links = [], contacts = [], confidence = 0.95, 
     ok: true,
     intent,
     action,
+    sensitive,
     answer: sensitive
       ? `${answer}\n\nDatenschutz-Hinweis: Bitte senden Sie Bestellnummern, Adressen, Zahlungsdaten oder Fotos nicht hier im Chat, sondern nur über die genannten E-Mail-Adressen oder Formulare.`
       : answer,
@@ -326,8 +338,8 @@ export function answerFenstershopChatbot({ message = '', extraChunks = [], turn 
 
 const LLM_SAFE_INTENTS = new Set(['knowledge_rag', 'fallback']);
 
-function mustKeepGuardrailDraft(draft) {
-  return !LLM_SAFE_INTENTS.has(draft.intent);
+function mustKeepGuardrailDraft(draft, message) {
+  return mustSkipLlmForPrivacy(message) || !LLM_SAFE_INTENTS.has(draft.intent);
 }
 
 
@@ -365,26 +377,47 @@ function answerStillSafe(polished, draft) {
   return true;
 }
 
-// Nemotron/Moonshot abgeschaltet (Elvis-Wunsch) -- nur noch Claude Haiku 4.5.
-// Schlägt Claude fehl (Auth/Timeout/Guardrail), bleibt der geprüfte Regel-/RAG-
-// Entwurf ohne KI-Politur stehen (llm.used:false) statt eines Fremd-LLM-Fallbacks.
+// Reihenfolge: Codex-Brücke (VPS-CLI, Abo-Kontingent), dann GPT-5.6 Luna über die
+// öffentliche API, dann Claude Haiku 4.5. Ohne Zugang bleibt der geprüfte
+// Regel-/RAG-Entwurf ohne KI-Politur stehen.
 const LLM_PROVIDERS = [
+  { name: 'codex', polish: polishFenstershopAnswerCodex },
+  { name: 'gpt', polish: polishFenstershopAnswerGpt },
   { name: 'claude', polish: polishFenstershopAnswerClaude },
 ];
 
+function llmProviderConfigured(provider, env) {
+  if (env.FENSTERSHOP_LLM_ENABLED === '0') return false;
+  if (provider === 'codex') return Boolean(env.JANELA_BRIDGE_URL && env.JANELA_BRIDGE_TOKEN);
+  if (provider === 'gpt') return Boolean(env.OPENAI_API_KEY || env.OPENAI_OAUTH_TOKEN);
+  if (provider === 'claude') return Boolean(env.CLAUDE_CODE_OAUTH_TOKEN || env.ANTHROPIC_API_KEY);
+  return false;
+}
+
 export async function answerFenstershopChatbotWithLlm({ message = '', extraChunks = [], env = process.env, turn = 0 } = {}) {
   const draft = answerFenstershopChatbot({ message, extraChunks, turn });
-  if (mustKeepGuardrailDraft(draft)) return draft;
+  if (mustKeepGuardrailDraft(draft, message)) return draft;
   const knowledge = retrieveFenstershopKnowledge(message, { limit: 3, extraChunks });
+  const attempts = [];
   for (const provider of LLM_PROVIDERS) {
     let polished;
     try {
       polished = await provider.polish({ message, draft, knowledge, env });
-    } catch {
+    } catch (error) {
+      attempts.push({ provider: provider.name, outcome: 'error' });
+      console.warn(`Fenstershop LLM ${provider.name}: ${error?.message || 'unknown_error'}`);
       continue;
     }
-    if (!polished || !answerStillSafe(polished, draft)) continue;
+    if (!polished) {
+      attempts.push({ provider: provider.name, outcome: llmProviderConfigured(provider.name, env) ? 'no_response' : 'unconfigured' });
+      continue;
+    }
+    if (!answerStillSafe(polished, draft)) {
+      attempts.push({ provider: provider.name, outcome: 'guardrail' });
+      console.warn(`Fenstershop LLM ${provider.name}: guardrail`);
+      continue;
+    }
     return { ...draft, answer: withRequiredRefs(polished.answer, draft), llm: { used: true, provider: provider.name, model: polished.model } };
   }
-  return { ...draft, llm: { used: false, reason: 'all_providers_failed_or_unconfigured' } };
+  return { ...draft, llm: { used: false, reason: 'all_providers_failed_or_unconfigured', attempts } };
 }

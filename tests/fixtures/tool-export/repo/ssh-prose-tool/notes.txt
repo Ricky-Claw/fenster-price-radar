@@ -1,0 +1,2 @@
+Wir nutzen ssh für Deploys.
+Wir nutzen rsync für Deploys.

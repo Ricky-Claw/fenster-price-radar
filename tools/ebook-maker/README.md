@@ -58,13 +58,13 @@ Der Generator prüft die Config hart und bricht mit klaren Fehlermeldungen ab (E
 
 ## Mockbild
 
-Der Generator erzeugt pro Lauf zusätzlich `assets/cover.png` (echtes Cover, A4-Render) und `mockup-prompt.txt`. Das Buch-Vorschaubild entsteht daraus komplett per Codex in einem Durchgang:
+Der Generator erzeugt pro Lauf zusätzlich `assets/cover.png` (echtes Cover, A4-Render) und `mockup-job.json` (JSON-Spec für Codex ImageGen 2). Das Buch-Vorschaubild entsteht daraus komplett per ImageGen 2 in einem Durchgang:
 
 ```bash
-codex exec -i public/ebooks/<slug>/assets/cover.png "$(cat public/ebooks/<slug>/mockup-prompt.txt)"
+codex exec -i public/ebooks/<slug>/assets/cover.png - < public/ebooks/<slug>/mockup-job.json
 ```
 
-Regeln: Text kommt ausschließlich aus dem mitgegebenen Cover — nie nachträglich Text, Overlays oder Badges ergänzen. Abweichender Titeltext = neu generieren, nicht nachbearbeiten. Details: `.claude/skills/dfs-ebook/SKILL.md`.
+Regeln: Das Bild muss durchs Bild-Generierungs-Tool entstehen — Compositing/Textur-Mapping (sharp/Canvas) ist verboten, nur Skalieren auf 1024×1024 erlaubt. Text kommt ausschließlich aus dem mitgegebenen Cover — nie nachträglich Text, Overlays oder Badges ergänzen. Abweichender Titeltext = neu generieren, nicht nachbearbeiten. Details: `.claude/skills/dfs-ebook/SKILL.md`.
 
 Regeln für Agenten: siehe `.claude/skills/dfs-ebook/SKILL.md`.
 

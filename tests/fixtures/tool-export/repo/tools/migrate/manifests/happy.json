@@ -1,0 +1,27 @@
+{
+  "name": "mini-tool",
+  "title": "Mini Tool",
+  "description": "Ein kleines Widget für den Webdesigner.",
+  "versionFrom": "mini-tool/package.json",
+  "files": ["mini-tool/**/*"],
+  "exclude": ["mini-tool/**/*.map"],
+  "envVars": [
+    {
+      "name": "PUBLIC_API_URL",
+      "required": true,
+      "description": "Öffentliche Basis-URL | der API"
+    }
+  ],
+  "modes": {
+    "embed": {
+      "snippet": "<script src=\"https://example.test/widget.js\"></script>",
+      "notes": "Snippet vor dem schließenden body-Tag einfügen."
+    },
+    "selfhost": {
+      "steps": ["Dateien auf den Webspace kopieren.", "Umgebungsvariable setzen."],
+      "notes": "HTTPS verwenden."
+    }
+  },
+  "cmsNotes": ["Als HTML-Block einfügen."],
+  "dsgvoNotes": ["Einwilligungsbedarf vor Veröffentlichung prüfen."]
+}

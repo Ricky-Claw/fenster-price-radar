@@ -1,0 +1,8 @@
+{
+  "name": "forbidden-tool",
+  "title": "Forbidden Tool",
+  "description": "Negativ-Fixture für Manifest-Begriffe.",
+  "version": "1.0.0",
+  "files": ["forbidden-tool/**/*"],
+  "forbiddenTerms": ["internal-host"]
+}

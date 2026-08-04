@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 
 const {
   cleanCsvList,
+  cleanDownloadUrl,
   cleanText,
   cleanUrl,
   sanitizeAction,
@@ -51,6 +52,31 @@ test('sanitizeAction rejects unsafe URLs and keeps abandon-reason options', () =
   assert.equal(action.actionConfig.newTab, true);
   assert.equal(action.actionConfig.reasonPrompt, 'Why leave?');
   assert.deepEqual(action.actionConfig.reasonOptions, ['Too expensive', 'Not ready']);
+});
+
+test('newsletter and contact action URLs only allow HTTPS or root-relative paths', () => {
+  assert.equal(cleanDownloadUrl('https://example.com/freebie.pdf'), 'https://example.com/freebie.pdf');
+  assert.equal(cleanDownloadUrl('/datenschutz'), '/datenschutz');
+  assert.equal(cleanDownloadUrl('/\\evil.com'), '');
+  assert.equal(cleanDownloadUrl('http://example.com/freebie.pdf'), '');
+  assert.equal(cleanDownloadUrl('javascript:alert(1)'), '');
+
+  const newsletter = sanitizeAction('newsletter', {
+    downloadUrl: 'https://example.com/freebie.pdf',
+    privacyUrl: '/datenschutz',
+  });
+  assert.equal(newsletter.actionConfig.downloadUrl, 'https://example.com/freebie.pdf');
+  assert.equal(newsletter.actionConfig.privacyUrl, '/datenschutz');
+
+  const unsafeNewsletter = sanitizeAction('newsletter', {
+    downloadUrl: 'http://example.com/freebie.pdf',
+    privacyUrl: 'javascript:alert(1)',
+  });
+  assert.equal(unsafeNewsletter.actionConfig.downloadUrl, '');
+  assert.equal(unsafeNewsletter.actionConfig.privacyUrl, '');
+
+  const contact = sanitizeAction('contact', { privacyUrl: 'https://example.com/privacy' });
+  assert.equal(contact.actionConfig.privacyUrl, 'https://example.com/privacy');
 });
 
 test('sanitizeSubmission enforces consent and validates emails', () => {

@@ -1,0 +1,7 @@
+{
+  "name": "ssh-host-tool",
+  "title": "SSH Host Tool",
+  "description": "Fixture für ein SSH-Host-Ziel.",
+  "version": "1.0.0",
+  "files": ["ssh-host-tool/**/*"]
+}

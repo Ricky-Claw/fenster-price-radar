@@ -1,4 +1,4 @@
-# Rückhol-Automatik (Conversion Rescue) — v1.0
+# Rückhol-Automatik (Conversion Rescue) — v1.1
 
 > **Dies ist die einzige kanonische Quelle dieses Produkts.**
 > Das alte Standalone-Repo `~/conversion-rescue` ist eingefroren (DEPRECATED) und
@@ -28,7 +28,7 @@ danach nur die Snippet-URLs auf der Kundenseite anpassen.
 
 | Was | Wo |
 |---|---|
-| Server | VPS `nexus-host` (76.13.143.100), systemd-Dienst `rueckhol-automatik`, Port 8791 (nur localhost) |
+| Server | VPS `<VPS-IP>`, systemd-Dienst `rueckhol-automatik`, Port 8791 (nur localhost) |
 | Direkt-Domain | https://rueckhol.schwarzwald-agent.de (Caddy, Auto-TLS) |
 | Kunden-URL | https://fenster-price-radar.vercel.app/rueckhol/* (Vercel-Proxy-Rewrite in `../vercel.json`) |
 | Dashboard | `/dashboard/` — Passwort = `FENSTER_RADAR_PASSWORD` |
@@ -44,7 +44,7 @@ Der Fensterradar-`middleware.js` nimmt `/rueckhol/*` vom seitenweiten Passwort-G
 
 ```bash
 npm run rueckhol         # aus dem Fensterradar-Repo-Root — Server auf :8080
-npm run rueckhol:test    # 12 Tests (node --test)
+npm run rueckhol:test    # 34 Tests (Node Test Runner)
 ```
 
 Oder in diesem Ordner: `npm install && npm start` / `npm test`. `better-sqlite3` und
@@ -60,7 +60,8 @@ Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
 | `FENSTER_RADAR_AUTH_SECRET` | HMAC-Secret für Session-Cookies (Fallback: das Passwort) | leer |
 | `ADMIN_TOKEN` | Alternativ/zusätzlich: Bearer-Token für API-Zugriff ohne Cookie (Skripte/Seeding) | leer |
 | `SITE_ORIGINS` | JSON `{"siteId":["https://origin",…]}` — CORS-Allowlist der Widget-Endpunkte. **Ungesetzt = allow-all (nur Test!)** | leer |
-| `WEBHOOK_URL` | Bekommt POST bei jeder Lead-Submission — **der Weg, wie Leads den Kunden erreichen** | leer |
+| `WEBHOOK_URL` | Push-Kanal: bekommt POST bei jeder Lead-Submission; Pull-Zugriff zusätzlich im Dashboard-Leads-Tab und per CSV-Export | leer |
+| `TRUST_PROXY_HEADERS` | `1` = nach fehlendem `X-Forwarded-For` auch `X-Real-IP` bzw. `X-Vercel-Forwarded-For` vertrauen. Nur setzen, wenn ein eigener Proxy diese Header bereinigt. | aus (sicher) |
 | `DISABLE_DEMO` | `1` = `/demo/*` wird nicht ausgeliefert (Kunden-Produktivbetrieb) | aus |
 
 ## API
@@ -82,6 +83,7 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
 - `GET/POST/PUT/DELETE /api/campaigns` — Kampagnen-CRUD (POST vergibt bei
   Namens-Kollision über Site-Grenzen automatisch eine eindeutige ID)
 - `GET /api/analytics?siteId=X` — Funnel (allTime + last7Days)
+- `GET /api/submissions?site=X[&format=csv]` — Leads als JSON oder CSV-Export
 - `/dashboard/` — UI (nicht eingeloggte Aufrufe → Redirect auf `/login`)
 
 ## Einbau auf einer Kundenseite
@@ -94,14 +96,63 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
 - Fehlersuche: `data-cre-debug="1"` ans Tag → das Widget loggt in der Browser-Konsole,
   warum kein Popup erscheint (Server nicht erreichbar / CORS / keine aktive Kampagne).
 - Der Server darf tot sein — das Widget schluckt alle Fehler, die Kundenseite bricht nie.
+- `CRE.trigger(id)` respektiert Kampagnen- und Seiten-Deckel; `CRE.triggerTest(id)` umgeht beide ausschließlich für Vorschau-/Testknöpfe. Der 6h-Seiten-Deckel sperrt andere Kampagnen, nicht die zuletzt gezeigte Kampagne mit ihrer eigenen kürzeren Wiederholungszeit.
+
+### Einbau ins Kunden-CMS (für den Webdesigner)
+
+1. Dieses Script **einmal im globalen Layout/Footer** einbauen, damit es auch auf
+   Produktseiten, Warenkorb und Kasse geladen wird:
+
+   ```html
+   <script async src="https://rueckhol.<kunden-domain>/cre.js" data-cre-site="<siteId>"></script>
+   ```
+
+2. Falls das globale Template nicht bearbeitet werden kann: denselben Code im Google
+   Tag Manager als Custom-HTML-Tag mit Trigger **„All Pages"** einbauen. Nicht nur in
+   einzelne CMS-Inhaltsseiten einsetzen.
+3. Bei vorhandener Content-Security-Policy die Rückhol-Subdomain unter `script-src`
+   und `connect-src` erlauben.
+4. Auf Staging und anschließend live prüfen: Desktop + Mobil, Produktseite,
+   Warenkorb und Kasse; das Popup darf Layout und Kaufabschluss nicht stören.
+
+**Vor dem Livegang serverseitig erledigen:** eigene Rückhol-Subdomain mit HTTPS,
+Kampagne mit passender `siteId`, Shop-Domains mit und ohne `www` in `SITE_ORIGINS`,
+`WEBHOOK_URL` für CRM/Newsletter und `DISABLE_DEMO=1`. Das Widget nutzt keine Cookies,
+aber `localStorage` und Ereignisübertragung; die Einordnung im Consent-Manager muss der
+Datenschutzverantwortliche freigeben.
 
 ## Betrieb & Update (VPS)
+
+Konkrete Zugangsdaten und Hosts stehen in den privaten Betriebsnotizen (nicht im Repo).
+
+**Client-IP und Rate-Limits:** Der Dienst lauscht nur auf `127.0.0.1` und ist
+ausschließlich über den Reverse-Proxy erreichbar. Die Zählung pro Besucher verwendet
+den letzten Eintrag in `X-Forwarded-For`, also den vom eigenen Proxy angehängten Hop.
+Voraussetzung ist, dass der Proxy `X-Forwarded-For` anhängt (Caddy tut das
+standardmäßig). Fehlt dieser Header, wird sicher auf die Socket-Adresse
+zurückgefallen. `X-Real-IP` und `X-Vercel-Forwarded-For` werden nur mit
+`TRUST_PROXY_HEADERS=1` ausgewertet; dann muss der eigene Proxy clientseitig gesetzte
+Werte entfernen. Beispiel für Caddy:
+
+```caddyfile
+reverse_proxy localhost:<PORT> {
+	header_up -X-Real-IP
+	header_up -X-Vercel-Forwarded-For
+}
+```
+
+Wird der Dienst zusätzlich über einen zweiten Proxy erreicht, etwa den Vercel-Rewrite
+`/rueckhol/*`, sehen alle Besucher dieses Wegs denselben letzten Hop und teilen sich
+einen Zähler. Für den produktiven Widget-Betrieb deshalb die Direkt-Domain verwenden;
+der Proxy-Pfad ist für Tests gedacht. Ein gültiges Dashboard-Passwort wird nie von
+einem Zähler blockiert: Nur Fehlversuche zählen, damit niemand den Kunden aussperren
+kann.
 
 ```bash
 # Deploy/Update vom kanonischen Stand (data/ NIE mitkopieren — dort lebt die Kunden-DB):
 rsync -az --delete --exclude='.git' --exclude='node_modules' --exclude='data' --exclude='.DS_Store' \
-  ./ root@76.13.143.100:/opt/rueckhol-automatik/
-ssh root@76.13.143.100 'chown -R fensterradar:fensterradar /opt/rueckhol-automatik \
+  ./ <BENUTZER>@<VPS-IP>:/opt/rueckhol-automatik/
+ssh <BENUTZER>@<VPS-IP> 'chown -R fensterradar:fensterradar /opt/rueckhol-automatik \
   && sudo -u fensterradar bash -c "cd /opt/rueckhol-automatik && npm install --no-audit --no-fund && npm test" \
   && systemctl restart rueckhol-automatik'
 curl -s https://<rueckhol-host>/api/health   # muss ok:true + neue Version zeigen
@@ -132,15 +183,21 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 - `server/lib/analytics.js` — Funnel-Auswertung
 - `server/db.js` — SQLite-Schema + Queries (`data/conversion-rescue.sqlite`)
 - `widget/cre.js` — Embed-Widget (Shadow DOM, Trigger, Consent, Frequency-Cap, Debug-Modus)
-- `dashboard/` — Kampagnen-Editor mit Live-Vorschau + Auswertung (mobil-tauglich)
+- `dashboard/` — Kampagnen-Editor mit Live-Vorschau, Auswertung und Leads-Export (mobil-tauglich)
 - `demo/demo-test.html` — Test-Shop (simulierter E-Commerce, Popups feuern live) · `demo/alle-popups.html` — Typen-Galerie
-- `tests/` — 12 Tests: API/CRUD, Preflight-Regression, Auth-Flow, Slug-Kollision, Sanitize, Analytics
+- `tests/` — 40 Tests insgesamt
+- `tests/api.test.js` — API/CRUD, Auth, Rate-Limits und CSV-Export
+- `tests/sanitize.test.js` — Input-, URL- und Formular-Sanitizing
+- `tests/widget.test.js` — Widget-Regressionsguards
+- `tests/dashboard.test.js` — Dashboard- und Leads-Renderer-Regressionsguards
 
-## Offene Punkte (bewusst, Stand v1.0)
+## Offene Punkte (bewusst, Stand v1.1)
 
-- **Leads erreichen den Kunden nur über `WEBHOOK_URL`** (kein Posteingang im Dashboard,
-  kein Export). Vor echtem Kundenbetrieb: Webhook auf CRM/Zapier/Mail-Bridge zeigen lassen.
+- Leads werden per `WEBHOOK_URL` aktiv an CRM/Zapier/Mail-Bridge gepusht und können
+  im Dashboard-Leads-Tab als JSON/CSV abgerufen werden.
 - Kein DB-Backup-Cron auf der VPS (eine Datei, `data/conversion-rescue.sqlite`).
-- Kein Rate-Limit auf `/api/login` (Events haben eins).
-- DSGVO-Werkzeuge (Löschung/Export/Aufbewahrung) fehlen — Integrator-/v2-Thema.
+- Der Leads-Export enthält personenbezogene Daten: nur zweckgebunden verarbeiten und
+  Zugriff, Rechtsgrundlage sowie Aufbewahrungsfrist vor dem Kundenbetrieb klären.
+- DSGVO-Export ist vorhanden; Löschung und automatisierte Aufbewahrung bleiben
+  Integrator-/v2-Themen.
 - Finales Popup-Design macht der Webdesigner des Kunden (Beispiel-Themes blau/orange).

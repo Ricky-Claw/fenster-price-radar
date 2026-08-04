@@ -2,6 +2,7 @@ import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { validateConfig } from './lib/validate.mjs';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const baseEbookDir = path.join(repoRoot, 'public/ebooks/ruhiges-heimspiel');
@@ -18,145 +19,8 @@ const outDir = path.resolve(argValue('--out', path.join(repoRoot, 'public/ebooks
 
 // ---------------------------------------------------------------------------
 // Validierung — bricht ab, bevor ein unsauberes E-Book entsteht.
-// Limits sind aus dem A4-Layout in styles.css abgeleitet (feste Seitenhöhe 297mm).
+// Regeln geteilt mit MCP-Tool ebook_validate: tools/ebook-maker/lib/validate.mjs
 // ---------------------------------------------------------------------------
-
-const LIMITS = {
-  title: 60,
-  subtitle: 90,
-  claim: 200,
-  kicker: 40,
-  topics: { max: 4, chars: 24 },
-  page: { label: 24, title: 60, lead: 260, blocksMax: 3 },
-  cards: { items: 3, title: 40, text: 150 },
-  checklist: { min: 3, max: 8, chars: 90 },
-  timeline: { items: 3, title: 40, text: 140 },
-  table: { headersMin: 2, headersMax: 4, rowsMax: 7, cell: 60 },
-  note: 220,
-  text: 400,
-  cta: { title: 60, text: 300, buttonText: 60, contactsMax: 3 },
-};
-
-// ponytail: grobe mm-Schätzung pro Block; Ground Truth ist der PDF-Seitenzahl-Check unten.
-const HEIGHT_BUDGET_MM = 235;
-const HEAD_MM = 70; // Label + h2 + Lead
-const BLOCK_GAP_MM = 9;
-
-function blockHeightMm(block) {
-  if (block.type === 'cards') return 62;
-  if (block.type === 'checklist') return 12 + (block.items?.length || 0) * 11;
-  if (block.type === 'timeline') return 70;
-  if (block.type === 'table') return 16 + (block.rows?.length || 0) * 11;
-  if (block.type === 'note') return 24;
-  return 34; // text
-}
-
-function validateConfig(cfg) {
-  const errors = [];
-  const err = (msg) => errors.push(msg);
-  const need = (value, name) => {
-    if (!value || (typeof value === 'string' && !value.trim())) err(`Pflichtfeld fehlt: ${name}`);
-  };
-  const maxLen = (value, limit, name) => {
-    if (typeof value === 'string' && value.length > limit) err(`${name} zu lang (${value.length} > ${limit} Zeichen)`);
-  };
-
-  need(cfg.slug, 'slug');
-  if (cfg.slug && !/^[a-z0-9-]+$/.test(cfg.slug)) err(`slug muss kebab-case sein: "${cfg.slug}"`);
-  need(cfg.title, 'title');
-  need(cfg.subtitle, 'subtitle');
-  need(cfg.claim, 'claim');
-  maxLen(cfg.title, LIMITS.title, 'title');
-  maxLen(cfg.subtitle, LIMITS.subtitle, 'subtitle');
-  maxLen(cfg.claim, LIMITS.claim, 'claim');
-  maxLen(cfg.kicker, LIMITS.kicker, 'kicker');
-
-  const topics = cfg.topics || [];
-  if (topics.length > LIMITS.topics.max) err(`topics: max. ${LIMITS.topics.max} Pills (${topics.length} angegeben)`);
-  topics.forEach((topic, i) => maxLen(topic, LIMITS.topics.chars, `topics[${i}]`));
-
-  if (cfg.cta) {
-    maxLen(cfg.cta.title, LIMITS.cta.title, 'cta.title');
-    maxLen(cfg.cta.text, LIMITS.cta.text, 'cta.text');
-    maxLen(cfg.cta.buttonText, LIMITS.cta.buttonText, 'cta.buttonText');
-    if (cfg.cta.buttonUrl && !/^https:\/\//.test(cfg.cta.buttonUrl)) err(`cta.buttonUrl muss mit https:// beginnen: "${cfg.cta.buttonUrl}"`);
-    if ((cfg.cta.contacts || []).length > LIMITS.cta.contactsMax) err(`cta.contacts: max. ${LIMITS.cta.contactsMax} Einträge`);
-  }
-
-  const pages = cfg.pages || [];
-  if (!pages.length) err('pages: mindestens eine Inhaltsseite nötig');
-
-  pages.forEach((page, p) => {
-    const where = `pages[${p}] („${page.title || page.label || '?'}“)`;
-    need(page.label, `${where}.label`);
-    need(page.title, `${where}.title`);
-    need(page.lead, `${where}.lead`);
-    maxLen(page.label, LIMITS.page.label, `${where}.label`);
-    maxLen(page.title, LIMITS.page.title, `${where}.title`);
-    maxLen(page.lead, LIMITS.page.lead, `${where}.lead`);
-
-    const blocks = page.blocks || [];
-    if (!blocks.length) err(`${where}: mindestens ein Block nötig`);
-    if (blocks.length > LIMITS.page.blocksMax) err(`${where}: max. ${LIMITS.page.blocksMax} Blöcke (${blocks.length} angegeben)`);
-
-    let heightMm = HEAD_MM;
-    blocks.forEach((block, b) => {
-      const at = `${where}.blocks[${b}]`;
-      const type = block.type || 'text';
-      heightMm += blockHeightMm(block) + BLOCK_GAP_MM;
-
-      if (type === 'cards') {
-        const items = block.items || [];
-        if (items.length !== LIMITS.cards.items) err(`${at}: cards braucht genau ${LIMITS.cards.items} Karten (3-Spalten-Raster), ${items.length} angegeben`);
-        items.forEach((item, i) => {
-          need(item.title, `${at}.items[${i}].title`);
-          need(item.text, `${at}.items[${i}].text`);
-          maxLen(item.title, LIMITS.cards.title, `${at}.items[${i}].title`);
-          maxLen(item.text, LIMITS.cards.text, `${at}.items[${i}].text`);
-        });
-      } else if (type === 'checklist') {
-        const items = block.items || [];
-        if (items.length < LIMITS.checklist.min || items.length > LIMITS.checklist.max) {
-          err(`${at}: checklist braucht ${LIMITS.checklist.min}–${LIMITS.checklist.max} Punkte, ${items.length} angegeben`);
-        }
-        items.forEach((item, i) => maxLen(item, LIMITS.checklist.chars, `${at}.items[${i}]`));
-      } else if (type === 'timeline') {
-        const items = block.items || [];
-        if (items.length !== LIMITS.timeline.items) err(`${at}: timeline braucht genau ${LIMITS.timeline.items} Schritte (3-Spalten-Raster), ${items.length} angegeben`);
-        items.forEach((item, i) => {
-          need(item.title, `${at}.items[${i}].title`);
-          maxLen(item.title, LIMITS.timeline.title, `${at}.items[${i}].title`);
-          maxLen(item.text, LIMITS.timeline.text, `${at}.items[${i}].text`);
-        });
-      } else if (type === 'table') {
-        const headers = block.headers || [];
-        const rows = block.rows || [];
-        if (headers.length < LIMITS.table.headersMin || headers.length > LIMITS.table.headersMax) {
-          err(`${at}: table braucht ${LIMITS.table.headersMin}–${LIMITS.table.headersMax} Spalten, ${headers.length} angegeben`);
-        }
-        if (!rows.length || rows.length > LIMITS.table.rowsMax) err(`${at}: table braucht 1–${LIMITS.table.rowsMax} Zeilen, ${rows.length} angegeben`);
-        rows.forEach((row, r) => {
-          if (row.length !== headers.length) err(`${at}.rows[${r}]: ${row.length} Zellen, aber ${headers.length} Spalten`);
-          row.forEach((cell, c) => maxLen(cell, LIMITS.table.cell, `${at}.rows[${r}][${c}]`));
-        });
-      } else if (type === 'note') {
-        need(block.text, `${at}.text`);
-        maxLen(block.text, LIMITS.note, `${at}.text`);
-      } else if (type === 'text') {
-        need(block.text, `${at}.text`);
-        maxLen(block.text, LIMITS.text, `${at}.text`);
-      } else {
-        err(`${at}: unbekannter Block-Typ "${type}" (erlaubt: cards, checklist, timeline, table, note, text)`);
-      }
-    });
-
-    if (heightMm > HEIGHT_BUDGET_MM) {
-      err(`${where}: Inhalt zu hoch für eine A4-Seite (~${Math.round(heightMm)}mm > ${HEIGHT_BUDGET_MM}mm) — Blöcke kürzen oder auf zwei Seiten verteilen`);
-    }
-  });
-
-  return errors;
-}
 
 const validationErrors = validateConfig(config);
 if (validationErrors.length) {
@@ -229,6 +93,27 @@ const html = `<!doctype html>
   <title>${escapeHtml(config.title)} – Deutscher Fenstershop E-Book</title>
   <meta name="description" content="${escapeHtml(config.claim || config.subtitle || config.title)}">
   <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Cover-Motiv v2 (generator-owned): elegantes Fenster statt Sofa/Fussball aus "Ruhiges Heimspiel" */
+    .fx-window { position: absolute; right: 0; top: 10mm; width: 70mm; height: 96mm; border-radius: 22px; background: #fff; box-shadow: var(--shadow); }
+    .fx-glass { position: absolute; inset: 7px; border-radius: 16px; border: 6px solid #d9ecfb; background: linear-gradient(180deg, #cfe6fa 0%, #eaf4fd 55%, #f8fbff 100%); overflow: hidden; }
+    .fx-glass::before, .fx-glass::after { content: ""; position: absolute; background: #fff; box-shadow: 0 0 6px rgba(12,45,87,.12); z-index: 3; }
+    .fx-glass::before { left: 50%; top: 0; bottom: 0; width: 6px; transform: translateX(-50%); }
+    .fx-glass::after { left: 0; right: 0; top: 58%; height: 6px; transform: translateY(-50%); }
+    .fx-hill { position: absolute; left: -12%; right: -6%; bottom: -7mm; height: 20mm; background: rgba(12,45,87,.09); border-radius: 50% 50% 0 0; }
+    .fx-hill.two { left: 34%; right: -22%; height: 26mm; background: rgba(12,45,87,.13); }
+    .fx-sun { position: absolute; right: 8mm; top: 8mm; width: 15mm; height: 15mm; background: var(--orange); border-radius: 50%; box-shadow: 0 0 0 12px rgba(244,123,32,.16), 0 0 0 22px rgba(244,123,32,.07); z-index: 1; }
+    .fx-shine { position: absolute; top: -12%; bottom: -12%; left: 10%; width: 11mm; background: rgba(255,255,255,.34); transform: skewX(-18deg); border-radius: 8px; z-index: 2; }
+    .fx-shine::after { content: ""; position: absolute; top: 0; bottom: 0; left: 15mm; width: 4mm; background: rgba(255,255,255,.26); }
+    .fx-sill { position: absolute; right: -3mm; top: 105mm; width: 80mm; height: 6.5mm; background: #fff; border-radius: 6px; box-shadow: 0 14px 30px rgba(0,0,0,.22); }
+    .fx-plant { position: absolute; top: 87mm; right: 46mm; width: 16mm; height: 18mm; z-index: 4; }
+    .fx-plant i { position: absolute; bottom: 7mm; left: 50%; width: 5.5mm; height: 11mm; background: var(--blue); border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; transform-origin: 50% 100%; }
+    .fx-plant i:nth-child(1) { transform: translateX(-50%) rotate(-30deg); }
+    .fx-plant i:nth-child(2) { transform: translateX(-50%); height: 13mm; }
+    .fx-plant i:nth-child(3) { transform: translateX(-50%) rotate(30deg); }
+    .fx-plant b { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 9mm; height: 7.5mm; background: var(--orange); border-radius: 4px 4px 9px 9px; }
+    .cover .quiet-badge { bottom: auto; top: 116mm; left: auto; right: 14mm; }
+  </style>
 </head>
 <body>
   <main class="ebook" aria-label="${escapeHtml(config.title)}">
@@ -242,7 +127,7 @@ const html = `<!doctype html>
           <p class="claim">${escapeHtml(config.claim)}</p>
           <div class="pill-row">${(config.topics || []).map((topic) => `<span>${escapeHtml(topic)}</span>`).join('')}</div>
         </div>
-        <div class="home-visual" aria-hidden="true"><div class="window-graphic"><span class="sun"></span><span class="ball"></span></div><div class="sofa"></div><div class="quiet-badge"><strong>Guide</strong><span>DFS</span></div></div>
+        <div class="home-visual" aria-hidden="true"><div class="fx-window"><div class="fx-glass"><span class="fx-hill"></span><span class="fx-hill two"></span><span class="fx-sun"></span><span class="fx-shine"></span></div></div><div class="fx-sill"></div><div class="fx-plant"><i></i><i></i><i></i><b></b></div><div class="quiet-badge"><strong>Guide</strong><span>DFS</span></div></div>
       </div>
       <footer class="page-footer"><span>deutscher-fenstershop.de</span><span>01</span></footer>
     </section>
@@ -267,20 +152,31 @@ const html = `<!doctype html>
 const htmlPath = path.join(outDir, 'index.html');
 writeFileSync(htmlPath, html);
 
-// Mockbild-Prompt für Codex: Cover als Referenzbild, Bild entsteht in EINEM
-// Durchgang — Text stammt nur aus dem Cover, nachträgliche Overlays verboten.
-const mockupPrompt = `Erzeuge das Mockbild für das DFS-E-Book „${config.title}".
-
-Das beigefügte Bild ist das ECHTE Cover (Seite 1) des E-Books. Stelle dieses Cover als hochwertiges 3D-Buch-/Broschüren-Mockup dar: leicht schräge 3/4-Ansicht von vorne, weiches Licht von links oben, dezenter Schlagschatten.
-
-Harte Regeln:
-- Cover-Inhalt (Text, Logo, Farben, Layout) 1:1 vom Referenzbild übernehmen — Text NICHT neu setzen, NICHTS hinzufügen, NICHTS weglassen, keine Schreibweise „korrigieren".
-- Kein zusätzlicher Text, keine Badges, keine Sticker, kein Wasserzeichen.
-- Hintergrund hell und neutral (#FFFFFF bis #F5F5F5), kein Farbverlauf, kein Showroom-Kitsch.
-- Format quadratisch 1024x1024, Buch mittig, ca. 70–80% der Bildhöhe.
-
-Speichere das Ergebnis als PNG nach: public/ebooks/${config.slug}/assets/mockup.png`;
-writeFileSync(path.join(outDir, 'mockup-prompt.txt'), mockupPrompt);
+// Mockbild-Job für Codex ImageGen 2: Cover als Referenzbild, Bild entsteht in
+// EINEM Durchgang komplett durchs Bild-Generierungs-Tool — programmatische
+// Komposition (sharp/Canvas/Textur-Mapping) ist verboten, nur Skalieren erlaubt.
+const mockupJob = {
+  task: 'dfs-ebook-mockup',
+  engine: 'codex-imagegen-2',
+  ebook: { slug: config.slug, titel: config.title },
+  input: { cover: 'assets/cover.png', beschreibung: 'Echtes A4-Cover (Seite 1) des E-Books, als Bild beigefuegt' },
+  output: { datei: `public/ebooks/${config.slug}/assets/mockup.png`, groesse: '1024x1024', format: 'png' },
+  stil: {
+    ansicht: '3D-Buch-/Broschueren-Mockup, leicht schraege 3/4-Ansicht von vorne, Softcover',
+    licht: 'weiches Licht von links oben, dezenter Schlagschatten',
+    hintergrund: 'hell und neutral (#FFFFFF bis #F5F5F5), kein Farbverlauf, kein Showroom-Kitsch',
+    bildaufbau: 'Buch mittig, ca. 70-80% der Bildhoehe',
+  },
+  harteRegeln: [
+    'Das Bild entsteht in EINEM Durchgang komplett ueber das interne Bild-Generierungs-Tool (ImageGen 2).',
+    'KEINE programmatische Komposition: kein sharp/Canvas/Textur-Mapping des Covers auf eine Buchform. Nach der Generierung ist nur Skalieren/Zuschneiden auf exakt 1024x1024 erlaubt.',
+    'Cover-Inhalt (Text, Logo, Farben, Layout) 1:1 vom Referenzbild uebernehmen — Text NICHT neu setzen, NICHTS hinzufuegen, NICHTS weglassen, keine Schreibweise korrigieren.',
+    'Titeltext muss buchstabengleich mit dem Cover sein. Abweichung = komplett neu generieren, NIE nachbearbeiten.',
+    'Kein zusaetzlicher Text, keine Badges, keine Sticker, kein Wasserzeichen.',
+  ],
+  ablage: 'Roh-PNG aus ~/.codex/generated_images/<id>/ auf 1024x1024 bringen und als output.datei speichern.',
+};
+writeFileSync(path.join(outDir, 'mockup-job.json'), `${JSON.stringify(mockupJob, null, 2)}\n`);
 
 if (!noPdf) {
   const chromeCandidates = [
@@ -317,7 +213,7 @@ if (!noPdf) {
   console.log(`HTML: ${htmlPath}`);
   console.log(`PDF: ${pdfPath} (${pdf.length} bytes, ${pdfPages} Seiten)`);
   console.log(`Cover: ${coverPath}`);
-  console.log(`Mockup-Prompt: ${path.join(outDir, 'mockup-prompt.txt')} (Codex: codex exec -i assets/cover.png "$(cat mockup-prompt.txt)")`);
+  console.log(`Mockup-Job: ${path.join(outDir, 'mockup-job.json')} (Codex ImageGen 2: codex exec -i ${path.join(outDir, 'assets/cover.png')} - < ${path.join(outDir, 'mockup-job.json')})`);
 } else {
   console.log(`HTML: ${htmlPath}`);
   console.log('PDF: übersprungen (--no-pdf)');

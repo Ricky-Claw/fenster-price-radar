@@ -1,15 +1,13 @@
 import { answerFenstershopChatbotWithLlm, chunkKnowledgeText } from '../src/chatbot/fenstershopChatbot.js';
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
+import { cookieValue, safeEqual, validSession } from '../src/auth/session.js';
 
-// Der Chatbot ruft bezahlte LLMs (Nemotron/Moonshot). Ohne Drossel + Body-Cap
-// koennte jeder die Kosten hochtreiben. Gleiche Schutzschicht wie api/aufmass.js.
-// CORS bleibt offen (Widget ist auf der Shop-Domain eingebettet) — per
-// CHATBOT_ALLOW_ORIGIN auf eine feste Herkunft verschaerfbar.
+// Der Chatbot nutzt GPT-5.6 Luna mit Claude als Ausweichpfad. Drosselung,
+// Body-Cap und eine feste Standard-Herkunft schützen den öffentlichen Endpunkt.
 const BODY_MAX_BYTES = 131072;
 const MESSAGE_MAX_CHARS = 2000;
 const KNOWLEDGE_MAX_FILES = 3;
 const KNOWLEDGE_MAX_CHARS = 30000;
-const KNOWLEDGE_NAME_MAX = 100;
 
 // Sitzungs-Wissen von der Testseite: kommt pro Request mit, wird nie gespeichert.
 // Serverless ist zur Laufzeit read-only — dauerhaftes Wissen geht über knowledge/ im Repo.
@@ -17,17 +15,16 @@ function extraChunksFromBody(body) {
   const files = Array.isArray(body.knowledge) ? body.knowledge.slice(0, KNOWLEDGE_MAX_FILES) : [];
   const chunks = [];
   for (const file of files) {
-    const name = String(file?.name || 'upload.md').slice(0, KNOWLEDGE_NAME_MAX);
     const content = String(file?.content || '').slice(0, KNOWLEDGE_MAX_CHARS);
     chunks.push(...chunkKnowledgeText(content, {
-      fallbackHeading: name.replace(/\.(md|txt)$/i, '').replace(/[-_]/g, ' '),
-      url: `upload:${name}`,
+      fallbackHeading: 'Hochgeladenes Wissen',
+      url: 'upload:knowledge',
       sourceType: 'upload',
     }));
   }
   return chunks;
 }
-const ALLOW_ORIGIN = process.env.CHATBOT_ALLOW_ORIGIN || '*';
+const ALLOW_ORIGIN = process.env.CHATBOT_ALLOW_ORIGIN || 'https://deutscher-fenstershop.de';
 const rateLimiter = createRateLimiter({
   windowMs: Number(process.env.CHATBOT_RL_WINDOW_MS) || 60000,
   maxPerKey: Number(process.env.CHATBOT_RL_MAX_PER_IP) || 12,
@@ -89,11 +86,18 @@ function clientIp(req) {
   return 'unknown';
 }
 
+function mayUploadKnowledge(req) {
+  if (validSession(cookieValue(req.headers?.cookie || '', 'fenster_radar_session'))) return true;
+  const expected = process.env.CHATBOT_KNOWLEDGE_TOKEN || '';
+  const provided = firstHeaderValue(req.headers?.['x-knowledge-token']);
+  return Boolean(expected) && safeEqual(provided || '', expected);
+}
+
 export default async function handler(req, res) {
   res.setHeader?.('access-control-allow-origin', ALLOW_ORIGIN);
   if (req.method === 'OPTIONS') {
     res.setHeader?.('access-control-allow-methods', 'POST,GET,OPTIONS');
-    res.setHeader?.('access-control-allow-headers', 'content-type');
+    res.setHeader?.('access-control-allow-headers', 'content-type, x-knowledge-token');
     return sendJson(res, 204, '');
   }
   if (req.method === 'GET') return sendJson(res, 200, { ok: true, service: 'janela', mode: 'rule-first-rag-mvp' });
@@ -113,7 +117,14 @@ export default async function handler(req, res) {
     // turn = wievielte Nutzer-Nachricht in dieser Sitzung (vom Widget mitgezählt, Server ist stateless).
     // Ab turn>=3 muss die Antwort verbindlich an die richtige Abteilung leiten (Telefon/Mail).
     const turn = Math.max(0, Math.min(999, Number.parseInt(body.turn, 10) || 0));
-    return sendJson(res, 200, await answerFenstershopChatbotWithLlm({ message, extraChunks: extraChunksFromBody(body), turn }));
+    const extraChunks = mayUploadKnowledge(req) ? extraChunksFromBody(body) : [];
+    const answer = await answerFenstershopChatbotWithLlm({ message, extraChunks, turn });
+    const hasValidSession = validSession(cookieValue(req.headers?.cookie || '', 'fenster_radar_session'));
+    if (!hasValidSession && answer.llm && Object.hasOwn(answer.llm, 'attempts')) {
+      const { attempts, ...publicLlm } = answer.llm;
+      answer.llm = publicLlm;
+    }
+    return sendJson(res, 200, answer);
   } catch (error) {
     return sendJson(res, 400, { ok: false, error: 'invalid_request', message: error.message });
   }

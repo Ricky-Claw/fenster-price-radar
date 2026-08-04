@@ -1,0 +1,94 @@
+{
+  "name": "rueckhol-automatik",
+  "title": "Rückhol-Automatik (Conversion Rescue)",
+  "description": "Eigenständiges Exit-Intent-Popup-System mit Dashboard, eingebettetem Widget und lokal betriebener API samt SQLite-Datenbank.",
+  "versionFrom": "rueckhol-automatik/package.json",
+  "files": [
+    "rueckhol-automatik/server/**/*",
+    "rueckhol-automatik/widget/**/*",
+    "rueckhol-automatik/dashboard/**/*",
+    "rueckhol-automatik/tests/**/*",
+    "rueckhol-automatik/demo/index.html",
+    "rueckhol-automatik/demo/demo-test.html",
+    "rueckhol-automatik/demo/alle-popups.html",
+    "rueckhol-automatik/vendor/**/*",
+    "rueckhol-automatik/package.json",
+    "rueckhol-automatik/package-lock.json"
+  ],
+  "exclude": [
+    "rueckhol-automatik/data/**",
+    "rueckhol-automatik/node_modules/**",
+    "rueckhol-automatik/docs/**"
+  ],
+  "forbiddenTerms": [
+    "nexus-host",
+    "hstgr",
+    "76.13.143.100"
+  ],
+  "envVars": [
+    {
+      "name": "FENSTER_RADAR_AUTH_SECRET",
+      "required": true,
+      "description": "HMAC-Secret für die Dashboard-Session."
+    },
+    {
+      "name": "FENSTER_RADAR_PASSWORD",
+      "required": true,
+      "description": "Passwort für die Anmeldung am Dashboard."
+    },
+    {
+      "name": "ADMIN_TOKEN",
+      "required": true,
+      "description": "Bearer-Token für den Maschinenzugriff auf die Admin-API."
+    },
+    {
+      "name": "WEBHOOK_URL",
+      "required": false,
+      "description": "Optionale Ziel-URL für die Weiterleitung von Lead-Events."
+    },
+    {
+      "name": "SITE_ORIGINS",
+      "required": true,
+      "description": "JSON-Zuordnung von Site-IDs zu erlaubten Shop-Origins als CORS-Allowlist des Widgets; in Produktion erforderlich."
+    },
+    {
+      "name": "DISABLE_DEMO",
+      "required": true,
+      "description": "In Produktion auf 1 setzen, damit die Demo-Routen nicht ausgeliefert werden."
+    },
+    {
+      "name": "PORT",
+      "required": false,
+      "description": "HTTP-Port des Servers; Standardwert ist 8080."
+    }
+  ],
+  "modes": {
+    "selfhost": {
+      "steps": [
+        "Node.js ab Version 22.13 installieren.",
+        "Das Paket in ein eigenes Verzeichnis entpacken.",
+        "vendor/ enthält eigene Minimal-Implementierungen von express und better-sqlite3, keine Pakete aus der npm-Registry; der better-sqlite3-Shim nutzt das eingebaute node:sqlite und erfordert deshalb Node.js ab Version 22.13.",
+        "Im Paketverzeichnis npm ci ausführen; der Schritt funktioniert offline und verifiziert die mitgelieferten lokalen Pakete unter vendor/.",
+        "Eine .env-Datei nach .env.example anlegen und ihre Werte vor dem Start in die Prozessumgebung laden.",
+        "DISABLE_DEMO=1 setzen.",
+        "Den Dienst mit npm start starten.",
+        "Einen Reverse-Proxy mit HTTPS vor den Dienst schalten.",
+        "Den Betriebszustand über /api/health prüfen."
+      ]
+    },
+    "embed": {
+      "snippet": "<script async src=\"https://IHRE-DOMAIN/cre.js\" data-cre-site=\"SITE-ID\" data-cre-api=\"https://IHRE-DOMAIN\"></script>",
+      "notes": "Das Widget lädt seine Konfiguration von der API und wird im Shop-Template oder über einen Tag-Manager eingesetzt. data-cre-site muss einer im Dashboard angelegten Site entsprechen. Die Origin der Shop-Domain muss in SITE_ORIGINS eingetragen sein."
+    }
+  },
+  "cmsNotes": [
+    "Das Dashboard ist durch eine Anmeldung geschützt.",
+    "Das Widget rendert im Shadow DOM und verursacht dadurch keine CSS-Konflikte mit dem Shop.",
+    "Der Server benötigt ein persistentes Verzeichnis für die SQLite-Datenbank; das Verzeichnis wird beim Start angelegt."
+  ],
+  "dsgvoNotes": [
+    "Popup-Submissions erfassen Leads und damit personenbezogene Daten in der lokalen SQLite-Datenbank; Löschfristen und bei Fremd-Hosting ein Auftragsverarbeitungsvertrag sind zu klären.",
+    "Die Datenbankdatei ist bewusst nicht im Paket enthalten.",
+    "Das Widget setzt keine Third-Party-Cookies; für die Wiederanzeige-Sperre speichert es einen Zeitwert im localStorage der Shop-Origin."
+  ]
+}

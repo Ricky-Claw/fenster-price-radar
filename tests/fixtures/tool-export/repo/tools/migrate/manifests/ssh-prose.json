@@ -1,0 +1,7 @@
+{
+  "name": "ssh-prose-tool",
+  "title": "SSH Prose Tool",
+  "description": "Positiv-Fixture für SSH-Prosa ohne Host.",
+  "version": "1.0.0",
+  "files": ["ssh-prose-tool/**/*"]
+}

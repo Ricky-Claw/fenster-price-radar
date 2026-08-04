@@ -23,6 +23,7 @@ const REVIEW_REASON_ORDER = Object.freeze([
   'oeffnungsart_unklar',
   'anschlag_unklar',
   'verglasung_unklar',
+  'teilung_unklar',
 ]);
 
 // Keep in sync with extractWindows NON_LATIN_RE.
@@ -33,7 +34,7 @@ function stripNonLatin(value) {
 }
 
 function aliasKey(value) {
-  return String(value || '').toLowerCase().replace(/[\s-]+/g, '');
+  return String(value || '').normalize('NFC').toLowerCase().replace(/[\s-]+/g, '');
 }
 
 function coerceInt(value) {

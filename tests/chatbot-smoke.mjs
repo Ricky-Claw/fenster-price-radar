@@ -122,6 +122,110 @@ assert.equal(llmGuardrail.intent, 'order_status');
 assert.equal(llmGuardrail.llm, null);
 assert.match(llmGuardrail.answer, /keinen Zugriff/i);
 
+{
+  const beforeFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error('sensible Nutzerdaten dürfen keinen Provider-Aufruf auslösen');
+  };
+  const sensitiveAnswer = await answerFenstershopChatbotWithLlm({
+    message: 'Meine IBAN ist DE02120300000000202051. Was bedeutet der Ug-Wert?',
+    env: { OPENAI_API_KEY: 'test' },
+  });
+  assert.equal(sensitiveAnswer.sensitive, true);
+  assert.equal(sensitiveAnswer.intent, 'knowledge_rag');
+  assert.equal(sensitiveAnswer.llm, null);
+  assert.equal(fetchCalls, 0, 'bei sensiblen Daten darf kein LLM-Provider aufgerufen werden');
+  globalThis.fetch = beforeFetch;
+}
+
+{
+  const beforeFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    return { ok: true, json: async () => ({ model: 'claude-haiku-4-5', stop_reason: 'end_turn', content: [{ type: 'text', text: 'Der Ug-Wert beschreibt den Wärmedurchgang der Verglasung.' }] }) };
+  };
+  await answerFenstershopChatbotWithLlm({
+    message: 'Was bedeutet der Ug-Wert? Ich wohne in 79098 Freiburg',
+    env: { ANTHROPIC_API_KEY: 'test' },
+  });
+  assert.ok(fetchCalls > 0, 'eine fünfstellige Postleitzahl darf den LLM-Provider nicht unterdrücken');
+  globalThis.fetch = beforeFetch;
+}
+
+{
+  const beforeFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error('lange Ziffernfolgen dürfen keinen Provider-Aufruf auslösen');
+  };
+  await answerFenstershopChatbotWithLlm({
+    message: 'Zu 4711234 habe ich eine Frage',
+    env: { ANTHROPIC_API_KEY: 'test' },
+  });
+  assert.equal(fetchCalls, 0, 'Ziffernfolgen ab sechs Stellen müssen den LLM-Aufruf unterdrücken');
+  globalThis.fetch = beforeFetch;
+}
+
+{
+  const beforeFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error('IBAN-Daten dürfen keinen Provider-Aufruf auslösen');
+  };
+  await answerFenstershopChatbotWithLlm({
+    message: 'DE02120300000000202051 ist meine Bankverbindung',
+    env: { ANTHROPIC_API_KEY: 'test' },
+  });
+  assert.equal(fetchCalls, 0, 'eine IBAN ohne Bezeichner muss den LLM-Aufruf unterdrücken');
+  globalThis.fetch = beforeFetch;
+}
+
+for (const [message, failureMessage] of [
+  ['Meine Rechnungsnummer 12 stimmt nicht', 'Rechnungsnummern dürfen keinen Provider-Aufruf auslösen'],
+  ['DE02-1203-0000-0000-2020-51 ist meine Bankverbindung', 'IBAN-Daten mit Bindestrichen dürfen keinen Provider-Aufruf auslösen'],
+  ['Bietet ihr Montage in Hauptstraße 12, 79098 Freiburg an?', 'Straßenanschriften dürfen keinen Provider-Aufruf auslösen'],
+  ['Zu 471123 habe ich eine Frage', 'Ziffernfolgen mit genau sechs Stellen dürfen keinen Provider-Aufruf auslösen'],
+  ['Rufen Sie mich unter 0176 234 5678 zurueck, ich habe eine Frage zum Ug-Wert', 'gruppierte Telefonnummern dürfen keinen Provider-Aufruf auslösen'],
+]) {
+  const beforeFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    throw new Error(failureMessage);
+  };
+  await answerFenstershopChatbotWithLlm({
+    message,
+    env: { ANTHROPIC_API_KEY: 'test' },
+  });
+  assert.equal(fetchCalls, 0, failureMessage);
+  globalThis.fetch = beforeFetch;
+}
+
+for (const message of [
+  'Liefert ihr auch nach Freiburg?',
+  'Liefert ihr nach 79098 Freiburg?',
+]) {
+  const draft = answerFenstershopChatbot({ message });
+  assert.ok(['knowledge_rag', 'fallback'].includes(draft.intent), 'Durchlass-Prüfung muss einen LLM-sicheren Intent treffen');
+  const beforeFetch = globalThis.fetch;
+  let fetchCalls = 0;
+  globalThis.fetch = async () => {
+    fetchCalls += 1;
+    return { ok: true, json: async () => ({ model: 'claude-haiku-4-5', stop_reason: 'end_turn', content: [{ type: 'text', text: 'Wir informieren Sie gerne zu unseren Liefermöglichkeiten.' }] }) };
+  };
+  await answerFenstershopChatbotWithLlm({
+    message,
+    env: { ANTHROPIC_API_KEY: 'test' },
+  });
+  assert.ok(fetchCalls > 0, 'reine Ortsangaben dürfen den LLM-Provider nicht unterdrücken');
+  globalThis.fetch = beforeFetch;
+}
+
 const chunks = retrieveFenstershopKnowledge('Lieferadresse ändern Kosten', { limit: 2 });
 assert.ok(chunks.length >= 1, 'knowledge retrieval should find chatbot md chunks');
 

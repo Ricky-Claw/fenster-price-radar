@@ -14,6 +14,7 @@
   <div class="tabs">
     <button type="button" aria-pressed="true" data-view="campaigns">Kampagnen</button>
     <button type="button" aria-pressed="false" data-view="analytics">Auswertung</button>
+    <button type="button" aria-pressed="false" data-view="leads">Leads</button>
   </div>
   <div class="spacer"></div>
   <label class="field-site">Seite
@@ -143,8 +144,10 @@
             <div class="f span2 act act-coupon"><label for="a-code">Rabattcode <span class="req" title="Pflichtfeld">*</span></label><input type="text" id="a-code" maxlength="80" placeholder="WILLKOMMEN10"><span class="hint">Wird angezeigt, Klick auf den Button kopiert ihn.</span></div>
             <!-- newsletter -->
             <div class="f act act-newsletter"><label for="a-news-ph">Platzhalter im Feld</label><input type="text" id="a-news-ph" maxlength="120" placeholder="ihre@email.de"></div>
+            <div class="f span2 act act-newsletter"><label for="a-news-download">Freebie-Download-Link (optional, https)</label><input type="url" id="a-news-download" placeholder="https://…/freebie.pdf"></div>
             <div class="f span2 act act-newsletter"><label for="a-news-consent">Zustimmungstext (DSGVO)</label><input type="text" id="a-news-consent" maxlength="220" placeholder="Ich möchte Angebote per E-Mail erhalten."></div>
             <div class="f span2 act act-newsletter"><label for="a-news-ok">Danke-Text nach Anmeldung</label><input type="text" id="a-news-ok" maxlength="200" placeholder="Danke! Sie sind eingetragen."></div>
+            <div class="f span2 act act-newsletter act-contact"><label for="a-privacy">Datenschutz-Link (optional, https)</label><input type="url" id="a-privacy" placeholder="https://…/datenschutz"></div>
             <!-- contact -->
             <div class="f span2 act act-contact"><label for="a-con-consent">Zustimmungstext (DSGVO)</label><input type="text" id="a-con-consent" maxlength="220" placeholder="Meine Angaben dürfen zur Bearbeitung genutzt werden."></div>
             <div class="f span2 act act-contact"><label for="a-con-ok">Danke-Text nach Absenden</label><input type="text" id="a-con-ok" maxlength="200" placeholder="Danke! Wir melden uns."></div>
@@ -171,6 +174,7 @@
                 <option value="bar">Balken unten</option>
               </select>
             </div>
+            <p id="mobileInterstitialHint" class="interstitial-hint span2 hidden">Tipp: Vollbild-Popups ohne Exit-Auslöser können das Google-Ranking auf Mobilgeräten verschlechtern — für diese Kombination besser Position Ecke oder Balken.</p>
             <div class="f">
               <label for="f-radius">Ecken-Rundung</label>
               <div class="range-row"><input type="range" id="f-radius" min="0" max="32" value="18"><output id="out-radius">18px</output></div>
@@ -219,6 +223,9 @@
 
   <!-- ===== Auswertung ===== -->
   <section id="view-analytics" class="analytics hidden"></section>
+
+  <!-- ===== Leads ===== -->
+  <section id="view-leads" class="leads hidden"></section>
 </main>
 
 <div class="toast" id="toast"></div>

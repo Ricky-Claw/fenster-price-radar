@@ -1,0 +1,114 @@
+name: Tool-Release
+
+on:
+  # Menschliches Gate: Kein Tool-Paket wird ohne bewussten manuellen Start veröffentlicht.
+  workflow_dispatch:
+    inputs:
+      tool:
+        description: Zu exportierendes Tool
+        required: true
+        default: rueckhol-automatik
+        type: string
+
+concurrency:
+  group: tool-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  release-tool:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Tool bestimmen
+        env:
+          REQUESTED_TOOL: ${{ inputs.tool }}
+        run: |
+          tool="$REQUESTED_TOOL"
+
+          if ! [[ "$tool" =~ ^[A-Za-z0-9._-]+$ ]]; then
+            echo "Ungültiger Tool-Name: $tool" >&2
+            exit 1
+          fi
+
+          echo "TOOL=$tool" >> "$GITHUB_ENV"
+
+          # Bei mehreren Manifesten hier die Dateien unter
+          # tools/migrate/manifests/*.json in eine Job-Matrix überführen.
+
+      - name: Export-Gate testen
+        run: npm run test:export
+
+      - name: Version aus Manifest lesen
+        run: |
+          node --input-type=module -e '
+            import fs from "node:fs/promises";
+            import path from "node:path";
+            import { resolveVersion } from "./tools/migrate/export.mjs";
+            const manifestPath = path.join("tools/migrate/manifests", `${process.env.TOOL}.json`);
+            const manifest = JSON.parse(await fs.readFile(manifestPath, "utf8"));
+            const version = await resolveVersion(manifest, process.cwd());
+            await fs.appendFile(process.env.GITHUB_ENV, `VERSION=${version}\n`);
+          '
+
+      - name: Übergabe-Paket exportieren
+        run: |
+          node tools/migrate/export.mjs "$TOOL" --zip \
+            | tee "$RUNNER_TEMP/tool-export.log"
+
+          node -e '
+            const fs = require("node:fs");
+            const path = require("node:path");
+            const zipPath = path.join(
+              "tools/migrate/out",
+              `${process.env.TOOL}-v${process.env.VERSION}.zip`,
+            );
+            if (!fs.existsSync(zipPath)) throw new Error("Export-ZIP fehlt: " + zipPath);
+            fs.appendFileSync(
+              process.env.GITHUB_ENV,
+              `ZIP_PATH=${zipPath}\n`,
+            );
+          '
+
+      - name: Versions-Release pflegen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="tool-${TOOL}-v${VERSION}"
+          title="${TOOL} v${VERSION} — Übergabe-Paket"
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release edit "$tag" --title "$title"
+            gh release upload "$tag" "$ZIP_PATH" --clobber
+          else
+            gh release create "$tag" "$ZIP_PATH" \
+              --title "$title" \
+              --notes "Automatisch erzeugtes Übergabe-Paket für ${TOOL} v${VERSION}."
+          fi
+
+      - name: Stabiles Release pflegen
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          tag="tool-${TOOL}-latest"
+          title="${TOOL} — aktuelles Übergabe-Paket"
+          latest_zip="tools/migrate/out/${TOOL}-latest.zip"
+          cp "$ZIP_PATH" "$latest_zip"
+
+          if gh release view "$tag" >/dev/null 2>&1; then
+            gh release edit "$tag" --title "$title"
+            gh release upload "$tag" "$latest_zip" --clobber
+          else
+            gh release create "$tag" "$latest_zip" \
+              --title "$title" \
+              --notes "Stabiler Download des aktuellsten Übergabe-Pakets für ${TOOL}."
+          fi

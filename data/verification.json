@@ -1,72 +1,71 @@
 {
-  "verifiedAt": "2026-07-20",
-  "samples": 1,
-  "note": "1 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
+  "verifiedAt": "2026-08-03",
+  "samples": 2,
+  "note": "2 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
   "verifiedKeys": [
     {
-      "key": "Aluplast|Ideal 4000, 3fach|500x500|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
+      "key": "Aluplast|Ideal 7000, 2fach|1200x1500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
       "result": "mismatch",
       "prices": {
-        "dfs": 146.64,
-        "fensterblick": 137.72,
-        "fensterversand": 253.43
+        "dfs": 474.2,
+        "fensterblick": 381.73,
+        "fensterversand": 290.27
       }
     },
     {
-      "key": "Aluplast|Ideal 5000, 2fach|900x1300|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
+      "key": "Aluplast|Ideal 7000, 3fach|900x1300|3fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
       "result": "mismatch",
       "prices": {
-        "dfs": 273.82,
-        "fensterblick": 267.52,
-        "fensterversand": 266.86
+        "dfs": 444.46,
+        "fensterblick": 336.68,
+        "fensterversand": 287.88
       }
     },
     {
-      "key": "Drutex|Iglo 5 Classic, 3fach|1600x1400|3fach|Dreh-Kipp + Dreh-Kipp|weiß|2flg_pfosten",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 519.82,
-        "fensterblick": 510.95
-      }
-    },
-    {
-      "key": "Drutex|Iglo Energy Classic, 3fach|1000x1200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 348.67,
-        "fensterblick": 309.98
-      }
-    },
-    {
-      "key": "Gealan|Gealan S8000, 3fach|900x1200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 219.06,
-        "fensterblick": 248.29
-      }
-    },
-    {
-      "key": "Kömmerling|Kömmerling 70, 3fach|1500x2000|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
+      "key": "Drutex|Iglo 5 Classic, 2fach|1200x1600|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
       "result": "verified",
       "prices": {
-        "dfs": 699.51,
-        "fensterversand": 433.53
+        "dfs": 289.39,
+        "fensterblick": 296.45
       }
     },
     {
-      "key": "Kömmerling|Kömmerling 88, 3fach|1200x1700|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-07-20T03:32:46.398Z",
+      "key": "Gealan|Gealan S8000, 3fach|1100x1600|3fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
       "result": "mismatch",
       "prices": {
-        "dfs": 452.8,
-        "fensterblick": 424.47,
-        "fensterversand": 509.16
+        "dfs": 422.9,
+        "fensterblick": 367.94
+      }
+    },
+    {
+      "key": "Gealan|Gealan S8000, 3fach|1400x1800|3fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 564.92,
+        "fensterblick": 480.29
+      }
+    },
+    {
+      "key": "Salamander|Salamander 76MD, 2fach|1100x1700|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 310.18,
+        "fensterblick": 308.47
+      }
+    },
+    {
+      "key": "Salamander|Salamander 82, 3fach|1100x1500|3fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-03T03:33:22.620Z",
+      "result": "verified",
+      "prices": {
+        "dfs": 331.15,
+        "fensterblick": 305.04
       }
     }
   ]

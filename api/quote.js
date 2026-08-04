@@ -1,10 +1,26 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { cookieValue, validSession } from '../src/auth/session.js';
+import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
 const ROOT = process.cwd();
+const COOKIE = 'fenster_radar_session';
 const DFS_BASE = 'https://deutscher-fenstershop.de';
 const FV_BASE = 'https://www.fensterversand.com';
 const FB_BASE = 'https://api.configurator.fensterblick.de';
+const rateLimiter = createRateLimiter({ windowMs: 60000, maxPerKey: 20, maxGlobal: 120 });
+
+function firstHeaderValue(value) { return Array.isArray(value) ? value[0] : value; }
+function clientIp(req) {
+  const headers = req?.headers || {};
+  const vercel = firstHeaderValue(headers['x-vercel-forwarded-for']);
+  if (typeof vercel === 'string' && vercel.split(',')[0]?.trim()) return vercel.split(',')[0].trim();
+  const real = firstHeaderValue(headers['x-real-ip']);
+  if (typeof real === 'string' && real.trim()) return real.trim();
+  const forwarded = firstHeaderValue(headers['x-forwarded-for']);
+  if (typeof forwarded === 'string' && forwarded.split(',').at(-1)?.trim()) return forwarded.split(',').at(-1).trim();
+  return 'unknown';
+}
 
 const PROFILES = [
   { id:'drutex-iglo-5-classic', brand:'Drutex', profile:'Iglo 5 Classic', dfs:32, fb:'Drutex Iglo 5 Classic' },
@@ -127,6 +143,16 @@ async function dfsDiscount(profile) {
 }
 
 export default async function handler(req,res){
+  if(!validSession(cookieValue(req.headers?.cookie || '',COOKIE))) return res.status(401).json({ok:false,error:'unauthorized'});
+  if(req.method!=='GET') {
+    res.setHeader('allow','GET');
+    return res.status(405).json({ok:false,error:'method_not_allowed'});
+  }
+  const rl=rateLimiter.check(clientIp(req));
+  if(!rl.allowed) {
+    res.setHeader('retry-after',String(rl.retryAfterSeconds));
+    return res.status(429).json({ok:false,error:'rate_limited'});
+  }
   try{
     const q=req.query || Object.fromEntries(new URL(req.url,'http://x').searchParams.entries());
     const profile=PROFILES.find(p=>p.id===q.profile) || PROFILES[0];

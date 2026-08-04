@@ -38,7 +38,11 @@ Immer: Ziel **Leads**, Advantage+-Platzierungen, Ausschluss vorhandener Leads de
 
 ### Instant Form statt Landingpage
 Bei Lead-Zielen mit kleinem Budget schlägt das Instant Form die eigene Landingpage (kein Ladeverlust, vorausgefüllte Felder). Aufbau:
-- Typ **„Höhere Absicht"** (Prüfschritt vor Absenden) — Qualität vor Volumen.
+- Typ **„Höheres Volumen"**. Die Variante „Höhere Absicht" hängt eine Prüfseite an und schaltet die **SMS-Verifizierung** frei (Lead muss einen Einmal-Passcode eingeben) — das hat bei DFS 07/2026 die Abschlussrate auf **5,5 %** gedrückt (26 Form-Öffnungen, 1 Lead, 82 € Spend). Normal sind 20–40 %. „Höhere Absicht" nur wählen, wenn Lead-Qualität nachweislich das Problem ist, nie zum Start.
+- **Qualitätsfilter vor dem Start prüfen:** SMS-Verifizierung aus, Telefonnummer auf **optional** (Meta empfiehlt das selbst), E-Mail als Pflichtfeld. Jedes Pflichtfeld kostet Abschlüsse.
+- **Veröffentlichte Formulare sind nicht mehr editierbar.** Änderung = Duplikat anlegen, dort anpassen, in der Anzeige austauschen, neu veröffentlichen. Also lieber vor dem Start einmal richtig prüfen.
+- **Multi-Advertiser Ads deaktivieren** — sonst schneidet Meta das Creative zu und zeigt es neben Fremdanzeigen.
+- **Vor dem Start klären, wer die Leads abruft:** Leads landen im Leads Center der **Facebook-Seite**, nicht im Werbekonto. Wer nur Werbekonto-Zugriff hat (z. B. ein Agentur-Portfolio), sieht sie nicht — und ohne Seiten-Rolle kann auch kein Systemnutzer-Token sie lesen.
 - Eine **Qualifizierungs-Frage** einbauen, die den Lead sortiert (bei DFS: „Fensterliste/Sanierungsplan vorhanden?"). Die Antwortverteilung ist später die wichtigste Qualitäts-Kennzahl.
 - Kontaktfelder vorausgefüllt (Name, E-Mail, Telefon) + PLZ.
 - Datenschutz-Link: **verifizierte URL** benutzen (bei DFS `/datenschutzerklaerung`, nicht `/datenschutz`) + Zusatzhinweis mit Förder-Vorbehalt.
@@ -56,7 +60,7 @@ Vor Freigabe je Datei prüfen: trägt sie einen noch nicht freigegebenen Claim? 
 
 ### Datenquelle
 - **Stufe 1 (ohne Setup):** Elvis exportiert im Ads Manager den Bericht als CSV und wirft ihn hier rein. Funktioniert ab Tag 1.
-- **Stufe 2 (API):** Systemnutzer-Token mit `ads_read` als Env `META_ADS_TOKEN` + Werbekonto-ID `META_ADS_ACCOUNT_ID`. Kein App-Review nötig, solange es das eigene Werbekonto im eigenen Business-Portfolio ist. Fetcher nach dem Muster des Preisradars: Snapshot schreiben, bei API-Fehler alten Snapshot stehen lassen und Fehlerzeile in den Report — nie stillschweigend leere Daten ausliefern.
+- **Stufe 2 (API):** Systemnutzer-Token mit `ads_read` als Env `META_ACCESS_TOKEN` + Werbekonto-ID `META_AD_ACCOUNT_ID`. Kein App-Review nötig, solange es das eigene Werbekonto im eigenen Business-Portfolio ist. Fetcher nach dem Muster des Preisradars: Snapshot schreiben, bei API-Fehler alten Snapshot stehen lassen und Fehlerzeile in den Report — nie stillschweigend leere Daten ausliefern.
 
 ### Kennzahlen (jeden Montag, je Anzeige)
 Spend · Impressionen · CTR · Form-Öffnungen · Leads · **CPL** · Anteil qualifizierter Leads (Antwort auf die Qualifizierungs-Frage).

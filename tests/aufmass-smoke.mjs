@@ -3,8 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { Readable } from 'node:stream';
 import handler from '../api/aufmass.js';
 import { extractWindows, hasNonLatinScript } from '../src/aufmass/extractWindows.js';
-import { AUFMASS_FIELD_KEYS } from '../src/aufmass/schema.js';
-import { normalizeWindow, normalizeWindowList } from '../src/aufmass/normalizeWindows.js';
+import { AUFMASS_FIELDS, AUFMASS_FIELD_KEYS } from '../src/aufmass/schema.js';
+import { normalizeWindow, normalizeWindowList, TRANSCRIPT_MAX } from '../src/aufmass/normalizeWindows.js';
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
 
 function response() {
@@ -59,7 +59,7 @@ assert.equal(normalized[0].verglasung, '2fach');
 assert.equal(normalized[0].needsReview, false);
 assert.equal(Object.hasOwn(normalized[0], 'extra'), false);
 
-assert.deepEqual(AUFMASS_FIELD_KEYS, ['raum', 'anzahl', 'breiteMm', 'hoeheMm', 'oeffnungsart', 'anschlag', 'material', 'verglasung', 'farbe', 'notiz']);
+assert.deepEqual(AUFMASS_FIELD_KEYS, ['raum', 'anzahl', 'breiteMm', 'hoeheMm', 'teilung', 'oeffnungsart', 'anschlag', 'material', 'marke', 'verglasung', 'farbe', 'notiz']);
 
 assert.equal(hasNonLatinScript('你好'), true);
 assert.equal(hasNonLatinScript('Привет'), true);
@@ -71,14 +71,45 @@ const fieldsLiteral = aufmassHtml.match(/var FIELDS = \[([\s\S]*?)\];/);
 assert.ok(fieldsLiteral, 'public/aufmass.html must define inline FIELDS');
 const browserFieldKeys = Array.from(fieldsLiteral[1].matchAll(/key:\s*['"]([^'"]+)['"]/g), (match) => match[1]);
 assert.deepEqual(browserFieldKeys, AUFMASS_FIELD_KEYS);
+const browserFieldDefaults = new Map(Array.from(
+  fieldsLiteral[1].matchAll(/{[^{}]*key:\s*['"]([^'"]+)['"][^{}]*default:\s*(?:'([^']*)'|"([^"]*)"|(-?\d+(?:\.\d+)?))[^{}]*}/g),
+  (match) => [match[1], match[2] ?? match[3] ?? Number(match[4])],
+));
+for (const field of AUFMASS_FIELDS) {
+  assert.ok(browserFieldDefaults.has(field.key), `inline FIELDS must define a default for ${field.key}`);
+  const schemaDefault = Object.hasOwn(field, 'default')
+    ? field.default
+    : field.type === 'dimension' ? 0 : undefined;
+  assert.equal(browserFieldDefaults.get(field.key), schemaDefault, `inline default for ${field.key} must match schema`);
+}
 assert.match(aufmassHtml, /id="summarySection"/);
 assert.match(aufmassHtml, /id="summaryText"/);
 assert.match(aufmassHtml, /id="confirmSummary"/);
 assert.match(aufmassHtml, /id="rejectSummary"/);
+assert.match(aufmassHtml, /id="speakSummary"/);
+assert.match(aufmassHtml, /speechSynthesis/);
+assert.match(aufmassHtml, /utterance\.lang = 'de-DE'/);
+assert.match(aufmassHtml, /id="noteMicBtn"/);
+assert.match(aufmassHtml, /teilung_unklar/);
+assert.match(aufmassHtml, /transcript: transcriptEl\.value\.slice\(0, 6000\)/);
+assert.match(aufmassHtml, /dataset\.label/);
+assert.match(aufmassHtml, /content:\s*attr\(data-label\)/);
+assert.match(aufmassHtml, /min-width:\s*1360px/);
+assert.match(aufmassHtml, /font-size:\s*8pt/);
+assert.match(aufmassHtml, /@media screen and \(max-width: 720px\)/);
+assert.equal(TRANSCRIPT_MAX, 6000);
 const convertTranscriptBody = aufmassHtml.match(/async function convertTranscript\(\) \{([\s\S]*?)\n        \}/);
 assert.ok(convertTranscriptBody, 'public/aufmass.html must define convertTranscript');
-assert.match(convertTranscriptBody[1], /^\s*if \(recording && recognition\) \{[\s\S]*?recognition\.stop\(\);/);
-assert.match(convertTranscriptBody[1], /hideBanners\(\);\s*hideSummary\(\);\s*var transcript = transcriptEl\.value\.trim\(\);/);
+assert.match(aufmassHtml, /function attachSpeechInput\(/);
+assert.equal((aufmassHtml.match(/attachSpeechInput\(/g) || []).length, 3);
+assert.match(convertTranscriptBody[1], /^\s*stopAllRecording\(function \(\) \{/);
+assert.match(aufmassHtml, /async function continueConvertTranscript\(\) \{\s*hideBanners\(\);\s*hideSummary\(\);\s*var transcript = transcriptEl\.value\.trim\(\);/);
+assert.match(aufmassHtml, /function stop\(onStopped\)/);
+assert.match(aufmassHtml, /function stopAllRecording\(onAllStopped\)/);
+assert.match(aufmassHtml, /if \(!SR\) \{[\s\S]*?return \{ stop: stop, isRecording:/);
+assert.match(aufmassHtml, /recognition\.onend = function \(\) \{[\s\S]*?finishStopWaiters\(\);/);
+assert.match(aufmassHtml, /setTimeout\(function \(\) \{[\s\S]*?\}, 800\);/);
+assert.match(aufmassHtml, /stopAllRecording\(function \(\) \{[\s\S]*?recognition\.start\(\);/);
 assert.match(aufmassHtml, /confirmSummaryBtn\.addEventListener\('click'/);
 assert.match(aufmassHtml, /rejectSummaryBtn\.addEventListener\('click'/);
 
@@ -86,7 +117,7 @@ assert.equal(normalized[1].breiteMm, 300);
 assert.equal(normalized[1].hoeheMm, 2600);
 assert.equal(normalized[1].anzahl, 500);
 assert.equal(normalized[1].oeffnungsart, 'Dreh-Kipp');
-assert.equal(normalized[1].verglasung, '3fach');
+assert.equal(normalized[1].verglasung, '2fach');
 assert.equal(normalized[1].needsReview, true);
 assert.deepEqual(normalized[1].reviewReasons, [
   'breite_geklemmt',
@@ -101,10 +132,12 @@ assert.deepEqual(normalized[2], {
   anzahl: 1,
   breiteMm: 0,
   hoeheMm: 0,
+  teilung: '—',
   oeffnungsart: 'Dreh-Kipp',
   anschlag: '—',
   material: '',
-  verglasung: '3fach',
+  marke: '',
+  verglasung: '2fach',
   farbe: 'Weiß',
   notiz: '',
   needsReview: true,
@@ -188,6 +221,63 @@ assert.equal(typeof validSubmitBody.reference, 'string');
 assert.match(validSubmitBody.reference, /^AUF-/);
 assert.equal(validSubmitBody.windowCount, 1);
 
+const previousWebhookForTranscriptTests = process.env.AUFMASS_TICKET_WEBHOOK;
+const hadSubmitFetch = Object.hasOwn(globalThis, 'fetch');
+const originalSubmitFetch = globalThis.fetch;
+const forwardedSubmitBodies = [];
+try {
+  process.env.AUFMASS_TICKET_WEBHOOK = 'https://example.invalid/aufmass-ticket';
+  const { default: webhookSubmitHandler } = await import(`../api/aufmass-submit.js?transcript-tests=${Date.now()}`);
+  globalThis.fetch = async (_url, options) => {
+    forwardedSubmitBodies.push(JSON.parse(options.body));
+    return { ok: true };
+  };
+
+  const longTranscriptSubmitReq = {
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.20' },
+    body: { ...validSubmitReq.body, transcript: 'x'.repeat(9000) },
+  };
+  const longTranscriptSubmitRes = response();
+  await webhookSubmitHandler(longTranscriptSubmitReq, longTranscriptSubmitRes);
+  const longTranscriptSubmitBody = JSON.parse(longTranscriptSubmitRes.body);
+  assert.equal(longTranscriptSubmitRes.statusCode, 200);
+  assert.equal(longTranscriptSubmitBody.ok, true);
+  assert.equal(forwardedSubmitBodies[0].transcript.length, TRANSCRIPT_MAX);
+
+  const missingTranscriptSubmitReq = {
+    method: 'POST',
+    headers: { 'x-real-ip': '203.0.113.21' },
+    body: validSubmitReq.body,
+  };
+  const missingTranscriptSubmitRes = response();
+  await webhookSubmitHandler(missingTranscriptSubmitReq, missingTranscriptSubmitRes);
+  const missingTranscriptSubmitBody = JSON.parse(missingTranscriptSubmitRes.body);
+  assert.equal(missingTranscriptSubmitRes.statusCode, 200);
+  assert.equal(missingTranscriptSubmitBody.ok, true);
+  assert.equal(forwardedSubmitBodies[1].transcript, '');
+
+  for (const [index, transcript] of [[], { text: 'kein String' }].entries()) {
+    const nonStringTranscriptSubmitReq = {
+      method: 'POST',
+      headers: { 'x-real-ip': `203.0.113.${22 + index}` },
+      body: { ...validSubmitReq.body, transcript },
+    };
+    const nonStringTranscriptSubmitRes = response();
+    await webhookSubmitHandler(nonStringTranscriptSubmitReq, nonStringTranscriptSubmitRes);
+    const nonStringTranscriptSubmitBody = JSON.parse(nonStringTranscriptSubmitRes.body);
+    assert.equal(nonStringTranscriptSubmitRes.statusCode, 200);
+    assert.equal(nonStringTranscriptSubmitBody.ok, true);
+    assert.equal(forwardedSubmitBodies[2 + index].transcript, '');
+  }
+} finally {
+  if (hadSubmitFetch) globalThis.fetch = originalSubmitFetch;
+  else delete globalThis.fetch;
+
+  if (previousWebhookForTranscriptTests === undefined) delete process.env.AUFMASS_TICKET_WEBHOOK;
+  else process.env.AUFMASS_TICKET_WEBHOOK = previousWebhookForTranscriptTests;
+}
+
 const putSubmitReq = { method: 'PUT', headers: { 'x-real-ip': '203.0.113.12' }, body: {} };
 const putSubmitRes = response();
 await submitHandler(putSubmitReq, putSubmitRes);
@@ -212,11 +302,13 @@ const capped = normalizeWindow({
   hoeheMm: 1400,
   raum: 'r'.repeat(1000),
   material: 'm'.repeat(1000),
+  marke: 'p'.repeat(1000),
   farbe: 'f'.repeat(1000),
   notiz: 'n'.repeat(1000),
 });
 assert.equal(capped.raum.length, 200);
 assert.equal(capped.material.length, 200);
+assert.equal(capped.marke.length, 100);
 assert.equal(capped.farbe.length, 100);
 assert.equal(capped.notiz.length, 500);
 
@@ -248,6 +340,19 @@ assert.ok(!defaultHinge.reviewReasons.includes('anschlag_unklar'));
 const unclearHinge = normalizeWindow({ anschlag: 'quatsch' });
 assert.ok(unclearHinge.reviewReasons.includes('anschlag_unklar'));
 
+const defaultTeilung = normalizeWindow({});
+assert.equal(defaultTeilung.teilung, '—');
+assert.ok(!defaultTeilung.reviewReasons.includes('teilung_unklar'));
+
+assert.equal(normalizeWindow({ teilung: 'geteilt' }).teilung, 'mehrteilig');
+assert.equal(normalizeWindow({ teilung: 'zweiflügelig' }).teilung, 'mehrteilig');
+assert.equal(normalizeWindow({ teilung: '2-teilig' }).teilung, 'mehrteilig');
+assert.equal(normalizeWindow({ teilung: 'mehrfluegelig' }).teilung, 'mehrteilig');
+assert.equal(normalizeWindow({ teilung: 'zweiflügelig'.normalize('NFD') }).teilung, 'mehrteilig');
+
+const unclearTeilung = normalizeWindow({ teilung: 'quatschwert' });
+assert.ok(unclearTeilung.reviewReasons.includes('teilung_unklar'));
+
 let llmRequestBody = null;
 const llmResult = await extractWindows({
   transcript: 'Wohnzimmer 120 auf 140',
@@ -271,6 +376,8 @@ const llmResult = await extractWindows({
 });
 assert.match(llmRequestBody.messages[0].content, /zusammenfassung/);
 assert.match(llmRequestBody.messages[0].content, /WICHTIG: Antworte ausschließlich auf Deutsch/);
+assert.match(llmRequestBody.messages[0].content, /Sonderform/);
+assert.match(llmRequestBody.messages[0].content, /- Restinfo: Jede Aussage/);
 assert.equal(llmRequestBody.max_tokens, 2500);
 assert.equal(llmResult.model, 'kimi-test');
 assert.deepEqual(llmResult.windows, [{ raum: 'Wohnzimmer', breiteMm: 1200 }]);

@@ -11,5 +11,9 @@ public/janela-wissen-anleitung.html
 public/janela-wissen-anleitung.md
 .env.cron
 tools/banner-maker/out/
+tools/migrate/out/
 tools/banner-maker/motive/*
 !tools/banner-maker/motive/README.md
+# Lokales Bildmaterial aus dem DFS-Konfigurator (121 MB Arbeitsmaterial, gehoert nicht ins Repo)
+dfs-konfigurator-bilder/
+.env*

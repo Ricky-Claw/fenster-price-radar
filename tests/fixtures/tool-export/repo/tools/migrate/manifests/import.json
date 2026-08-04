@@ -1,0 +1,7 @@
+{
+  "name": "import-tool",
+  "title": "Import Tool",
+  "description": "Negativ-Fixture für den Import-Scan.",
+  "version": "1.0.0",
+  "files": ["require-outside/**/*"]
+}

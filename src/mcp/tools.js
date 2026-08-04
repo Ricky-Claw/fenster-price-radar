@@ -127,6 +127,51 @@ export function popupDelete({ id } = {}, deps = {}) {
   return rueckholFetch('DELETE', `/api/campaigns?id=${encodeURIComponent(id)}`, deps);
 }
 
+// --- E-Books (Generator-Pipeline: Frank/Agents liefern Config, VPS-Worker generiert) ---
+
+import { validateConfig, LIMITS } from '../../tools/ebook-maker/lib/validate.mjs';
+
+export function ebookValidate({ config } = {}) {
+  if (!config || typeof config !== 'object' || Array.isArray(config)) {
+    throw new Error('ebook_validate braucht ein config-Objekt (siehe tools/ebook-maker/example-ebook.json)');
+  }
+  const errors = validateConfig(config);
+  return {
+    valid: errors.length === 0,
+    errors,
+    limits: LIMITS,
+    hint: errors.length
+      ? 'Inhalte kürzen oder Seiten aufteilen — Limits sind A4-Physik und nicht verhandelbar.'
+      : 'Config gültig. Zur Generierung als <slug>.json in den ebook-inbox-Ordner legen; der Worker generiert und veröffentlicht automatisch.',
+  };
+}
+
+export async function ebookStatus({ slug } = {}, { env = process.env, fetchImpl = globalThis.fetch } = {}) {
+  const clean = String(slug || '').trim();
+  if (!/^[a-z0-9-]+$/.test(clean)) throw new Error('ebook_status braucht einen kebab-case slug');
+  const base = (env.SELF_BASE_URL || 'https://fenster-price-radar.vercel.app').replace(/\/$/, '');
+  const check = async (file) => {
+    const url = `${base}/ebooks/${clean}/${file}`;
+    try {
+      const res = await fetchImpl(url, { method: 'HEAD', redirect: 'manual' });
+      return { url, live: res.status === 200 };
+    } catch {
+      return { url, live: false };
+    }
+  };
+  const [cover, mockup] = await Promise.all([check('assets/cover.png'), check('assets/mockup.png')]);
+  return {
+    slug: clean,
+    generated: cover.live,
+    mockupLive: mockup.live,
+    cover,
+    mockup,
+    note: cover.live
+      ? 'E-Book ist generiert und deployt. PDF liegt unter /ebooks/<slug>/<slug>.pdf (Login-geschützt).'
+      : 'Noch nicht generiert/deployt — Worker-Lauf abwarten oder Config prüfen.',
+  };
+}
+
 // --- DFS-Website-Chatbot (deutscher-fenstershop.de) ---
 
 export async function dfsChatbotAsk({ message, sessionId } = {}, { env = process.env, fetchImpl = globalThis.fetch } = {}) {

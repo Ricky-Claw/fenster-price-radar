@@ -187,6 +187,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
 .f label { font-size: 13px; font-weight: 600; color: var(--ink); }
 .f .hint { font-size: 12px; color: var(--muted); }
 .f.span2 { grid-column: 1 / -1; }
+.interstitial-hint { grid-column: 1 / -1; margin: -4px 0 0; padding: 9px 11px; border-radius: 8px; background: #f8f3e7; color: var(--warn); font-size: 12px; }
 .charcount { font-size: 11px; color: var(--faint); text-align: right; }
 
 .choice { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px; }
@@ -286,6 +287,23 @@ input.invalid, textarea.invalid, select.invalid { border-color: var(--danger); o
 .cmp-row { display: grid; grid-template-columns: 120px 1fr 44px; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; }
 .cmp-row .cmp-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
 .cmp-row b { text-align: right; font-variant-numeric: tabular-nums; color: var(--accent); }
+
+/* ---- leads ---- */
+.leads { display: block; }
+.leads-panel { overflow: hidden; }
+.leads-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--line); }
+.leads-head h2 { font-size: 17px; }
+.leads-table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.leads-table { width: 100%; min-width: 860px; border-collapse: collapse; font-size: 13px; }
+.leads-table th, .leads-table td { padding: 11px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.leads-table th { color: var(--muted); background: var(--panel-2); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; }
+.leads-table td:nth-child(1), .leads-table td:nth-child(2) { white-space: nowrap; }
+.leads-table td:nth-child(5) { min-width: 240px; }
+.leads-table tbody tr:last-child td { border-bottom: 0; }
+@media (max-width: 720px) {
+  .leads-head { align-items: stretch; flex-direction: column; }
+  .leads-head .btn { align-self: flex-start; }
+}
 
 .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; padding: 11px 18px; border-radius: 10px; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: all .2s ease; z-index: 50; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }

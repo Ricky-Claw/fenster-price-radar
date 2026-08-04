@@ -689,6 +689,7 @@ function App(){
         <a href="/janela-wissen-anleitung.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Janela Wissen (Anleitung)</a>
         <a href="/rueckhol/" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Rückhol-Automatik</a>
         <a href="/rueckhol-popups-test.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Rückhol-Popups (Test)</a>
+        <a href="https://github.com/Ricky-Claw/fenster-price-radar/releases" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Tool-Pakete (GitHub)</a>
       </nav>
     </header>
     {menuOpen ? <button type="button" className="menuBackdrop" aria-label="Ansichtsmenü schließen" onClick={()=>setMenuOpen(false)} /> : null}

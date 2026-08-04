@@ -1,0 +1,7 @@
+{
+  "name": "data-tool",
+  "title": "Data Tool",
+  "description": "Negativ-Fixture für die Denylist.",
+  "version": "1.0.0",
+  "files": ["data-tool/**/*"]
+}

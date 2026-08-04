@@ -1,0 +1,7 @@
+{
+  "name": "version-injection-tool",
+  "title": "Version Injection Tool",
+  "description": "Negativ-Fixture für Zeilenumbrüche in der Version.",
+  "version": "1.0\nEVIL=1",
+  "files": ["mini-tool/**/*"]
+}

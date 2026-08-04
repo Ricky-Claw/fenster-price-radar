@@ -159,11 +159,24 @@
   // Demo-Seite: Frequenz-Deckel aufheben, damit Popups bei JEDEM Besuch wieder
   // feuern (im echten Einsatz schützt der Deckel Besucher vor Genervtwerden —
   // hier würde er jeden zweiten Test "da passiert nichts" aussehen lassen).
+  function clearDemoSiteCap() {
+    try { localStorage.removeItem('cre_any_demo'); } catch (e) {}
+  }
   try {
     Object.keys(localStorage)
       .filter(function (k) { return k.indexOf('cre_seen_demo_') === 0; })
       .forEach(function (k) { localStorage.removeItem(k); });
+    clearDemoSiteCap();
   } catch (e) {}
+  // Nur für diese Demo: Nach jedem eingeblendeten Popup den 6h-Seiten-Deckel
+  // wieder löschen, damit ein späterer gedeckelter Warenkorb-Trigger noch feuert.
+  new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      Array.prototype.forEach.call(mutation.addedNodes, function (node) {
+        if (node.nodeType === 1 && node.hasAttribute('data-cre-host')) clearDemoSiteCap();
+      });
+    });
+  }).observe(document.body, { childList: true });
 </script>
 <script async src="../cre.js" data-cre-site="demo" data-cre-api=""></script>
 <script>
@@ -258,7 +271,7 @@
         b.appendChild(t); b.appendChild(s);
         b.addEventListener('click', function () {
           document.getElementById('testpanel').classList.remove('open');
-          if (window.CRE && window.CRE.trigger) window.CRE.trigger(c.id);
+          if (window.CRE && window.CRE.triggerTest) window.CRE.triggerTest(c.id);
         });
         box.appendChild(b);
       });

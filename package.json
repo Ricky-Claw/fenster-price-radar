@@ -6,6 +6,8 @@
   "scripts": {
     "banner:check": "node --check tools/banner-maker/select-action.mjs && node --check tools/banner-maker/image-meta.mjs && node --check tools/banner-maker/fonts.mjs && node --check tools/banner-maker/banner-template.mjs && node --check tools/banner-maker/render.mjs && node --check tools/banner-maker/compress.mjs && node --check tools/banner-maker/make-banner.mjs && node --check tools/lib/find-chrome.mjs",
     "banner:make": "node tools/banner-maker/make-banner.mjs",
+    "tool:export": "node tools/migrate/export.mjs",
+    "test:export": "node --test tests/tool-export.mjs",
     "predev": "node scripts/build-anleitung.js",
     "dev": "vite --host 0.0.0.0",
     "prebuild": "node scripts/build-anleitung.js",
@@ -27,16 +29,20 @@
     "test:aufmass": "node tests/aufmass-smoke.mjs",
     "test:banner": "node tests/banner-maker.mjs",
     "check:live": "node scripts/check-live.mjs",
+    "check:llm": "node scripts/check-llm.mjs",
     "test:agent": "node tests/agent-token.mjs",
     "test:mcp": "node tests/mcp-smoke.mjs",
-    "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js",
+    "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js && node tests/api-auth.mjs && node tests/gpt-client.mjs && node tests/codex-bridge.mjs",
+    "test:gpt": "node tests/gpt-client.mjs",
+    "test:api-auth": "node tests/api-auth.mjs",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js && node --check tools/ebook-maker/make-ebook.mjs",
     "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",
     "ebook:make": "node tools/ebook-maker/make-ebook.mjs",
     "knowledge:crawl": "node scripts/crawl-dfs-knowledge.js",
     "meta:radar": "node --env-file-if-exists=.env tools/meta-radar/meta-radar.mjs",
     "rueckhol": "npm --prefix rueckhol-automatik start",
-    "rueckhol:test": "npm --prefix rueckhol-automatik test"
+    "rueckhol:test": "npm --prefix rueckhol-automatik test",
+    "test:codex-bridge": "node tests/codex-bridge.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",

@@ -1,0 +1,31 @@
+{
+  "task": "dfs-ebook-mockup",
+  "engine": "codex-imagegen-2",
+  "ebook": {
+    "slug": "fenster-foerderung",
+    "titel": "Förderung für neue Fenster"
+  },
+  "input": {
+    "cover": "assets/cover.png",
+    "beschreibung": "Echtes A4-Cover (Seite 1) des E-Books, als Bild beigefuegt"
+  },
+  "output": {
+    "datei": "public/ebooks/fenster-foerderung/assets/mockup.png",
+    "groesse": "1024x1024",
+    "format": "png"
+  },
+  "stil": {
+    "ansicht": "3D-Buch-/Broschueren-Mockup, leicht schraege 3/4-Ansicht von vorne, Softcover",
+    "licht": "weiches Licht von links oben, dezenter Schlagschatten",
+    "hintergrund": "hell und neutral (#FFFFFF bis #F5F5F5), kein Farbverlauf, kein Showroom-Kitsch",
+    "bildaufbau": "Buch mittig, ca. 70-80% der Bildhoehe"
+  },
+  "harteRegeln": [
+    "Das Bild entsteht in EINEM Durchgang komplett ueber das interne Bild-Generierungs-Tool (ImageGen 2).",
+    "KEINE programmatische Komposition: kein sharp/Canvas/Textur-Mapping des Covers auf eine Buchform. Nach der Generierung ist nur Skalieren/Zuschneiden auf exakt 1024x1024 erlaubt.",
+    "Cover-Inhalt (Text, Logo, Farben, Layout) 1:1 vom Referenzbild uebernehmen — Text NICHT neu setzen, NICHTS hinzufuegen, NICHTS weglassen, keine Schreibweise korrigieren.",
+    "Titeltext muss buchstabengleich mit dem Cover sein. Abweichung = komplett neu generieren, NIE nachbearbeiten.",
+    "Kein zusaetzlicher Text, keine Badges, keine Sticker, kein Wasserzeichen."
+  ],
+  "ablage": "Roh-PNG aus ~/.codex/generated_images/<id>/ auf 1024x1024 bringen und als output.datei speichern."
+}

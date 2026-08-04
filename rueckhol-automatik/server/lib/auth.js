@@ -42,7 +42,10 @@ function hasValidSession(req) {
 }
 
 function checkPassword(candidate) {
-  return isConfigured() && String(candidate || '') === expectedPassword();
+  if (!isConfigured()) return false;
+  const candidateDigest = crypto.createHash('sha256').update(String(candidate || ''), 'utf8').digest();
+  const expectedDigest = crypto.createHash('sha256').update(expectedPassword(), 'utf8').digest();
+  return crypto.timingSafeEqual(candidateDigest, expectedDigest);
 }
 
 function sessionCookie() {

@@ -1,6 +1,6 @@
-import { LLM_ANSWER_RULES } from './llmPromptRules.js';
+import { buildFenstershopLlmPrompt } from './llmPromptRules.js';
 
-// Claude Haiku als Qualitäts-Primärprovider. Zwei Auth-Wege möglich:
+// Claude Haiku als Qualitäts-Ausweichprovider. Zwei Auth-Wege möglich:
 // - CLAUDE_CODE_OAUTH_TOKEN (per `claude setup-token` aus einem Claude-Abo erzeugt) -> Bearer + oauth-Beta-Header,
 //   läuft über das Abo-Kontingent statt separater API-Abrechnung.
 // - ANTHROPIC_API_KEY -> klassischer x-api-key, nutzungsbasiert abgerechnet.
@@ -22,19 +22,9 @@ export async function polishFenstershopAnswerClaude({ message, draft, knowledge 
   const auth = claudeAuth(env);
   if (!auth || typeof fetchImpl !== 'function') return null;
   const model = env.FENSTERSHOP_CLAUDE_MODEL || DEFAULT_MODEL;
-  const prompt = `Du bist der Hilfechat vom Deutschen Fenstershop. Formuliere eine kurze, freundliche deutsche Antwort als reinen Text (kein JSON, keine Anführungszeichen drumherum).
-
-${LLM_ANSWER_RULES}
-
-Nutzerfrage: ${message}
-Intent: ${draft.intent}
-Draft-Antwort: ${draft.answer}
-Links: ${JSON.stringify(draft.links || [])}
-Kontakte: ${JSON.stringify(draft.contacts || [])}
-Wissensquellen: ${JSON.stringify(knowledge.map((chunk) => ({ title: chunk.title, text: chunk.text.slice(0, 900) })))}
-`;
+  const prompt = buildFenstershopLlmPrompt({ message, draft, knowledge });
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_CLAUDE_TIMEOUT_MS || 15000));
+  const timer = setTimeout(() => controller.abort(), Number(env.FENSTERSHOP_CLAUDE_TIMEOUT_MS || 8000));
   try {
     const authHeaders = auth.mode === 'oauth'
       ? { authorization: `Bearer ${auth.token}`, 'anthropic-beta': OAUTH_BETA_HEADER }

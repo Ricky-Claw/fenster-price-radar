@@ -8,7 +8,8 @@
       "includeFiles": "data/**"
     },
     "api/chatbot.js": {
-      "includeFiles": "{programmierlogik_chatbot_final_mit_anfrage_status.md,knowledge/**,public/data/dfs-knowledge.json}"
+      "includeFiles": "{programmierlogik_chatbot_final_mit_anfrage_status.md,knowledge/**,public/data/dfs-knowledge.json}",
+      "maxDuration": 30
     },
     "api/aufmass.js": {
       "maxDuration": 30

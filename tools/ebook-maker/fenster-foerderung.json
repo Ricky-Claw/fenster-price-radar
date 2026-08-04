@@ -1,0 +1,92 @@
+{
+  "slug": "fenster-foerderung",
+  "title": "Förderung für neue Fenster",
+  "subtitle": "Zuschuss, Steuerbonus und Kredit – klar erklärt.",
+  "kicker": "Deutscher Fenstershop Ratgeber",
+  "claim": "Ein kompakter Überblick über die drei Förderwege beim Fenstertausch – und wie die Antragstellung sauber abläuft.",
+  "topics": ["Zuschuss", "Steuerbonus", "Kredit"],
+  "footerLabel": "DFS Ratgeber",
+  "cta": {
+    "kicker": "Nächster Schritt",
+    "title": "Fenstertausch förderfähig planen",
+    "text": "Mit Maßen, Öffnungsart und Verglasungswunsch lässt sich prüfen, welche Fenster die Förderanforderungen erfüllen. Der Deutsche Fenstershop hilft bei der Auswahl passender Modelle.",
+    "buttonText": "Fenster online konfigurieren oder Anfrage vorbereiten",
+    "buttonUrl": "https://deutscher-fenstershop.de/konfigurator/fenster",
+    "contacts": [
+      { "label": "E-Mail", "value": "anfrage@deutscher-fenstershop.de" },
+      { "label": "Telefon", "value": "+49 7221 / 3022-333" },
+      { "label": "Web", "value": "deutscher-fenstershop.de" }
+    ]
+  },
+  "pages": [
+    {
+      "label": "Überblick",
+      "title": "Drei Wege zur Fenster-Förderung",
+      "lead": "Beim Fenstertausch im Bestand gibt es drei staatliche Förderwege. Sie lassen sich nicht kombinieren – pro Maßnahme gilt ein Weg.",
+      "blocks": [
+        {
+          "type": "cards",
+          "items": [
+            { "icon": "€", "title": "BAFA-Zuschuss", "text": "Direkter Zuschuss über die Bundesförderung für effiziente Gebäude (BEG)." },
+            { "icon": "§", "title": "Steuerbonus", "text": "Steuerermäßigung nach §35c EStG, verteilt über drei Jahre." },
+            { "icon": "⌂", "title": "KfW-Kredit", "text": "Zinsgünstiger Kredit, wenn die Sanierung größer angelegt ist." }
+          ]
+        },
+        { "type": "note", "text": "Stand: Juli 2026, ohne Gewähr. Maßgeblich sind die aktuellen Bedingungen von BAFA, KfW und Finanzamt." }
+      ]
+    },
+    {
+      "label": "Zuschuss",
+      "title": "Der BAFA-Zuschuss im Detail",
+      "lead": "Der häufigste Weg beim reinen Fenstertausch ist der Zuschuss als Einzelmaßnahme über das BAFA.",
+      "blocks": [
+        {
+          "type": "table",
+          "headers": ["Variante", "Fördersatz", "Hinweis"],
+          "rows": [
+            ["Basisförderung", "15 %", "bis 30.000 € Kosten je Wohneinheit"],
+            ["Mit Sanierungsfahrplan (iSFP)", "20 %", "bis 60.000 € Kosten je Wohneinheit"],
+            ["Technische Anforderung", "Uw ≤ 0,95", "in der Regel nur mit 3-fach-Verglasung"],
+            ["Antragszeitpunkt", "vor Auftrag", "vorzeitiger Beginn kostet die Förderung"]
+          ]
+        },
+        { "type": "note", "text": "Ob ein Fenster die Anforderungen erfüllt, hängt von Profil und Verglasung ab – das lässt sich vor der Bestellung klären." }
+      ]
+    },
+    {
+      "label": "Checkliste",
+      "title": "Voraussetzungen prüfen",
+      "lead": "Diese Punkte entscheiden, ob eine Förderung realistisch ist – am besten vor der Anfrage durchgehen.",
+      "blocks": [
+        {
+          "type": "checklist",
+          "items": [
+            "Gebäude ist ein Bestandsbau, kein Neubau",
+            "Einbau erfolgt durch einen Fachbetrieb",
+            "Fenster erreichen Uw-Wert von höchstens 0,95",
+            "Antrag wird vor der Auftragsvergabe gestellt",
+            "Energieeffizienz-Experte ist eingebunden",
+            "Rechnungen und Nachweise werden aufbewahrt"
+          ]
+        },
+        { "type": "note", "text": "Für den Steuerbonus nach §35c gelten eigene Regeln – hier genügt oft die Fachunternehmer-Bescheinigung mit der Steuererklärung." }
+      ]
+    },
+    {
+      "label": "Ablauf",
+      "title": "So läuft die Antragstellung",
+      "lead": "Die Reihenfolge ist entscheidend: erst planen und beantragen, dann beauftragen und einbauen.",
+      "blocks": [
+        {
+          "type": "timeline",
+          "items": [
+            { "title": "Planen", "text": "Fensterliste erstellen, Uw-Werte klären und Energieeffizienz-Experten einbinden." },
+            { "title": "Beantragen", "text": "Förderantrag stellen und den Zuwendungsbescheid abwarten – erst dann beauftragen." },
+            { "title": "Umsetzen", "text": "Einbau durch den Fachbetrieb, Nachweise einreichen, Auszahlung erhalten." }
+          ]
+        },
+        { "type": "note", "text": "Bei Unsicherheit hilft eine unverbindliche Anfrage mit Fensterliste – so lässt sich die Machbarkeit vorab einschätzen." }
+      ]
+    }
+  ]
+}
