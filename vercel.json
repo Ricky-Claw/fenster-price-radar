@@ -20,6 +20,9 @@
     "api/mcp.js": {
       "includeFiles": "public/data/**",
       "maxDuration": 30
+    },
+    "api/meta-leadgen-poll.js": {
+      "maxDuration": 90
     }
   },
   "headers": [

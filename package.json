@@ -35,6 +35,7 @@
     "test:chatbot": "node tests/chatbot-smoke.mjs && node tests/config-links.mjs && node --check public/chatbot-widget.js && node tests/api-auth.mjs && node tests/gpt-client.mjs && node tests/codex-bridge.mjs",
     "test:gpt": "node tests/gpt-client.mjs",
     "test:api-auth": "node tests/api-auth.mjs",
+    "test:meta": "node tests/meta-leadgen.mjs",
     "ebook:check": "node --check public/ebooks/ruhiges-heimspiel/export-pdf.js && node --check tools/ebook-maker/make-ebook.mjs",
     "ebook:pdf": "node public/ebooks/ruhiges-heimspiel/export-pdf.js",
     "ebook:make": "node tools/ebook-maker/make-ebook.mjs",

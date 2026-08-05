@@ -156,6 +156,20 @@ Ein Basis-Formular für K1+K2, ein Klon mit Aktions-Intro für K3.
 - **Datenschutz:** Link **https://deutscher-fenstershop.de/datenschutzerklaerung** (verifiziert 20.07.; `/datenschutz` ist 404) + Zusatzhinweis: „Mit dem Absenden stimmen Sie zu, dass Deutscher Fenstershop Sie zu Ihrer Anfrage kontaktiert. Alle Angaben zu Förderprogrammen ohne Gewähr. Höhe und Bewilligung der Förderung sind abhängig vom individuellen Vorhaben und der Entscheidung des BAFA. Der Förderantrag muss vor Vertragsabschluss gestellt werden."
 - **Danke-Screen:** Headline „Fast geschafft!" · Text: „Wir melden uns kurzfristig mit den nächsten Schritten. Sie haben Ihre Fensterliste schon? Senden Sie sie an info@deutscher-fenstershop.de — das beschleunigt Ihr Angebot. Oder starten Sie direkt den Fördermittel-Check:" · Button: „Zum Fördermittel-Check" → https://deutscher-fenstershop.de/foerdermittel-check mit UTM (siehe Messplan). (Instant Forms können keine Datei-Uploads — Mail + Fördercheck sind die Anschluss-Wege.)
 
+### 6a. Leadgen-Webhook
+
+#### Polling-Fallback
+
+Mit Standard Access für `leads_retrieval` liefert Meta Leadgen-Webhooks nur Leads von App-Rollen; echte Kunden-Leads lösen keinen Webhook aus. Als Sicherheitsnetz pollt `GET` oder `POST /api/meta-leadgen-poll` die aktiven Formulare und führt gefundene Leads durch dieselbe deduplizierte Weiterleitung. Der Endpoint ist mit `CRON_SECRET` als Bearer-Token geschützt. `?hours=` setzt den Lookback auf 1 bis 720 Stunden (Default: `META_POLL_LOOKBACK_HOURS`, sonst 6); `?dry=1` zählt nur und sendet nichts. Die Antwort weist mit `eligible` die Leads nach Lookback-Filter und mit `attempted` die tatsächlichen Weiterleitungsversuche aus.
+
+Beispiel für den VPS-Cron auf nexus-host:
+
+```cron
+*/10 * * * * curl -fsS -m 90 -H "Authorization: Bearer $CRON_SECRET" https://fenster-price-radar.vercel.app/api/meta-leadgen-poll >> /var/log/meta-leadgen-poll.log 2>&1
+```
+
+Sobald Meta Advanced Access für `leads_retrieval` gewährt, feuert der Webhook sofort; der Poller findet dann nur noch Duplikate (`dedupe:skipped`). Der Takt kann anschließend auf stündlich reduziert werden.
+
 ## 7. Messplan
 
 - **Namenskonvention:** Kampagnen `DFS_FH_K1_Kalt` / `DFS_FH_K2_Warm` / `DFS_FH_K3_RT_Aktion`; Anzeigen `<K>_<Creative>_<PT>` (z. B. `K1_Feed-Fensterliste_PT1`).
