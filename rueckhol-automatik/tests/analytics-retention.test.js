@@ -54,6 +54,20 @@ test('event site ids are case insensitive for retention quotas', () => {
   db.close();
 });
 
+test('submission retention purges old rows and limits each site independently', () => {
+  const db = createDatabase({ dbPath: ':memory:', eventLimit: 2, eventRetentionDays: 2 });
+  const old = new Date(Date.now() - 3 * 86400000).toISOString();
+  db.insertSubmission({ site_id: 'a', campaign_id: 'c', kind: 'lead', payload: {}, created_at: old });
+  db.insertSubmission({ site_id: 'a', campaign_id: 'c', kind: 'lead', payload: {}, created_at: new Date().toISOString() });
+  db.insertSubmission({ site_id: 'a', campaign_id: 'c', kind: 'lead', payload: {}, created_at: new Date(Date.now() + 1).toISOString() });
+  db.insertSubmission({ site_id: 'a', campaign_id: 'c', kind: 'lead', payload: {}, created_at: new Date(Date.now() + 2).toISOString() });
+  db.insertSubmission({ site_id: 'b', campaign_id: 'c', kind: 'lead', payload: {}, created_at: new Date().toISOString() });
+  assert.equal(db.listSubmissions('a').length, 2);
+  assert.equal(db.listSubmissions('a').some((submission) => submission.created_at === old), false);
+  assert.equal(db.listSubmissions('b').length, 1);
+  db.close();
+});
+
 test('backup still runs when the database checkpoint fails', async () => {
   let backupCalls = 0;
   const db = { checkpoint() { throw new Error('checkpoint failed'); }, close() {} };

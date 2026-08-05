@@ -74,6 +74,19 @@ function clampNumber(value, min, max, fallback) {
   return Math.min(max, Math.max(min, Math.round(numeric)));
 }
 
+function decodeCssEscapes(value) {
+  return String(value ?? '').replace(/\\([0-9a-fA-F]{1,6})\s?|\\(.)/g, (m, hex, literal) => {
+    if (hex) {
+      const code = parseInt(hex, 16);
+      if (Number.isFinite(code) && code >= 0 && code <= 0x10FFFF) {
+        try { return String.fromCodePoint(code); } catch (_) { return ''; }
+      }
+      return '';
+    }
+    return literal;
+  });
+}
+
 function cleanCustomCss(value) {
   // custom_css is injected into a live <style> inside the widget shadow root on
   // every visitor's browser, so it is an untrusted-blast-radius surface even
@@ -82,7 +95,13 @@ function cleanCustomCss(value) {
   // url() (exfiltrates form values via attribute-selector background requests),
   // and expression()/behavior (legacy script execution). data: and same-origin
   // relative url() are kept so legitimate inline assets still work.
-  return String(value ?? '')
+  let decoded = String(value ?? '');
+  for (let i = 0; i < 8; i++) {
+    const next = decodeCssEscapes(decoded);
+    if (next === decoded) break;
+    decoded = next;
+  }
+  return decoded
     .replace(/\u0000/g, '')
     .replace(/@import[^;]*;?/gi, '')
     .replace(/@charset[^;]*;?/gi, '')
@@ -283,7 +302,9 @@ function sanitizeCampaignInput(input = {}, existing = {}) {
 
   return {
     id,
-    site_id: cleanId(merged.site_id || merged.siteId || existing.site_id || 'default', 'default'),
+    site_id: existing.site_id
+      ? cleanId(existing.site_id, 'default')
+      : cleanId(merged.site_id || merged.siteId || 'default', 'default'),
     site_name: cleanText(merged.site_name || merged.siteName || merged.site_id || merged.siteId || 'Default site', 120) || 'Default site',
     name: cleanText(merged.name || 'Conversion Rescue campaign', 160),
     enabled: asBool(merged.enabled),

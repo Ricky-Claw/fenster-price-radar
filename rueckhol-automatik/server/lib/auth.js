@@ -57,7 +57,7 @@ function sessionCookie() {
 // Dev default (nothing configured): open, same as before auth existed.
 // adminToken is passed in (not read from env) so it honors the same
 // options.adminToken override createApp() already supports for tests.
-function createGuards(adminToken) {
+function createGuards(adminToken, { onAuthFailure } = {}) {
   function hasCredential(req) {
     if (!adminToken && !isConfigured()) return true;
     const auth = req.get('authorization') || '';
@@ -73,6 +73,11 @@ function createGuards(adminToken) {
   function requireDashboardAuth(req, res, next) {
     res.set('cache-control', 'no-store');
     if (hasCredential(req)) { next(); return; }
+    if (onAuthFailure && !onAuthFailure(req)) {
+      res.set('retry-after', String(15 * 60));
+      res.status(429).json({ error: 'too_many_attempts' });
+      return;
+    }
     res.status(401).json({ error: 'login_required' });
   }
 
@@ -82,6 +87,10 @@ function createGuards(adminToken) {
   function requireDashboardPage(req, res, next) {
     res.set('cache-control', 'no-store');
     if (hasCredential(req)) { next(); return; }
+    if (onAuthFailure && !onAuthFailure(req)) {
+      res.status(429).type('text/plain').send('Too many attempts. Try again later.');
+      return;
+    }
     res.redirect('../login');
   }
 

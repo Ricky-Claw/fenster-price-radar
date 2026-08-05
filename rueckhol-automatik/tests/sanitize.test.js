@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 
 const {
   cleanCsvList,
+  cleanCustomCss,
   cleanDownloadUrl,
   cleanText,
   cleanUrl,
@@ -19,6 +20,24 @@ test('sanitizeCampaignInput cleans page exclusions and supports camelCase', () =
     '/warenkorb, /kasse',
   );
   assert.equal(sanitizeCampaignInput({ page_exclude: 'x'.repeat(321) }).page_exclude.length, 320);
+});
+
+test('cleanCustomCss decodes CSS escapes before filtering imports', () => {
+  assert.equal(/import/i.test(cleanCustomCss('@\\69mport "https://evil.example/x.css";')), false);
+});
+
+test('cleanCustomCss repeatedly decodes nested CSS escapes before filtering', () => {
+  const cleaned = cleanCustomCss('@\\00005c69mport "https://evil.example/x.css";');
+  assert.equal(/import/i.test(cleaned), false);
+  assert.equal(/evil\.example/i.test(cleaned), false);
+});
+
+test('sanitizeCampaignInput keeps existing site assignment on updates', () => {
+  assert.equal(
+    sanitizeCampaignInput({ id: 'existing-id', site_id: 'site-b' }, { id: 'existing-id', site_id: 'site-a' }).site_id,
+    'site-a',
+  );
+  assert.equal(sanitizeCampaignInput({ site_id: 'site-b' }, {}).site_id, 'site-b');
 });
 
 test('cleanText strips control characters and collapses whitespace', () => {

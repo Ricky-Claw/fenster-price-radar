@@ -53,6 +53,21 @@ test('MCP design applies by id and rejects a mismatched site', async () => {
   } finally { ctx.close(); }
 });
 
+test('MCP create rejects an explicit id belonging to another site', async () => {
+  const ctx = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  try {
+    const created = await call(ctx, rpc('tools/call', { name: 'popup_create', arguments: { campaign: { id: 'mcp-fixed-id', siteId: 'site-a', name: 'Original', enabled: true } } }));
+    assert.equal(created.json().result.isError, undefined);
+    const rejected = await call(ctx, rpc('tools/call', { name: 'popup_create', arguments: { campaign: { id: 'mcp-fixed-id', siteId: 'site-b', name: 'Hijacked', enabled: false } } }));
+    assert.equal(rejected.json().result.isError, true);
+    const unchanged = (await ctx.app.inject({ method: 'GET', url: '/api/campaigns', headers: { authorization: 'Bearer test-token' } })).json().campaigns.find(c => c.id === 'mcp-fixed-id');
+    assert.equal(unchanged.site_id, 'site-a');
+    assert.equal(unchanged.name, 'Original');
+    const sameSite = await call(ctx, rpc('tools/call', { name: 'popup_create', arguments: { campaign: { id: 'mcp-fixed-id', siteId: 'site-a', name: 'Updated', enabled: true } } }));
+    assert.equal(sameSite.json().result.isError, undefined);
+  } finally { ctx.close(); }
+});
+
 test('MCP rejects malformed campaign arguments with a JSON-RPC error', async () => {
   const ctx = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
   try {

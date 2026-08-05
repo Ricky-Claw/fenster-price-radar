@@ -28,6 +28,11 @@ function popupCreate(db, campaign) {
     let id = sanitized.id; let n = 2; let clash = db.getCampaign(id);
     while (clash && clash.site_id !== sanitized.site_id) { id = `${sanitized.id}-${n++}`; clash = db.getCampaign(id); }
     sanitized.id = id;
+  } else {
+    const clash = db.getCampaign(sanitized.id);
+    if (clash && clash.site_id !== sanitized.site_id) {
+      throw new Error('Kampagnen-ID gehört bereits einer anderen Site');
+    }
   }
   return { campaign: db.saveCampaign(sanitized) };
 }

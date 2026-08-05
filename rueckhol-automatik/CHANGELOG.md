@@ -3,6 +3,37 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.6.2 — 2026-08-05
+
+Fünf offene Sicherheitsfunde aus dem Vollaudit geschlossen, zwei weitere
+per unabhängiger Gegenprüfung während dieser Runde selbst gefunden und
+sofort mitgefixt (live gegen den echten Angriff nachgestellt):
+
+- `custom_css` (landet live in einem `<style>` bei jedem Besucher): CSS-
+  Escape-Sequenzen (`@\69mport "https://evil..."`) umgingen den Filter
+  komplett. Erster Fix dekodierte nur einmal — ein verschachtelter Escape
+  (`\00005c69mport`) überlebte trotzdem, weil das Dekodieren selbst wieder
+  einen rohen Escape erzeugen kann. Jetzt wird bis zum Fixpunkt dekodiert
+  (max. 8 Durchläufe), erst danach gefiltert.
+- `/api/campaigns`, `/api/analytics`, `/api/submissions`, `/dashboard/`
+  waren komplett ohne Rate-Limit auf falsche Zugangsdaten erreichbar.
+  Neues Limit (20 Fehlversuche/15 Min pro IP) greift nur bei
+  fehlgeschlagener Auth, nie bei Erfolg — kein Risiko, sich selbst
+  auszusperren.
+- Eine Kampagne konnte per Update stillschweigend auf eine andere Site
+  umgehängt werden (`site_id` im Payload gewann einfach). `site_id` ist
+  jetzt nach dem Anlegen unveränderlich; Verschieben = löschen + neu
+  anlegen. Beim Gegenprüfen zeigte sich: derselbe Übernahme-Angriff ging
+  auch über Neuanlegen mit einer fremden, bereits vergebenen ID (Anlegen
+  bekam nie ein `existing`, der Sperre griff nicht) — jetzt lehnen sowohl
+  `PUT/POST /api/campaigns` als auch `popup_create`/`popup_update` das
+  explizit ab, statt die fremde Kampagne zu überschreiben.
+- Security-Header + Content-Security-Policy neu auf `/`, `/login`,
+  `/dashboard/` (nicht auf Widget/API — die bleiben cross-origin
+  einbettbar, absichtlich unverändert).
+- Leads-Tabelle (`/api/submit`) wächst nicht mehr unbegrenzt — gleiche
+  zeitbasierte Aufbewahrung + Site-Deckel wie bei Events.
+
 ## 1.6.1 — 2026-08-05
 
 - MVP-Vorschau-Features entfernt: Test-Shop (`demo/demo-test.html`) und

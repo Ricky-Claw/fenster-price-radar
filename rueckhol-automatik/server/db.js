@@ -94,6 +94,7 @@ function createDatabase(options = {}) {
     );
 
     CREATE INDEX IF NOT EXISTS idx_events_site_created ON events(site_id, created_at);
+    CREATE INDEX IF NOT EXISTS idx_submissions_site_created ON submissions(site_id, created_at);
   `);
 
   const campaignColumns = db.prepare('PRAGMA table_info(campaigns)').all();
@@ -174,6 +175,14 @@ function createDatabase(options = {}) {
       WHERE (@site_id = '' OR site_id = @site_id)
       ORDER BY created_at DESC, id DESC
     `),
+    purgeSubmissions: db.prepare(`
+      DELETE FROM submissions WHERE created_at < @cutoff
+    `),
+    purgeSubmissionsByLimit: db.prepare(`
+      DELETE FROM submissions
+      WHERE site_id = @site_id
+        AND id NOT IN (SELECT id FROM submissions WHERE site_id = @site_id ORDER BY created_at DESC, id DESC LIMIT @limit)
+    `),
   };
 
   function ensureSite(siteId, name) {
@@ -247,6 +256,9 @@ function createDatabase(options = {}) {
       payload: JSON.stringify(submission.payload || {}),
       created_at: submission.created_at,
     });
+    const cutoff = new Date(Date.now() - eventRetentionDays * 24 * 60 * 60 * 1000).toISOString();
+    statements.purgeSubmissions.run({ cutoff });
+    statements.purgeSubmissionsByLimit.run({ site_id: submission.site_id, limit: eventLimit });
   }
 
   return {

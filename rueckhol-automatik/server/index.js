@@ -134,6 +134,13 @@ function sendFile(res, filePath, contentType) {
   res.status(200).type(contentType).send(body);
 }
 
+function setAdminSecurityHeaders(res, cspExtra) {
+  res.set('x-content-type-options', 'nosniff');
+  res.set('x-frame-options', 'DENY');
+  res.set('referrer-policy', 'no-referrer');
+  res.set('content-security-policy', cspExtra);
+}
+
 function createApp(options = {}) {
   const rootDir = options.rootDir || path.resolve(__dirname, '..');
   const db = options.db || createDatabase({
@@ -143,7 +150,9 @@ function createApp(options = {}) {
   });
   const app = express();
   const adminToken = options.adminToken === undefined ? process.env.ADMIN_TOKEN || '' : options.adminToken;
-  const { requireDashboardAuth, requireDashboardPage } = createGuards(adminToken);
+  const { requireDashboardAuth, requireDashboardPage } = createGuards(adminToken, {
+    onAuthFailure: (req) => checkDashboardAuthRateLimit(clientIp(req)),
+  });
   const webhookUrl = options.webhookUrl === undefined ? process.env.WEBHOOK_URL || '' : options.webhookUrl;
   const siteOrigins = options.siteOrigins || parseSiteOrigins(process.env.SITE_ORIGINS);
   const outboundFetch = options.fetch || globalThis.fetch;
@@ -154,6 +163,7 @@ function createApp(options = {}) {
   // further failed-login responses from 401 to 429. Only failures consume it.
   const checkGlobalLoginCost = createRateLimiter(100, 15 * 60_000);
   const checkMcpRateLimit = createRateLimiter(10, 15 * 60_000);
+  const checkDashboardAuthRateLimit = createRateLimiter(20, 15 * 60_000);
   const checkInstallRateLimit = createRateLimiter(10, 60_000);
   const backupDir = options.backupDir || path.join(rootDir, 'data', 'backups');
   const runDatabaseBackup = options.backupDatabase || backupDatabase;
@@ -352,6 +362,7 @@ function createApp(options = {}) {
 
   app.get('/', (req, res) => {
     res.set('cache-control', 'no-store');
+    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
     res.type('text/html; charset=utf-8').send(`
       <!doctype html>
       <html lang="de">
@@ -395,6 +406,7 @@ function createApp(options = {}) {
 
   app.get('/login', (req, res) => {
     res.set('cache-control', 'no-store');
+    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
     res.type('text/html; charset=utf-8').send(`
       <!doctype html>
       <html lang="de">
@@ -703,6 +715,15 @@ function createApp(options = {}) {
         clash = db.getCampaign(candidate);
       }
       campaign.id = candidate;
+    } else {
+      // Explicit id from the caller: never silently take over another
+      // site's campaign — reject instead of falling into saveCampaign's
+      // UPDATE branch.
+      const clash = db.getCampaign(campaign.id);
+      if (clash && clash.site_id !== campaign.site_id) {
+        res.status(409).json({ error: 'campaign_id_belongs_to_another_site' });
+        return;
+      }
     }
     const saved = db.saveCampaign(campaign);
     res.json({ campaign: saved });
@@ -746,7 +767,10 @@ function createApp(options = {}) {
   // Chained manually: this vendor express shim's app.use() only accepts one
   // handler per prefix (unlike app.get/post, which support several via rest args).
   const dashboardStatic = express.static(path.join(rootDir, 'dashboard'));
-  app.use('/dashboard', (req, res, next) => requireDashboardPage(req, res, () => dashboardStatic(req, res, next)));
+  app.use('/dashboard', (req, res, next) => {
+    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://rsms.me; font-src https://rsms.me; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    requireDashboardPage(req, res, () => dashboardStatic(req, res, next));
+  });
   // Demo/test pages are for our test phase — a customer's production install
   // should not serve them (DISABLE_DEMO=1 in the service env).
   if (process.env.DISABLE_DEMO !== '1') {

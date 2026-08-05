@@ -6,6 +6,21 @@ test('CSV cells guard leading tabs independently', () => {
   assert.equal(csvCell('\t=SUM(1,2)'), '"\'\t=SUM(1,2)"');
 });
 
+test('dashboard auth rate limit only affects failed credentials', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  try {
+    const responses = [];
+    for (let i = 0; i < 21; i++) {
+      responses.push(await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers: { authorization: 'Bearer wrong-token' } }));
+    }
+    assert.equal(responses.slice(0, 20).every((response) => response.status === 401), true);
+    assert.equal(responses[20].status, 429);
+    assert.equal((await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers: { authorization: 'Bearer test-token' } })).status, 200);
+  } finally {
+    appContext.close();
+  }
+});
+
 test('campaign CRUD, config, events, and analytics work together', async () => {
   const appContext = createApp({
     dbPath: ':memory:',
@@ -498,6 +513,31 @@ test('same campaign name on two sites must not overwrite each other', async () =
   } finally {
     appContext.close();
   }
+});
+
+test('explicit campaign id cannot overwrite another site via POST', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', webhookUrl: '', warnOnOpenAdmin: false });
+  const auth = { 'content-type': 'application/json', authorization: 'Bearer test-token' };
+  try {
+    const original = (await appContext.app.inject({
+      method: 'POST', url: '/api/campaigns', headers: auth,
+      body: { id: 'fixed-id', siteId: 'site-a', name: 'Original', enabled: true, trigger: 'exit_intent', actionType: 'coupon', actionConfig: { code: 'A' } },
+    })).json().campaign;
+    const rejected = await appContext.app.inject({
+      method: 'POST', url: '/api/campaigns', headers: auth,
+      body: { id: 'fixed-id', siteId: 'site-b', name: 'Hijacked', enabled: false, trigger: 'scroll', actionType: 'url', actionConfig: { url: 'https://evil.example' } },
+    });
+    assert.equal(rejected.status, 409);
+    const unchanged = (await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers: auth })).json().campaigns.find(c => c.id === original.id);
+    assert.equal(unchanged.site_id, 'site-a');
+    assert.equal(unchanged.name, 'Original');
+    const sameSite = await appContext.app.inject({
+      method: 'POST', url: '/api/campaigns', headers: auth,
+      body: { id: 'fixed-id', siteId: 'site-a', name: 'Updated', enabled: true, trigger: 'exit_intent', actionType: 'coupon', actionConfig: { code: 'B' } },
+    });
+    assert.equal(sameSite.status, 200);
+    assert.equal(sameSite.json().campaign.name, 'Updated');
+  } finally { appContext.close(); }
 });
 
 test('editing an existing campaign via PUT must not 500 (created_at param regression)', async () => {
