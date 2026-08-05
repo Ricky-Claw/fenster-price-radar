@@ -45,9 +45,12 @@ const LEAD_ACTION_TYPES = new Set(['lead', 'leadgen_grouped', 'onsite_conversion
 
 function leadsAus(actions) {
   if (!Array.isArray(actions)) return 0;
+  // Meta liefert pro echtem Instant-Form-Lead mehrere parallele Action-Typen
+  // (z.B. "lead" UND "onsite_conversion.lead_grouped" für dieselbe Einreichung)
+  // — aufsummieren würde denselben Lead mehrfach zählen. Max statt Summe.
   return actions
     .filter((a) => LEAD_ACTION_TYPES.has(a.action_type))
-    .reduce((sum, a) => sum + Number(a.value || 0), 0);
+    .reduce((max, a) => Math.max(max, Number(a.value || 0)), 0);
 }
 
 async function eigeneKampagnen() {
