@@ -3,6 +3,13 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.3.0 — 2026-08-04
+
+- MCP-Server für Agenten zieht von Vercel direkt auf diesen Server um (`POST
+  /api/mcp`, gleiche sechs Popup-Werkzeuge, jetzt mit direktem Datenbankzugriff
+  statt HTTP-Umweg). Auth über eigenständiges `ADMIN_TOKEN`, eigenes Rate-Limit
+  auf fehlgeschlagene Auth-Versuche.
+
 ## 1.2.0 — 2026-08-04
 
 - Mehrere Einschlussmuster und Seitenausschlüsse für Kampagnen.

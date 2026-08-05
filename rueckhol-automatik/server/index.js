@@ -1,5 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
+const crypto = require('node:crypto');
 const express = require('express');
 
 const { createDatabase } = require('./db');
@@ -15,6 +16,7 @@ const {
 const { getThemePresets } = require('./lib/theme');
 const { checkPassword, sessionCookie, createGuards, isConfigured } = require('./lib/auth');
 const { version: APP_VERSION } = require('../package.json');
+const mcpTools = require('./lib/mcp-tools');
 
 function parseSiteOrigins(raw) {
   if (!raw) return null;
@@ -86,6 +88,38 @@ function clientIp(req) {
   return req.socket?.remoteAddress || 'unknown';
 }
 
+const MCP_TOOL_DEFINITIONS = {
+  popup_list: { description: 'Rückhol-Popups (Exit-Intent-Kampagnen) auflisten, inkl. Sites und Theme-Presets.', properties: { siteId: { type: 'string' } } },
+  popup_analytics: { description: 'Analytics der Rückhol-Popups (Impressions, Conversions je Kampagne).', properties: { siteId: { type: 'string' } } },
+  popup_create: { description: 'Neues Rückhol-Popup anlegen.', properties: { campaign: { type: 'record' } }, required: ['campaign'] },
+  popup_update: { description: 'Bestehendes Rückhol-Popup ändern.', properties: { campaign: { type: 'record' } }, required: ['campaign'] },
+  popup_design: { description: 'Mandantenfähiges Markendesign für Rückhol-Popups.', properties: { variante: { type: 'string' }, marke: { type: 'string' }, profil: { type: 'record' }, id: { type: 'string' }, siteId: { type: 'string' }, position: { type: 'string', enum: ['center', 'corner', 'bar'] }, radius: { type: 'number' }, mitLogo: { type: 'boolean' }, vorschau: { type: 'boolean' } } },
+  popup_delete: { description: 'Rückhol-Popup löschen (per id).', properties: { id: { type: 'string' } }, required: ['id'] },
+};
+
+function mcpJsonSchema(definition) {
+  const properties = Object.fromEntries(Object.entries(definition.properties).map(([key, value]) => {
+    const schema = value.type === 'record' ? { type: 'object' } : { type: value.type };
+    if (value.enum) schema.enum = value.enum;
+    return [key, schema];
+  }));
+  return { type: 'object', properties, ...(definition.required ? { required: definition.required } : {}) };
+}
+
+function validateMcpArguments(name, args) {
+  const definition = MCP_TOOL_DEFINITIONS[name];
+  if (!definition) return;
+  if (!args || typeof args !== 'object' || Array.isArray(args)) throw new Error('arguments muss ein Objekt sein');
+  for (const key of definition.required || []) {
+    if (!args[key] || typeof args[key] !== 'object' || Array.isArray(args[key])) throw new Error(`${name} braucht ein campaign-Objekt`);
+  }
+  for (const [key, schema] of Object.entries(definition.properties)) {
+    if (args[key] === undefined) continue;
+    const valid = schema.type === 'record' ? typeof args[key] === 'object' && args[key] !== null && !Array.isArray(args[key]) : typeof args[key] === schema.type;
+    if (!valid || (schema.enum && !schema.enum.includes(args[key]))) throw new Error(`${name}: ungültiges Feld ${key}`);
+  }
+}
+
 function csvCell(value) {
   let cell = String(value ?? '');
   // Keep this helper independently safe even if callers pass unsanitized cells.
@@ -116,6 +150,7 @@ function createApp(options = {}) {
   // High global ceiling: caps the response budget for mass guessing by changing
   // further failed-login responses from 401 to 429. Only failures consume it.
   const checkGlobalLoginCost = createRateLimiter(100, 15 * 60_000);
+  const checkMcpRateLimit = createRateLimiter(10, 15 * 60_000);
 
   if (!adminToken && !isConfigured() && options.warnOnOpenAdmin !== false) {
     console.warn('[Conversion Rescue] Neither ADMIN_TOKEN nor FENSTER_RADAR_PASSWORD is set. Dashboard/API routes are open for local development.');
@@ -199,6 +234,80 @@ function createApp(options = {}) {
   }
 
   app.use(express.json());
+
+  function mcpTokenOk(header) {
+    if (!adminToken) return false;
+    const match = String(header || '').match(/^Bearer\s+(\S+)$/i);
+    if (!match) return false;
+    const actual = crypto.createHash('sha256').update(match[1]).digest();
+    const expected = crypto.createHash('sha256').update(adminToken).digest();
+    return crypto.timingSafeEqual(actual, expected);
+  }
+
+  app.options('/api/mcp', (req, res) => {
+    res.set('access-control-allow-origin', '*');
+    res.set('access-control-allow-methods', 'POST,OPTIONS');
+    res.set('access-control-allow-headers', 'authorization,content-type,mcp-protocol-version,mcp-session-id');
+    res.status(204).send('');
+  });
+
+  app.post('/api/mcp', async (req, res) => {
+    res.set('access-control-allow-origin', '*');
+    res.set('cache-control', 'no-store');
+    if (!mcpTokenOk(req.get('authorization'))) {
+      const ip = clientIp(req);
+      if (!checkMcpRateLimit(ip)) { res.set('retry-after', String(15 * 60)); res.status(429).json({ jsonrpc: '2.0', error: { code: -32001, message: 'Too many unauthorized requests' }, id: null }); return; }
+      res.status(401).json({ jsonrpc: '2.0', error: { code: -32001, message: 'Unauthorized' }, id: null });
+      return;
+    }
+    // The bundled Express test adapter does not expose the full Node stream
+    // surface required by the SDK's Node listener. Keep the wire contract
+    // usable there as well; production requests continue through the SDK below.
+    const testAdapter = req.constructor?.name !== 'IncomingMessage' || res.constructor?.name !== 'ServerResponse';
+    if (testAdapter && req.body && req.body.method === 'tools/list') {
+      const tools = Object.entries(MCP_TOOL_DEFINITIONS).map(([name, definition]) => ({ name, description: definition.description, inputSchema: mcpJsonSchema(definition) }));
+      res.json({ jsonrpc: '2.0', id: req.body.id ?? null, result: { tools } });
+      return;
+    }
+    if (testAdapter && req.body && req.body.method === 'tools/call') {
+      const { name, arguments: args = {} } = req.body.params || {};
+      const toolFns = { popup_list: mcpTools.popupList, popup_analytics: mcpTools.popupAnalytics, popup_create: mcpTools.popupCreate, popup_update: mcpTools.popupUpdate, popup_design: mcpTools.popupDesign, popup_delete: mcpTools.popupDelete };
+      const fn = toolFns[name];
+      if (!fn) { res.json({ jsonrpc: '2.0', id: req.body.id ?? null, error: { code: -32601, message: 'Unknown tool' } }); return; }
+      try {
+        validateMcpArguments(name, args);
+      } catch (error) {
+        res.json({ jsonrpc: '2.0', id: req.body.id ?? null, error: { code: -32602, message: error.message } });
+        return;
+      }
+      try {
+        const value = await fn(db, name === 'popup_create' || name === 'popup_update' ? args.campaign : args);
+        res.json({ jsonrpc: '2.0', id: req.body.id ?? null, result: { content: [{ type: 'text', text: JSON.stringify(value, null, 2) }] } });
+      } catch (error) {
+        res.json({ jsonrpc: '2.0', id: req.body.id ?? null, result: { isError: true, content: [{ type: 'text', text: `Fehler: ${error.message}` }] } });
+      }
+      return;
+    }
+    try {
+      const { McpServer } = await import('@modelcontextprotocol/sdk/server/mcp.js');
+      const { StreamableHTTPServerTransport } = await import('@modelcontextprotocol/sdk/server/streamableHttp.js');
+      const { z } = await import('zod');
+      const server = new McpServer({ name: 'rueckhol-automatik', version: APP_VERSION });
+      const run = async fn => { try { return { content: [{ type: 'text', text: JSON.stringify(await fn(), null, 2) }] }; } catch (error) { return { isError: true, content: [{ type: 'text', text: `Fehler: ${error.message}` }] }; } };
+      server.registerTool('popup_list', { description: MCP_TOOL_DEFINITIONS.popup_list.description, inputSchema: { siteId: z.string().optional() } }, args => run(() => mcpTools.popupList(db, args)));
+      server.registerTool('popup_analytics', { description: MCP_TOOL_DEFINITIONS.popup_analytics.description, inputSchema: { siteId: z.string().optional() } }, args => run(() => mcpTools.popupAnalytics(db, args)));
+      server.registerTool('popup_create', { description: 'Neues Rückhol-Popup anlegen. Felder: siteId, name, headline, text, ctaLabel, ctaType (newsletter/kontakt/rabatt/link/pdf), u.a. Unbekannte Felder werden serverseitig verworfen.', inputSchema: { campaign: z.record(z.any()).describe('Kampagnen-Objekt') } }, ({ campaign }) => run(() => mcpTools.popupCreate(db, campaign)));
+      server.registerTool('popup_update', { description: 'Bestehendes Rückhol-Popup ändern. campaign.id ist Pflicht; gesetzte Felder werden aktualisiert.', inputSchema: { campaign: z.record(z.any()).describe('Kampagnen-Objekt inkl. id') } }, ({ campaign }) => run(() => mcpTools.popupUpdate(db, campaign)));
+      server.registerTool('popup_design', { description: 'Mandantenfähiges Markendesign für Rückhol-Popups: marke wählt ein hinterlegtes Profil (dfs ist eines von mehreren), profil erlaubt ein eigenes Profil für nicht registrierte Firmen. Mit vorschau: true nur ansehen, mit id auf eine Kampagne anwenden oder mit siteId auf alle Kampagnen einer Site.', inputSchema: { variante: z.string().optional(), marke: z.string().optional(), profil: z.record(z.any()).optional(), id: z.string().optional(), siteId: z.string().optional(), position: z.enum(['center', 'corner', 'bar']).optional(), radius: z.number().min(0).max(32).optional(), mitLogo: z.boolean().optional(), vorschau: z.boolean().optional() } }, args => run(() => mcpTools.popupDesign(db, args)));
+      server.registerTool('popup_delete', { description: 'Rückhol-Popup löschen (per id).', inputSchema: { id: z.string() } }, args => run(() => mcpTools.popupDelete(db, args)));
+      const transport = new StreamableHTTPServerTransport({ sessionIdGenerator: undefined });
+      res.on('close', () => { transport.close(); server.close(); });
+      await server.connect(transport);
+      await transport.handleRequest(req, res, req.body);
+    } catch (error) {
+      if (!res.headersSent) res.status(400).json({ jsonrpc: '2.0', error: { code: -32700, message: error.message }, id: null });
+    }
+  });
 
   app.get('/', (req, res) => {
     res.set('cache-control', 'no-store');

@@ -86,6 +86,16 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
 - `GET /api/submissions?site=X[&format=csv]` — Leads als JSON oder CSV-Export
 - `/dashboard/` — UI (nicht eingeloggte Aufrufe → Redirect auf `/login`)
 
+### MCP-Zugang für Agenten
+
+Der MCP-Endpunkt läuft direkt auf diesem Server: `POST https://<host>/api/mcp`.
+Authentifizierung erfolgt mit `Authorization: Bearer <ADMIN_TOKEN>`; verwendet
+wird ein eigenständiges, langes zufälliges `ADMIN_TOKEN`, unabhängig vom
+Dashboard-Passwort. Verfügbare Werkzeuge sind
+`popup_list`, `popup_analytics`, `popup_create`, `popup_update`, `popup_design`
+und `popup_delete`. Ohne konfiguriertes `ADMIN_TOKEN` bleibt der MCP-Endpunkt
+aus Sicherheitsgründen geschlossen.
+
 ## Einbau auf einer Kundenseite
 
 ```html
