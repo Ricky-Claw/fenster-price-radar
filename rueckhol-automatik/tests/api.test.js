@@ -539,3 +539,68 @@ test('submit endpoint is rate limited like events', async () => {
     appContext.close();
   }
 });
+
+test('events endpoint rejects a body over the JSON limit with 413', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    const body = {
+      siteId: 'demo',
+      type: 'popup_shown',
+      metadata: { padding: 'x'.repeat(262144) },
+    };
+    const response = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/events',
+      headers: {
+        'content-type': 'application/json',
+        'content-length': String(Buffer.byteLength(JSON.stringify(body))),
+      },
+      body,
+    });
+
+    assert.equal(response.status, 413);
+    assert.equal(response.headers['content-type'], 'application/json; charset=utf-8');
+    assert.equal(response.body, '{"error":"payload_too_large"}');
+  } finally {
+    appContext.close();
+  }
+});
+
+test('events endpoint rejects an oversized streamed body without content-length', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    const response = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/events',
+      headers: { 'content-type': 'application/json', 'transfer-encoding': 'chunked' },
+      body: {
+        siteId: 'demo',
+        type: 'popup_shown',
+        metadata: { padding: 'x'.repeat(262144) },
+      },
+    });
+
+    assert.equal(response.status, 413);
+    assert.equal(response.headers['content-type'], 'application/json; charset=utf-8');
+    assert.equal(response.body, '{"error":"payload_too_large"}');
+  } finally {
+    appContext.close();
+  }
+});
+
+test('events endpoint still accepts a normal small JSON body', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', webhookUrl: '', warnOnOpenAdmin: false });
+  try {
+    const response = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/events',
+      headers: { 'content-type': 'application/json' },
+      body: { siteId: 'demo', type: 'popup_shown', metadata: { source: 'limit-regression' } },
+    });
+
+    assert.equal(response.status, 200);
+    assert.deepEqual(response.json(), { ok: true });
+  } finally {
+    appContext.close();
+  }
+});

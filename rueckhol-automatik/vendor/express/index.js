@@ -235,7 +235,10 @@ function express() {
   return app;
 }
 
-express.json = function json() {
+express.json = function json(options = {}) {
+  const limit = options.limit === undefined ? 262144 : Number(options.limit);
+  if (!Number.isFinite(limit) || limit < 0) throw new TypeError('express.json limit must be a non-negative number');
+
   return (req, res, next) => {
     if (req.method === 'GET' || req.method === 'HEAD') {
       req.body = {};
@@ -251,8 +254,43 @@ express.json = function json() {
     }
 
     const chunks = [];
-    req.on('data', (chunk) => chunks.push(chunk));
-    req.on('end', () => {
+    let bytes = 0;
+    let settled = false;
+
+    const cleanup = () => {
+      req.removeListener('data', onData);
+      req.removeListener('end', onEnd);
+      req.removeListener('error', onError);
+    };
+    const rejectPayloadTooLarge = () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      chunks.length = 0;
+      if (typeof req.pause === 'function') req.pause();
+      if (typeof req.destroy === 'function') {
+        res.once('finish', () => {
+          if (!req.destroyed) req.destroy();
+        });
+      }
+      res.statusCode = 413;
+      res.setHeader('content-type', 'application/json; charset=utf-8');
+      res.end(JSON.stringify({ error: 'payload_too_large' }));
+    };
+    const onData = (chunk) => {
+      if (settled) return;
+      const buffer = Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+      bytes += buffer.byteLength;
+      if (bytes > limit) {
+        rejectPayloadTooLarge();
+        return;
+      }
+      chunks.push(buffer);
+    };
+    const onEnd = () => {
+      if (settled) return;
+      settled = true;
+      cleanup();
       const raw = Buffer.concat(chunks).toString('utf8').trim();
       if (!raw) {
         req.body = {};
@@ -267,8 +305,23 @@ express.json = function json() {
         res.setHeader('content-type', 'application/json; charset=utf-8');
         res.end(JSON.stringify({ error: 'Invalid JSON body' }));
       }
-    });
-    req.on('error', next);
+    };
+    const onError = (error) => {
+      if (settled) return;
+      settled = true;
+      cleanup();
+      next(error);
+    };
+
+    const contentLength = req.headers['content-length'];
+    if (contentLength !== undefined && Number(contentLength) > limit) {
+      rejectPayloadTooLarge();
+      return;
+    }
+
+    req.on('data', onData);
+    req.on('end', onEnd);
+    req.on('error', onError);
   };
 };
 
