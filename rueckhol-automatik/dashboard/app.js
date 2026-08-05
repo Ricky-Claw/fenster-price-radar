@@ -18,7 +18,7 @@
     editingId: null,     // id of the campaign being edited (null = new)
     device: 'desktop',
     dirty: false,        // unsaved changes in the editor
-    window: 'allTime',   // analytics window: allTime | last7Days
+    window: 'allTime',   // analytics window: allTime | last7Days | last30Days | last90Days | last180Days | last365Days
     leadsGen: 0,         // ignores stale lead responses after a site switch
   };
 
@@ -387,8 +387,12 @@
     Object.keys(bc).forEach(function (k) { var b = bc[k]; shown += b.shown || 0; conv += b.converted || 0; inter += b.interacted || 0; dismiss += sumReasons(b.reasons); });
 
     var toggle = '<div class="win-toggle">' +
-      '<button class="chip" type="button" data-win="allTime" aria-pressed="' + (state.window === 'allTime') + '">Gesamt</button>' +
-      '<button class="chip" type="button" data-win="last7Days" aria-pressed="' + (state.window === 'last7Days') + '">Letzte 7 Tage</button></div>';
+      '<button class="chip" type="button" data-win="last7Days" aria-pressed="' + (state.window === 'last7Days') + '">Letzte 7 Tage</button>' +
+      '<button class="chip" type="button" data-win="last30Days" aria-pressed="' + (state.window === 'last30Days') + '">Letzter Monat</button>' +
+      '<button class="chip" type="button" data-win="last90Days" aria-pressed="' + (state.window === 'last90Days') + '">3 Monate</button>' +
+      '<button class="chip" type="button" data-win="last180Days" aria-pressed="' + (state.window === 'last180Days') + '">6 Monate</button>' +
+      '<button class="chip" type="button" data-win="last365Days" aria-pressed="' + (state.window === 'last365Days') + '">Jahr</button>' +
+      '<button class="chip" type="button" data-win="allTime" aria-pressed="' + (state.window === 'allTime') + '">Gesamt</button></div>';
 
     var kpis = '<div class="kpis">' +
       kpi(shown, 'Popups gezeigt', 'Seite: ' + esc(wrap.site)) +

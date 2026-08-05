@@ -3,6 +3,12 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.6.0 — 2026-08-05
+
+- Auswertung um vier Zeitfenster erweitert: Letzter Monat, 3 Monate,
+  6 Monate, Jahr — neben den bestehenden Letzte 7 Tage/Gesamt. Sechs
+  Chips im Dashboard, gleiches rollierendes Tage-Muster wie bisher.
+
 ## 1.5.0 — 2026-08-05
 
 - Analytics gegen Fälschung und dauerhaften Datenverlust abgesichert:

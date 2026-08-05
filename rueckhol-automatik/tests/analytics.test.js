@@ -49,3 +49,23 @@ test('summarizeAnalytics builds funnel, action, trigger, and reason stats', () =
   assert.equal(summary.last7Days.totalEvents, 4);
   assert.equal(summary.last7Days.byAction.coupon.converted, 0);
 });
+
+test('summarizeAnalytics returns all rolling windows with matching event ranges', () => {
+  const now = new Date('2026-06-30T12:00:00.000Z');
+  const campaigns = [{ id: 'camp-a', name: 'Campaign', site_id: 'demo', trigger: 'idle', action_type: 'newsletter' }];
+  const events = [
+    { site_id: 'demo', campaign_id: 'camp-a', type: 'popup_shown', created_at: '2026-05-21T12:00:00.000Z' },
+    { site_id: 'demo', campaign_id: 'camp-a', type: 'cta_click', created_at: '2025-12-12T12:00:00.000Z' },
+  ];
+  const summary = summarizeAnalytics({ campaigns, events }, { siteId: 'demo', now });
+
+  for (const key of ['last7Days', 'last30Days', 'last90Days', 'last180Days', 'last365Days', 'allTime']) {
+    assert.ok(summary[key]);
+  }
+  assert.equal(summary.last7Days.totalEvents, 0);
+  assert.equal(summary.last30Days.totalEvents, 0);
+  assert.equal(summary.last90Days.totalEvents, 1);
+  assert.equal(summary.last180Days.totalEvents, 1);
+  assert.equal(summary.last365Days.totalEvents, 2);
+  assert.equal(summary.allTime.totalEvents, 2);
+});

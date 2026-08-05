@@ -114,21 +114,28 @@ function summarizeAnalytics(input = {}, options = {}) {
   const events = Array.isArray(input.events) ? input.events : [];
   const siteId = options.siteId || '';
   const now = options.now ? new Date(options.now) : new Date();
-  const last7DaysStart = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+  const dayMs = 24 * 60 * 60 * 1000;
 
   const allTime = buildWindowSummary(campaigns, events, siteId);
-  const last7Days = buildWindowSummary(
-    campaigns,
-    events.filter((event) => {
-      const createdAt = toDate(event.created_at);
-      return createdAt ? createdAt >= last7DaysStart : false;
-    }),
-    siteId,
-  );
+  const buildRollingWindow = (days) => {
+    const start = new Date(now.getTime() - (days * dayMs));
+    return buildWindowSummary(
+      campaigns,
+      events.filter((event) => {
+        const createdAt = toDate(event.created_at);
+        return createdAt ? createdAt >= start : false;
+      }),
+      siteId,
+    );
+  };
 
   return {
     allTime,
-    last7Days,
+    last7Days: buildRollingWindow(7),
+    last30Days: buildRollingWindow(30),
+    last90Days: buildRollingWindow(90),
+    last180Days: buildRollingWindow(180),
+    last365Days: buildRollingWindow(365),
   };
 }
 
