@@ -3,6 +3,20 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.5.0 — 2026-08-05
+
+- Analytics gegen Fälschung und dauerhaften Datenverlust abgesichert:
+  Aufbewahrung ist jetzt zeitbasiert (400 Tage) statt zählbasiert — eine
+  Flut gefälschter Events kann keine echte Historie mehr verdrängen.
+  `created_at` wird ausschließlich serverseitig gesetzt (Client-Wert wird
+  ignoriert), zusätzlich hartes Mengenlimit pro Site (50.000, mit
+  kanonisch kleingeschriebener `site_id` — `demo`/`DEMO` teilen sich ein
+  Kontingent). Neuer, vom Dashboard-Session-Schlüssel unabhängiger
+  `eventToken` (ausgeliefert über `/api/config`) ist für `/api/events` und
+  `/api/submit` erforderlich, sobald ein Passwort konfiguriert ist.
+  Event-Typ-Whitelist ergänzt. Tägliches Datei-Backup mit WAL-Checkpoint
+  und Rotation (30 Tage), läuft auch bei fehlgeschlagenem Checkpoint weiter.
+
 ## 1.4.0 — 2026-08-05
 
 - Neuer Dashboard-Knopf "Einbau prüfen": `GET /api/install-check?siteId=X`

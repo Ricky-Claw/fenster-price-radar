@@ -303,12 +303,15 @@ function sanitizeCampaignInput(input = {}, existing = {}) {
 }
 
 function sanitizeEventInput(input = {}) {
+  const allowedTypes = new Set(['popup_shown', 'cta_click', 'close', 'coupon_reveal', 'url_open', 'pdf_open', 'contact_submit', 'newsletter_opt_in', 'lead_submit']);
+  const type = cleanText(input.type || '', 80);
   return {
-    site_id: cleanId(input.site_id || input.siteId || 'default', 'default'),
+    // Analytics quotas are keyed by site_id; make casing variations one site.
+    site_id: cleanId(input.site_id || input.siteId || 'default', 'default').toLowerCase(),
     campaign_id: cleanId(input.campaign_id || input.campaignId || '', ''),
-    type: cleanText(input.type || 'event', 80),
+    type: allowedTypes.has(type) ? type : null,
     metadata: cleanMetadata(input.metadata),
-    created_at: cleanText(input.created_at || input.createdAt || nowIso(), 80),
+    created_at: nowIso(),
   };
 }
 

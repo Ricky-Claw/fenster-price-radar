@@ -208,9 +208,17 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 
 - Leads werden per `WEBHOOK_URL` aktiv an CRM/Zapier/Mail-Bridge gepusht und können
   im Dashboard-Leads-Tab als JSON/CSV abgerufen werden.
-- Kein DB-Backup-Cron auf der VPS (eine Datei, `data/conversion-rescue.sqlite`).
+- Die Datenbank wird täglich nach `data/backups/` gesichert.
 - Der Leads-Export enthält personenbezogene Daten: nur zweckgebunden verarbeiten und
   Zugriff, Rechtsgrundlage sowie Aufbewahrungsfrist vor dem Kundenbetrieb klären.
 - DSGVO-Export ist vorhanden; Löschung und automatisierte Aufbewahrung bleiben
   Integrator-/v2-Themen.
 - Finales Popup-Design macht der Webdesigner des Kunden (Beispiel-Themes blau/orange).
+### Backup wiederherstellen
+
+Dienst stoppen, dann das gewünschte Backup kopieren und den Dienst wieder starten:
+
+`rm -f data/conversion-rescue.sqlite-wal data/conversion-rescue.sqlite-shm && cp data/backups/conversion-rescue-<DATUM>.sqlite data/conversion-rescue.sqlite`
+
+Beim Wiederherstellen müssen `conversion-rescue.sqlite-wal` und
+`conversion-rescue.sqlite-shm` neben der Live-Datei ebenfalls gelöscht werden.

@@ -40,7 +40,10 @@ function hydrateSubmission(row) {
 
 function createDatabase(options = {}) {
   const dbPath = options.dbPath || path.join(process.cwd(), 'data', 'conversion-rescue.sqlite');
-  const eventLimit = Number.isFinite(Number(options.eventLimit)) ? Number(options.eventLimit) : 5000;
+  const retentionInput = Number(options.eventRetentionDays);
+  const eventRetentionDays = Number.isFinite(retentionInput) && retentionInput >= 1 ? retentionInput : 400;
+  const limitInput = Number(options.eventLimit);
+  const eventLimit = Number.isFinite(limitInput) && limitInput >= 1 ? Math.round(limitInput) : 50000;
   fs.mkdirSync(path.dirname(dbPath), { recursive: true });
 
   const db = new Database(dbPath);
@@ -89,6 +92,8 @@ function createDatabase(options = {}) {
       payload TEXT NOT NULL,
       created_at TEXT NOT NULL
     );
+
+    CREATE INDEX IF NOT EXISTS idx_events_site_created ON events(site_id, created_at);
   `);
 
   const campaignColumns = db.prepare('PRAGMA table_info(campaigns)').all();
@@ -147,15 +152,18 @@ function createDatabase(options = {}) {
       VALUES (@site_id, @campaign_id, @type, @metadata, @created_at)
     `),
     purgeEvents: db.prepare(`
+      DELETE FROM events WHERE created_at < @cutoff
+    `),
+    purgeEventsByLimit: db.prepare(`
       DELETE FROM events
-      WHERE id NOT IN (
-        SELECT id FROM events ORDER BY id DESC LIMIT @limit
-      )
+      WHERE site_id = @site_id
+        AND id NOT IN (SELECT id FROM events WHERE site_id = @site_id ORDER BY created_at DESC, id DESC LIMIT @limit)
     `),
     listEvents: db.prepare(`
       SELECT * FROM events
       WHERE (@site_id = '' OR site_id = @site_id)
       ORDER BY created_at DESC, id DESC
+      LIMIT @limit
     `),
     insertSubmission: db.prepare(`
       INSERT INTO submissions (site_id, campaign_id, kind, payload, created_at)
@@ -225,7 +233,9 @@ function createDatabase(options = {}) {
       metadata: JSON.stringify(event.metadata || {}),
       created_at: event.created_at,
     });
-    statements.purgeEvents.run({ limit: eventLimit });
+    const cutoff = new Date(Date.now() - eventRetentionDays * 24 * 60 * 60 * 1000).toISOString();
+    statements.purgeEvents.run({ cutoff });
+    statements.purgeEventsByLimit.run({ site_id: event.site_id, limit: eventLimit });
   }
 
   function insertSubmission(submission) {
@@ -243,6 +253,9 @@ function createDatabase(options = {}) {
     close() {
       db.close();
     },
+    checkpoint() {
+      db.pragma('wal_checkpoint(TRUNCATE)');
+    },
     deleteCampaign(id) {
       return statements.deleteCampaign.run({ id }).changes > 0;
     },
@@ -254,7 +267,7 @@ function createDatabase(options = {}) {
     insertSubmission,
     listCampaigns,
     listEvents(siteId = '') {
-      return statements.listEvents.all({ site_id: siteId }).map(hydrateEvent);
+      return statements.listEvents.all({ site_id: siteId, limit: 20000 }).map(hydrateEvent);
     },
     listSites() {
       return statements.listSites.all();

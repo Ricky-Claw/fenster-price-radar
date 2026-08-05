@@ -88,4 +88,4 @@ function createGuards(adminToken) {
   return { requireDashboardAuth, requireDashboardPage };
 }
 
-module.exports = { COOKIE, isConfigured, checkPassword, sessionCookie, createGuards };
+module.exports = { COOKIE, secret, sign, isConfigured, checkPassword, sessionCookie, createGuards };

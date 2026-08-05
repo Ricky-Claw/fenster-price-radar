@@ -14,7 +14,8 @@ const {
   sanitizeSubmission,
 } = require('./lib/sanitize');
 const { getThemePresets } = require('./lib/theme');
-const { checkPassword, sessionCookie, createGuards, isConfigured } = require('./lib/auth');
+const { checkPassword, sessionCookie, createGuards, isConfigured, secret } = require('./lib/auth');
+const { backupDatabase } = require('./lib/backup');
 const { version: APP_VERSION } = require('../package.json');
 const mcpTools = require('./lib/mcp-tools');
 
@@ -135,9 +136,10 @@ function sendFile(res, filePath, contentType) {
 
 function createApp(options = {}) {
   const rootDir = options.rootDir || path.resolve(__dirname, '..');
-  const db = createDatabase({
+  const db = options.db || createDatabase({
     dbPath: options.dbPath || path.join(rootDir, 'data', 'conversion-rescue.sqlite'),
-    eventLimit: options.eventLimit || 5000,
+    eventLimit: options.eventLimit,
+    eventRetentionDays: options.eventRetentionDays,
   });
   const app = express();
   const adminToken = options.adminToken === undefined ? process.env.ADMIN_TOKEN || '' : options.adminToken;
@@ -153,6 +155,43 @@ function createApp(options = {}) {
   const checkGlobalLoginCost = createRateLimiter(100, 15 * 60_000);
   const checkMcpRateLimit = createRateLimiter(10, 15 * 60_000);
   const checkInstallRateLimit = createRateLimiter(10, 60_000);
+  const backupDir = options.backupDir || path.join(rootDir, 'data', 'backups');
+  const runDatabaseBackup = options.backupDatabase || backupDatabase;
+  const backupKeep = options.backupRetentionDays === undefined ? 30 : options.backupRetentionDays;
+  const dbPath = options.dbPath || path.join(rootDir, 'data', 'conversion-rescue.sqlite');
+  const eventTokenKey = crypto.createHmac('sha256', secret()).update('rueckhol-event-token-v1').digest();
+  const eventTokenFor = (siteId, date) => crypto.createHmac('sha256', eventTokenKey).update(`evt.${siteId}.${date}`).digest('base64url');
+  const validEventToken = (siteId, supplied) => {
+    if (!isConfigured() || typeof supplied !== 'string') return !isConfigured();
+    const today = new Date();
+    const candidates = [0, 1].map((days) => new Date(today.getTime() - days * 86400000).toISOString().slice(0, 10));
+    const suppliedDigest = crypto.createHash('sha256').update(supplied).digest();
+    return candidates.some((date) => {
+      const expectedDigest = crypto.createHash('sha256').update(eventTokenFor(siteId, date)).digest();
+      return crypto.timingSafeEqual(suppliedDigest, expectedDigest);
+    });
+  };
+  const requireEventToken = (req, res, siteId) => {
+    if (!validEventToken(siteId, req.body && req.body.eventToken)) {
+      res.status(401).json({ error: 'A valid eventToken is required' });
+      return false;
+    }
+    return true;
+  };
+  let backupTimer = null;
+  if (options.disableBackupSchedule !== true && dbPath !== ':memory:') {
+    const runBackup = () => {
+      try {
+        db.checkpoint();
+      } catch (error) {
+        console.warn('[Conversion Rescue] Database checkpoint failed; attempting backup anyway.', error);
+      }
+      return runDatabaseBackup({ dbPath, backupDir, keep: backupKeep }).catch(() => {});
+    };
+    runBackup();
+    backupTimer = setInterval(runBackup, 24 * 60 * 60 * 1000);
+    if (backupTimer.unref) backupTimer.unref();
+  }
 
   if (!adminToken && !isConfigured() && options.warnOnOpenAdmin !== false) {
     console.warn('[Conversion Rescue] Neither ADMIN_TOKEN nor FENSTER_RADAR_PASSWORD is set. Dashboard/API routes are open for local development.');
@@ -452,12 +491,14 @@ function createApp(options = {}) {
     const siteId = cleanId(req.query.siteId || 'default', 'default');
     applyCors(req, res, siteId);
     const campaigns = db.listCampaigns(siteId, true).map(publicCampaign);
-    res.json({ siteId, campaigns });
+    const today = new Date().toISOString().slice(0, 10);
+    res.json({ siteId, campaigns, eventToken: isConfigured() ? eventTokenFor(siteId, today) : null });
   });
 
   app.post('/api/events', (req, res) => {
     const siteId = cleanId(req.body.siteId || req.body.site_id || 'default', 'default');
     applyCors(req, res, siteId);
+    if (!requireEventToken(req, res, siteId)) return;
     const ip = clientIp(req);
     if (!checkRateLimit(ip)) {
       res.status(429).json({ error: 'Too many events' });
@@ -476,6 +517,7 @@ function createApp(options = {}) {
   app.post('/api/submit', (req, res) => {
     const siteId = cleanId(req.body.siteId || req.body.site_id || 'default', 'default');
     applyCors(req, res, siteId);
+    if (!requireEventToken(req, res, siteId)) return;
     // Same throttle as /api/events — this is the endpoint that fires the
     // customer's webhook and fills the submissions table.
     const ip = clientIp(req);
@@ -716,6 +758,7 @@ function createApp(options = {}) {
   return {
     app,
     close() {
+      if (backupTimer) clearInterval(backupTimer);
       db.close();
     },
   };

@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.4.0 (keep in sync with package.json)
+ * Version: 1.5.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -17,6 +17,7 @@
   var SITE = (d.creSite || 'default').trim();
   var API = (d.creApi || (script && script.src ? script.src.replace(/\/cre\.js.*$/, '') : '')).replace(/\/+$/, '');
   var DEBUG = d.creDebug === '1';
+  var eventToken;
   function dbg(msg) { if (DEBUG && window.console) console.info('[Rueckhol] ' + msg); }
 
   function api(path) { return API + path; }
@@ -84,7 +85,9 @@
   // ---- events ----
   function track(campaignId, type, metadata) {
     try {
-      var body = JSON.stringify({ siteId: SITE, campaignId: campaignId, type: type, metadata: metadata || {} });
+      var event = { siteId: SITE, campaignId: campaignId, type: type, metadata: metadata || {} };
+      if (eventToken) event.eventToken = eventToken;
+      var body = JSON.stringify(event);
       if (navigator.sendBeacon) {
         navigator.sendBeacon(api('/api/events'), new Blob([body], { type: 'application/json' }));
       } else {
@@ -95,7 +98,7 @@
   function submit(campaignId, kind, payload) {
     return fetch(api('/api/submit'), {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ siteId: SITE, campaignId: campaignId, kind: kind, payload: payload })
+      body: JSON.stringify({ siteId: SITE, campaignId: campaignId, kind: kind, payload: payload, eventToken: eventToken || undefined })
     }).then(function (r) { return r.ok; }).catch(function () { return false; });
   }
 
@@ -439,6 +442,7 @@
         return r.json();
       })
       .then(function (data) {
+        eventToken = data && data.eventToken || undefined;
         var campaigns = (data && data.campaigns) || [];
         if (!campaigns.length) { dbg('no active campaigns for site "' + SITE + '" — create one in the dashboard'); return; }
         dbg(campaigns.length + ' campaign(s) armed for site "' + SITE + '"');
