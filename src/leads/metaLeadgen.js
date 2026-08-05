@@ -126,3 +126,104 @@ export async function processLeadgenChange(change) {
   const forwarded = await forwardToSchwarzwald(body);
   return { leadgenId, forwarded: forwarded.status, dedupe: forwarded.data?.dedupe };
 }
+
+export async function pollOnce({
+  dry = false,
+  lookbackHours = 6,
+  processingBudgetMs = Infinity,
+  now = Date.now,
+  graphFn = graph,
+  pageAccessTokenFn = pageAccessToken,
+  processLeadgenChangeFn = processLeadgenChange,
+} = {}) {
+  const startedAt = now();
+  const cutoff = startedAt - lookbackHours * 60 * 60 * 1000;
+  const result = {
+    ok: true,
+    dry,
+    formsChecked: 0,
+    leadsSeen: 0,
+    eligible: 0,
+    attempted: 0,
+    forwarded: 0,
+    created: 0,
+    skipped: 0,
+    truncated: false,
+    errors: [],
+  };
+
+  let token;
+  try {
+    token = await pageAccessTokenFn();
+  } catch {
+    return { ok: false, error: 'GRAPH_AUTH_FAILED' };
+  }
+
+  let forms;
+  try {
+    const response = await graphFn(`${DFS_PAGE_ID}/leadgen_forms`, token, {
+      fields: 'id,name,status',
+      limit: '50',
+    });
+    if (response.error) throw new Error('graph_error');
+    if (!Array.isArray(response.data)) throw new Error('graph_shape');
+    forms = response.data.filter((form) => form.status === 'ACTIVE');
+  } catch {
+    return { ok: false, error: 'GRAPH_LIST_FAILED' };
+  }
+
+  for (const form of forms) {
+    if (now() - startedAt >= processingBudgetMs) {
+      result.truncated = true;
+      break;
+    }
+    result.formsChecked += 1;
+
+    let leads;
+    try {
+      const response = await graphFn(`${form.id}/leads`, token, {
+        fields: 'id,created_time',
+        limit: '25',
+      });
+      if (response.error) throw new Error('graph_error');
+      leads = Array.isArray(response.data) ? response.data : [];
+    } catch {
+      result.errors.push({ formId: form.id, grund: 'leads_list_failed' });
+      continue;
+    }
+
+    result.leadsSeen += leads.length;
+    for (const lead of leads) {
+      if (now() - startedAt >= processingBudgetMs) {
+        result.truncated = true;
+        break;
+      }
+      if (Date.parse(lead.created_time) < cutoff) continue;
+      result.eligible += 1;
+      if (dry) continue;
+      result.attempted += 1;
+
+      try {
+        const processed = await processLeadgenChangeFn({
+          value: { leadgen_id: lead.id, form_id: form.id },
+        });
+        if (processed.skipped) {
+          result.errors.push({ leadId: lead.id, formId: form.id, grund: processed.skipped });
+        } else if (processed.forwarded >= 200 && processed.forwarded <= 299) {
+          result.forwarded += 1;
+          if (processed.dedupe === 'created') result.created += 1;
+          else if (processed.dedupe === 'skipped') result.skipped += 1;
+          else result.errors.push({ leadId: lead.id, formId: form.id, grund: 'dedupe_unbekannt' });
+        } else {
+          result.errors.push({ leadId: lead.id, formId: form.id, grund: `forward_${processed.forwarded}` });
+        }
+      } catch {
+        result.errors.push({ leadId: lead.id, formId: form.id, grund: 'exception' });
+      }
+    }
+    if (result.truncated) break;
+  }
+
+  result.ok = result.errors.length === 0;
+  return result;
+}

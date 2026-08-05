@@ -41,6 +41,7 @@
     "ebook:make": "node tools/ebook-maker/make-ebook.mjs",
     "knowledge:crawl": "node scripts/crawl-dfs-knowledge.js",
     "meta:radar": "node --env-file-if-exists=.env tools/meta-radar/meta-radar.mjs",
+    "leads:poll": "node --env-file-if-exists=.env tools/meta-leadgen-poll/poll.mjs",
     "rueckhol": "npm --prefix rueckhol-automatik start",
     "rueckhol:test": "npm --prefix rueckhol-automatik test",
     "test:codex-bridge": "node tests/codex-bridge.mjs"

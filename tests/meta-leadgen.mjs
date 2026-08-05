@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import pollHandler from '../api/meta-leadgen-poll.js';
-import { forwardToSchwarzwald, mapLeadToDfsMetaBody } from '../src/leads/metaLeadgen.js';
+import { forwardToSchwarzwald, mapLeadToDfsMetaBody, pollOnce } from '../src/leads/metaLeadgen.js';
 
 function response() {
   return {
@@ -64,6 +64,42 @@ const fallbackBody = mapLeadToDfsMetaBody({
   field_data: [{ name: 'anzahl_fenster', values: ['irgend_was_neues'] }],
 });
 assert.equal(fallbackBody.windowCount, 'Irgend was neues');
+
+{
+  const now = Date.parse('2026-08-06T12:00:00.000Z');
+  const result = await pollOnce({
+    lookbackHours: 6,
+    now: () => now,
+    pageAccessTokenFn: async () => 'page-token',
+    graphFn: async (path) => {
+      if (path.endsWith('/leadgen_forms')) return { data: [
+        { id: 'aktiv', status: 'ACTIVE' },
+        { id: 'pausiert', status: 'PAUSED' },
+      ] };
+      return { data: [
+        { id: 'neu', created_time: '2026-08-06T11:00:00.000Z' },
+        { id: 'alt', created_time: '2026-08-06T05:00:00.000Z' },
+      ] };
+    },
+    processLeadgenChangeFn: async (change) => {
+      assert.deepEqual(change, { value: { leadgen_id: 'neu', form_id: 'aktiv' } });
+      return { forwarded: 201, dedupe: 'created' };
+    },
+  });
+  assert.deepEqual(result, {
+    ok: true,
+    dry: false,
+    formsChecked: 1,
+    leadsSeen: 2,
+    eligible: 1,
+    attempted: 1,
+    forwarded: 1,
+    created: 1,
+    skipped: 0,
+    truncated: false,
+    errors: [],
+  });
+}
 
 {
   const originalFetch = globalThis.fetch;
