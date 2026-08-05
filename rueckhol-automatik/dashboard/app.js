@@ -349,6 +349,21 @@
     window.prompt('Diesen Code einmal ins <head> oder vor </body> Ihrer Seite einfügen:', snippet);
   }
 
+  function checkInstall() {
+    var button = $('#btnInstallCheck'); var panel = $('#installCheckResult');
+    var site = state.site || (state.draft && state.draft.site_id) || '';
+    if (!site) { panel.textContent = 'Bitte zuerst eine Seite auswählen.'; return; }
+    button.disabled = true; button.textContent = 'Prüfe …'; panel.textContent = 'Einbau wird geprüft …';
+    apiCall('/api/install-check?siteId=' + encodeURIComponent(site)).then(function (data) {
+      if (!data.geprueft || !data.geprueft.length) { panel.textContent = 'Für diese Seiten-Kennung ist noch keine Domain hinterlegt (SITE_ORIGINS).'; return; }
+      panel.innerHTML = data.geprueft.map(function (item) {
+        var ok = item.gefunden;
+        return '<div>' + (ok ? '✓ Gefunden auf ' : '✕ Nicht gefunden auf ') + esc(item.origin) + (item.fehler ? ' — ' + esc(item.fehler) : '') + '</div>';
+      }).join('');
+    }).catch(function (e) { panel.textContent = 'Einbauprüfung nicht möglich: ' + e.message; })
+      .finally(function () { button.disabled = false; button.textContent = 'Einbau prüfen'; });
+  }
+
   // ---- analytics ----
   var REASON_LABELS = { button: 'X-Button', x: 'X-Button', backdrop: 'daneben geklickt', esc: 'Esc-Taste' };
   function sumReasons(r) { var s = 0; if (r) Object.keys(r).forEach(function (k) { s += r[k] || 0; }); return s; }
@@ -557,8 +572,10 @@
     $('#btnDelete').addEventListener('click', del);
     $('#btnDuplicate').addEventListener('click', duplicate);
     $('#btnEmbed').addEventListener('click', showEmbed);
+    $('#btnInstallCheck').addEventListener('click', checkInstall);
     $('#siteSelect').addEventListener('change', function () {
       if (!confirmDiscard()) { this.value = state.site; return; } // revert on cancel
+      $('#installCheckResult').textContent = '';
       state.site = this.value; renderList();
       var first = visibleCampaigns()[0]; if (first) editCampaign(first.id); else newCampaign();
       if ($('#view-leads') && !$('#view-leads').classList.contains('hidden')) renderLeads();

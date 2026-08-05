@@ -144,6 +144,7 @@ function createApp(options = {}) {
   const { requireDashboardAuth, requireDashboardPage } = createGuards(adminToken);
   const webhookUrl = options.webhookUrl === undefined ? process.env.WEBHOOK_URL || '' : options.webhookUrl;
   const siteOrigins = options.siteOrigins || parseSiteOrigins(process.env.SITE_ORIGINS);
+  const outboundFetch = options.fetch || globalThis.fetch;
   const allowOpenCors = !siteOrigins;
   const checkRateLimit = createRateLimiter(80, 60_000);
   const checkLoginRateLimit = createRateLimiter(10, 15 * 60_000);
@@ -151,6 +152,7 @@ function createApp(options = {}) {
   // further failed-login responses from 401 to 429. Only failures consume it.
   const checkGlobalLoginCost = createRateLimiter(100, 15 * 60_000);
   const checkMcpRateLimit = createRateLimiter(10, 15 * 60_000);
+  const checkInstallRateLimit = createRateLimiter(10, 60_000);
 
   if (!adminToken && !isConfigured() && options.warnOnOpenAdmin !== false) {
     console.warn('[Conversion Rescue] Neither ADMIN_TOKEN nor FENSTER_RADAR_PASSWORD is set. Dashboard/API routes are open for local development.');
@@ -560,6 +562,81 @@ function createApp(options = {}) {
     res.set('content-type', 'text/csv; charset=utf-8');
     res.set('content-disposition', `attachment; filename="leads-${siteId}-${date}.csv"`);
     res.send('\uFEFF' + lines.join('\r\n'));
+  });
+
+  app.get('/api/install-check', requireDashboardAuth, async (req, res) => {
+    if (!checkInstallRateLimit(clientIp(req))) {
+      res.status(429).json({ error: 'Zu viele Einbauprüfungen. Bitte später erneut versuchen.' });
+      return;
+    }
+    const siteId = cleanText(req.query.siteId || '', 140);
+    if (!siteId) {
+      res.status(400).json({ error: 'Site ID is required' });
+      return;
+    }
+    const configuredOrigins = Array.isArray(siteOrigins && siteOrigins[siteId]) ? siteOrigins[siteId] : [];
+    if (!configuredOrigins.length) {
+      res.json({ siteId, geprueft: [], irgendwoGefunden: false, hinweis: 'Für diese Seiten-Kennung ist noch keine Domain hinterlegt (SITE_ORIGINS).' });
+      return;
+    }
+
+    const maxBytes = 2 * 1024 * 1024;
+    const checkOrigin = async (configuredOrigin) => {
+      const origin = String(configuredOrigin).trim().replace(/\/+$/, '');
+      if (!/^https:\/\//i.test(origin)) {
+        return { origin, gefunden: false, scriptSrc: null, fehler: 'Übersprungen: Nur HTTPS-Domains werden geprüft.' };
+      }
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8000);
+      try {
+        const response = await outboundFetch(new URL('/', origin), { method: 'GET', redirect: 'manual', signal: controller.signal });
+        if (response.status >= 300 && response.status < 400) {
+          return { origin, gefunden: false, scriptSrc: null, fehler: 'Weiterleitung erkannt — bitte Ziel-Domain in SITE_ORIGINS eintragen oder manuell prüfen.' };
+        }
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        let html = '';
+        let bytes = 0;
+        if (response.body && typeof response.body.getReader === 'function') {
+          const reader = response.body.getReader();
+          const decoder = new TextDecoder();
+          try {
+            while (true) {
+              const part = await reader.read();
+              if (part.done) break;
+              bytes += part.value.byteLength;
+              if (bytes > maxBytes) {
+                await reader.cancel();
+                throw new Error('Antwort ist größer als 2 MB.');
+              }
+              html += decoder.decode(part.value, { stream: true });
+            }
+            html += decoder.decode();
+          } finally { reader.releaseLock(); }
+        } else {
+          throw new Error('Antwort konnte nicht gestreamt werden.');
+        }
+        const searchableHtml = html
+          .replace(/<!--[\s\S]*?-->/g, '')
+          .replace(/<textarea\b[^>]*>[\s\S]*?<\/textarea\s*>/gi, '')
+          .replace(/<pre\b[^>]*>[\s\S]*?<\/pre\s*>/gi, '');
+        const tags = searchableHtml.match(/<script\b[^>]*>/gi) || [];
+        let scriptSrc = null;
+        for (const tag of tags) {
+          const srcMatch = tag.match(/\bsrc\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+          const siteMatch = tag.match(/\bdata-cre-site\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/i);
+          const src = srcMatch && (srcMatch[1] || srcMatch[2] || srcMatch[3]);
+          const matchedSite = siteMatch && (siteMatch[1] || siteMatch[2] || siteMatch[3]);
+          if (src && /(?:^|\/)cre\.js(?=[?#]|$)/i.test(src) && matchedSite === siteId) { scriptSrc = src; break; }
+        }
+        return { origin, gefunden: !!scriptSrc, scriptSrc, fehler: null };
+      } catch (error) {
+        const message = error.name === 'AbortError' ? 'Zeitüberschreitung nach 8 Sekunden.' : (error.message || 'Netzwerkfehler.');
+        return { origin, gefunden: false, scriptSrc: null, fehler: message };
+      } finally { clearTimeout(timer); }
+    };
+    const geprueft = await Promise.allSettled(configuredOrigins.map(checkOrigin));
+    const results = geprueft.map((entry) => entry.status === 'fulfilled' ? entry.value : ({ origin: '', gefunden: false, scriptSrc: null, fehler: 'Prüfung fehlgeschlagen.' }));
+    res.json({ siteId, geprueft: results, irgendwoGefunden: results.some((result) => result.gefunden) });
   });
 
   app.get('/api/campaigns', requireDashboardAuth, (req, res) => {

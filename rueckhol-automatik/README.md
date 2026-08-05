@@ -85,6 +85,9 @@ Geschützt (Session-Cookie ODER `Authorization: Bearer <ADMIN_TOKEN>`):
 - `GET /api/analytics?siteId=X` — Funnel (allTime + last7Days)
 - `GET /api/submissions?site=X[&format=csv]` — Leads als JSON oder CSV-Export
 - `/dashboard/` — UI (nicht eingeloggte Aufrufe → Redirect auf `/login`)
+- `GET /api/install-check?siteId=X` — geschützte Einbauprüfung: ruft ausschließlich
+  die für `X` in `SITE_ORIGINS` hinterlegten HTTPS-Domains ab und sucht dort nach dem
+  passenden `cre.js`-Script. Nutzer-URLs werden niemals verwendet.
 
 ### MCP-Zugang für Agenten
 

@@ -3,6 +3,18 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.4.0 — 2026-08-05
+
+- Neuer Dashboard-Knopf "Einbau prüfen": `GET /api/install-check?siteId=X`
+  holt serverseitig die in `SITE_ORIGINS` hinterlegten Domains ab und prüft,
+  ob das Snippet (`cre.js` + passendes `data-cre-site`) dort im HTML steht —
+  niemals gegen eine vom Aufrufer angegebene URL, nur gegen bereits
+  admin-konfigurierte Domains. Redirects werden nicht automatisch verfolgt
+  (Absicherung gegen SSRF auf interne Ziele), Antworten sind auf 2 MB
+  gestreamt begrenzt, HTML-Kommentare/`<textarea>`/`<pre>` werden vor der
+  Suche entfernt (kein Fehlalarm durch auskommentierte/inaktive Snippets),
+  und die Route hat ein eigenes Rate-Limit (10/Minute).
+
 ## 1.3.0 — 2026-08-04
 
 - MCP-Server für Agenten zieht von Vercel direkt auf diesen Server um (`POST
