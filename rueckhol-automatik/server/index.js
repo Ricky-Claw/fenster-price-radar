@@ -381,11 +381,9 @@ function createApp(options = {}) {
         <body>
           <div class="wrap">
             <div class="head"><span class="dot"></span><h1>Rückhol-Automatik</h1></div>
-            <p class="sub">Popups, die Besucher vor dem Absprung zurückholen — Steuerung, Test-Shop und Auswertung.</p>
+            <p class="sub">Popups, die Besucher vor dem Absprung zurückholen — Steuerung und Auswertung.</p>
             <div class="cards">
-              <a class="card" href="demo/demo-test.html"><b>🛒 Test-Shop öffnen</b><span>Simulierter Online-Shop: Popups erscheinen wie beim echten Besucher — beim Verlassen, nach Zeit, beim Scrollen. Auf dem Handy per Test-Knopf auslösbar.</span></a>
               <a class="card" href="dashboard/"><b>⚙️ Steuerung (Dashboard)</b><span>Kampagnen anlegen und bearbeiten, Texte/Design anpassen, Auswertung ansehen. Passwortgeschützt.</span></a>
-              <a class="card" href="demo/alle-popups.html"><b>🎨 Popup-Galerie</b><span>Alle Popup-Typen (Newsletter, Kontakt, Gutschein, Link, PDF) nebeneinander als Vorschau.</span></a>
             </div>
             <p class="foot">Version <span id="v">…</span> · <a href="api/health" style="color:inherit">Status</a></p>
           </div>

@@ -3,6 +3,13 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.6.1 — 2026-08-05
+
+- MVP-Vorschau-Features entfernt: Test-Shop (`demo/demo-test.html`) und
+  Popup-Galerie (`demo/alle-popups.html`) waren nur zur Kundenabnahme
+  gedacht, Produkt ist verkauft/live. Karten von der Startseite entfernt,
+  Dateien gelöscht.
+
 ## 1.6.0 — 2026-08-05
 
 - Auswertung um vier Zeitfenster erweitert: Letzter Monat, 3 Monate,

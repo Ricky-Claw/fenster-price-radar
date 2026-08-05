@@ -32,8 +32,6 @@ danach nur die Snippet-URLs auf der Kundenseite anpassen.
 | Direkt-Domain | https://rueckhol.schwarzwald-agent.de (Caddy, Auto-TLS) |
 | Kunden-URL | https://fenster-price-radar.vercel.app/rueckhol/* (Vercel-Proxy-Rewrite in `../vercel.json`) |
 | Dashboard | `/dashboard/` — Passwort = `FENSTER_RADAR_PASSWORD` |
-| Test-Shop | `/demo/demo-test.html` — simulierter Online-Shop (NORDMÖBEL-Kulisse); Popups feuern echt wie beim Besucher, Test-Panel unten rechts triggert gezielt, speist echte Analytics (Seite `demo`) |
-| Galerie | `/demo/alle-popups.html` — alle Popup-Typen als Vorschau (blau/orange Beispiel-Farben) |
 | Health | `/api/health` → `{ok, name, version, uptimeSeconds}` |
 | Service-Env | `/etc/rueckhol-automatik/service.env` auf der VPS |
 
@@ -197,7 +195,6 @@ Caddy-Block, DNS — ~15 Minuten. Echte Mandantenfähigkeit in einer Instanz wä
 - `server/db.js` — SQLite-Schema + Queries (`data/conversion-rescue.sqlite`)
 - `widget/cre.js` — Embed-Widget (Shadow DOM, Trigger, Consent, Frequency-Cap, Debug-Modus)
 - `dashboard/` — Kampagnen-Editor mit Live-Vorschau, Auswertung und Leads-Export (mobil-tauglich)
-- `demo/demo-test.html` — Test-Shop (simulierter E-Commerce, Popups feuern live) · `demo/alle-popups.html` — Typen-Galerie
 - `tests/` — 40 Tests insgesamt
 - `tests/api.test.js` — API/CRUD, Auth, Rate-Limits und CSV-Export
 - `tests/sanitize.test.js` — Input-, URL- und Formular-Sanitizing
