@@ -136,7 +136,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
 
   /* Vorschau fliesst mit statt sticky (Topbar ist hier hoeher) + kompakter */
   .col-preview { position: static; }
-  .stage { height: 400px; margin: 12px; }
+  .stage { height: 560px; margin: 12px; }
 
   .empty { padding: 22px 14px; }
   .editor-body { padding: 4px 14px 14px; }
@@ -241,11 +241,12 @@ input.invalid, textarea.invalid, select.invalid { border-color: var(--danger); o
 .chip { font-size: 12px; padding: 4px 9px; border-radius: 999px; border: 1px solid var(--line-strong); background: var(--panel); cursor: pointer; color: var(--muted); font-weight: 600; }
 .chip[aria-pressed="true"] { background: var(--accent-soft); border-color: transparent; color: var(--accent); }
 .stage {
-  margin: 14px; border-radius: 12px; border: 1px solid var(--line); overflow: hidden;
+  margin: 14px; border-radius: 12px; border: 1px solid var(--line);
+  overflow-x: hidden; overflow-y: auto;
   background:
     linear-gradient(0deg, rgba(0,0,0,.02), rgba(0,0,0,.02)),
     repeating-linear-gradient(45deg, #efece4 0 10px, #f5f2ea 10px 20px);
-  position: relative; height: 460px;
+  position: relative; height: 680px;
 }
 .stage.mobile { max-width: 300px; margin-left: auto; margin-right: auto; }
 .stage .mock-bar { height: 30px; background: #fff; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 6px; padding: 0 12px; }
