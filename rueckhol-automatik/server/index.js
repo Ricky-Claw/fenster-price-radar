@@ -160,7 +160,8 @@ function createApp(options = {}) {
   const schwarzwaldNlListId = options.schwarzwaldNlListId === undefined
     ? process.env.SCHWARZWALD_NL_LIST_ID || '' : options.schwarzwaldNlListId;
   const schwarzwaldArchipelToken = options.schwarzwaldArchipelToken === undefined
-    ? process.env.SCHWARZWALD_ARCHIPEL_TOKEN || '' : options.schwarzwaldArchipelToken;
+    ? process.env.RUECKHOL_AUTOMATIK_LEAD_TOKEN || process.env.SCHWARZWALD_ARCHIPEL_TOKEN || ''
+    : options.schwarzwaldArchipelToken;
   const schwarzwaldArchipelIsland = options.schwarzwaldArchipelIsland === undefined
     ? process.env.SCHWARZWALD_ARCHIPEL_ISLAND || 'rueckhol-automatik' : options.schwarzwaldArchipelIsland;
   const schwarzwaldArchipelCategory = options.schwarzwaldArchipelCategory === undefined

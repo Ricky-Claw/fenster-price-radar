@@ -39,6 +39,34 @@ test('forwards contact submissions with Archipel contract and stable distinct ID
   } finally { ctx.close(); }
 });
 
+test('dedicated Rueckhol token takes precedence without replacing the legacy token', async () => {
+  const previousDedicated = process.env.RUECKHOL_AUTOMATIK_LEAD_TOKEN;
+  const previousLegacy = process.env.SCHWARZWALD_ARCHIPEL_TOKEN;
+  process.env.RUECKHOL_AUTOMATIK_LEAD_TOKEN = 'dedicated-secret';
+  process.env.SCHWARZWALD_ARCHIPEL_TOKEN = 'legacy-secret';
+  let authorization = '';
+  const ctx = createApp({
+    dbPath: ':memory:',
+    schwarzwaldBaseUrl: 'https://schwarzwald-agent.de',
+    fetch: async (_url, opts) => {
+      authorization = opts.headers.authorization;
+      return { ok: true };
+    },
+    warnOnOpenAdmin: false,
+  });
+  try {
+    assert.equal((await submit(ctx, 'contact', { email: 'contact@example.com' })).status, 200);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(authorization, 'Bearer dedicated-secret');
+  } finally {
+    ctx.close();
+    if (previousDedicated === undefined) delete process.env.RUECKHOL_AUTOMATIK_LEAD_TOKEN;
+    else process.env.RUECKHOL_AUTOMATIK_LEAD_TOKEN = previousDedicated;
+    if (previousLegacy === undefined) delete process.env.SCHWARZWALD_ARCHIPEL_TOKEN;
+    else process.env.SCHWARZWALD_ARCHIPEL_TOKEN = previousLegacy;
+  }
+});
+
 test('does not fetch when forwarding is unconfigured and still succeeds', async () => {
   const ctx = createApp({ dbPath: ':memory:', fetch: async () => { throw new Error('must not fetch'); }, warnOnOpenAdmin: false });
   try {
