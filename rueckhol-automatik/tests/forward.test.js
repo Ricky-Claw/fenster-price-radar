@@ -1,4 +1,4 @@
-const test = require('node:test');
+const { test, mock } = require('node:test');
 const assert = require('node:assert/strict');
 const { createApp } = require('../server/index');
 
@@ -53,4 +53,30 @@ test('forwarding failures do not affect submit response', async () => {
     assert.deepEqual((await submit(ctx, 'newsletter', { email: 'news@example.com' })).json(), { ok: true });
     await new Promise((resolve) => setImmediate(resolve));
   } finally { ctx.close(); }
+});
+
+test('logs newsletter forwarding HTTP failures without affecting submit response', async () => {
+  const warn = mock.method(console, 'warn');
+  const ctx = createApp({ dbPath: ':memory:', schwarzwaldBaseUrl: 'https://schwarzwald-agent.de', schwarzwaldNlListId: 'list-1', fetch: async () => ({ ok: false, status: 403, text: async () => '{"error":"ISLAND_MISMATCH"}' }), warnOnOpenAdmin: false });
+  try {
+    assert.deepEqual((await submit(ctx, 'newsletter', { email: 'news@example.com' })).json(), { ok: true });
+    await new Promise((resolve) => setImmediate(resolve));
+    const forwardingWarning = warn.mock.calls.find((call) => call.arguments[0].includes('Newsletter-Weiterleitung'));
+    assert.ok(forwardingWarning);
+    assert.match(forwardingWarning.arguments[0], /fehlgeschlagen/);
+    assert.match(forwardingWarning.arguments[0], /403/);
+  } finally { ctx.close(); warn.mock.restore(); }
+});
+
+test('logs contact lead forwarding HTTP failures without affecting submit response', async () => {
+  const warn = mock.method(console, 'warn');
+  const ctx = createApp({ dbPath: ':memory:', schwarzwaldBaseUrl: 'https://schwarzwald-agent.de', schwarzwaldArchipelToken: 'secret', fetch: async () => ({ ok: false, status: 403, text: async () => '{"error":"ISLAND_MISMATCH"}' }), warnOnOpenAdmin: false });
+  try {
+    assert.deepEqual((await submit(ctx, 'contact', { email: 'contact@example.com' })).json(), { ok: true });
+    await new Promise((resolve) => setImmediate(resolve));
+    const forwardingWarning = warn.mock.calls.find((call) => call.arguments[0].includes('Lead-Weiterleitung'));
+    assert.ok(forwardingWarning);
+    assert.match(forwardingWarning.arguments[0], /fehlgeschlagen/);
+    assert.match(forwardingWarning.arguments[0], /403/);
+  } finally { ctx.close(); warn.mock.restore(); }
 });

@@ -3,6 +3,15 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.7.1 — 2026-08-06
+
+- Fix: die neue Weiterleitung (v1.7.0) loggte einen Fehlschlag nur bei
+  echtem Netzwerkausfall — antwortete das Zielsystem ganz normal mit
+  4xx/5xx (z. B. 403 bei falschem Token), blieb das komplett
+  stillschweigend unbemerkt. Live am echten Endpunkt bestätigt (403
+  ISLAND_MISMATCH kam durch, ohne jede Log-Zeile). Jetzt wird jede
+  nicht-2xx-Antwort mit Status + Body geloggt.
+
 ## 1.7.0 — 2026-08-06
 
 - Newsletter-Anmeldungen und Kontakt-/Rückruf-Anfragen aus den Popups
