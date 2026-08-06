@@ -8,8 +8,7 @@
       "tools/banner-maker/out/foerderheld-meta/dfs-meta-feed-fensterliste-1080.jpg",
       "tools/banner-maker/out/foerderheld-meta/dfs-meta-aktion-feed-1080.jpg"
     ],
-    "anker_hinweis": "Diese beiden Dateien vor der Generierung ansehen. Der neue Satz muss aussehen, als käme er aus derselben Serie — gleiche Lichtstimmung, gleiche Linienstärke der Blaupause, gleiche Schriftanmutung, gleiche Orange-Dosierung.",
-    "anker_voraussetzung": "Liegen unter tools/banner-maker/out/ (gitignored, nicht Teil des Checkouts) — stammen aus einem vorherigen Lauf von 'npm run banner:make -- --aktion foerderheld-2026'. Fehlen sie in einem frischen Checkout: zuerst diesen Lauf ausführen, um die Anker-Serie zu erzeugen, dann erst dieses Spec starten."
+    "anker_hinweis": "Diese beiden Dateien vor der Generierung ansehen. Der neue Satz muss aussehen, als käme er aus derselben Serie — gleiche Lichtstimmung, gleiche Linienstärke der Blaupause, gleiche Schriftanmutung, gleiche Orange-Dosierung."
   },
 
   "format": {
@@ -134,7 +133,6 @@
   "nachbearbeitung": {
     "logo_composite": {
       "asset": "tools/banner-maker/out/_logo-weiss.png",
-      "asset_voraussetzung": "Ebenfalls gitignored. Liegt normalerweise schon aus früheren Läufen im Ordner; fehlt es, vor der Generierung einmalig aus dem DFS-Logo per sharp freistellen/weißfärben und dort ablegen.",
       "begruendung": "Das Logo wird bewusst NICHT mitgeneriert. KI-gemalte Logos fallen pro Bild unterschiedlich aus — genau das war die letzte Kundenbeschwerde. Nur so bleibt es über alle Motive identisch.",
       "breite_px": 300,
       "position_px": { "x": 72, "y": 64 },
