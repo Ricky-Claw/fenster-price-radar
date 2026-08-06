@@ -3,6 +3,14 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.7.2 — 2026-08-06
+
+- Fix: Browser behandelten `sendBeacon` für die Cross-Origin-Tracking-Endpunkte
+  als Request mit Credentials. Obwohl die Kundendomain erlaubt war, fehlte in
+  Preflight und Antwort `Access-Control-Allow-Credentials: true`; dadurch wurden
+  Popup-Events von CORS blockiert. Der Header wird jetzt ausschließlich für
+  explizit in `SITE_ORIGINS` freigegebene Origins gesetzt.
+
 ## 1.7.1 — 2026-08-06
 
 - Fix: die neue Weiterleitung (v1.7.0) loggte einen Fehlschlag nur bei

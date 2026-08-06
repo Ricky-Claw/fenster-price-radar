@@ -263,6 +263,16 @@ test('preflight allows known origins even without siteId in the URL', async () =
     });
     assert.equal(preflight.status, 204);
     assert.equal(preflight.headers['access-control-allow-origin'], 'https://kunde.example');
+    assert.equal(preflight.headers['access-control-allow-credentials'], 'true');
+
+    const event = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/events',
+      headers: { origin: 'https://kunde.example', 'content-type': 'application/json' },
+      body: { siteId: 'demo', campaignId: 'demo-popup', type: 'popup_shown' },
+    });
+    assert.equal(event.status, 200);
+    assert.equal(event.headers['access-control-allow-credentials'], 'true');
 
     const foreign = await appContext.app.inject({
       method: 'OPTIONS',

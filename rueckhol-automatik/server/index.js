@@ -230,6 +230,7 @@ function createApp(options = {}) {
       res.set('access-control-allow-origin', '*');
     } else if (siteOrigins[siteId] && siteOrigins[siteId].includes(origin)) {
       res.set('access-control-allow-origin', origin);
+      res.set('access-control-allow-credentials', 'true');
       res.set('vary', 'origin');
     }
     res.set('access-control-allow-methods', 'GET,POST,OPTIONS');
@@ -249,6 +250,7 @@ function createApp(options = {}) {
       res.set('access-control-allow-origin', '*');
     } else if (allKnownOrigins.has(origin)) {
       res.set('access-control-allow-origin', origin);
+      res.set('access-control-allow-credentials', 'true');
       res.set('vary', 'origin');
     }
     res.set('access-control-allow-methods', 'GET,POST,OPTIONS');
