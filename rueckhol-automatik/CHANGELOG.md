@@ -3,6 +3,13 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.6.3 — 2026-08-05
+
+- „Was ist neu"-Banner im Dashboard: zeigt kurz die letzten Verbesserungen
+  (Auswertungsfenster, Einbau-Prüfung, Sicherheitsrunde, aufgeräumte
+  Startseite), einmal wegklickbar (merkt sich die gesehene Version lokal
+  im Browser, taucht bei der nächsten inhaltlichen Änderung wieder auf).
+
 ## 1.6.2 — 2026-08-05
 
 Fünf offene Sicherheitsfunde aus dem Vollaudit geschlossen, zwei weitere

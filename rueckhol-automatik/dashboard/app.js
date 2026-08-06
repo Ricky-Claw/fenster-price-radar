@@ -36,6 +36,31 @@
   var TRIGGER_LABELS = { exit_intent: 'Ausstieg', idle: 'Inaktiv', time_on_page: 'Nach Zeit', scroll_depth: 'Scroll', manual: 'Manuell' };
   var ACTION_LABELS = { url: 'Link', pdf: 'PDF', coupon: 'Rabattcode', newsletter: 'Newsletter', contact: 'Kontakt' };
 
+  // ---- what's new banner ----
+  // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
+  // worth telling Elvis about. Dismissing stores the version he's seen, so the
+  // banner reappears only once there's something newer than that.
+  var WHATS_NEW_VERSION = '1.6.3';
+  var WHATS_NEW_ITEMS = [
+    'Auswertung: sechs Zeitfenster (7 Tage, Monat, 3/6 Monate, Jahr, Gesamt) statt nur zwei, plus tägliches Backup gegen Datenverlust.',
+    'Neuer Knopf „Einbau prüfen" — zeigt direkt, ob das Snippet wirklich auf der Seite sitzt.',
+    'Sicherheitsrunde: Rate-Limit gegen Passwort-/Token-Raten, dichterer Filter fürs eigene CSS, Kampagnen können nicht mehr versehentlich zur falschen Seite wandern.',
+    'Startseite aufgeräumt — Test-Vorschau-Seiten (nur fürs MVP gedacht) entfernt.',
+  ];
+  function initWhatsNew() {
+    try {
+      var KEY = 'cre_whatsnew_seen';
+      if (localStorage.getItem(KEY) === WHATS_NEW_VERSION) return;
+      $('#whatsNewTitle').textContent = 'Was ist neu (Stand v' + WHATS_NEW_VERSION + ')';
+      $('#whatsNewList').innerHTML = WHATS_NEW_ITEMS.map(function (item) { return '<li>' + item + '</li>'; }).join('');
+      $('#whatsNew').classList.remove('hidden');
+      $('#btnWhatsNewClose').addEventListener('click', function () {
+        try { localStorage.setItem(KEY, WHATS_NEW_VERSION); } catch (e) {}
+        $('#whatsNew').classList.add('hidden');
+      });
+    } catch (e) { /* localStorage unavailable (e.g. private mode) — just skip the banner */ }
+  }
+
   // ---- api ----
   function apiCall(path, opts) {
     return fetch(APP_BASE + path, opts).then(function (r) {
@@ -608,6 +633,7 @@
 
   // ---- boot ----
   bind();
+  initWhatsNew();
   loadData().then(function () {
     renderPresets(); buildSiteSelect();
     var first = state.campaigns[0];
