@@ -60,7 +60,7 @@ Vor Freigabe je Datei prüfen: trägt sie einen noch nicht freigegebenen Claim? 
 
 ### Datenquelle
 - **Stufe 1 (ohne Setup):** Elvis exportiert im Ads Manager den Bericht als CSV und wirft ihn hier rein. Funktioniert ab Tag 1.
-- **Stufe 2 (API):** Systemnutzer-Token mit `ads_read` als Env `META_ADS_TOKEN` + Werbekonto-ID `META_ADS_ACCOUNT_ID`. Kein App-Review nötig, solange es das eigene Werbekonto im eigenen Business-Portfolio ist. Fetcher nach dem Muster des Preisradars: Snapshot schreiben, bei API-Fehler alten Snapshot stehen lassen und Fehlerzeile in den Report — nie stillschweigend leere Daten ausliefern.
+- **Stufe 2 (API):** Systemnutzer-Token mit `ads_read` als Env `META_ACCESS_TOKEN` + Werbekonto-ID `META_AD_ACCOUNT_ID`. Kein App-Review nötig, solange es das eigene Werbekonto im eigenen Business-Portfolio ist. Fetcher nach dem Muster des Preisradars: Snapshot schreiben, bei API-Fehler alten Snapshot stehen lassen und Fehlerzeile in den Report — nie stillschweigend leere Daten ausliefern.
 
 ### Kennzahlen (jeden Montag, je Anzeige)
 Spend · Impressionen · CTR · Form-Öffnungen · Leads · **CPL** · Anteil qualifizierter Leads (Antwort auf die Qualifizierungs-Frage).
