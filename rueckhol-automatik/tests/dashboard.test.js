@@ -15,6 +15,26 @@ test('dashboard includes the Leads tab and submissions routes', () => {
   assert.match(app, /format=csv/);
 });
 
+test('dashboard CSP permits configured HTTPS logos in the live preview', async () => {
+  const appContext = createApp({
+    dbPath: ':memory:',
+    adminToken: 'test-token',
+    webhookUrl: '',
+    warnOnOpenAdmin: false,
+  });
+  try {
+    const response = await appContext.app.inject({
+      method: 'GET',
+      url: '/dashboard/',
+      headers: { authorization: 'Bearer test-token' },
+    });
+    assert.equal(response.status, 200);
+    assert.match(response.headers['content-security-policy'], /img-src 'self' data: https:/);
+  } finally {
+    appContext.close();
+  }
+});
+
 test('campaign editor persists download and privacy URLs', () => {
   assert.match(html, /id="a-news-download"/);
   assert.match(html, /id="a-privacy"/);

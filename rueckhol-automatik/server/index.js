@@ -160,7 +160,8 @@ function createApp(options = {}) {
   const schwarzwaldNlListId = options.schwarzwaldNlListId === undefined
     ? process.env.SCHWARZWALD_NL_LIST_ID || '' : options.schwarzwaldNlListId;
   const schwarzwaldArchipelToken = options.schwarzwaldArchipelToken === undefined
-    ? process.env.SCHWARZWALD_ARCHIPEL_TOKEN || '' : options.schwarzwaldArchipelToken;
+    ? process.env.RUECKHOL_AUTOMATIK_LEAD_TOKEN || process.env.SCHWARZWALD_ARCHIPEL_TOKEN || ''
+    : options.schwarzwaldArchipelToken;
   const schwarzwaldArchipelIsland = options.schwarzwaldArchipelIsland === undefined
     ? process.env.SCHWARZWALD_ARCHIPEL_ISLAND || 'rueckhol-automatik' : options.schwarzwaldArchipelIsland;
   const schwarzwaldArchipelCategory = options.schwarzwaldArchipelCategory === undefined
@@ -810,7 +811,7 @@ function createApp(options = {}) {
   // handler per prefix (unlike app.get/post, which support several via rest args).
   const dashboardStatic = express.static(path.join(rootDir, 'dashboard'));
   app.use('/dashboard', (req, res, next) => {
-    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://rsms.me; font-src https://rsms.me; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://rsms.me; font-src https://rsms.me; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
     requireDashboardPage(req, res, () => dashboardStatic(req, res, next));
   });
   // Demo/test pages are for our test phase — a customer's production install
