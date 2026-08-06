@@ -249,7 +249,7 @@ function createDatabase(options = {}) {
 
   function insertSubmission(submission) {
     ensureSite(submission.site_id, submission.site_id);
-    statements.insertSubmission.run({
+    const info = statements.insertSubmission.run({
       site_id: submission.site_id,
       campaign_id: submission.campaign_id || '',
       kind: submission.kind,
@@ -259,6 +259,7 @@ function createDatabase(options = {}) {
     const cutoff = new Date(Date.now() - eventRetentionDays * 24 * 60 * 60 * 1000).toISOString();
     statements.purgeSubmissions.run({ cutoff });
     statements.purgeSubmissionsByLimit.run({ site_id: submission.site_id, limit: eventLimit });
+    return info.lastInsertRowid;
   }
 
   return {

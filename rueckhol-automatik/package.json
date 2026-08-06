@@ -1,6 +1,6 @@
 {
   "name": "conversion-rescue",
-  "version": "1.6.3",
+  "version": "1.7.0",
   "private": true,
   "description": "Standalone Conversion Rescue widget product with Express, SQLite, dashboard, and embeddable popup script.",
   "scripts": {

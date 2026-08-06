@@ -16,6 +16,7 @@ const {
 const { getThemePresets } = require('./lib/theme');
 const { checkPassword, sessionCookie, createGuards, isConfigured, secret } = require('./lib/auth');
 const { backupDatabase } = require('./lib/backup');
+const { forwardNewsletter, forwardContactLead } = require('./lib/forward');
 const { version: APP_VERSION } = require('../package.json');
 const mcpTools = require('./lib/mcp-tools');
 
@@ -154,6 +155,18 @@ function createApp(options = {}) {
     onAuthFailure: (req) => checkDashboardAuthRateLimit(clientIp(req)),
   });
   const webhookUrl = options.webhookUrl === undefined ? process.env.WEBHOOK_URL || '' : options.webhookUrl;
+  const schwarzwaldBaseUrl = options.schwarzwaldBaseUrl === undefined
+    ? process.env.SCHWARZWALD_AGENT_BASE_URL || '' : options.schwarzwaldBaseUrl;
+  const schwarzwaldNlListId = options.schwarzwaldNlListId === undefined
+    ? process.env.SCHWARZWALD_NL_LIST_ID || '' : options.schwarzwaldNlListId;
+  const schwarzwaldArchipelToken = options.schwarzwaldArchipelToken === undefined
+    ? process.env.SCHWARZWALD_ARCHIPEL_TOKEN || '' : options.schwarzwaldArchipelToken;
+  const schwarzwaldArchipelIsland = options.schwarzwaldArchipelIsland === undefined
+    ? process.env.SCHWARZWALD_ARCHIPEL_ISLAND || 'rueckhol-automatik' : options.schwarzwaldArchipelIsland;
+  const schwarzwaldArchipelCategory = options.schwarzwaldArchipelCategory === undefined
+    ? process.env.SCHWARZWALD_ARCHIPEL_CATEGORY || 'fenster' : options.schwarzwaldArchipelCategory;
+  const schwarzwaldArchipelDomain = options.schwarzwaldArchipelDomain === undefined
+    ? process.env.SCHWARZWALD_ARCHIPEL_DOMAIN || '' : options.schwarzwaldArchipelDomain;
   const siteOrigins = options.siteOrigins || parseSiteOrigins(process.env.SITE_ORIGINS);
   const outboundFetch = options.fetch || globalThis.fetch;
   const allowOpenCors = !siteOrigins;
@@ -544,7 +557,7 @@ function createApp(options = {}) {
     }
 
     const createdAt = nowIso();
-    db.insertSubmission({
+    const submissionId = db.insertSubmission({
       site_id: siteId,
       campaign_id: cleanId(req.body.campaignId || req.body.campaign_id || '', ''),
       kind: submission.kind,
@@ -574,6 +587,33 @@ function createApp(options = {}) {
       payload: submission.payload,
       createdAt,
     });
+
+    if (submission.kind === 'newsletter') {
+      forwardNewsletter(
+        { email: submission.payload.email, name: '' },
+        { baseUrl: schwarzwaldBaseUrl, listId: schwarzwaldNlListId },
+        outboundFetch,
+      );
+    } else if (submission.kind === 'contact' || submission.kind === 'lead') {
+      forwardContactLead(
+        {
+          name: submission.payload.name || '',
+          email: submission.payload.email,
+          message: submission.payload.message || '',
+          siteId,
+          submissionId,
+          createdAt,
+        },
+        {
+          baseUrl: schwarzwaldBaseUrl,
+          token: schwarzwaldArchipelToken,
+          island: schwarzwaldArchipelIsland,
+          category: schwarzwaldArchipelCategory,
+          domain: schwarzwaldArchipelDomain,
+        },
+        outboundFetch,
+      );
+    }
 
     res.json({ ok: true });
   });

@@ -3,6 +3,19 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.7.0 — 2026-08-06
+
+- Newsletter-Anmeldungen und Kontakt-/Rückruf-Anfragen aus den Popups
+  werden jetzt zusätzlich automatisch weitergeleitet: Newsletter an die
+  Schwarzwald-Agent-Newsletter-Liste (`POST /api/nl/subscribe`), Kontakt/
+  Rückruf ins Schwarzwald-Agent-CRM über den Archipel-Lead-Contract
+  (`POST /api/leads/intake`, Bearer-Token). Feuer-und-vergessen — ein
+  Ausfall des Zielsystems verzögert oder blockiert nie die Antwort an den
+  Besucher, nur geloggt. Ohne konfigurierte Umgebungsvariablen
+  (`SCHWARZWALD_AGENT_BASE_URL`, `SCHWARZWALD_NL_LIST_ID`,
+  `SCHWARZWALD_ARCHIPEL_TOKEN`) bleibt die Weiterleitung inaktiv — reine
+  Zusatzfunktion, ändert nichts am bestehenden Verhalten ohne diese Werte.
+
 ## 1.6.3 — 2026-08-05
 
 - „Was ist neu"-Banner im Dashboard: zeigt kurz die letzten Verbesserungen
