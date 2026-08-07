@@ -12,6 +12,8 @@ und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/healt
 - CRM: `RUECKHOL_AUTOMATIK_LEAD_TOKEN` ist jetzt der zweckgebundene Zugang für
   die Lead-Weiterleitung. Der bisherige allgemeine Token bleibt als kompatibler
   Fallback bestehen und muss nicht überschrieben werden.
+- Dashboard: Der „Was ist neu"-Banner zeigt jetzt ebenfalls v1.7.3 statt des
+  veralteten Stands v1.6.3; ein Test verhindert erneute Versionsabweichungen.
 
 ## 1.7.2 — 2026-08-06
 

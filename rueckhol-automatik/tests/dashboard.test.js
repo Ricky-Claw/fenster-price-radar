@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const { createApp } = require('../server/index');
+const packageVersion = require('../package.json').version;
 
 const dashboardDir = path.join(__dirname, '..', 'dashboard');
 const html = fs.readFileSync(path.join(dashboardDir, 'index.html'), 'utf8');
@@ -13,6 +14,12 @@ test('dashboard includes the Leads tab and submissions routes', () => {
   assert.match(html, /id="view-leads"/);
   assert.match(app, /\/api\/submissions\?site=/);
   assert.match(app, /format=csv/);
+});
+
+test('what-is-new banner version matches the running package version', () => {
+  const match = app.match(/var WHATS_NEW_VERSION = '([0-9]+\.[0-9]+\.[0-9]+)'/);
+  assert.ok(match, 'what-is-new banner version is present');
+  assert.equal(match[1], packageVersion);
 });
 
 test('dashboard CSP permits configured HTTPS logos in the live preview', async () => {

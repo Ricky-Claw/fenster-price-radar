@@ -40,12 +40,12 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.6.3';
+  var WHATS_NEW_VERSION = '1.7.3';
   var WHATS_NEW_ITEMS = [
-    'Auswertung: sechs Zeitfenster (7 Tage, Monat, 3/6 Monate, Jahr, Gesamt) statt nur zwei, plus tägliches Backup gegen Datenverlust.',
-    'Neuer Knopf „Einbau prüfen" — zeigt direkt, ob das Snippet wirklich auf der Seite sitzt.',
-    'Sicherheitsrunde: Rate-Limit gegen Passwort-/Token-Raten, dichterer Filter fürs eigene CSS, Kampagnen können nicht mehr versehentlich zur falschen Seite wandern.',
-    'Startseite aufgeräumt — Test-Vorschau-Seiten (nur fürs MVP gedacht) entfernt.',
+    'Leads: Kontaktanfragen werden in der Rückhol-Automatik gespeichert und an das CRM weitergeleitet.',
+    'Auswertung: Cross-Origin-Event-Tracking funktioniert wieder für alle erlaubten Popup-Seiten.',
+    'Live-Vorschau: externe HTTPS-Logos werden jetzt wie im echten Popup angezeigt.',
+    'CRM: eigener, zweckgebundener Zugang für die Rückhol-Automatik.',
   ];
   function initWhatsNew() {
     try {
