@@ -170,6 +170,7 @@ assert.equal(fallbackBody.windowCount, 'Irgend was neues');
 
 async function runPollCase(query, {
   dedupe = 'created',
+  intakeBody,
   targetStatus = 200,
   singleLead = false,
   listFailure = false,
@@ -188,7 +189,7 @@ async function runPollCase(query, {
     const url = new URL(input);
     const path = url.pathname.replace('/v21.0/', '');
     if (options.method === 'POST') {
-      return { status: targetStatus, json: async () => ({ dedupe }) };
+      return { status: targetStatus, json: async () => intakeBody ?? ({ dedupe }) };
     }
     if (path === '1192875973914275' && url.searchParams.get('fields') === 'access_token') {
       return { json: async () => ({ access_token: 'page-token' }) };
@@ -276,6 +277,28 @@ async function runPollCase(query, {
   assert.equal(result.body.forwarded, 1);
   assert.equal(result.body.created, 0);
   assert.equal(result.body.skipped, 1);
+}
+
+{
+  const result = await runPollCase({}, {
+    intakeBody: { replayed: false, delivery: 'legacy-inline', mailed: true },
+    singleLead: true,
+  });
+  assert.equal(result.status, 200);
+  assert.equal(result.body.created, 1);
+  assert.equal(result.body.skipped, 0);
+  assert.deepEqual(result.body.errors, []);
+}
+
+{
+  const result = await runPollCase({}, {
+    intakeBody: { replayed: true, delivery: 'legacy-inline', mailed: false },
+    singleLead: true,
+  });
+  assert.equal(result.status, 200);
+  assert.equal(result.body.created, 0);
+  assert.equal(result.body.skipped, 1);
+  assert.deepEqual(result.body.errors, []);
 }
 
 {
