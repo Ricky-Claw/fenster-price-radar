@@ -124,7 +124,19 @@ export async function processLeadgenChange(change) {
 
   const body = mapLeadToDfsMetaBody(lead, formName);
   const forwarded = await forwardToSchwarzwald(body);
-  return { leadgenId, forwarded: forwarded.status, dedupe: forwarded.data?.dedupe };
+  const replayed = typeof forwarded.data?.replayed === 'boolean'
+    ? forwarded.data.replayed
+    : undefined;
+  const dedupe = forwarded.data?.dedupe
+    || (replayed === true ? 'skipped' : replayed === false ? 'created' : undefined);
+  return {
+    leadgenId,
+    forwarded: forwarded.status,
+    dedupe,
+    delivery: forwarded.data?.delivery,
+    mailed: forwarded.data?.mailed,
+    delivered: forwarded.data?.delivered,
+  };
 }
 
 export async function pollOnce({
