@@ -37,6 +37,30 @@ test('forwardContactLead includes mailTo only when configured and returns its re
   assert.equal(Object.hasOwn(bodies[1], 'mailTo'), false);
 });
 
+test('forwardContactLead maps the first phone extra and appends remaining extras to the message', async () => {
+  const bodies = [];
+  const fetchImpl = async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true }; };
+  const input = { name: 'Max', email: 'max@example.com', message: 'Bitte melden', siteId: 'demo', submissionId: 1, createdAt: '2026-08-11T12:00:00.000Z' };
+  const config = { baseUrl: 'https://schwarzwald-agent.de', token: 'secret', island: 'rueckhol' };
+  await forwardContactLead({ ...input, extras: [
+    { label: 'Direkter Kontakt', value: '+49 123', type: 'tel' },
+    { label: 'Fensteranzahl', value: '7', type: 'number' },
+    { label: 'Mobil alternativ', value: '+49 456', type: 'tel' },
+  ] }, config, fetchImpl);
+  assert.equal(bodies[0].contact.phone, '+49 123');
+  assert.equal(bodies[0].message, 'Bitte melden\n\nFensteranzahl: 7\nMobil alternativ: +49 456');
+});
+
+test('forwardContactLead keeps its request body unchanged when extras are absent', async () => {
+  const bodies = [];
+  const fetchImpl = async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true }; };
+  const input = { name: 'Max', email: 'max@example.com', message: 'Hallo', siteId: 'demo', submissionId: 1, createdAt: '2026-08-11T12:00:00.000Z' };
+  const config = { baseUrl: 'https://schwarzwald-agent.de', token: 'secret', island: 'rueckhol' };
+  await forwardContactLead(input, config, fetchImpl);
+  await forwardContactLead({ ...input, extras: [] }, config, fetchImpl);
+  assert.deepEqual(bodies[1], bodies[0]);
+});
+
 test('manual CRM resend requires auth, reports missing leads and config, and reuses the original lead id', async () => {
   const headers = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
   const unconfigured = createApp({ dbPath: ':memory:', adminToken: 'test-token', fetch: async () => { throw new Error('must not fetch'); }, warnOnOpenAdmin: false });

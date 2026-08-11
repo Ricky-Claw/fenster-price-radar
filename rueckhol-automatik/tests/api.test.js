@@ -291,6 +291,7 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
           email: '"buyer,one"@example.com',
           name: '=SUM(1+1)',
           message: 'Bitte, Angebot senden',
+          extras: [{ label: 'Rufnummer', value: '+49 123 456' }],
           consent: true,
         },
       },
@@ -341,6 +342,7 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
         email: originalLead.email,
         name: originalLead.name,
         message: originalLead.message,
+        extras: originalLead.extras,
         page: originalLead.page,
       },
       {
@@ -349,6 +351,7 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
         email: '"buyer,one"@example.com',
         name: '=SUM(1+1)',
         message: 'Bitte, Angebot senden',
+        extras: [{ label: 'Rufnummer', value: '+49 123 456' }],
         page: 'https://shop.example/konfigurator',
       },
     );

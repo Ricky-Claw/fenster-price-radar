@@ -124,6 +124,43 @@ function cleanMetadata(value) {
   return metadata;
 }
 
+function cleanExtraFields(value) {
+  if (!Array.isArray(value)) return [];
+  const fields = [];
+  const labels = new Set();
+  const allowedTypes = new Set(['text', 'tel', 'email', 'number']);
+
+  for (const entry of value) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+    const label = cleanText(entry.label, 60);
+    if (!label || labels.has(label)) continue;
+    fields.push({
+      label,
+      type: allowedTypes.has(entry.type) ? entry.type : 'text',
+    });
+    labels.add(label);
+    if (fields.length === 5) break;
+  }
+
+  return fields;
+}
+
+function cleanExtras(value) {
+  if (!Array.isArray(value)) return [];
+  const extras = [];
+
+  for (const entry of value) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+    const label = cleanText(entry.label, 60);
+    const extraValue = cleanText(entry.value, 200);
+    if (!label || !extraValue) continue;
+    extras.push({ label, value: extraValue });
+    if (extras.length === 5) break;
+  }
+
+  return extras;
+}
+
 function cleanEmail(value) {
   const email = cleanText(value, 240).toLowerCase();
   return EMAIL_PATTERN.test(email) ? email : '';
@@ -231,6 +268,7 @@ function sanitizeAction(actionTypeInput, configInput = {}) {
     actionConfig = {
       ...common,
       allowUpload: asBool(config.allowUpload),
+      extraFields: cleanExtraFields(config.extraFields),
       label: cleanText(config.label || 'Anfrage senden', 120),
       privacyUrl: cleanDownloadUrl(config.privacyUrl),
       consentLabel: cleanText(
@@ -257,6 +295,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}, pageInput = '') {
   const uploadId = /^[A-Za-z0-9_-]{20,64}$/.test(String(payload.uploadId || ''))
     ? String(payload.uploadId)
     : undefined;
+  const extras = cleanExtras(payload.extras);
 
   if (!consent) throw new Error('Explicit consent is required');
   if (!email) throw new Error('A valid email address is required');
@@ -282,6 +321,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}, pageInput = '') {
         message: cleanText(payload.message, 600),
         consent: true,
         ...(uploadId ? { uploadId } : {}),
+        ...(extras.length ? { extras } : {}),
       },
     };
   }
@@ -295,6 +335,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}, pageInput = '') {
       message: cleanText(payload.message, 1200),
       consent: true,
       ...(uploadId ? { uploadId } : {}),
+      ...(extras.length ? { extras } : {}),
     },
   };
 }
@@ -369,6 +410,8 @@ module.exports = {
   cleanCustomCss,
   cleanDownloadUrl,
   cleanEmail,
+  cleanExtraFields,
+  cleanExtras,
   cleanId,
   cleanMetadata,
   cleanPageUrl,

@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.11.1 (keep in sync with package.json)
+ * Version: 1.12.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -179,7 +179,13 @@
         return '<div data-cre-form="newsletter" style="display:grid;gap:10px"><input data-cre-email type="email" autocomplete="email" placeholder="' + esc(a.placeholder || 'Deine E-Mail') + '" style="' + inp + '">' + consent + '<button type="button" data-cre-action="newsletter" style="' + btn + '">' + label + '</button>' + status + '</div>';
       case 'contact':
         var upload = a.allowUpload ? '<label style="display:grid;gap:5px;color:' + t.muted + ';font-size:13px"><span>Fensterliste anhängen (optional)</span><input data-cre-file type="file" accept=".pdf,.jpg,.jpeg,.png,.csv,.xlsx" style="' + inp + 'padding:9px 11px"></label>' : '';
-        return '<div data-cre-form="contact" style="display:grid;gap:10px"><input data-cre-name type="text" placeholder="Name" style="' + inp + '"><input data-cre-email type="email" autocomplete="email" placeholder="E-Mail" style="' + inp + '"><textarea data-cre-message rows="3" placeholder="Deine Nachricht" style="' + inp + 'resize:vertical"></textarea>' + upload + consent + '<button type="button" data-cre-action="contact" style="' + btn + '">' + label + '</button>' + status + '</div>';
+        var extraFields = Array.isArray(a.extraFields) ? a.extraFields : [];
+        var extraMarkup = extraFields.map(function (field, index) {
+          var type = ['text', 'tel', 'email', 'number'].indexOf(field.type) !== -1 ? field.type : 'text';
+          var inputmode = type === 'tel' ? ' inputmode="tel"' : (type === 'number' ? ' inputmode="numeric"' : '');
+          return '<input data-cre-extra="' + index + '" type="' + type + '" placeholder="' + esc(field.label) + '"' + inputmode + ' style="' + inp + '">';
+        }).join('');
+        return '<div data-cre-form="contact" style="display:grid;gap:10px"><input data-cre-name type="text" placeholder="Name" style="' + inp + '"><input data-cre-email type="email" autocomplete="email" placeholder="E-Mail" style="' + inp + '"><textarea data-cre-message rows="3" placeholder="Deine Nachricht" style="' + inp + 'resize:vertical"></textarea>' + extraMarkup + upload + consent + '<button type="button" data-cre-action="contact" style="' + btn + '">' + label + '</button>' + status + '</div>';
       default:
         return '<button type="button" data-cre-action="close" style="' + btn + '">' + label + '</button>';
     }
@@ -236,6 +242,10 @@
         if (kind === 'contact') {
           var nm = root.querySelector('[data-cre-name]'); var msg = root.querySelector('[data-cre-message]');
           payload.name = nm ? nm.value : ''; payload.message = msg ? msg.value : '';
+          payload.extras = (Array.isArray(actionConfig.extraFields) ? actionConfig.extraFields : []).map(function (field, index) {
+            var extraInput = root.querySelector('[data-cre-extra="' + index + '"]');
+            return extraInput && extraInput.value.trim() ? { label: field.label, value: extraInput.value } : null;
+          }).filter(Boolean);
         }
         track(c.id, 'cta_click', { action: kind });
         b.disabled = true;

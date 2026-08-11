@@ -233,6 +233,8 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
 .f label { font-size: 13px; font-weight: 600; color: var(--ink); }
 .f .hint { font-size: 12px; color: var(--muted); }
 .f.span2 { grid-column: 1 / -1; }
+.extra-field-row { display: grid; grid-template-columns: minmax(0, 1fr) 130px auto; gap: 8px; margin-top: 8px; }
+@media (max-width: 560px) { .extra-field-row { grid-template-columns: minmax(0, 1fr) 110px; } .extra-field-row button { grid-column: 1 / -1; } }
 .interstitial-hint { grid-column: 1 / -1; margin: -4px 0 0; padding: 9px 11px; border-radius: var(--radius); background: rgba(244, 180, 0, .12); color: #8A6100; font-size: 12px; }
 .charcount { font-size: 11px; color: var(--faint); text-align: right; }
 

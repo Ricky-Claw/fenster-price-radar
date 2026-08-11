@@ -330,10 +330,21 @@ function createApp(options = {}) {
       email: submission.payload.email || '',
       name: submission.payload.name || '',
       message: submission.payload.message || '',
+      ...(submission.payload.extras ? { extras: submission.payload.extras } : {}),
       campaign: campaignName || submission.campaign_id,
       page: submission.page || '',
       createdAt: submission.created_at,
     };
+  }
+
+  function submissionExtras(extras, campaignId) {
+    if (!extras || !extras.length) return undefined;
+    const campaign = db.getCampaign(campaignId);
+    const configuredFields = campaign && campaign.action_config && Array.isArray(campaign.action_config.extraFields)
+      ? campaign.action_config.extraFields
+      : [];
+    const typesByLabel = new Map(configuredFields.map((field) => [field.label, field.type]));
+    return extras.map((extra) => ({ ...extra, type: typesByLabel.get(extra.label) || 'text' }));
   }
 
   function resolveSubmissionAttachments(payload, siteId, at, req) {
@@ -764,6 +775,10 @@ function createApp(options = {}) {
           name: submission.payload.name || '',
           email: submission.payload.email,
           message: submission.payload.message || '',
+          extras: submissionExtras(
+            submission.payload.extras,
+            cleanId(req.body.campaignId || req.body.campaign_id || '', ''),
+          ),
           siteId,
           submissionId,
           createdAt,
@@ -849,6 +864,7 @@ function createApp(options = {}) {
           name: submission.payload.name || '',
           email: submission.payload.email,
           message: submission.payload.message || '',
+          extras: submissionExtras(submission.payload.extras, submission.campaign_id),
           siteId,
           submissionId: submission.id,
           createdAt: submission.created_at,

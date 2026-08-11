@@ -30,9 +30,24 @@ function forwardNewsletter({ email, name }, config, fetchImpl) {
   }, DEFAULT_TIMEOUT_MS));
 }
 
-function forwardContactLead({ name, email, message, siteId, submissionId, createdAt, attachments, mailTo }, config, fetchImpl) {
+function forwardContactLead({ name, email, message, extras, siteId, submissionId, createdAt, attachments, mailTo }, config, fetchImpl) {
   if (!config || !config.baseUrl || !config.token) return;
   const url = `${config.baseUrl.replace(/\/$/, '')}/api/leads/intake`;
+  let phone;
+  let forwardedMessage = message;
+  if (extras && extras.length) {
+    const messageExtras = [];
+    extras.forEach((extra) => {
+      if (!phone && (extra.type === 'tel' || /telefon|rufnummer|handy|mobil/i.test(extra.label))) {
+        phone = extra.value;
+      } else {
+        messageExtras.push(`${extra.label}: ${extra.value}`);
+      }
+    });
+    if (messageExtras.length) {
+      forwardedMessage = message ? `${message}\n\n${messageExtras.join('\n')}` : messageExtras.join('\n');
+    }
+  }
   const body = {
     schema: 'archipel.lead/v1',
     id: `${config.island}_${siteId}_${submissionId}`,
@@ -44,9 +59,9 @@ function forwardContactLead({ name, email, message, siteId, submissionId, create
       category: config.category || 'sonstiges',
     },
     consent: { given: true, ts: createdAt, textVersion: 'v1' },
-    contact: { name: name || undefined, email },
+    contact: { name: name || undefined, email, ...(phone ? { phone } : {}) },
     ...(mailTo ? { mailTo } : {}),
-    message: message || undefined,
+    message: forwardedMessage || undefined,
     attachments: attachments && attachments.length ? attachments : undefined,
   };
   const responsePromise = withTimeout(fetchImpl, url, {

@@ -3,6 +3,16 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.12.0 — 2026-08-11
+
+- **Eigene Eingabezeilen im Kontakt-Popup:** Je Kampagne lassen sich bis zu
+  fünf zusätzliche Felder anlegen und frei beschriften — etwa „Rufnummer".
+  Für jede Zeile wählen Sie die Art (Text, Telefon, E-Mail, Zahl); auf dem
+  Handy erscheint dann die passende Tastatur. Eine Telefon-Zeile landet im
+  CRM im dafür vorgesehenen Rufnummern-Feld, alle übrigen Angaben hängen
+  klar beschriftet unter der Nachricht. Kampagnen ohne Zusatzfelder
+  verhalten sich unverändert.
+
 ## 1.11.1 — 2026-08-11
 
 - Alle Standardtexte sind jetzt auf Deutsch. Bisher steckten englische

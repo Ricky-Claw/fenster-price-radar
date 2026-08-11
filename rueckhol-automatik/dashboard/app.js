@@ -40,7 +40,7 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.11.1';
+  var WHATS_NEW_VERSION = '1.12.0';
   var WHATS_NEW_ITEMS = [
     'Angebots-Popup: Besucher können optional eine Fensterliste hochladen; sie wird mit dem Lead ans CRM und per Mail weitergegeben.',
     'Neues Aussehen: Die Steuerung folgt jetzt dem Design des Deutschen Fenstershops — Dunkelblau für die Oberfläche, Orange nur für die wichtigste Aktion.',
@@ -105,6 +105,29 @@
     };
   }
 
+  function renderExtraFields(fields) {
+    var list = $('#a-con-extra-fields');
+    fields = Array.isArray(fields) ? fields.slice(0, 5) : [];
+    list.innerHTML = fields.map(function (field, index) {
+      var type = ['text', 'tel', 'email', 'number'].indexOf(field.type) !== -1 ? field.type : 'text';
+      return '<div class="extra-field-row" data-extra-field>' +
+        '<input type="text" maxlength="60" data-extra-label placeholder="Beschriftung" value="' + esc(field.label || '') + '">' +
+        '<select data-extra-type aria-label="Art des zusätzlichen Feldes">' +
+        '<option value="text"' + (type === 'text' ? ' selected' : '') + '>Text</option>' +
+        '<option value="tel"' + (type === 'tel' ? ' selected' : '') + '>Telefon</option>' +
+        '<option value="email"' + (type === 'email' ? ' selected' : '') + '>E-Mail</option>' +
+        '<option value="number"' + (type === 'number' ? ' selected' : '') + '>Zahl</option></select>' +
+        '<button class="btn btn-sm" type="button" data-extra-remove="' + index + '">Entfernen</button></div>';
+    }).join('');
+    $('#a-con-extra-add').disabled = fields.length >= 5;
+  }
+
+  function readExtraFields() {
+    return $$('[data-extra-field]', $('#a-con-extra-fields')).map(function (row) {
+      return { label: $('[data-extra-label]', row).value.trim(), type: $('[data-extra-type]', row).value };
+    }).filter(function (field) { return field.label; }).slice(0, 5);
+  }
+
   // Write a campaign object into the form inputs.
   function writeForm(c) {
     setVal('f-name', c.name); setVal('f-site', c.site_id); setVal('f-sitename', c.site_name);
@@ -132,6 +155,7 @@
     setVal('a-privacy', a.privacyUrl);
     setVal('a-con-consent', a.consentLabel); setVal('a-con-ok', a.successMessage);
     setChk('a-con-upload', a.allowUpload);
+    renderExtraFields(a.extraFields);
     // design
     var th = c.theme || {}; var col = th.colors || {};
     ['accent', 'accent_text', 'text', 'muted', 'surface', 'border'].forEach(function (k) {
@@ -164,7 +188,7 @@
     else if (action === 'pdf') ac = { pdfUrl: v('a-pdf'), label: cta, newTab: true };
     else if (action === 'coupon') ac = { code: v('a-code'), label: cta };
     else if (action === 'newsletter') ac = { label: cta, placeholder: v('a-news-ph') || 'name@example.com', downloadUrl: v('a-news-download'), privacyUrl: v('a-privacy'), consentLabel: v('a-news-consent') || 'Ich stimme zu.', successMessage: v('a-news-ok') || 'Danke!' };
-    else ac = { label: cta, privacyUrl: v('a-privacy'), consentLabel: v('a-con-consent') || 'Ich stimme zu.', successMessage: v('a-con-ok') || 'Danke!', allowUpload: chk('a-con-upload') };
+    else ac = { label: cta, privacyUrl: v('a-privacy'), consentLabel: v('a-con-consent') || 'Ich stimme zu.', successMessage: v('a-con-ok') || 'Danke!', allowUpload: chk('a-con-upload'), extraFields: readExtraFields() };
 
     var colors = clone((d.theme && d.theme.colors) || {});
     ['accent', 'accent_text', 'text', 'muted', 'surface', 'border'].forEach(function (k) {
@@ -681,6 +705,25 @@
     });
     $('#siteCooldownHours').addEventListener('change', saveSiteCooldown);
     $('#siteLeadMailTo').addEventListener('change', saveSiteLeadMailTo);
+    $('#a-con-extra-add').addEventListener('click', function () {
+      var fields = readExtraFields();
+      if (fields.length >= 5) return;
+      fields.push({ label: '', type: 'text' });
+      renderExtraFields(fields);
+      scheduleForm(); setDirty(true);
+      var labels = $$('[data-extra-label]', $('#a-con-extra-fields'));
+      if (labels.length) labels[labels.length - 1].focus();
+    });
+    $('#a-con-extra-fields').addEventListener('click', function (event) {
+      var button = event.target.closest('[data-extra-remove]');
+      if (!button) return;
+      var fields = $$('[data-extra-field]', this).map(function (row) {
+        return { label: $('[data-extra-label]', row).value.trim(), type: $('[data-extra-type]', row).value };
+      });
+      fields.splice(Number(button.getAttribute('data-extra-remove')), 1);
+      renderExtraFields(fields);
+      scheduleForm(); setDirty(true);
+    });
 
     // any form input → live preview + mark unsaved
     $('#form').addEventListener('input', function () { scheduleForm(); setDirty(true); });

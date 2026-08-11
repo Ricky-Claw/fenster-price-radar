@@ -5,6 +5,8 @@ const {
   cleanCsvList,
   cleanCustomCss,
   cleanDownloadUrl,
+  cleanExtraFields,
+  cleanExtras,
   cleanPageUrl,
   cleanText,
   cleanUrl,
@@ -13,6 +15,43 @@ const {
   sanitizeSubmission,
   sanitizeTrigger,
 } = require('../server/lib/sanitize');
+
+test('cleanExtraFields validates labels and types, removes duplicates, and caps fields', () => {
+  assert.deepEqual(cleanExtraFields('Rufnummer'), []);
+  assert.deepEqual(cleanExtraFields([
+    { label: ' Rufnummer ', type: 'tel' },
+    { label: '', type: 'email' },
+    { label: 'Rufnummer', type: 'number' },
+    { label: 'Wunsch', type: 'unsupported' },
+    { label: 'E-Mail 2', type: 'email' },
+    { label: 'Anzahl', type: 'number' },
+    { label: 'Ort', type: 'text' },
+    { label: 'Zu viel', type: 'text' },
+  ]), [
+    { label: 'Rufnummer', type: 'tel' },
+    { label: 'Wunsch', type: 'text' },
+    { label: 'E-Mail 2', type: 'email' },
+    { label: 'Anzahl', type: 'number' },
+    { label: 'Ort', type: 'text' },
+  ]);
+});
+
+test('cleanExtras validates values and caps field count and lengths', () => {
+  const extras = cleanExtras([
+    { label: 'L'.repeat(80), value: 'V'.repeat(240) },
+    { label: 'Leer', value: '   ' },
+    { label: '', value: 'Wert' },
+    { label: 'Zwei', value: '2' },
+    { label: 'Drei', value: '3' },
+    { label: 'Vier', value: '4' },
+    { label: 'Fünf', value: '5' },
+    { label: 'Sechs', value: '6' },
+  ]);
+  assert.equal(extras.length, 5);
+  assert.equal(extras[0].label.length, 60);
+  assert.equal(extras[0].value.length, 200);
+  assert.equal(extras.some((extra) => extra.label === 'Leer'), false);
+});
 
 test('sanitizeCampaignInput cleans page exclusions and supports camelCase', () => {
   assert.equal(sanitizeCampaignInput({ name: 'Default' }).page_exclude, '');

@@ -63,6 +63,24 @@ test('contact markup shows the file field only when uploads are allowed', () => 
   assert.match(actionMarkup(campaign, theme), /data-cre-file/);
 });
 
+test('contact markup escapes extra labels and submission collects extras', () => {
+  const escaped = [];
+  const actionMarkup = new Function('esc', 'safeUrl', `return (${extractFunction('actionMarkup')});`)(
+    (value) => { escaped.push(value); return String(value).replace(/</g, '&lt;'); },
+    (value) => String(value || ''),
+  );
+  const theme = { radius: '10px', accent: '#123', accentText: '#fff', border: '#ddd', text: '#111', muted: '#666' };
+  const markup = actionMarkup({
+    action_type: 'contact', cta_label: 'Senden',
+    action_config: { extraFields: [{ label: '<Rufnummer>', type: 'tel' }, { label: 'Anzahl', type: 'number' }] },
+  }, theme);
+  assert.match(markup, /data-cre-extra="0" type="tel" placeholder="&lt;Rufnummer>" inputmode="tel"/);
+  assert.match(markup, /data-cre-extra="1" type="number" placeholder="Anzahl" inputmode="numeric"/);
+  assert.ok(escaped.includes('<Rufnummer>'));
+  assert.match(source, /payload\.extras\s*=\s*\(Array\.isArray\(actionConfig\.extraFields\)/);
+  assert.match(source, /\{ label: field\.label, value: extraInput\.value \}/);
+});
+
 test('widget includes the mobile popup safeguards', () => {
   const inpBlock = source.match(/var inp = [^\n]+/);
   assert.ok(inpBlock, 'input style block is present');
