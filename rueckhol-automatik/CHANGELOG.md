@@ -3,6 +3,13 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.8.0 — 2026-08-11
+
+- Datei-Upload im Angebots-Popup: Besucher können optional eine Fensterliste
+  anhängen; sie wird zusammen mit der Anfrage ans CRM und per Mail weitergegeben.
+  Ein fehlgeschlagener Upload blockiert die Lead-Abgabe nicht. Uploads werden
+  7 Tage aufbewahrt und täglich automatisch bereinigt.
+
 ## 1.7.3 — 2026-08-06
 
 - Fix: Die produktive Dashboard-CSP blockierte externe HTTPS-Logos in der

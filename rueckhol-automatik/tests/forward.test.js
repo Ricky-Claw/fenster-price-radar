@@ -1,6 +1,7 @@
 const { test, mock } = require('node:test');
 const assert = require('node:assert/strict');
 const { createApp } = require('../server/index');
+const { forwardContactLead } = require('../server/lib/forward');
 
 function submit(ctx, kind, payload, siteId = 'demo') {
   return ctx.app.inject({
@@ -10,6 +11,19 @@ function submit(ctx, kind, payload, siteId = 'demo') {
     body: { siteId, kind, payload: { consent: true, ...payload } },
   });
 }
+
+test('forwardContactLead includes attachments only when provided', async () => {
+  const bodies = [];
+  const fetchImpl = async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true }; };
+  const input = { name: 'Max', email: 'max@example.com', siteId: 'demo', submissionId: 1, createdAt: '2026-08-11T12:00:00.000Z' };
+  const config = { baseUrl: 'https://schwarzwald-agent.de', token: 'secret', island: 'rueckhol', category: 'fenster' };
+  const attachments = [{ filename: 'liste.pdf', mime: 'application/pdf', size: 12, sha256: 'abc', url: 'https://example.test/api/uploads?id=abcdefghijklmnopqrstuvwxyz123456' }];
+  forwardContactLead({ ...input, attachments }, config, fetchImpl);
+  forwardContactLead(input, config, fetchImpl);
+  await new Promise((resolve) => setImmediate(resolve));
+  assert.deepEqual(bodies[0].attachments, attachments);
+  assert.equal(Object.hasOwn(bodies[1], 'attachments'), false);
+});
 
 test('forwards newsletter submissions', async () => {
   const calls = [];

@@ -93,6 +93,17 @@ function createDatabase(options = {}) {
       created_at TEXT NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS uploads (
+      id TEXT PRIMARY KEY,
+      site_id TEXT,
+      mime TEXT,
+      size INTEGER,
+      sha256 TEXT,
+      original_name TEXT,
+      created_at TEXT,
+      expires_at TEXT
+    );
+
     CREATE INDEX IF NOT EXISTS idx_events_site_created ON events(site_id, created_at);
     CREATE INDEX IF NOT EXISTS idx_submissions_site_created ON submissions(site_id, created_at);
   `);
@@ -183,6 +194,13 @@ function createDatabase(options = {}) {
       WHERE site_id = @site_id
         AND id NOT IN (SELECT id FROM submissions WHERE site_id = @site_id ORDER BY created_at DESC, id DESC LIMIT @limit)
     `),
+    insertUpload: db.prepare(`
+      INSERT INTO uploads (id, site_id, mime, size, sha256, original_name, created_at, expires_at)
+      VALUES (@id, @site_id, @mime, @size, @sha256, @original_name, @created_at, @expires_at)
+    `),
+    getUpload: db.prepare('SELECT * FROM uploads WHERE id = @id LIMIT 1'),
+    listExpiredUploads: db.prepare('SELECT id FROM uploads WHERE expires_at < @now'),
+    purgeExpiredUploads: db.prepare('DELETE FROM uploads WHERE expires_at < @now'),
   };
 
   function ensureSite(siteId, name) {
@@ -262,6 +280,20 @@ function createDatabase(options = {}) {
     return info.lastInsertRowid;
   }
 
+  function purgeExpiredUploads() {
+    const now = new Date().toISOString();
+    const expired = statements.listExpiredUploads.all({ now });
+    for (const { id } of expired) options.deleteUpload?.(id);
+    statements.purgeExpiredUploads.run({ now });
+    return expired.map(({ id }) => id);
+  }
+
+  function insertUpload(upload) {
+    purgeExpiredUploads();
+    statements.insertUpload.run(upload);
+    return statements.getUpload.get({ id: upload.id });
+  }
+
   return {
     close() {
       db.close();
@@ -276,8 +308,12 @@ function createDatabase(options = {}) {
     getCampaign(id) {
       return hydrateCampaign(statements.getCampaign.get({ id }));
     },
+    getUpload(id) {
+      return statements.getUpload.get({ id });
+    },
     insertEvent,
     insertSubmission,
+    insertUpload,
     listCampaigns,
     listEvents(siteId = '') {
       return statements.listEvents.all({ site_id: siteId, limit: 20000 }).map(hydrateEvent);
@@ -288,6 +324,7 @@ function createDatabase(options = {}) {
     listSubmissions(siteId = '') {
       return statements.listSubmissions.all({ site_id: siteId }).map(hydrateSubmission);
     },
+    purgeExpiredUploads,
     saveCampaign,
   };
 }

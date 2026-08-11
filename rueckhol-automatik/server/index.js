@@ -17,6 +17,15 @@ const { getThemePresets } = require('./lib/theme');
 const { checkPassword, sessionCookie, createGuards, isConfigured, secret } = require('./lib/auth');
 const { backupDatabase } = require('./lib/backup');
 const { forwardNewsletter, forwardContactLead } = require('./lib/forward');
+const {
+  allowedMime,
+  contentDispositionValue,
+  createUploadStore,
+  newUploadId,
+  safeStoredName,
+  sha256,
+  sniffMime,
+} = require('./lib/uploads');
 const { version: APP_VERSION } = require('../package.json');
 const mcpTools = require('./lib/mcp-tools');
 
@@ -144,10 +153,13 @@ function setAdminSecurityHeaders(res, cspExtra) {
 
 function createApp(options = {}) {
   const rootDir = options.rootDir || path.resolve(__dirname, '..');
+  const uploadsDir = options.uploadsDir || path.join(rootDir, 'data', 'uploads');
+  const uploadStore = createUploadStore({ uploadsDir });
   const db = options.db || createDatabase({
     dbPath: options.dbPath || path.join(rootDir, 'data', 'conversion-rescue.sqlite'),
     eventLimit: options.eventLimit,
     eventRetentionDays: options.eventRetentionDays,
+    deleteUpload: uploadStore.deleteUpload,
   });
   const app = express();
   const adminToken = options.adminToken === undefined ? process.env.ADMIN_TOKEN || '' : options.adminToken;
@@ -179,10 +191,24 @@ function createApp(options = {}) {
   const checkMcpRateLimit = createRateLimiter(10, 15 * 60_000);
   const checkDashboardAuthRateLimit = createRateLimiter(20, 15 * 60_000);
   const checkInstallRateLimit = createRateLimiter(10, 60_000);
+  const checkUploadRateLimit = createRateLimiter(10, 60_000);
+  const checkDownloadRateLimit = createRateLimiter(60, 60_000);
   const backupDir = options.backupDir || path.join(rootDir, 'data', 'backups');
   const runDatabaseBackup = options.backupDatabase || backupDatabase;
   const backupKeep = options.backupRetentionDays === undefined ? 30 : options.backupRetentionDays;
   const dbPath = options.dbPath || path.join(rootDir, 'data', 'conversion-rescue.sqlite');
+  const uploadMaxBytes = 10 * 1024 * 1024;
+  const uploadRetentionMs = (options.uploadRetentionDays ?? 7) * 24 * 60 * 60 * 1000;
+  // Production must set PUBLIC_BASE_URL to the public Rueckhol service URL.
+  const publicBaseUrlValue = String(options.publicBaseUrl === undefined
+    ? process.env.PUBLIC_BASE_URL || '' : options.publicBaseUrl).replace(/\/+$/, '');
+  const configuredPublicBaseUrl = /^https:\/\//i.test(publicBaseUrlValue)
+    || /^http:\/\/localhost(?::\d+)?(?:\/|$)/i.test(publicBaseUrlValue)
+    ? publicBaseUrlValue
+    : '';
+  if (publicBaseUrlValue && !configuredPublicBaseUrl) {
+    console.warn('[Conversion Rescue] PUBLIC_BASE_URL must use HTTPS (or http://localhost for local tests); falling back to the request URL.');
+  }
   const eventTokenKey = crypto.createHmac('sha256', secret()).update('rueckhol-event-token-v1').digest();
   const eventTokenFor = (siteId, date) => crypto.createHmac('sha256', eventTokenKey).update(`evt.${siteId}.${date}`).digest('base64url');
   const validEventToken = (siteId, supplied) => {
@@ -203,6 +229,7 @@ function createApp(options = {}) {
     return true;
   };
   let backupTimer = null;
+  let uploadPurgeTimer = null;
   if (options.disableBackupSchedule !== true && dbPath !== ':memory:') {
     const runBackup = () => {
       try {
@@ -216,6 +243,14 @@ function createApp(options = {}) {
     backupTimer = setInterval(runBackup, 24 * 60 * 60 * 1000);
     if (backupTimer.unref) backupTimer.unref();
   }
+  uploadPurgeTimer = setInterval(() => {
+    try {
+      db.purgeExpiredUploads();
+    } catch (error) {
+      console.warn('[Conversion Rescue] Expired upload purge failed.', error);
+    }
+  }, 24 * 60 * 60 * 1000);
+  if (uploadPurgeTimer.unref) uploadPurgeTimer.unref();
 
   if (!adminToken && !isConfigured() && options.warnOnOpenAdmin !== false) {
     console.warn('[Conversion Rescue] Neither ADMIN_TOKEN nor FENSTER_RADAR_PASSWORD is set. Dashboard/API routes are open for local development.');
@@ -512,6 +547,101 @@ function createApp(options = {}) {
     applyPreflightCors(req, res);
     res.status(204).send('');
   });
+  app.options('/api/upload', (req, res) => {
+    applyPreflightCors(req, res);
+    res.status(204).send('');
+  });
+
+  app.post('/api/upload', (req, res) => {
+    if (typeof req.setTimeout === 'function') req.setTimeout(30_000, () => req.destroy());
+    const siteId = cleanId(req.query.site || 'default', 'default');
+    applyCors(req, res, siteId);
+    if (!validEventToken(siteId, req.query.token)) {
+      res.status(401).json({ error: 'A valid eventToken is required' });
+      return;
+    }
+    if (!checkUploadRateLimit(clientIp(req))) {
+      res.status(429).json({ error: 'Too many uploads' });
+      return;
+    }
+
+    const chunks = [];
+    let size = 0;
+    let settled = false;
+    const onError = () => {
+      if (!settled && !res.writableEnded) res.status(400).json({ error: 'Upload fehlgeschlagen' });
+      settled = true;
+    };
+    req.on('error', onError);
+    req.on('data', (chunk) => {
+      if (settled) return;
+      size += chunk.length;
+      if (size > uploadMaxBytes) {
+        settled = true;
+        chunks.length = 0;
+        res.status(413).json({ error: 'Datei zu groß' });
+        req.destroy();
+        return;
+      }
+      chunks.push(Buffer.from(chunk));
+    });
+    req.on('end', () => {
+      if (settled) return;
+      settled = true;
+      const buffer = Buffer.concat(chunks);
+      const mime = sniffMime(buffer);
+      if (!mime || !allowedMime[mime]) {
+        res.status(415).json({ error: 'Dateityp nicht erlaubt' });
+        return;
+      }
+      const id = newUploadId();
+      const originalName = safeStoredName(req.query.name, mime);
+      const createdAt = nowIso();
+      const expiresAt = new Date(new Date(createdAt).getTime() + uploadRetentionMs).toISOString();
+      try {
+        uploadStore.writeUpload(id, buffer);
+        db.insertUpload({
+          id,
+          site_id: siteId,
+          mime,
+          size: buffer.length,
+          sha256: sha256(buffer),
+          original_name: originalName,
+          created_at: createdAt,
+          expires_at: expiresAt,
+        });
+      } catch (error) {
+        uploadStore.deleteUpload(id);
+        res.status(500).json({ error: 'Upload konnte nicht gespeichert werden' });
+        return;
+      }
+      res.json({ ok: true, uploadId: id, mime, size: buffer.length });
+    });
+  });
+
+  app.get('/api/uploads', (req, res) => {
+    applyCors(req, res, '');
+    if (!checkDownloadRateLimit(clientIp(req))) {
+      res.status(429).json({ error: 'Too many downloads' });
+      return;
+    }
+    const id = String(req.query.id || '');
+    const upload = /^[A-Za-z0-9_-]{20,64}$/.test(id) ? db.getUpload(id) : null;
+    if (!upload || upload.expires_at < nowIso()) {
+      res.status(404).json({ error: 'Datei nicht gefunden' });
+      return;
+    }
+    applyCors(req, res, upload.site_id);
+    try {
+      const body = uploadStore.readUpload(id);
+      res.set('content-type', upload.mime);
+      res.set('x-content-type-options', 'nosniff');
+      res.set('content-disposition', contentDispositionValue(upload.original_name));
+      res.send(body);
+    } catch (error) {
+      res.status(404).json({ error: 'Datei nicht gefunden' });
+    }
+  });
 
   app.get('/api/config', (req, res) => {
     const siteId = cleanId(req.query.siteId || 'default', 'default');
@@ -560,6 +690,24 @@ function createApp(options = {}) {
     }
 
     const createdAt = nowIso();
+    let attachments;
+    if (submission.payload.uploadId) {
+      const upload = db.getUpload(submission.payload.uploadId);
+      if (upload && upload.site_id === siteId && upload.expires_at >= createdAt) {
+        const forwardedProto = firstHeaderValue(req.headers['x-forwarded-proto']);
+        const protocol = (typeof forwardedProto === 'string' ? forwardedProto.split(',')[0].trim() : '')
+          || (req.socket?.encrypted ? 'https' : 'http');
+        const host = req.get('host') || 'localhost';
+        const publicBaseUrl = configuredPublicBaseUrl || `${protocol}://${host}`;
+        attachments = [{
+          filename: upload.original_name,
+          mime: upload.mime,
+          size: upload.size,
+          sha256: upload.sha256,
+          url: `${publicBaseUrl.replace(/\/+$/, '')}/api/uploads?id=${encodeURIComponent(upload.id)}`,
+        }];
+      }
+    }
     const submissionId = db.insertSubmission({
       site_id: siteId,
       campaign_id: cleanId(req.body.campaignId || req.body.campaign_id || '', ''),
@@ -606,6 +754,7 @@ function createApp(options = {}) {
           siteId,
           submissionId,
           createdAt,
+          attachments,
         },
         {
           baseUrl: schwarzwaldBaseUrl,
@@ -824,6 +973,7 @@ function createApp(options = {}) {
     app,
     close() {
       if (backupTimer) clearInterval(backupTimer);
+      if (uploadPurgeTimer) clearInterval(uploadPurgeTimer);
       db.close();
     },
   };

@@ -1,9 +1,97 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { createApp, createRateLimiter, csvCell } = require('../server/index');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
 
 test('CSV cells guard leading tabs independently', () => {
   assert.equal(csvCell('\t=SUM(1,2)'), '"\'\t=SUM(1,2)"');
+});
+
+test('submit resolves only same-site upload metadata into forwarded attachments', async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rueckhol-submit-upload-'));
+  const bodies = [];
+  const appContext = createApp({
+    dbPath: ':memory:',
+    uploadsDir: path.join(tempDir, 'uploads'),
+    schwarzwaldBaseUrl: 'https://schwarzwald-agent.de',
+    schwarzwaldArchipelToken: 'secret',
+    publicBaseUrl: 'https://rueckhol.example',
+    fetch: async (_url, options) => { bodies.push(JSON.parse(options.body)); return { ok: true }; },
+    warnOnOpenAdmin: false,
+  });
+  try {
+    const uploadFor = async (site) => appContext.app.inject({
+      method: 'POST',
+      url: `/api/upload?site=${site}&name=Fensterliste.pdf`,
+      headers: { 'content-type': 'application/octet-stream' },
+      body: Buffer.from('%PDF-1.7\n'),
+    });
+    const ownUpload = await uploadFor('demo');
+    const foreignUpload = await uploadFor('other');
+    assert.equal(ownUpload.status, 200);
+    assert.equal(foreignUpload.status, 200);
+
+    const submit = (uploadId) => appContext.app.inject({
+      method: 'POST',
+      url: '/api/submit',
+      headers: { 'content-type': 'application/json' },
+      body: { siteId: 'demo', kind: 'contact', payload: { email: 'test@example.com', consent: true, uploadId } },
+    });
+    assert.equal((await submit(ownUpload.json().uploadId)).status, 200);
+    assert.equal((await submit(foreignUpload.json().uploadId)).status, 200);
+    await new Promise((resolve) => setImmediate(resolve));
+
+    assert.equal(bodies[0].attachments.length, 1);
+    assert.equal(bodies[0].attachments[0].filename, 'Fensterliste.pdf');
+    assert.equal(bodies[0].attachments[0].url, `https://rueckhol.example/api/uploads?id=${ownUpload.json().uploadId}`);
+    assert.equal(bodies[1].attachments, undefined);
+  } finally {
+    appContext.close();
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
+test('ignores an insecure configured public upload base URL', async () => {
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rueckhol-insecure-base-'));
+  const bodies = [];
+  const originalWarn = console.warn;
+  const warnings = [];
+  console.warn = (...args) => warnings.push(args.join(' '));
+  const appContext = createApp({
+    dbPath: ':memory:',
+    uploadsDir: path.join(tempDir, 'uploads'),
+    schwarzwaldBaseUrl: 'https://schwarzwald-agent.de',
+    schwarzwaldArchipelToken: 'secret',
+    publicBaseUrl: 'http://example.test',
+    siteOrigins: { demo: ['https://shop.example'] },
+    fetch: async (_url, options) => { bodies.push(JSON.parse(options.body)); return { ok: true }; },
+    warnOnOpenAdmin: false,
+  });
+  console.warn = originalWarn;
+  try {
+    const uploaded = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/upload?site=demo&name=Fensterliste.pdf',
+      headers: { 'content-type': 'application/octet-stream' },
+      body: Buffer.from('%PDF-1.7\n'),
+    });
+    const submitted = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/submit',
+      headers: { 'content-type': 'application/json', host: 'local.test' },
+      body: { siteId: 'demo', kind: 'contact', payload: { email: 'test@example.com', consent: true, uploadId: uploaded.json().uploadId } },
+    });
+    assert.equal(submitted.status, 200);
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.equal(bodies[0].attachments[0].url, `http://local.test/api/uploads?id=${uploaded.json().uploadId}`);
+    assert.equal(warnings.filter((warning) => warning.includes('PUBLIC_BASE_URL')).length, 1);
+  } finally {
+    console.warn = originalWarn;
+    appContext.close();
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
 });
 
 test('dashboard auth rate limit only affects failed credentials', async () => {

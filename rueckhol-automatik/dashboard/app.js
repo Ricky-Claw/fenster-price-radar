@@ -40,8 +40,9 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.7.3';
+  var WHATS_NEW_VERSION = '1.8.0';
   var WHATS_NEW_ITEMS = [
+    'Angebots-Popup: Besucher können optional eine Fensterliste hochladen; sie wird mit dem Lead ans CRM und per Mail weitergegeben.',
     'Leads: Kontaktanfragen werden in der Rückhol-Automatik gespeichert und an das CRM weitergeleitet.',
     'Auswertung: Cross-Origin-Event-Tracking funktioniert wieder für alle erlaubten Popup-Seiten.',
     'Live-Vorschau: externe HTTPS-Logos werden jetzt wie im echten Popup angezeigt.',
@@ -129,6 +130,7 @@
     setVal('a-news-consent', a.consentLabel); setVal('a-news-ok', a.successMessage);
     setVal('a-privacy', a.privacyUrl);
     setVal('a-con-consent', a.consentLabel); setVal('a-con-ok', a.successMessage);
+    setChk('a-con-upload', a.allowUpload);
     // design
     var th = c.theme || {}; var col = th.colors || {};
     ['accent', 'accent_text', 'text', 'muted', 'surface', 'border'].forEach(function (k) {
@@ -161,7 +163,7 @@
     else if (action === 'pdf') ac = { pdfUrl: v('a-pdf'), label: cta, newTab: true };
     else if (action === 'coupon') ac = { code: v('a-code'), label: cta };
     else if (action === 'newsletter') ac = { label: cta, placeholder: v('a-news-ph') || 'name@example.com', downloadUrl: v('a-news-download'), privacyUrl: v('a-privacy'), consentLabel: v('a-news-consent') || 'Ich stimme zu.', successMessage: v('a-news-ok') || 'Danke!' };
-    else ac = { label: cta, privacyUrl: v('a-privacy'), consentLabel: v('a-con-consent') || 'Ich stimme zu.', successMessage: v('a-con-ok') || 'Danke!' };
+    else ac = { label: cta, privacyUrl: v('a-privacy'), consentLabel: v('a-con-consent') || 'Ich stimme zu.', successMessage: v('a-con-ok') || 'Danke!', allowUpload: chk('a-con-upload') };
 
     var colors = clone((d.theme && d.theme.colors) || {});
     ['accent', 'accent_text', 'text', 'muted', 'surface', 'border'].forEach(function (k) {
