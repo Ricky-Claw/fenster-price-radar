@@ -149,18 +149,13 @@ an `/api/submit` mitgeben. Absenden in `cre.js:223 ff.`
    Mailgröße beachten → große Dateien besser als Download-Link statt Anhang.
 
    **Neue Anforderung (Elvis, 2026-08-11):** Jede Lead-Mail soll zusätzlich als
-   **CC** an Herrn Krzemien gehen. `lead-notify.ts` kennt aktuell nur `to`, kein
-   `cc` — muss ergänzt werden (Adresse über eine eigene Env-Variable, z. B.
-   `ARCHIPEL_LEAD_NOTIFY_CC`, nicht hart im Code).
-
-   ⚠️ **Vor dem Einbau klären:** Elvis nannte
-   `krzemien@deutscher-fensterhsop.de` — die Domain ist dort verdreht
-   (`fensterhsop` statt `fenstershop`). Die richtige Domain lautet
-   `deutscher-fenstershop.de`. Die Tippfehler-Domain existiert derzeit nicht
-   (NXDOMAIN geprüft), Mails würden also nur zurückkommen — aber sobald sie
-   jemand registriert, gingen Lead-Daten (Name, E-Mail, Nachricht, hochgeladene
-   Fensterliste) an Fremde. Deshalb: **Adresse von Elvis bestätigen lassen**,
-   nicht raten.
+   **CC** an `krzemien@deutscher-fenstershop.de` gehen (von Elvis am 2026-08-11
+   ausdrücklich bestätigt — eine erste Nennung enthielt einen Domain-Dreher
+   `fensterhsop`, diese Schreibweise ist FALSCH und darf nicht verwendet werden).
+   `lead-notify.ts` kennt aktuell nur `to`, kein `cc` — muss ergänzt werden.
+   Adresse über eine eigene Env-Variable setzen (z. B.
+   `ARCHIPEL_LEAD_NOTIFY_CC`), nicht hart im Code, damit sie ohne Deploy
+   änderbar bleibt. Gilt für ALLE Lead-Mails, nicht nur die mit Anhang.
 4. Admin-CRM-UI zeigt Attachments schon an (`lib/archipel/admin-leads.ts`) — prüfen, ob
    ein Download-Link für `stored`-Dateien ergänzt werden muss.
 
