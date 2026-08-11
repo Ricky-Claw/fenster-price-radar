@@ -102,13 +102,28 @@ function createDatabase(options = {}) {
     db.exec("ALTER TABLE campaigns ADD COLUMN page_exclude TEXT NOT NULL DEFAULT ''");
   }
 
+  const siteColumns = db.prepare('PRAGMA table_info(sites)').all();
+  if (!siteColumns.some((column) => column.name === 'cooldown_hours')) {
+    db.exec('ALTER TABLE sites ADD COLUMN cooldown_hours INTEGER NOT NULL DEFAULT 0');
+  }
+
   const statements = {
     upsertSite: db.prepare(`
       INSERT INTO sites (id, name)
       VALUES (@id, @name)
       ON CONFLICT(id) DO UPDATE SET name = excluded.name
     `),
+    // Legt die Site nur an, wenn sie fehlt. Nötig für Pfade, die keinen echten
+    // Anzeigenamen kennen (z. B. Seiten-Einstellungen): upsertSite würde dort
+    // den gepflegten Namen mit der blanken Kennung überschreiben.
+    insertSiteIfMissing: db.prepare(`
+      INSERT INTO sites (id, name)
+      VALUES (@id, @name)
+      ON CONFLICT(id) DO NOTHING
+    `),
     listSites: db.prepare('SELECT * FROM sites ORDER BY id ASC'),
+    getSiteCooldownHours: db.prepare('SELECT cooldown_hours FROM sites WHERE id = @id LIMIT 1'),
+    setSiteCooldownHours: db.prepare('UPDATE sites SET cooldown_hours = @hours WHERE id = @id'),
     getCampaign: db.prepare('SELECT * FROM campaigns WHERE id = @id LIMIT 1'),
     listCampaigns: db.prepare(`
       SELECT * FROM campaigns
@@ -187,6 +202,11 @@ function createDatabase(options = {}) {
 
   function ensureSite(siteId, name) {
     statements.upsertSite.run({ id: siteId, name: name || siteId });
+  }
+
+  function normalizeCooldownHours(hours) {
+    const value = Number(hours);
+    return Number.isInteger(value) && value >= 0 && value <= 168 ? value : 0;
   }
 
   function serializeCampaign(campaign) {
@@ -273,6 +293,10 @@ function createDatabase(options = {}) {
       return statements.deleteCampaign.run({ id }).changes > 0;
     },
     ensureSite,
+    getSiteCooldownHours(siteId) {
+      const row = statements.getSiteCooldownHours.get({ id: siteId });
+      return row ? normalizeCooldownHours(row.cooldown_hours) : 0;
+    },
     getCampaign(id) {
       return hydrateCampaign(statements.getCampaign.get({ id }));
     },
@@ -289,6 +313,14 @@ function createDatabase(options = {}) {
       return statements.listSubmissions.all({ site_id: siteId }).map(hydrateSubmission);
     },
     saveCampaign,
+    setSiteCooldownHours(siteId, hours) {
+      const value = normalizeCooldownHours(hours);
+      // Nicht ensureSite: das würde einen gepflegten Anzeigenamen mit der
+      // blanken Kennung überschreiben, nur weil die Pause gespeichert wird.
+      statements.insertSiteIfMissing.run({ id: siteId, name: siteId });
+      statements.setSiteCooldownHours.run({ id: siteId, hours: value });
+      return value;
+    },
   };
 }
 

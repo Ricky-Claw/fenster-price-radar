@@ -68,6 +68,21 @@ test('sanitizeTrigger clamps numeric config and keeps supported trigger names', 
   );
 });
 
+test('sanitizeCampaignInput keeps only an enabled site-pause override and preserves campaign frequency', () => {
+  const enabled = sanitizeCampaignInput({
+    trigger_config: { ignoreSitePause: true, frequencyHours: 7 },
+  });
+  assert.equal(enabled.trigger_config.ignoreSitePause, true);
+  assert.equal(enabled.trigger_config.frequencyHours, 7);
+
+  const omitted = sanitizeCampaignInput({ trigger_config: { frequencyHours: 12 } });
+  assert.ok(!('ignoreSitePause' in omitted.trigger_config));
+  assert.equal(omitted.trigger_config.frequencyHours, 12);
+
+  const disabled = sanitizeCampaignInput({ trigger_config: { ignoreSitePause: false } });
+  assert.ok(!('ignoreSitePause' in disabled.trigger_config));
+});
+
 test('sanitizeAction rejects unsafe URLs and keeps abandon-reason options', () => {
   const action = sanitizeAction('url', {
     url: 'javascript:alert(1)',

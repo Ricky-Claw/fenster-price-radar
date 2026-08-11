@@ -68,6 +68,7 @@ select { padding-right: 28px; cursor: pointer; }
 textarea { resize: vertical; min-height: 64px; line-height: 1.5; }
 input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
 .field-site select { width: auto; min-width: 160px; }
+.field-site input[type="number"] { width: 76px; }
 
 /* ---- buttons ---- */
 .btn {
@@ -131,6 +132,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent-soft
   .tabs button { flex: 1; text-align: center; }
   .field-site { order: 4; flex: 1 1 auto; }
   .field-site select { width: 100%; min-width: 0; }
+  #siteCooldownField { flex: 1 1 auto; }
   #btnEmbed { order: 5; flex: 0 0 auto; }
 
   /* Touch-Ziele + kein iOS-Zoom beim Fokus (font-size >= 16) */

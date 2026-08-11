@@ -21,6 +21,94 @@ test('dashboard auth rate limit only affects failed credentials', async () => {
   }
 });
 
+test('site cooldown defaults to zero in public config', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  try {
+    const response = await appContext.app.inject({ method: 'GET', url: '/api/config?siteId=fresh-site' });
+    assert.equal(response.status, 200);
+    assert.equal(response.json().siteCooldownHours, 0);
+  } finally {
+    appContext.close();
+  }
+});
+
+test('authenticated site settings update is reflected in public config', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  try {
+    const update = await appContext.app.inject({
+      method: 'PUT', url: '/api/site-settings',
+      headers: { authorization: 'Bearer test-token', 'content-type': 'application/json' },
+      body: { siteId: 'demo', cooldownHours: 12 },
+    });
+    assert.equal(update.status, 200);
+    assert.deepEqual(update.json(), { ok: true, siteId: 'demo', cooldownHours: 12 });
+
+    const config = await appContext.app.inject({ method: 'GET', url: '/api/config?siteId=demo' });
+    assert.equal(config.json().siteCooldownHours, 12);
+  } finally {
+    appContext.close();
+  }
+});
+
+test('invalid site cooldown values are rejected and keep the stored value', async () => {
+  // 0 bedeutet "gar keine Pause". Ein Tippfehler (999, 2.5) darf deshalb NICHT
+  // still auf 0 fallen und als Erfolg gemeldet werden — das hätte die genau
+  // gegenteilige Wirkung von dem, was der Kunde eingestellt hat.
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  const auth = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
+  try {
+    const gesetzt = await appContext.app.inject({ method: 'PUT', url: '/api/site-settings', headers: auth, body: { siteId: 'demo', cooldownHours: 6 } });
+    assert.equal(gesetzt.status, 200);
+
+    for (const cooldownHours of [-1, 999, 'abc', 2.5, null]) {
+      const update = await appContext.app.inject({ method: 'PUT', url: '/api/site-settings', headers: auth, body: { siteId: 'demo', cooldownHours } });
+      assert.equal(update.status, 400, `Wert ${JSON.stringify(cooldownHours)} muss abgelehnt werden`);
+      const config = await appContext.app.inject({ method: 'GET', url: '/api/config?siteId=demo' });
+      assert.equal(config.json().siteCooldownHours, 6, 'der zuvor gespeicherte Wert bleibt erhalten');
+    }
+
+    // Die Grenzen selbst sind gültig.
+    for (const gueltig of [0, 168]) {
+      const ok = await appContext.app.inject({ method: 'PUT', url: '/api/site-settings', headers: auth, body: { siteId: 'demo', cooldownHours: gueltig } });
+      assert.equal(ok.status, 200);
+      assert.equal(ok.json().cooldownHours, gueltig);
+    }
+  } finally {
+    appContext.close();
+  }
+});
+
+test('saving the display pause keeps the site display name', async () => {
+  // Regression: setSiteCooldownHours rief ensureSite(siteId, siteId) auf und
+  // überschrieb damit den gepflegten Anzeigenamen mit der blanken Kennung.
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  const auth = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
+  try {
+    await appContext.app.inject({
+      method: 'POST', url: '/api/campaigns', headers: auth,
+      body: { siteId: 'demo', siteName: 'Deutscher Fenstershop', name: 'Test', headline: 'Hallo' },
+    });
+    await appContext.app.inject({ method: 'PUT', url: '/api/site-settings', headers: auth, body: { siteId: 'demo', cooldownHours: 6 } });
+
+    const sites = (await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers: auth })).json().sites;
+    const demo = sites.find((s) => s.id === 'demo');
+    assert.equal(demo.name, 'Deutscher Fenstershop');
+    assert.equal(demo.cooldown_hours, 6);
+  } finally {
+    appContext.close();
+  }
+});
+
+test('site settings require dashboard authentication', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  try {
+    const response = await appContext.app.inject({ method: 'PUT', url: '/api/site-settings', body: { siteId: 'demo', cooldownHours: 6 } });
+    assert.equal(response.status, 401);
+  } finally {
+    appContext.close();
+  }
+});
+
 test('campaign CRUD, config, events, and analytics work together', async () => {
   const appContext = createApp({
     dbPath: ':memory:',

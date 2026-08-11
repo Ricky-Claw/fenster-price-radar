@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.7.3 (keep in sync with package.json)
+ * Version: 1.8.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -18,6 +18,7 @@
   var API = (d.creApi || (script && script.src ? script.src.replace(/\/cre\.js.*$/, '') : '')).replace(/\/+$/, '');
   var DEBUG = d.creDebug === '1';
   var eventToken;
+  var siteCooldownHours = 0;
   function dbg(msg) { if (DEBUG && window.console) console.info('[Rueckhol] ' + msg); }
 
   function api(path) { return API + path; }
@@ -40,11 +41,11 @@
   function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '')); }
 
   // ---- suppression (don't nag) ----
-  // Fixed site-wide cap; make configurable only when a real use case needs it.
-  var ANY_CAMPAIGN_COOLDOWN_MS = 6 * 60 * 60 * 1000;
   function suppressKey(id) { return 'cre_seen_' + SITE + '_' + id; }
   function anyCampaignKey() { return 'cre_any_' + SITE; }
   function isAnyCampaignSuppressed(c) {
+    if (c && c.trigger_config && c.trigger_config.ignoreSitePause) return false;
+    if (!(siteCooldownHours > 0)) return false;
     try {
       var raw = localStorage.getItem(anyCampaignKey());
       if (!raw) return false;
@@ -57,9 +58,11 @@
     } catch (e) { return false; }
   }
   function suppressAnyCampaign(c) {
+    if (c && c.trigger_config && c.trigger_config.ignoreSitePause) return;
+    if (!(siteCooldownHours > 0)) return;
     try {
       localStorage.setItem(anyCampaignKey(), JSON.stringify({
-        until: Date.now() + ANY_CAMPAIGN_COOLDOWN_MS,
+        until: Date.now() + siteCooldownHours * 3600 * 1000,
         id: c && c.id || ''
       }));
     } catch (e) {}
@@ -298,8 +301,9 @@
   }
 
   function show(c, trigger, force) {
-    if (!force && isAnyCampaignSuppressed(c)) dbg('site-wide cap active');
-    if (openHost || (!force && (isAnyCampaignSuppressed(c) || isSuppressed(c)))) return;
+    if (openHost) return;
+    if (!force && isAnyCampaignSuppressed(c)) { dbg('site-wide cap active'); return; }
+    if (!force && isSuppressed(c)) return;
     var t = theme(c);
     var host = document.createElement('div');
     host.setAttribute('data-cre-host', '');
@@ -443,6 +447,8 @@
       })
       .then(function (data) {
         eventToken = data && data.eventToken || undefined;
+        var configuredCooldown = data && data.siteCooldownHours;
+        siteCooldownHours = typeof configuredCooldown === 'number' && isFinite(configuredCooldown) && configuredCooldown > 0 && configuredCooldown <= 168 && Math.floor(configuredCooldown) === configuredCooldown ? configuredCooldown : 0;
         var campaigns = (data && data.campaigns) || [];
         if (!campaigns.length) { dbg('no active campaigns for site "' + SITE + '" — create one in the dashboard'); return; }
         dbg(campaigns.length + ' campaign(s) armed for site "' + SITE + '"');

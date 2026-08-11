@@ -140,6 +140,7 @@ function sanitizeTrigger(triggerInput, configInput = {}) {
     seconds: undefined,
     percent: undefined,
     frequencyHours: clampNumber(config.frequencyHours, 0, 720, 24),
+    ignoreSitePause: asBool(config.ignoreSitePause),
   };
 
   if (trigger === 'idle' || trigger === 'time_on_page') {
@@ -151,6 +152,7 @@ function sanitizeTrigger(triggerInput, configInput = {}) {
 
   if (triggerConfig.seconds === undefined) delete triggerConfig.seconds;
   if (triggerConfig.percent === undefined) delete triggerConfig.percent;
+  if (!triggerConfig.ignoreSitePause) delete triggerConfig.ignoreSitePause;
   return { trigger, triggerConfig };
 }
 

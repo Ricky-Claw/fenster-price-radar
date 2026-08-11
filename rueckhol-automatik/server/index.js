@@ -518,7 +518,7 @@ function createApp(options = {}) {
     applyCors(req, res, siteId);
     const campaigns = db.listCampaigns(siteId, true).map(publicCampaign);
     const today = new Date().toISOString().slice(0, 10);
-    res.json({ siteId, campaigns, eventToken: isConfigured() ? eventTokenFor(siteId, today) : null });
+    res.json({ siteId, campaigns, eventToken: isConfigured() ? eventTokenFor(siteId, today) : null, siteCooldownHours: db.getSiteCooldownHours(siteId) });
   });
 
   app.post('/api/events', (req, res) => {
@@ -741,6 +741,27 @@ function createApp(options = {}) {
       sites: db.listSites(),
       themePresets: getThemePresets(),
     });
+  });
+
+  app.put('/api/site-settings', requireDashboardAuth, (req, res) => {
+    const siteId = cleanId(req.body.siteId || '', '');
+    if (!siteId) {
+      res.status(400).json({ error: 'Site id is required' });
+      return;
+    }
+    // Ungültige Werte NICHT stillschweigend auf 0 fallen lassen: 0 bedeutet
+    // "gar keine Pause" — ein Tippfehler (999, 2.5) würde sonst als Erfolg
+    // gemeldet und hätte die genau gegenteilige Wirkung.
+    // Number(null) und Number('') ergeben 0 — beides würde sonst als gültige
+    // "keine Pause" durchgehen, obwohl gar kein Wert übergeben wurde.
+    const raw = req.body.cooldownHours;
+    const requested = raw === null || raw === undefined || raw === '' ? NaN : Number(raw);
+    if (!Number.isInteger(requested) || requested < 0 || requested > 168) {
+      res.status(400).json({ error: 'Anzeige-Pause muss eine ganze Zahl zwischen 0 und 168 Stunden sein.' });
+      return;
+    }
+    const cooldownHours = db.setSiteCooldownHours(siteId, requested);
+    res.json({ ok: true, siteId, cooldownHours });
   });
 
   app.post('/api/campaigns', requireDashboardAuth, (req, res) => {

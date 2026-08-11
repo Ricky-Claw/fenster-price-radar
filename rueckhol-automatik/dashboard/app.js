@@ -40,12 +40,11 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.7.3';
+  var WHATS_NEW_VERSION = '1.8.0';
   var WHATS_NEW_ITEMS = [
-    'Leads: Kontaktanfragen werden in der Rückhol-Automatik gespeichert und an das CRM weitergeleitet.',
-    'Auswertung: Cross-Origin-Event-Tracking funktioniert wieder für alle erlaubten Popup-Seiten.',
-    'Live-Vorschau: externe HTTPS-Logos werden jetzt wie im echten Popup angezeigt.',
-    'CRM: eigener, zweckgebundener Zugang für die Rückhol-Automatik.',
+    'Anzeige-Pause ist jetzt einstellbar: Sie legen je Seite selbst fest, wie lange nach einem gezeigten Popup Ruhe herrscht (0 Stunden = keine Pause).',
+    'Bisher waren dafür 6 Stunden fest eingebaut — dadurch blieben Popups anderer Seitenbereiche unsichtbar, obwohl sie gepasst hätten.',
+    'Wie oft eine einzelne Kampagne demselben Besucher erscheint, stellen Sie weiterhin direkt in der Kampagne ein.',
   ];
   function initWhatsNew() {
     try {
@@ -116,6 +115,7 @@
     setVal('f-seconds', tc.seconds != null ? tc.seconds : 20);
     setVal('f-percent', tc.percent != null ? tc.percent : 50);
     setVal('f-cooldown', tc.frequencyHours != null ? tc.frequencyHours : 24);
+    setChk('f-ignore-pause', tc.ignoreSitePause);
     // content
     setVal('f-headline', c.headline); setVal('f-body', c.body); setVal('f-cta', c.cta_label);
     // action
@@ -151,7 +151,7 @@
     var d = state.draft || emptyDraft();
     var trigger = ($('#triggerChoice input:checked') || {}).value || 'exit_intent';
     var action = ($('#actionChoice input:checked') || {}).value || 'coupon';
-    var tc = { frequencyHours: num('f-cooldown', 24) };
+    var tc = { frequencyHours: num('f-cooldown', 24), ignoreSitePause: chk('f-ignore-pause') };
     if (trigger === 'idle' || trigger === 'time_on_page') tc.seconds = num('f-seconds', 30);
     if (trigger === 'scroll_depth') tc.percent = num('f-percent', 50);
 
@@ -365,6 +365,31 @@
       return '<option value="' + esc(id) + '"' + (id === state.site ? ' selected' : '') + '>' + esc(id) + '</option>';
     }).join('');
     sel.innerHTML = opts;
+    updateSiteCooldownField();
+  }
+
+  function updateSiteCooldownField() {
+    var field = $('#siteCooldownField');
+    var input = $('#siteCooldownHours');
+    var site = state.sites.find(function (item) { return (item.id || item.site_id || item) === state.site; });
+    field.classList.toggle('hidden', !state.site);
+    input.disabled = !state.site;
+    input.value = site && Number.isInteger(Number(site.cooldown_hours)) ? Number(site.cooldown_hours) : 0;
+  }
+
+  function saveSiteCooldown() {
+    if (!state.site) return;
+    var input = $('#siteCooldownHours');
+    var hours = Number(input.value);
+    return apiCall('/api/site-settings', {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ siteId: state.site, cooldownHours: hours })
+    }).then(function (result) {
+      var site = state.sites.find(function (item) { return (item.id || item.site_id || item) === state.site; });
+      if (site && typeof site === 'object') site.cooldown_hours = result.cooldownHours;
+      input.value = result.cooldownHours;
+      toast('Anzeige-Pause gespeichert');
+    }).catch(function (e) { updateSiteCooldownField(); toast(e.message, true); });
   }
 
   // ---- embed snippet ----
@@ -606,9 +631,11 @@
       if (!confirmDiscard()) { this.value = state.site; return; } // revert on cancel
       $('#installCheckResult').textContent = '';
       state.site = this.value; renderList();
+      updateSiteCooldownField();
       var first = visibleCampaigns()[0]; if (first) editCampaign(first.id); else newCampaign();
       if ($('#view-leads') && !$('#view-leads').classList.contains('hidden')) renderLeads();
     });
+    $('#siteCooldownHours').addEventListener('change', saveSiteCooldown);
 
     // any form input → live preview + mark unsaved
     $('#form').addEventListener('input', function () { scheduleForm(); setDirty(true); });

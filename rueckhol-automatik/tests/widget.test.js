@@ -41,13 +41,25 @@ test('widget includes the mobile popup safeguards', () => {
   assert.match(source, /\.cre-x\{[^}]*width:44px;height:44px/);
 });
 
-test('widget includes site-wide frequency and safe action links', () => {
+test('widget caps repeats per campaign and enables the site-wide cap only from config', () => {
+  // Pro Kampagne wird weiterhin gedeckelt (Standard 24 h) — sonst nervt dasselbe
+  // Popup denselben Besucher endlos.
+  assert.match(source, /cre_seen_/);
+  assert.match(source, /if \(!force && isSuppressed\(c\)\) return;/);
+  assert.match(source, /frequencyHours/);
+
+  assert.match(source, /configuredCooldown = data && data\.siteCooldownHours/);
+  assert.match(source, /siteCooldownHours = typeof configuredCooldown === 'number'/);
+  assert.match(source, /function isAnyCampaignSuppressed\(c\) \{\s*if \(c && c\.trigger_config && c\.trigger_config\.ignoreSitePause\) return false;\s*if \(!\(siteCooldownHours > 0\)\) return false;/);
+  assert.match(source, /function suppressAnyCampaign\(c\) \{\s*if \(c && c\.trigger_config && c\.trigger_config\.ignoreSitePause\) return;\s*if \(!\(siteCooldownHours > 0\)\) return;/);
   assert.match(source, /cre_any_/);
-  assert.match(source, /\(!force && \(isAnyCampaignSuppressed\(c\)/);
-  assert.match(source, /if \(!force\) suppressAnyCampaign\(c\)/);
-  assert.match(source, /JSON\.stringify\(\{\s*until:[^,]+,\s*id:/);
+  assert.match(source, /JSON\.stringify\(\{\s*until: Date\.now\(\) \+ siteCooldownHours \* 3600 \* 1000,\s*id:/);
   assert.match(source, /lastId === c\.id/);
   assert.match(source, /dbg\('site-wide cap active'\)/);
+  assert.match(source, /if \(!force\) suppressAnyCampaign\(c\)/);
+});
+
+test('widget keeps action links safe', () => {
   assert.match(source, /downloadUrl/);
   assert.match(source, /privacyUrl/);
   assert.match(source, /v\.indexOf\('\\\\'\) !== -1/);

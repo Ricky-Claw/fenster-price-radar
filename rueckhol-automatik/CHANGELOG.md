@@ -3,6 +3,31 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.8.0 — 2026-08-11
+
+- Die „Anzeige-Pause" ist jetzt je Seite einstellbar (Feld in der Kopfzeile des
+  Dashboards, 0–168 Stunden, **Standard 0 = keine Pause**). Bisher waren
+  6 Stunden fest verdrahtet: ein einmal gezeigtes Popup sperrte **alle anderen**
+  Kampagnen — auch die inhaltlich passenden eines ganz anderen Seitenbereichs.
+  Dadurch sah ein Besucher, der vom Ratgeber in den Konfigurator wechselte,
+  dort nichts, und jeder Test war nach dem ersten Popup blind. Wie oft eine
+  **einzelne** Kampagne demselben Besucher erscheint, bleibt unverändert in der
+  Kampagne einstellbar (Standard 24 Stunden).
+- Beim Bauen dieser Einstellung fielen zwei Fehler auf, beide live nachgestellt
+  und mitgefixt: das Speichern der Pause überschrieb den gepflegten
+  Anzeigenamen der Seite mit der blanken Kennung („Deutscher Fenstershop"
+  wurde zu „dfs"), und ungültige Eingaben (999, 2,5, leer) landeten
+  kommentarlos bei 0 — also ausgerechnet „keine Pause" — und wurden trotzdem
+  als Erfolg gemeldet. Solche Eingaben werden jetzt abgelehnt, der zuvor
+  gespeicherte Wert bleibt stehen.
+- Die Datenbank wird beim Start automatisch erweitert; bestehende
+  Installationen behalten ihre Daten (gegen eine echte Alt-Datenbank geprüft).
+- Neu je Kampagne: **„Anzeige-Pause der Seite ignorieren"**. Damit laufen
+  Testkampagnen auf ausgewählten Seiten ungebremst, während die üblichen
+  Kampagnen weiter pausieren. Solche Kampagnen werden von der Pause weder
+  blockiert noch lösen sie selbst eine aus; der Deckel für die *eigene*
+  Wiederholung (Standard 24 Stunden) gilt unverändert weiter.
+
 ## 1.7.3 — 2026-08-06
 
 - Fix: Die produktive Dashboard-CSP blockierte externe HTTPS-Logos in der

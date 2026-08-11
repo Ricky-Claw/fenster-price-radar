@@ -20,6 +20,9 @@
   <label class="field-site">Seite
     <select id="siteSelect" aria-label="Seite auswählen"></select>
   </label>
+  <label class="field-site hidden" id="siteCooldownField" title="So lange erscheint nach einem gezeigten Popup kein anderes. 0 = keine Pause.">Anzeige-Pause (Std.)
+    <input id="siteCooldownHours" type="number" min="0" max="168" step="1" aria-label="Anzeige-Pause in Stunden">
+  </label>
   <button class="btn" id="btnEmbed" type="button">Einbau-Code</button>
   <button class="btn" id="btnInstallCheck" type="button">Einbau prüfen</button>
   <button class="btn btn-primary" id="btnNew" type="button">+ Neue Kampagne</button>
@@ -120,6 +123,10 @@
               <label for="f-cooldown">Danach nicht erneut zeigen (Stunden)</label>
               <input type="number" id="f-cooldown" min="0" max="8760" value="24">
               <span class="hint">Pro Besucher, nach Schließen oder Abschluss.</span>
+            </div>
+            <div class="f" style="align-self:end">
+              <label class="toggle"><input type="checkbox" id="f-ignore-pause"><span class="track"></span><span>Anzeige-Pause der Seite ignorieren</span></label>
+              <span class="hint">Für Testkampagnen: erscheint auch während der Pause und löst selbst keine aus.</span>
             </div>
           </div>
         </div>
