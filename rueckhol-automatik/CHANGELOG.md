@@ -3,6 +3,17 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.10.0 — 2026-08-11
+
+- **Datei-Upload im Angebots-Popup:** Besucher können optional eine Fensterliste
+  anhängen; sie geht zusammen mit der Anfrage ans CRM und per Mail an DFS.
+  Ein fehlgeschlagener Upload blockiert die Lead-Abgabe nicht — die Anfrage
+  kommt auch ohne Datei an. Dateien werden 7 Tage aufbewahrt und danach
+  automatisch bereinigt; gelöscht wird nur, was belegt zugestellt wurde.
+  Erlaubt sind PDF, JPEG, PNG, CSV und echte XLSX-Dateien (max. 10 MB);
+  das alte `.xls`-Format bleibt bewusst außen vor, weil sich Makros darin
+  ohne tiefe Prüfung nicht ausschließen lassen.
+
 ## 1.9.0 — 2026-08-11
 
 - Die Steuerung trägt jetzt das Design des Deutschen Fenstershops. Farben,

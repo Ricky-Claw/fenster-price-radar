@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.9.0 (keep in sync with package.json)
+ * Version: 1.10.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -178,7 +178,8 @@
       case 'newsletter':
         return '<div data-cre-form="newsletter" style="display:grid;gap:10px"><input data-cre-email type="email" autocomplete="email" placeholder="' + esc(a.placeholder || 'Deine E-Mail') + '" style="' + inp + '">' + consent + '<button type="button" data-cre-action="newsletter" style="' + btn + '">' + label + '</button>' + status + '</div>';
       case 'contact':
-        return '<div data-cre-form="contact" style="display:grid;gap:10px"><input data-cre-name type="text" placeholder="Name" style="' + inp + '"><input data-cre-email type="email" autocomplete="email" placeholder="E-Mail" style="' + inp + '"><textarea data-cre-message rows="3" placeholder="Deine Nachricht" style="' + inp + 'resize:vertical"></textarea>' + consent + '<button type="button" data-cre-action="contact" style="' + btn + '">' + label + '</button>' + status + '</div>';
+        var upload = a.allowUpload ? '<label style="display:grid;gap:5px;color:' + t.muted + ';font-size:13px"><span>Fensterliste anhängen (optional)</span><input data-cre-file type="file" accept=".pdf,.jpg,.jpeg,.png,.csv,.xlsx" style="' + inp + 'padding:9px 11px"></label>' : '';
+        return '<div data-cre-form="contact" style="display:grid;gap:10px"><input data-cre-name type="text" placeholder="Name" style="' + inp + '"><input data-cre-email type="email" autocomplete="email" placeholder="E-Mail" style="' + inp + '"><textarea data-cre-message rows="3" placeholder="Deine Nachricht" style="' + inp + 'resize:vertical"></textarea>' + upload + consent + '<button type="button" data-cre-action="contact" style="' + btn + '">' + label + '</button>' + status + '</div>';
       default:
         return '<button type="button" data-cre-action="close" style="' + btn + '">' + label + '</button>';
     }
@@ -237,8 +238,30 @@
           payload.name = nm ? nm.value : ''; payload.message = msg ? msg.value : '';
         }
         track(c.id, 'cta_click', { action: kind });
-        b.disabled = true; setStatus('Wird gesendet …', true);
-        submit(c.id, kind, payload).then(function (ok) {
+        b.disabled = true;
+        var beforeSubmit = Promise.resolve();
+        var fileInput = kind === 'contact' ? root.querySelector('[data-cre-file]') : null;
+        var file = fileInput && fileInput.files && fileInput.files[0];
+        if (file && file.size > 10 * 1024 * 1024) {
+          setStatus('Datei zu groß (max 10 MB). Anfrage wird ohne Datei gesendet.', false);
+        } else if (file) {
+          setStatus('Datei wird hochgeladen …', true);
+          beforeSubmit = fetch(api('/api/upload?site=' + encodeURIComponent(SITE) + '&token=' + encodeURIComponent(eventToken || '') + '&name=' + encodeURIComponent(file.name)), {
+            method: 'POST', body: file
+          }).then(function (r) {
+            if (!r.ok) throw new Error('upload failed');
+            return r.json();
+          }).then(function (result) {
+            if (!result || !result.uploadId) throw new Error('upload id missing');
+            payload.uploadId = result.uploadId;
+            setStatus('Wird gesendet …', true);
+          }).catch(function () {
+            setStatus('Datei konnte nicht angehängt werden, Anfrage wird ohne Datei gesendet.', false);
+          });
+        } else {
+          setStatus('Wird gesendet …', true);
+        }
+        beforeSubmit.then(function () { return submit(c.id, kind, payload); }).then(function (ok) {
           if (ok) {
             // conversion is recorded server-side (/api/submit -> newsletter_opt_in / contact_submit)
             suppress(c);

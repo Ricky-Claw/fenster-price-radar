@@ -60,6 +60,7 @@ Ohne gesetztes Passwort läuft alles offen (Dev-Modus, Warnung im Log).
 | `SITE_ORIGINS` | JSON `{"siteId":["https://origin",…]}` — CORS-Allowlist der Widget-Endpunkte. **Ungesetzt = allow-all (nur Test!)** | leer |
 | `WEBHOOK_URL` | Push-Kanal: bekommt POST bei jeder Lead-Submission; Pull-Zugriff zusätzlich im Dashboard-Leads-Tab und per CSV-Export | leer |
 | `TRUST_PROXY_HEADERS` | `1` = nach fehlendem `X-Forwarded-For` auch `X-Real-IP` bzw. `X-Vercel-Forwarded-For` vertrauen. Nur setzen, wenn ein eigener Proxy diese Header bereinigt. | aus (sicher) |
+| `PUBLIC_BASE_URL` | Öffentliche Basis-URL der Rückhol-Automatik für Datei-Anhänge. **Muss in Produktion gesetzt sein.** | leer (Request-Fallback nur für lokale Entwicklung) |
 | `DISABLE_DEMO` | `1` = `/demo/*` wird nicht ausgeliefert (Kunden-Produktivbetrieb) | aus |
 
 ## API
@@ -70,6 +71,9 @@ Schreib-POSTs von Skripten verhindert es nicht; Rate-Limit + Validierung deckeln
 eine echte Schreib-Autorisierung wäre v2):
 - `GET /api/config?siteId=X` — aktive Kampagnen fürs Widget
 - `POST /api/events` — Tracking (siteId im Body; Rate-Limit pro IP)
+- `POST /api/upload?site=X&token=T&name=DATEI` — optionaler Datei-Upload als Raw Body
+  (PDF/JPG/PNG/CSV/XLSX, maximal 10 MB, Aufbewahrung 7 Tage)
+- `GET /api/uploads?id=X` — hochgeladene Datei als Attachment (`nosniff`)
 - `POST /api/submit` — Lead-Formulare (erzwingt Consent + valide E-Mail; feuert Webhook)
 - `GET /cre.js` — Embed-Script (Cache 5 Min)
 - `GET /api/health` — Monitoring/Version

@@ -214,6 +214,7 @@ function sanitizeAction(actionTypeInput, configInput = {}) {
   } else {
     actionConfig = {
       ...common,
+      allowUpload: asBool(config.allowUpload),
       label: cleanText(config.label || 'Send request', 120),
       privacyUrl: cleanDownloadUrl(config.privacyUrl),
       consentLabel: cleanText(
@@ -237,6 +238,9 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
     : {};
   const consent = asBool(payload.consent);
   const email = cleanEmail(payload.email);
+  const uploadId = /^[A-Za-z0-9_-]{20,64}$/.test(String(payload.uploadId || ''))
+    ? String(payload.uploadId)
+    : undefined;
 
   if (!consent) throw new Error('Explicit consent is required');
   if (!email) throw new Error('A valid email address is required');
@@ -259,6 +263,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
         email,
         message: cleanText(payload.message, 600),
         consent: true,
+        ...(uploadId ? { uploadId } : {}),
       },
     };
   }
@@ -270,6 +275,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
       email,
       message: cleanText(payload.message, 1200),
       consent: true,
+      ...(uploadId ? { uploadId } : {}),
     },
   };
 }

@@ -6,6 +6,22 @@ const path = require('node:path');
 const source = fs.readFileSync(path.join(__dirname, '..', 'widget', 'cre.js'), 'utf8');
 const packageVersion = require('../package.json').version;
 
+function extractFunction(name) {
+  const start = source.indexOf(`function ${name}(`);
+  assert.notEqual(start, -1, `${name} is present`);
+  let depth = 0;
+  let end = source.indexOf('{', start);
+  for (; end < source.length; end += 1) {
+    if (source[end] === '{') depth += 1;
+    if (source[end] === '}') {
+      depth -= 1;
+      if (depth === 0) break;
+    }
+  }
+  assert.equal(depth, 0, `${name} function is complete`);
+  return source.slice(start, end + 1);
+}
+
 function extractMatchesPage() {
   const start = source.indexOf('function matchesPage(c) {');
   assert.notEqual(start, -1, 'matchesPage is present');
@@ -28,6 +44,19 @@ test('widget header version matches package version', () => {
   const headerVersion = source.match(/\* Version:\s*([0-9]+\.[0-9]+\.[0-9]+)/);
   assert.ok(headerVersion, 'widget version header is present');
   assert.equal(headerVersion[1], packageVersion);
+});
+
+test('contact markup shows the file field only when uploads are allowed', () => {
+  const actionMarkup = new Function('esc', 'safeUrl', `return (${extractFunction('actionMarkup')});`)(
+    (value) => String(value == null ? '' : value),
+    (value) => String(value || ''),
+  );
+  const theme = { radius: '10px', accent: '#123', accentText: '#fff', border: '#ddd', text: '#111', muted: '#666' };
+  const campaign = { action_type: 'contact', action_config: {}, cta_label: 'Senden' };
+
+  assert.doesNotMatch(actionMarkup(campaign, theme), /data-cre-file/);
+  campaign.action_config.allowUpload = true;
+  assert.match(actionMarkup(campaign, theme), /data-cre-file/);
 });
 
 test('widget includes the mobile popup safeguards', () => {
