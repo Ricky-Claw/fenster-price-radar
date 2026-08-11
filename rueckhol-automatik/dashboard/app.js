@@ -40,7 +40,7 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.12.0';
+  var WHATS_NEW_VERSION = '1.13.0';
   var WHATS_NEW_ITEMS = [
     'Angebots-Popup: Besucher können optional eine Fensterliste hochladen; sie wird mit dem Lead ans CRM und per Mail weitergegeben.',
     'Neues Aussehen: Die Steuerung folgt jetzt dem Design des Deutschen Fenstershops — Dunkelblau für die Oberfläche, Orange nur für die wichtigste Aktion.',
@@ -621,7 +621,7 @@
     table.className = 'leads-table';
     var thead = document.createElement('thead');
     var headerRow = document.createElement('tr');
-    ['Datum', 'Typ', 'E-Mail', 'Name', 'Nachricht', 'Kampagne', 'Seite', 'Aktion'].forEach(function (label) {
+    ['Datum', 'Typ', 'E-Mail', 'Name', 'Nachricht', 'Kampagne', 'Seite', 'Datei', 'Aktion'].forEach(function (label) {
       var th = document.createElement('th');
       th.textContent = label;
       headerRow.appendChild(th);
@@ -642,6 +642,26 @@
         cell.textContent = value;
         row.appendChild(cell);
       });
+      // Angehängte Datei: als Link zum Öffnen. Ist sie nach Ablauf der
+      // Aufbewahrung nicht mehr da, sagen wir das, statt einen toten Link
+      // anzubieten — der Lead selbst bleibt ja bestehen.
+      var fileCell = document.createElement('td');
+      var att = lead.attachment;
+      if (!att) {
+        fileCell.textContent = '—';
+      } else if (att.abgelaufen) {
+        fileCell.textContent = 'nicht mehr verfügbar';
+        fileCell.className = 'muted';
+      } else {
+        var link = document.createElement('a');
+        link.href = APP_BASE + att.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = att.filename + (att.size ? ' (' + Math.max(1, Math.round(att.size / 1024)) + ' KB)' : '');
+        fileCell.appendChild(link);
+      }
+      row.appendChild(fileCell);
+
       var actionCell = document.createElement('td');
       var resend = document.createElement('button');
       resend.type = 'button';

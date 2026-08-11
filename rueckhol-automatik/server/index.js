@@ -322,7 +322,27 @@ function createApp(options = {}) {
     };
   }
 
+  // Zeigt die angehängte Datei im Leads-Bereich an. Ohne das steckt die
+  // hochgeladene Fensterliste zwar in der Datenbank, ist im Dashboard aber
+  // unsichtbar — man sähe den Lead und wüsste nicht, dass eine Liste dabei ist.
+  // Ist die Datei nach Ablauf der Aufbewahrung weg, wird das ehrlich gemeldet,
+  // statt einen Link anzubieten, der ins Leere führt.
+  function submissionAttachment(submission) {
+    const uploadId = submission.payload && submission.payload.uploadId;
+    if (!uploadId) return null;
+    const upload = db.getUpload(uploadId);
+    if (!upload) return { filename: '', abgelaufen: true };
+    return {
+      filename: upload.original_name || 'Datei',
+      mime: upload.mime || '',
+      size: upload.size || 0,
+      url: `/api/uploads?id=${encodeURIComponent(uploadId)}`,
+      abgelaufen: false,
+    };
+  }
+
   function publicSubmission(submission, campaignName = '') {
+    const attachment = submissionAttachment(submission);
     return {
       id: submission.id,
       campaignId: submission.campaign_id,
@@ -331,6 +351,7 @@ function createApp(options = {}) {
       name: submission.payload.name || '',
       message: submission.payload.message || '',
       ...(submission.payload.extras ? { extras: submission.payload.extras } : {}),
+      ...(attachment ? { attachment } : {}),
       campaign: campaignName || submission.campaign_id,
       page: submission.page || '',
       createdAt: submission.created_at,

@@ -9,6 +9,53 @@ test('CSV cells guard leading tabs independently', () => {
   assert.equal(csvCell('\t=SUM(1,2)'), '"\'\t=SUM(1,2)"');
 });
 
+test('leads list exposes the attached file so the dashboard can show it', async () => {
+  // Ohne das steckt die hochgeladene Fensterliste zwar in der Datenbank,
+  // ist im Leads-Bereich aber unsichtbar — man saehe den Lead und wuesste
+  // nicht, dass eine Liste dabei ist.
+  const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rueckhol-lead-attachment-'));
+  const appContext = createApp({
+    dbPath: ':memory:',
+    uploadsDir: path.join(tempDir, 'uploads'),
+    adminToken: 'test-token',
+    warnOnOpenAdmin: false,
+  });
+  const auth = { authorization: 'Bearer test-token' };
+  try {
+    const uploaded = await appContext.app.inject({
+      method: 'POST',
+      url: '/api/upload?site=demo&name=Fensterliste.pdf',
+      headers: { 'content-type': 'application/octet-stream' },
+      body: Buffer.from('%PDF-1.7\n'),
+    });
+    assert.equal(uploaded.status, 200);
+    const uploadId = uploaded.json().uploadId;
+
+    await appContext.app.inject({
+      method: 'POST', url: '/api/submit',
+      headers: { 'content-type': 'application/json' },
+      body: { siteId: 'demo', kind: 'contact', payload: { email: 'a@b.de', consent: true, uploadId } },
+    });
+
+    const mitDatei = (await appContext.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers: auth })).json().submissions[0];
+    assert.equal(mitDatei.attachment.filename, 'Fensterliste.pdf');
+    assert.equal(mitDatei.attachment.abgelaufen, false);
+    assert.match(mitDatei.attachment.url, new RegExp(`/api/uploads\\?id=${uploadId}`));
+
+    // Lead ohne Datei traegt kein attachment-Feld.
+    await appContext.app.inject({
+      method: 'POST', url: '/api/submit',
+      headers: { 'content-type': 'application/json' },
+      body: { siteId: 'demo', kind: 'contact', payload: { email: 'c@d.de', consent: true } },
+    });
+    const ohneDatei = (await appContext.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers: auth })).json().submissions[0];
+    assert.equal(ohneDatei.attachment, undefined);
+  } finally {
+    appContext.close();
+    fs.rmSync(tempDir, { recursive: true, force: true });
+  }
+});
+
 test('submit resolves only same-site upload metadata into forwarded attachments', async () => {
   const tempDir = fs.mkdtempSync(path.join(os.tmpdir(), 'rueckhol-submit-upload-'));
   const bodies = [];

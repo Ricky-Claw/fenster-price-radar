@@ -3,6 +3,16 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.13.0 — 2026-08-11
+
+- **Angehängte Dateien im Leads-Bereich sichtbar.** Bisher wurde eine
+  hochgeladene Fensterliste zwar gespeichert und ans CRM übergeben, tauchte
+  in der Leads-Übersicht aber nirgends auf — man sah den Lead und wusste
+  nicht, dass eine Liste dabei ist. Jetzt steht Dateiname und Größe in einer
+  eigenen Spalte, ein Klick öffnet die Datei. Ist sie nach Ablauf der
+  Aufbewahrung nicht mehr da, steht das dort ehrlich, statt einen Link
+  anzubieten, der ins Leere führt.
+
 ## 1.12.0 — 2026-08-11
 
 - **Eigene Eingabezeilen im Kontakt-Popup:** Je Kampagne lassen sich bis zu
