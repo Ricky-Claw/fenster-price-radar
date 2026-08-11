@@ -142,9 +142,25 @@ an `/api/submit` mitgeben. Absenden in `cre.js:223 ff.`
    `redirect: 'manual'`, Timeout, Byte-Cap beim Streamen, keine internen IPs
    (Muster existiert im Repo: `lib/llm/safe-base-url.ts`, und im Rückhol-Repo bei `install-check`).
 2. `sha256` gegenprüfen, bei Abweichung nicht speichern.
-3. Mail an DFS mit Anhang über `lib/email/transactional.ts` (Versand-Infra existiert,
-   Lead-Benachrichtigung ist neu). Mailgröße beachten → große Dateien besser als
-   Download-Link statt Anhang.
+3. Mail an DFS mit Anhang über `lib/email/transactional.ts`. **Stand 2026-08-11:**
+   `lib/archipel/lead-notify.ts` existiert bereits (noch **untracked** im Worktree
+   `~/schwarzwald-worktree-rueckhol` — eine andere Session arbeitet daran, dort
+   nichts überschreiben). Empfänger kommt aus `ARCHIPEL_LEAD_NOTIFY_TO`.
+   Mailgröße beachten → große Dateien besser als Download-Link statt Anhang.
+
+   **Neue Anforderung (Elvis, 2026-08-11):** Jede Lead-Mail soll zusätzlich als
+   **CC** an Herrn Krzemien gehen. `lead-notify.ts` kennt aktuell nur `to`, kein
+   `cc` — muss ergänzt werden (Adresse über eine eigene Env-Variable, z. B.
+   `ARCHIPEL_LEAD_NOTIFY_CC`, nicht hart im Code).
+
+   ⚠️ **Vor dem Einbau klären:** Elvis nannte
+   `krzemien@deutscher-fensterhsop.de` — die Domain ist dort verdreht
+   (`fensterhsop` statt `fenstershop`). Die richtige Domain lautet
+   `deutscher-fenstershop.de`. Die Tippfehler-Domain existiert derzeit nicht
+   (NXDOMAIN geprüft), Mails würden also nur zurückkommen — aber sobald sie
+   jemand registriert, gingen Lead-Daten (Name, E-Mail, Nachricht, hochgeladene
+   Fensterliste) an Fremde. Deshalb: **Adresse von Elvis bestätigen lassen**,
+   nicht raten.
 4. Admin-CRM-UI zeigt Attachments schon an (`lib/archipel/admin-leads.ts`) — prüfen, ob
    ein Download-Link für `stored`-Dateien ergänzt werden muss.
 
