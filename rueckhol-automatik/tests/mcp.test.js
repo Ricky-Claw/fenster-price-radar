@@ -1,6 +1,8 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const { createApp } = require('../server/index');
+const { popupPause } = require('../server/lib/mcp-tools');
+const { createDatabase } = require('../server/db');
 
 function rpc(method, params, id = 1) { return { jsonrpc: '2.0', id, method, ...(params ? { params } : {}) }; }
 async function call(ctx, body, token = 'test-token') {
@@ -15,8 +17,20 @@ test('MCP requires the admin token and exposes only popup tools', async () => {
     const response = await call(ctx, rpc('tools/list'));
     assert.equal(response.status, 200);
     const names = response.json().result.tools.map(tool => tool.name);
-    assert.deepEqual(names.sort(), ['popup_analytics', 'popup_create', 'popup_delete', 'popup_design', 'popup_list', 'popup_update'].sort());
+    assert.deepEqual(names.sort(), ['popup_analytics', 'popup_create', 'popup_delete', 'popup_design', 'popup_list', 'popup_pause', 'popup_update'].sort());
   } finally { ctx.close(); }
+});
+
+test('popupPause reads, sets up to 24 hours, and rejects invalid agent values without changing storage', () => {
+  const db = createDatabase({ dbPath: ':memory:' });
+  try {
+    assert.deepEqual(popupPause(db, { siteId: 'demo' }), { siteId: 'demo', stunden: 0, hinweis: 'nur gelesen' });
+    assert.deepEqual(popupPause(db, { siteId: 'demo', stunden: 24 }), { siteId: 'demo', stunden: 24 });
+    for (const stunden of [25, 168, -1, 2.5, '2']) {
+      assert.throws(() => popupPause(db, { siteId: 'demo', stunden }), /Deckel für Agenten liegt bei 24 Stunden.*Dashboard/);
+      assert.equal(db.getSiteCooldownHours('demo'), 24);
+    }
+  } finally { db.close(); }
 });
 
 test('MCP design preview is read-only and create writes a campaign', async () => {

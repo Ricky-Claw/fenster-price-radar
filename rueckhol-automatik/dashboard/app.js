@@ -40,7 +40,7 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.10.0';
+  var WHATS_NEW_VERSION = '1.11.0';
   var WHATS_NEW_ITEMS = [
     'Angebots-Popup: Besucher können optional eine Fensterliste hochladen; sie wird mit dem Lead ans CRM und per Mail weitergegeben.',
     'Neues Aussehen: Die Steuerung folgt jetzt dem Design des Deutschen Fenstershops — Dunkelblau für die Oberfläche, Orange nur für die wichtigste Aktion.',
@@ -374,10 +374,15 @@
   function updateSiteCooldownField() {
     var field = $('#siteCooldownField');
     var input = $('#siteCooldownHours');
+    var mailField = $('#siteLeadMailField');
+    var mailInput = $('#siteLeadMailTo');
     var site = state.sites.find(function (item) { return (item.id || item.site_id || item) === state.site; });
     field.classList.toggle('hidden', !state.site);
+    mailField.classList.toggle('hidden', !state.site);
     input.disabled = !state.site;
+    mailInput.disabled = !state.site;
     input.value = site && Number.isInteger(Number(site.cooldown_hours)) ? Number(site.cooldown_hours) : 0;
+    mailInput.value = site && site.lead_mail_to || '';
   }
 
   function saveSiteCooldown() {
@@ -392,6 +397,20 @@
       if (site && typeof site === 'object') site.cooldown_hours = result.cooldownHours;
       input.value = result.cooldownHours;
       toast('Anzeige-Pause gespeichert');
+    }).catch(function (e) { updateSiteCooldownField(); toast(e.message, true); });
+  }
+
+  function saveSiteLeadMailTo() {
+    if (!state.site) return;
+    var input = $('#siteLeadMailTo');
+    return apiCall('/api/site-settings', {
+      method: 'PUT', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ siteId: state.site, leadMailTo: input.value.trim() })
+    }).then(function (result) {
+      var site = state.sites.find(function (item) { return (item.id || item.site_id || item) === state.site; });
+      if (site && typeof site === 'object') site.lead_mail_to = result.leadMailTo;
+      input.value = result.leadMailTo;
+      toast('Lead-Mail-Empfänger gespeichert');
     }).catch(function (e) { updateSiteCooldownField(); toast(e.message, true); });
   }
 
@@ -578,7 +597,7 @@
     table.className = 'leads-table';
     var thead = document.createElement('thead');
     var headerRow = document.createElement('tr');
-    ['Datum', 'Typ', 'E-Mail', 'Name', 'Nachricht', 'Kampagne'].forEach(function (label) {
+    ['Datum', 'Typ', 'E-Mail', 'Name', 'Nachricht', 'Kampagne', 'Seite', 'Aktion'].forEach(function (label) {
       var th = document.createElement('th');
       th.textContent = label;
       headerRow.appendChild(th);
@@ -592,13 +611,35 @@
       if (message.length > 120) message = message.slice(0, 117) + '…';
       var date = lead.createdAt ? new Date(lead.createdAt).toLocaleString('de-DE') : '—';
       var type = lead.type === 'newsletter' ? 'Newsletter' : (lead.type === 'contact' ? 'Kontakt' : lead.type);
-      var values = [date, type || '—', lead.email || '—', lead.name || '—', message || '—', campaignNames[lead.campaignId] || lead.campaignId || '—'];
+      var values = [date, type || '—', lead.email || '—', lead.name || '—', message || '—', campaignNames[lead.campaignId] || lead.campaignId || '—', lead.page || '—'];
       var row = document.createElement('tr');
       values.forEach(function (value) {
         var cell = document.createElement('td');
         cell.textContent = value;
         row.appendChild(cell);
       });
+      var actionCell = document.createElement('td');
+      var resend = document.createElement('button');
+      resend.type = 'button';
+      resend.className = 'btn btn-sm';
+      resend.textContent = 'Erneut senden';
+      resend.addEventListener('click', function () {
+        resend.disabled = true;
+        resend.textContent = 'Sendet …';
+        apiCall('/api/leads/resend', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ site: site, id: lead.id })
+        }).then(function () {
+          toast('Lead wurde erneut ans CRM gesendet');
+        }).catch(function (error) {
+          toast(error.message, true);
+        }).finally(function () {
+          resend.disabled = false;
+          resend.textContent = 'Erneut senden';
+        });
+      });
+      actionCell.appendChild(resend);
+      row.appendChild(actionCell);
       tbody.appendChild(row);
     });
     table.appendChild(tbody);
@@ -639,6 +680,7 @@
       if ($('#view-leads') && !$('#view-leads').classList.contains('hidden')) renderLeads();
     });
     $('#siteCooldownHours').addEventListener('change', saveSiteCooldown);
+    $('#siteLeadMailTo').addEventListener('change', saveSiteLeadMailTo);
 
     // any form input → live preview + mark unsaved
     $('#form').addEventListener('input', function () { scheduleForm(); setDirty(true); });

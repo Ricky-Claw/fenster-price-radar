@@ -14,6 +14,10 @@ test('dashboard includes the Leads tab and submissions routes', () => {
   assert.match(html, /id="view-leads"/);
   assert.match(app, /\/api\/submissions\?site=/);
   assert.match(app, /format=csv/);
+  assert.match(html, /id="siteLeadMailTo"/);
+  assert.match(html, /Leer = Standardempfänger/);
+  assert.match(app, /\/api\/leads\/resend/);
+  assert.match(app, /Erneut senden/);
 });
 
 test('what-is-new banner version matches the running package version', () => {

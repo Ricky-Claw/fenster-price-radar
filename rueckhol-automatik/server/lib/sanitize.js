@@ -129,6 +129,22 @@ function cleanEmail(value) {
   return EMAIL_PATTERN.test(email) ? email : '';
 }
 
+function cleanPageUrl(value) {
+  if (typeof value !== 'string') return '';
+  const raw = value.trim();
+  if (!/^https?:\/\//i.test(raw)) return '';
+  try {
+    const parsed = new URL(raw);
+    if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+  } catch (_) {
+    return '';
+  }
+  const cutAt = [raw.indexOf('?'), raw.indexOf('#')]
+    .filter((index) => index >= 0)
+    .reduce((lowest, index) => Math.min(lowest, index), raw.length);
+  return raw.slice(0, cutAt).slice(0, 300);
+}
+
 function sanitizeTrigger(triggerInput, configInput = {}) {
   const trigger = SUPPORTED_TRIGGERS.has(String(triggerInput || '').trim())
     ? String(triggerInput).trim()
@@ -228,7 +244,7 @@ function sanitizeAction(actionTypeInput, configInput = {}) {
   return { actionType, actionConfig };
 }
 
-function sanitizeSubmission(kindInput, payloadInput = {}) {
+function sanitizeSubmission(kindInput, payloadInput = {}, pageInput = '') {
   const kind = ['lead', 'newsletter', 'contact'].includes(String(kindInput || '').trim())
     ? String(kindInput).trim()
     : '';
@@ -248,6 +264,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
   if (kind === 'newsletter') {
     return {
       kind,
+      ...(pageInput ? { page: cleanPageUrl(pageInput) } : {}),
       payload: {
         email,
         consent: true,
@@ -258,6 +275,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
   if (kind === 'lead') {
     return {
       kind,
+      ...(pageInput ? { page: cleanPageUrl(pageInput) } : {}),
       payload: {
         name: cleanText(payload.name, 120),
         email,
@@ -270,6 +288,7 @@ function sanitizeSubmission(kindInput, payloadInput = {}) {
 
   return {
     kind,
+    ...(pageInput ? { page: cleanPageUrl(pageInput) } : {}),
     payload: {
       name: cleanText(payload.name, 120),
       email,
@@ -352,6 +371,7 @@ module.exports = {
   cleanEmail,
   cleanId,
   cleanMetadata,
+  cleanPageUrl,
   cleanText,
   cleanUrl,
   nowIso,

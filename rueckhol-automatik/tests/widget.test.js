@@ -46,6 +46,10 @@ test('widget header version matches package version', () => {
   assert.equal(headerVersion[1], packageVersion);
 });
 
+test('widget submits the current page as a separate lead field', () => {
+  assert.match(extractFunction('submit'), /page:\s*location\.href/);
+});
+
 test('contact markup shows the file field only when uploads are allowed', () => {
   const actionMarkup = new Function('esc', 'safeUrl', `return (${extractFunction('actionMarkup')});`)(
     (value) => String(value == null ? '' : value),

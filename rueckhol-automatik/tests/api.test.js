@@ -286,6 +286,7 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
         siteId: 'demo',
         campaignId: 'lead-campaign',
         kind: 'contact',
+        page: 'https://shop.example/konfigurator?utm_source=google#schritt-2',
         payload: {
           email: '"buyer,one"@example.com',
           name: '=SUM(1+1)',
@@ -340,6 +341,7 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
         email: originalLead.email,
         name: originalLead.name,
         message: originalLead.message,
+        page: originalLead.page,
       },
       {
         campaignId: 'lead-campaign',
@@ -347,8 +349,10 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
         email: '"buyer,one"@example.com',
         name: '=SUM(1+1)',
         message: 'Bitte, Angebot senden',
+        page: 'https://shop.example/konfigurator',
       },
     );
+    assert.equal(json.submissions.find((submission) => submission.campaignId === 'formula-0').page, '');
 
     const csvResponse = await appContext.app.inject({
       method: 'GET',
@@ -360,7 +364,7 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
     assert.match(csvResponse.headers['content-disposition'], /^attachment; filename="leads-demo-\d{4}-\d{2}-\d{2}\.csv"$/);
     const csv = csvResponse.body;
     assert.deepEqual([...Buffer.from(csv).subarray(0, 3)], [0xef, 0xbb, 0xbf]);
-    assert.match(csv, /^\uFEFFid;campaignId;type;email;name;message;createdAt\r\n/);
+    assert.match(csv, /^\uFEFFid;campaignId;campaign;type;email;name;message;page;createdAt\r\n/);
     assert.match(csv, /"""buyer,one""@example\.com"/);
     assert.match(csv, /;'=SUM\(1\+1\);/);
     assert.match(csv, /;'\+SUM;/);
@@ -371,6 +375,42 @@ test('submissions API requires auth and returns JSON and injection-safe CSV', as
   } finally {
     appContext.close();
   }
+});
+
+test('lead mail recipient is independently configurable, validated, listed, and may be cleared', async () => {
+  const appContext = createApp({ dbPath: ':memory:', adminToken: 'test-token', warnOnOpenAdmin: false });
+  const headers = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
+  try {
+    assert.equal((await appContext.app.inject({
+      method: 'PUT', url: '/api/site-settings', headers,
+      body: { siteId: 'demo', cooldownHours: 168 },
+    })).json().cooldownHours, 168);
+
+    const saved = await appContext.app.inject({
+      method: 'PUT', url: '/api/site-settings', headers,
+      body: { siteId: 'demo', leadMailTo: 'Leads@Example.com' },
+    });
+    assert.equal(saved.status, 200);
+    assert.equal(saved.json().leadMailTo, 'leads@example.com');
+    let site = (await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers })).json().sites.find((item) => item.id === 'demo');
+    assert.equal(site.lead_mail_to, 'leads@example.com');
+    assert.equal(site.cooldown_hours, 168, 'setting only leadMailTo keeps the pause unchanged');
+
+    const invalid = await appContext.app.inject({
+      method: 'PUT', url: '/api/site-settings', headers,
+      body: { siteId: 'demo', leadMailTo: 'keine-adresse' },
+    });
+    assert.equal(invalid.status, 400);
+    site = (await appContext.app.inject({ method: 'GET', url: '/api/campaigns', headers })).json().sites.find((item) => item.id === 'demo');
+    assert.equal(site.lead_mail_to, 'leads@example.com');
+
+    const cleared = await appContext.app.inject({
+      method: 'PUT', url: '/api/site-settings', headers,
+      body: { siteId: 'demo', leadMailTo: '' },
+    });
+    assert.equal(cleared.status, 200);
+    assert.equal(cleared.json().leadMailTo, '');
+  } finally { appContext.close(); }
 });
 
 test('widget config includes sanitized newsletter download and privacy URLs', async () => {

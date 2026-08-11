@@ -25,6 +25,51 @@ test('forwardContactLead includes attachments only when provided', async () => {
   assert.equal(Object.hasOwn(bodies[1], 'attachments'), false);
 });
 
+test('forwardContactLead includes mailTo only when configured and returns its request promise', async () => {
+  const bodies = [];
+  const fetchImpl = async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true, status: 200 }; };
+  const input = { email: 'max@example.com', siteId: 'demo', submissionId: 1, createdAt: '2026-08-11T12:00:00.000Z' };
+  const config = { baseUrl: 'https://schwarzwald-agent.de', token: 'secret', island: 'rueckhol' };
+  const response = await forwardContactLead({ ...input, mailTo: 'crm@example.com' }, config, fetchImpl);
+  await forwardContactLead(input, config, fetchImpl);
+  assert.equal(response.ok, true);
+  assert.equal(bodies[0].mailTo, 'crm@example.com');
+  assert.equal(Object.hasOwn(bodies[1], 'mailTo'), false);
+});
+
+test('manual CRM resend requires auth, reports missing leads and config, and reuses the original lead id', async () => {
+  const headers = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
+  const unconfigured = createApp({ dbPath: ':memory:', adminToken: 'test-token', fetch: async () => { throw new Error('must not fetch'); }, warnOnOpenAdmin: false });
+  try {
+    await submit(unconfigured, 'contact', { email: 'lead@example.com' });
+    const lead = (await unconfigured.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers })).json().submissions[0];
+    assert.equal((await unconfigured.app.inject({ method: 'POST', url: '/api/leads/resend', body: { site: 'demo', id: lead.id } })).status, 401);
+    assert.equal((await unconfigured.app.inject({ method: 'POST', url: '/api/leads/resend', headers, body: { site: 'demo', id: 9999 } })).status, 404);
+    const unavailable = await unconfigured.app.inject({ method: 'POST', url: '/api/leads/resend', headers, body: { site: 'demo', id: lead.id } });
+    assert.equal(unavailable.status, 503);
+    assert.match(unavailable.json().error, /nicht eingerichtet/);
+  } finally { unconfigured.close(); }
+
+  const bodies = [];
+  const configured = createApp({
+    dbPath: ':memory:', adminToken: 'test-token',
+    schwarzwaldBaseUrl: 'https://schwarzwald-agent.de', schwarzwaldArchipelToken: 'secret',
+    fetch: async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true, status: 200 }; },
+    warnOnOpenAdmin: false,
+  });
+  try {
+    await configured.app.inject({ method: 'PUT', url: '/api/site-settings', headers, body: { siteId: 'demo', leadMailTo: 'crm@example.com' } });
+    await submit(configured, 'contact', { name: 'Max', email: 'max@example.com', message: 'Hallo' });
+    const lead = (await configured.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers })).json().submissions[0];
+    const resent = await configured.app.inject({ method: 'POST', url: '/api/leads/resend', headers, body: { site: 'demo', id: lead.id } });
+    assert.equal(resent.status, 200);
+    assert.deepEqual(resent.json(), { ok: true });
+    assert.equal(bodies.length, 2);
+    assert.equal(bodies[1].id, bodies[0].id);
+    assert.equal(bodies[1].mailTo, 'crm@example.com');
+  } finally { configured.close(); }
+});
+
 test('forwards newsletter submissions', async () => {
   const calls = [];
   const ctx = createApp({ dbPath: ':memory:', schwarzwaldBaseUrl: 'https://schwarzwald-agent.de/', schwarzwaldNlListId: 'list-1', fetch: async (url, opts) => { calls.push({ url: String(url), opts }); return { ok: true }; }, warnOnOpenAdmin: false });

@@ -9,6 +9,7 @@ const { sanitizeEventInput } = require('../server/lib/sanitize');
 const { secret } = require('../server/lib/auth');
 const crypto = require('node:crypto');
 const { backupDatabase } = require('../server/lib/backup');
+const Database = require('better-sqlite3');
 
 test('event retention is age based and ignores volume', () => {
   const db = createDatabase({ dbPath: ':memory:', eventRetentionDays: 2 });
@@ -66,6 +67,46 @@ test('submission retention purges old rows and limits each site independently', 
   assert.equal(db.listSubmissions('a').some((submission) => submission.created_at === old), false);
   assert.equal(db.listSubmissions('b').length, 1);
   db.close();
+});
+
+test('file database migration adds submission page and site lead mail columns without losing rows', async () => {
+  const dir = await fs.mkdtemp(path.join(os.tmpdir(), 'conversion-rescue-migration-'));
+  const dbPath = path.join(dir, 'existing.sqlite');
+  const legacy = new Database(dbPath);
+  legacy.exec(`
+    CREATE TABLE sites (id TEXT PRIMARY KEY, name TEXT NOT NULL);
+    CREATE TABLE submissions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      site_id TEXT NOT NULL,
+      campaign_id TEXT NOT NULL,
+      kind TEXT NOT NULL,
+      payload TEXT NOT NULL,
+      created_at TEXT NOT NULL
+    );
+    INSERT INTO sites (id, name) VALUES ('legacy', 'Legacy Site');
+    INSERT INTO submissions (site_id, campaign_id, kind, payload, created_at)
+      VALUES ('legacy', 'old-campaign', 'contact', '{"email":"alt@example.com"}', '2026-01-01T00:00:00.000Z');
+  `);
+  legacy.close();
+
+  const db = createDatabase({ dbPath });
+  try {
+    const site = db.listSites().find((item) => item.id === 'legacy');
+    const submission = db.listSubmissions('legacy')[0];
+    assert.equal(site.name, 'Legacy Site');
+    assert.equal(site.lead_mail_to, '');
+    assert.equal(submission.payload.email, 'alt@example.com');
+    assert.equal(submission.page, '');
+
+    const migrated = new Database(dbPath);
+    try {
+      assert.ok(migrated.prepare('PRAGMA table_info(sites)').all().some((column) => column.name === 'lead_mail_to'));
+      assert.ok(migrated.prepare('PRAGMA table_info(submissions)').all().some((column) => column.name === 'page'));
+    } finally { migrated.close(); }
+  } finally {
+    db.close();
+    await fs.rm(dir, { recursive: true, force: true });
+  }
 });
 
 test('backup still runs when the database checkpoint fails', async () => {

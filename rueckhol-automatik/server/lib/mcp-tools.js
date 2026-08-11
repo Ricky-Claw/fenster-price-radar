@@ -13,6 +13,16 @@ function localList(db, { siteId } = {}) {
   return { campaigns: db.listCampaigns(clean || '', false).map(publicCampaign), sites: db.listSites(), themePresets: getThemePresets() };
 }
 function popupList(db, args) { return localList(db, args); }
+function popupPause(db, { siteId, stunden } = {}) {
+  const clean = typeof siteId === 'string' ? siteId.trim() : siteId;
+  if (!clean) throw new Error('popup_pause siteId darf nicht leer sein');
+  if (clean === '*') throw new Error('popup_pause unterstützt keinen siteId-Platzhalter "*"');
+  if (stunden === undefined) return { siteId: clean, stunden: db.getSiteCooldownHours(clean), hinweis: 'nur gelesen' };
+  if (!Number.isInteger(stunden) || stunden < 0 || stunden > 24) {
+    throw new Error('popup_pause stunden muss eine ganze Zahl zwischen 0 und 24 sein. Der Deckel für Agenten liegt bei 24 Stunden; längere Pausen bitte im Dashboard einstellen.');
+  }
+  return { siteId: clean, stunden: db.setSiteCooldownHours(clean, stunden) };
+}
 function popupAnalytics(db, { siteId } = {}) {
   const clean = typeof siteId === 'string' ? siteId.trim() : siteId;
   if (clean === '') throw new Error('popup_analytics siteId darf nicht leer sein');
@@ -74,4 +84,4 @@ async function popupDesign(db, { variante = 'blau', id, siteId, position = 'cent
   return { marke, variante, theme: good.map(x => x.response?.campaign?.theme).find(Boolean) || theme, angewendetAuf: good.map(x => x.campaign.id), ...(bad.length ? { fehlgeschlagen: bad.map(x => ({ id: x.campaign.id, grund: x.error.message })), unvollstaendig: true } : {}), vorschau: false };
 }
 function popupDelete(db, { id } = {}) { if (!id) throw new Error('popup_delete braucht eine id'); if (!db.deleteCampaign(id)) throw new Error('Campaign not found'); return { ok: true }; }
-module.exports = { popupList, popupAnalytics, popupCreate, popupUpdate, popupDesign, popupDelete };
+module.exports = { popupList, popupPause, popupAnalytics, popupCreate, popupUpdate, popupDesign, popupDelete };

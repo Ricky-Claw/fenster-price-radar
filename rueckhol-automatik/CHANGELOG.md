@@ -3,6 +3,32 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.11.0 — 2026-08-11
+
+- **Leads zeigen jetzt Herkunft:** In der Leads-Übersicht steht neben jedem
+  Eintrag, aus welcher Kampagne und von welcher Seite er stammt — auch in der
+  CSV-Ausgabe. Die Seite wird ab dieser Version erfasst; bei älteren Leads
+  bleibt das Feld leer. Aus der gespeicherten Adresse werden Frage- und
+  Rautezeichen samt allem dahinter entfernt, damit Suchbegriffe, Werbe-
+  Parameter und Sitzungskennungen gar nicht erst im Lead-Datensatz landen.
+- **Knopf „Erneut senden"** je Lead: übergibt einen Lead noch einmal ans CRM,
+  falls die automatische Übergabe nicht ankam oder im Spam landete. Anders
+  als die automatische Übergabe wartet der Knopf auf die Antwort und meldet
+  ehrlich, was passiert ist — ist die Übergabe auf dem Server gar nicht
+  eingerichtet, sagt er das, statt Erfolg vorzutäuschen. Höchstens
+  10 Sendungen pro Minute, damit Doppelklicks nichts anrichten. Eine
+  hochgeladene Datei geht wieder mit; die Lead-Kennung bleibt gleich, damit
+  im CRM keine Dublette entsteht.
+- **Empfänger je Seite einstellbar** („Lead-Mail an" in der Kopfzeile, leer =
+  Standardempfänger). Ungültige Adressen werden abgelehnt, der gespeicherte
+  Wert bleibt erhalten.
+- **Neues Agenten-Werkzeug `popup_pause`:** Agenten können die Anzeige-Pause
+  jetzt lesen und setzen — **gedeckelt auf 24 Stunden**. Längere Pausen
+  bleiben dem Dashboard vorbehalten (dort weiterhin bis 168), damit eine
+  unglückliche Anweisung die Popups einer ganzen Seite höchstens einen Tag
+  stilllegen kann. Werte außerhalb der Grenze werden abgelehnt statt
+  stillschweigend zurechtgestutzt.
+
 ## 1.10.0 — 2026-08-11
 
 - **Datei-Upload im Angebots-Popup:** Besucher können optional eine Fensterliste

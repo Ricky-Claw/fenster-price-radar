@@ -30,7 +30,7 @@ function forwardNewsletter({ email, name }, config, fetchImpl) {
   }, DEFAULT_TIMEOUT_MS));
 }
 
-function forwardContactLead({ name, email, message, siteId, submissionId, createdAt, attachments }, config, fetchImpl) {
+function forwardContactLead({ name, email, message, siteId, submissionId, createdAt, attachments, mailTo }, config, fetchImpl) {
   if (!config || !config.baseUrl || !config.token) return;
   const url = `${config.baseUrl.replace(/\/$/, '')}/api/leads/intake`;
   const body = {
@@ -45,17 +45,20 @@ function forwardContactLead({ name, email, message, siteId, submissionId, create
     },
     consent: { given: true, ts: createdAt, textVersion: 'v1' },
     contact: { name: name || undefined, email },
+    ...(mailTo ? { mailTo } : {}),
     message: message || undefined,
     attachments: attachments && attachments.length ? attachments : undefined,
   };
-  logIfNotOk('Lead-Weiterleitung', withTimeout(fetchImpl, url, {
+  const responsePromise = withTimeout(fetchImpl, url, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',
       authorization: `Bearer ${config.token}`,
     },
     body: JSON.stringify(body),
-  }, DEFAULT_TIMEOUT_MS));
+  }, DEFAULT_TIMEOUT_MS);
+  logIfNotOk('Lead-Weiterleitung', responsePromise);
+  return responsePromise;
 }
 
 module.exports = { forwardNewsletter, forwardContactLead };

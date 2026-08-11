@@ -7,6 +7,8 @@ const { createDatabase } = require('./db');
 const { summarizeAnalytics } = require('./lib/analytics');
 const {
   cleanId,
+  cleanEmail,
+  cleanPageUrl,
   cleanText,
   nowIso,
   sanitizeCampaignInput,
@@ -101,6 +103,7 @@ function clientIp(req) {
 
 const MCP_TOOL_DEFINITIONS = {
   popup_list: { description: 'Rückhol-Popups (Exit-Intent-Kampagnen) auflisten, inkl. Sites und Theme-Presets.', properties: { siteId: { type: 'string' } } },
+  popup_pause: { description: 'Anzeige-Pause einer Site lesen oder setzen (Stunden). Ohne stunden nur lesen. Über den Agenten max. 24 Stunden — längere Pausen bleiben dem Dashboard vorbehalten.', properties: { siteId: { type: 'string' }, stunden: { type: 'number' } }, required: ['siteId'] },
   popup_analytics: { description: 'Analytics der Rückhol-Popups (Impressions, Conversions je Kampagne).', properties: { siteId: { type: 'string' } } },
   popup_create: { description: 'Neues Rückhol-Popup anlegen.', properties: { campaign: { type: 'record' } }, required: ['campaign'] },
   popup_update: { description: 'Bestehendes Rückhol-Popup ändern.', properties: { campaign: { type: 'record' } }, required: ['campaign'] },
@@ -122,7 +125,11 @@ function validateMcpArguments(name, args) {
   if (!definition) return;
   if (!args || typeof args !== 'object' || Array.isArray(args)) throw new Error('arguments muss ein Objekt sein');
   for (const key of definition.required || []) {
-    if (!args[key] || typeof args[key] !== 'object' || Array.isArray(args[key])) throw new Error(`${name} braucht ein campaign-Objekt`);
+    const schema = definition.properties[key];
+    if (schema.type === 'record' && (!args[key] || typeof args[key] !== 'object' || Array.isArray(args[key]))) {
+      throw new Error(`${name} braucht ein campaign-Objekt`);
+    }
+    if (args[key] === undefined || args[key] === null || args[key] === '') throw new Error(`${name} braucht das Feld ${key}`);
   }
   for (const [key, schema] of Object.entries(definition.properties)) {
     if (args[key] === undefined) continue;
@@ -193,6 +200,7 @@ function createApp(options = {}) {
   const checkInstallRateLimit = createRateLimiter(10, 60_000);
   const checkUploadRateLimit = createRateLimiter(10, 60_000);
   const checkDownloadRateLimit = createRateLimiter(60, 60_000);
+  const checkLeadResendRateLimit = createRateLimiter(10, 60_000);
   const backupDir = options.backupDir || path.join(rootDir, 'data', 'backups');
   const runDatabaseBackup = options.backupDatabase || backupDatabase;
   const backupKeep = options.backupRetentionDays === undefined ? 30 : options.backupRetentionDays;
@@ -314,7 +322,7 @@ function createApp(options = {}) {
     };
   }
 
-  function publicSubmission(submission) {
+  function publicSubmission(submission, campaignName = '') {
     return {
       id: submission.id,
       campaignId: submission.campaign_id,
@@ -322,8 +330,28 @@ function createApp(options = {}) {
       email: submission.payload.email || '',
       name: submission.payload.name || '',
       message: submission.payload.message || '',
+      campaign: campaignName || submission.campaign_id,
+      page: submission.page || '',
       createdAt: submission.created_at,
     };
+  }
+
+  function resolveSubmissionAttachments(payload, siteId, at, req) {
+    if (!payload.uploadId) return undefined;
+    const upload = db.getUpload(payload.uploadId);
+    if (!upload || upload.site_id !== siteId || upload.expires_at < at) return undefined;
+    const forwardedProto = firstHeaderValue(req.headers['x-forwarded-proto']);
+    const protocol = (typeof forwardedProto === 'string' ? forwardedProto.split(',')[0].trim() : '')
+      || (req.socket?.encrypted ? 'https' : 'http');
+    const host = req.get('host') || 'localhost';
+    const publicBaseUrl = configuredPublicBaseUrl || `${protocol}://${host}`;
+    return [{
+      filename: upload.original_name,
+      mime: upload.mime,
+      size: upload.size,
+      sha256: upload.sha256,
+      url: `${publicBaseUrl.replace(/\/+$/, '')}/api/uploads?id=${encodeURIComponent(upload.id)}`,
+    }];
   }
 
   function postWebhook(payload) {
@@ -373,7 +401,7 @@ function createApp(options = {}) {
     }
     if (testAdapter && req.body && req.body.method === 'tools/call') {
       const { name, arguments: args = {} } = req.body.params || {};
-      const toolFns = { popup_list: mcpTools.popupList, popup_analytics: mcpTools.popupAnalytics, popup_create: mcpTools.popupCreate, popup_update: mcpTools.popupUpdate, popup_design: mcpTools.popupDesign, popup_delete: mcpTools.popupDelete };
+      const toolFns = { popup_list: mcpTools.popupList, popup_pause: mcpTools.popupPause, popup_analytics: mcpTools.popupAnalytics, popup_create: mcpTools.popupCreate, popup_update: mcpTools.popupUpdate, popup_design: mcpTools.popupDesign, popup_delete: mcpTools.popupDelete };
       const fn = toolFns[name];
       if (!fn) { res.json({ jsonrpc: '2.0', id: req.body.id ?? null, error: { code: -32601, message: 'Unknown tool' } }); return; }
       try {
@@ -397,6 +425,7 @@ function createApp(options = {}) {
       const server = new McpServer({ name: 'rueckhol-automatik', version: APP_VERSION });
       const run = async fn => { try { return { content: [{ type: 'text', text: JSON.stringify(await fn(), null, 2) }] }; } catch (error) { return { isError: true, content: [{ type: 'text', text: `Fehler: ${error.message}` }] }; } };
       server.registerTool('popup_list', { description: MCP_TOOL_DEFINITIONS.popup_list.description, inputSchema: { siteId: z.string().optional() } }, args => run(() => mcpTools.popupList(db, args)));
+      server.registerTool('popup_pause', { description: MCP_TOOL_DEFINITIONS.popup_pause.description, inputSchema: { siteId: z.string(), stunden: z.number().optional() } }, args => run(() => mcpTools.popupPause(db, args)));
       server.registerTool('popup_analytics', { description: MCP_TOOL_DEFINITIONS.popup_analytics.description, inputSchema: { siteId: z.string().optional() } }, args => run(() => mcpTools.popupAnalytics(db, args)));
       server.registerTool('popup_create', { description: 'Neues Rückhol-Popup anlegen. Felder: siteId, name, headline, text, ctaLabel, ctaType (newsletter/kontakt/rabatt/link/pdf), u.a. Unbekannte Felder werden serverseitig verworfen.', inputSchema: { campaign: z.record(z.any()).describe('Kampagnen-Objekt') } }, ({ campaign }) => run(() => mcpTools.popupCreate(db, campaign)));
       server.registerTool('popup_update', { description: 'Bestehendes Rückhol-Popup ändern. campaign.id ist Pflicht; gesetzte Felder werden aktualisiert.', inputSchema: { campaign: z.record(z.any()).describe('Kampagnen-Objekt inkl. id') } }, ({ campaign }) => run(() => mcpTools.popupUpdate(db, campaign)));
@@ -683,36 +712,20 @@ function createApp(options = {}) {
     }
     let submission;
     try {
-      submission = sanitizeSubmission(req.body.kind, req.body.payload);
+      submission = sanitizeSubmission(req.body.kind, req.body.payload, cleanPageUrl(req.body.page));
     } catch (error) {
       res.status(400).json({ error: error.message });
       return;
     }
 
     const createdAt = nowIso();
-    let attachments;
-    if (submission.payload.uploadId) {
-      const upload = db.getUpload(submission.payload.uploadId);
-      if (upload && upload.site_id === siteId && upload.expires_at >= createdAt) {
-        const forwardedProto = firstHeaderValue(req.headers['x-forwarded-proto']);
-        const protocol = (typeof forwardedProto === 'string' ? forwardedProto.split(',')[0].trim() : '')
-          || (req.socket?.encrypted ? 'https' : 'http');
-        const host = req.get('host') || 'localhost';
-        const publicBaseUrl = configuredPublicBaseUrl || `${protocol}://${host}`;
-        attachments = [{
-          filename: upload.original_name,
-          mime: upload.mime,
-          size: upload.size,
-          sha256: upload.sha256,
-          url: `${publicBaseUrl.replace(/\/+$/, '')}/api/uploads?id=${encodeURIComponent(upload.id)}`,
-        }];
-      }
-    }
+    const attachments = resolveSubmissionAttachments(submission.payload, siteId, createdAt, req);
     const submissionId = db.insertSubmission({
       site_id: siteId,
       campaign_id: cleanId(req.body.campaignId || req.body.campaign_id || '', ''),
       kind: submission.kind,
       payload: submission.payload,
+      page: submission.page,
       created_at: createdAt,
     });
 
@@ -755,6 +768,7 @@ function createApp(options = {}) {
           submissionId,
           createdAt,
           attachments,
+          mailTo: db.getSiteLeadMailTo(siteId),
         },
         {
           baseUrl: schwarzwaldBaseUrl,
@@ -791,13 +805,14 @@ function createApp(options = {}) {
       return;
     }
 
-    const submissions = db.listSubmissions(siteId).map(publicSubmission);
+    const campaignNames = new Map(db.listCampaigns(siteId, false).map((campaign) => [campaign.id, campaign.name]));
+    const submissions = db.listSubmissions(siteId).map((submission) => publicSubmission(submission, campaignNames.get(submission.campaign_id)));
     if (format === 'json') {
       res.json({ ok: true, submissions });
       return;
     }
 
-    const columns = ['id', 'campaignId', 'type', 'email', 'name', 'message', 'createdAt'];
+    const columns = ['id', 'campaignId', 'campaign', 'type', 'email', 'name', 'message', 'page', 'createdAt'];
     const lines = [
       columns.join(';'),
       ...submissions.map((submission) => columns.map((column) => csvCell(submission[column])).join(';')),
@@ -806,6 +821,59 @@ function createApp(options = {}) {
     res.set('content-type', 'text/csv; charset=utf-8');
     res.set('content-disposition', `attachment; filename="leads-${siteId}-${date}.csv"`);
     res.send('\uFEFF' + lines.join('\r\n'));
+  });
+
+  app.post('/api/leads/resend', requireDashboardAuth, async (req, res) => {
+    if (!checkLeadResendRateLimit(clientIp(req))) {
+      res.status(429).json({ ok: false, error: 'Zu viele erneute Sendungen. Bitte warten Sie eine Minute.' });
+      return;
+    }
+    const siteId = cleanId(req.body.site || '', '');
+    if (!siteId) {
+      res.status(400).json({ ok: false, error: 'Site ist erforderlich.' });
+      return;
+    }
+    const id = Number(req.body.id);
+    const submission = Number.isInteger(id) ? db.listSubmissions(siteId).find((lead) => Number(lead.id) === id) : null;
+    if (!submission) {
+      res.status(404).json({ ok: false, error: 'Lead wurde nicht gefunden.' });
+      return;
+    }
+    if (!schwarzwaldBaseUrl || !schwarzwaldArchipelToken) {
+      res.status(503).json({ ok: false, error: 'Übergabe ans CRM ist auf diesem Server nicht eingerichtet.' });
+      return;
+    }
+    try {
+      const response = await forwardContactLead(
+        {
+          name: submission.payload.name || '',
+          email: submission.payload.email,
+          message: submission.payload.message || '',
+          siteId,
+          submissionId: submission.id,
+          createdAt: submission.created_at,
+          attachments: resolveSubmissionAttachments(submission.payload, siteId, nowIso(), req),
+          mailTo: db.getSiteLeadMailTo(siteId),
+        },
+        {
+          baseUrl: schwarzwaldBaseUrl,
+          token: schwarzwaldArchipelToken,
+          island: schwarzwaldArchipelIsland,
+          category: schwarzwaldArchipelCategory,
+          domain: schwarzwaldArchipelDomain,
+        },
+        outboundFetch,
+      );
+      if (!response || response.ok === false) {
+        const status = response && response.status ? ` (HTTP ${response.status})` : '';
+        res.status(502).json({ ok: false, error: `CRM-Übergabe fehlgeschlagen${status}.` });
+        return;
+      }
+      res.json({ ok: true });
+    } catch (error) {
+      const timedOut = error && error.name === 'AbortError';
+      res.status(timedOut ? 504 : 502).json({ ok: false, error: timedOut ? 'CRM-Übergabe hat länger als 8 Sekunden gedauert.' : `CRM-Übergabe fehlgeschlagen: ${error.message}` });
+    }
   });
 
   app.get('/api/install-check', requireDashboardAuth, async (req, res) => {
@@ -903,14 +971,38 @@ function createApp(options = {}) {
     // gemeldet und hätte die genau gegenteilige Wirkung.
     // Number(null) und Number('') ergeben 0 — beides würde sonst als gültige
     // "keine Pause" durchgehen, obwohl gar kein Wert übergeben wurde.
-    const raw = req.body.cooldownHours;
-    const requested = raw === null || raw === undefined || raw === '' ? NaN : Number(raw);
-    if (!Number.isInteger(requested) || requested < 0 || requested > 168) {
-      res.status(400).json({ error: 'Anzeige-Pause muss eine ganze Zahl zwischen 0 und 168 Stunden sein.' });
+    const hasCooldown = Object.hasOwn(req.body, 'cooldownHours');
+    const hasLeadMailTo = Object.hasOwn(req.body, 'leadMailTo');
+    if (!hasCooldown && !hasLeadMailTo) {
+      res.status(400).json({ error: 'Mindestens eine Site-Einstellung muss angegeben werden.' });
       return;
     }
-    const cooldownHours = db.setSiteCooldownHours(siteId, requested);
-    res.json({ ok: true, siteId, cooldownHours });
+    let requested;
+    if (hasCooldown) {
+      const raw = req.body.cooldownHours;
+      requested = raw === null || raw === undefined || raw === '' ? NaN : Number(raw);
+      if (!Number.isInteger(requested) || requested < 0 || requested > 168) {
+        res.status(400).json({ error: 'Anzeige-Pause muss eine ganze Zahl zwischen 0 und 168 Stunden sein.' });
+        return;
+      }
+    }
+    let leadMailTo;
+    if (hasLeadMailTo) {
+      if (typeof req.body.leadMailTo !== 'string') {
+        res.status(400).json({ error: 'Lead-Mail an muss eine gültige E-Mail-Adresse oder leer sein.' });
+        return;
+      }
+      const rawMail = req.body.leadMailTo.trim();
+      leadMailTo = rawMail ? cleanEmail(rawMail) : '';
+      if (rawMail && !leadMailTo) {
+        res.status(400).json({ error: 'Lead-Mail an muss eine gültige E-Mail-Adresse oder leer sein.' });
+        return;
+      }
+    }
+    const result = { ok: true, siteId };
+    if (hasCooldown) result.cooldownHours = db.setSiteCooldownHours(siteId, requested);
+    if (hasLeadMailTo) result.leadMailTo = db.setSiteLeadMailTo(siteId, leadMailTo);
+    res.json(result);
   });
 
   app.post('/api/campaigns', requireDashboardAuth, (req, res) => {

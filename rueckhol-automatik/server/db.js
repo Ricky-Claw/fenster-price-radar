@@ -1,6 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const Database = require('better-sqlite3');
+const { cleanEmail } = require('./lib/sanitize');
 
 function parseJson(value, fallback) {
   if (!value) return fallback;
@@ -52,7 +53,9 @@ function createDatabase(options = {}) {
   db.exec(`
     CREATE TABLE IF NOT EXISTS sites (
       id TEXT PRIMARY KEY,
-      name TEXT NOT NULL
+      name TEXT NOT NULL,
+      cooldown_hours INTEGER NOT NULL DEFAULT 0,
+      lead_mail_to TEXT NOT NULL DEFAULT ''
     );
 
     CREATE TABLE IF NOT EXISTS campaigns (
@@ -90,6 +93,7 @@ function createDatabase(options = {}) {
       campaign_id TEXT NOT NULL,
       kind TEXT NOT NULL,
       payload TEXT NOT NULL,
+      page TEXT NOT NULL DEFAULT '',
       created_at TEXT NOT NULL
     );
 
@@ -117,6 +121,14 @@ function createDatabase(options = {}) {
   if (!siteColumns.some((column) => column.name === 'cooldown_hours')) {
     db.exec('ALTER TABLE sites ADD COLUMN cooldown_hours INTEGER NOT NULL DEFAULT 0');
   }
+  if (!siteColumns.some((column) => column.name === 'lead_mail_to')) {
+    db.exec("ALTER TABLE sites ADD COLUMN lead_mail_to TEXT NOT NULL DEFAULT ''");
+  }
+
+  const submissionColumns = db.prepare('PRAGMA table_info(submissions)').all();
+  if (!submissionColumns.some((column) => column.name === 'page')) {
+    db.exec("ALTER TABLE submissions ADD COLUMN page TEXT NOT NULL DEFAULT ''");
+  }
 
   const statements = {
     upsertSite: db.prepare(`
@@ -135,6 +147,8 @@ function createDatabase(options = {}) {
     listSites: db.prepare('SELECT * FROM sites ORDER BY id ASC'),
     getSiteCooldownHours: db.prepare('SELECT cooldown_hours FROM sites WHERE id = @id LIMIT 1'),
     setSiteCooldownHours: db.prepare('UPDATE sites SET cooldown_hours = @hours WHERE id = @id'),
+    getSiteLeadMailTo: db.prepare('SELECT lead_mail_to FROM sites WHERE id = @id LIMIT 1'),
+    setSiteLeadMailTo: db.prepare('UPDATE sites SET lead_mail_to = @lead_mail_to WHERE id = @id'),
     getCampaign: db.prepare('SELECT * FROM campaigns WHERE id = @id LIMIT 1'),
     listCampaigns: db.prepare(`
       SELECT * FROM campaigns
@@ -193,8 +207,8 @@ function createDatabase(options = {}) {
       LIMIT @limit
     `),
     insertSubmission: db.prepare(`
-      INSERT INTO submissions (site_id, campaign_id, kind, payload, created_at)
-      VALUES (@site_id, @campaign_id, @kind, @payload, @created_at)
+      INSERT INTO submissions (site_id, campaign_id, kind, payload, page, created_at)
+      VALUES (@site_id, @campaign_id, @kind, @payload, @page, @created_at)
     `),
     listSubmissions: db.prepare(`
       SELECT * FROM submissions
@@ -292,6 +306,7 @@ function createDatabase(options = {}) {
       campaign_id: submission.campaign_id || '',
       kind: submission.kind,
       payload: JSON.stringify(submission.payload || {}),
+      page: submission.page || '',
       created_at: submission.created_at,
     });
     const cutoff = new Date(Date.now() - eventRetentionDays * 24 * 60 * 60 * 1000).toISOString();
@@ -329,6 +344,10 @@ function createDatabase(options = {}) {
       const row = statements.getSiteCooldownHours.get({ id: siteId });
       return row ? normalizeCooldownHours(row.cooldown_hours) : 0;
     },
+    getSiteLeadMailTo(siteId) {
+      const row = statements.getSiteLeadMailTo.get({ id: siteId });
+      return row ? row.lead_mail_to : '';
+    },
     getCampaign(id) {
       return hydrateCampaign(statements.getCampaign.get({ id }));
     },
@@ -357,6 +376,14 @@ function createDatabase(options = {}) {
       statements.insertSiteIfMissing.run({ id: siteId, name: siteId });
       statements.setSiteCooldownHours.run({ id: siteId, hours: value });
       return value;
+    },
+    setSiteLeadMailTo(siteId, value) {
+      const raw = String(value ?? '').trim();
+      const leadMailTo = raw ? cleanEmail(raw) : '';
+      if (raw && !leadMailTo) throw new Error('Lead-Mail an muss eine gültige E-Mail-Adresse sein.');
+      statements.insertSiteIfMissing.run({ id: siteId, name: siteId });
+      statements.setSiteLeadMailTo.run({ id: siteId, lead_mail_to: leadMailTo });
+      return leadMailTo;
     },
   };
 }

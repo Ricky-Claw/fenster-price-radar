@@ -5,6 +5,7 @@ const {
   cleanCsvList,
   cleanCustomCss,
   cleanDownloadUrl,
+  cleanPageUrl,
   cleanText,
   cleanUrl,
   sanitizeAction,
@@ -49,6 +50,15 @@ test('cleanUrl only keeps absolute http or https URLs and strips hashes', () => 
   assert.equal(cleanUrl('data:text/html,hi'), '');
   assert.equal(cleanUrl('/relative/path'), '');
   assert.equal(cleanUrl('https://example.com/offer#section'), 'https://example.com/offer');
+});
+
+test('cleanPageUrl removes query and fragment, rejects unsafe or relative values, and caps length', () => {
+  assert.equal(cleanPageUrl('https://example.com/angebot?q=fenster#kontakt'), 'https://example.com/angebot');
+  assert.equal(cleanPageUrl('https://example.com/angebot#kontakt?q=fenster'), 'https://example.com/angebot');
+  assert.equal(cleanPageUrl('javascript:alert(1)'), '');
+  assert.equal(cleanPageUrl('/angebot'), '');
+  assert.equal(cleanPageUrl('https://'), '');
+  assert.equal(cleanPageUrl(`https://example.com/${'a'.repeat(400)}`).length, 300);
 });
 
 test('cleanCsvList returns trimmed safe values', () => {
