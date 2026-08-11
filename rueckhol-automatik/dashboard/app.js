@@ -40,11 +40,12 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.8.0';
+  var WHATS_NEW_VERSION = '1.9.0';
   var WHATS_NEW_ITEMS = [
-    'Anzeige-Pause ist jetzt einstellbar: Sie legen je Seite selbst fest, wie lange nach einem gezeigten Popup Ruhe herrscht (0 Stunden = keine Pause).',
-    'Bisher waren dafür 6 Stunden fest eingebaut — dadurch blieben Popups anderer Seitenbereiche unsichtbar, obwohl sie gepasst hätten.',
+    'Neues Aussehen: Die Steuerung folgt jetzt dem Design des Deutschen Fenstershops — Dunkelblau für die Oberfläche, Orange nur für die wichtigste Aktion.',
+    'Anzeige-Pause ist einstellbar: Sie legen je Seite fest, wie lange nach einem gezeigten Popup Ruhe herrscht (0 Stunden = keine Pause). Testkampagnen können sie per Schalter ignorieren.',
     'Wie oft eine einzelne Kampagne demselben Besucher erscheint, stellen Sie weiterhin direkt in der Kampagne ein.',
+    'Die kurze Anleitung oben ist auf dem neuesten Stand — inklusive Einbau-Prüfung, Seiten-Eingrenzung und Auswertungs-Zeiträumen.',
   ];
   function initWhatsNew() {
     try {

@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.8.0 (keep in sync with package.json)
+ * Version: 1.9.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).

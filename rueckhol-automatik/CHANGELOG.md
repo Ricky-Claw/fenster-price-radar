@@ -3,6 +3,25 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.9.0 — 2026-08-11
+
+- Die Steuerung trägt jetzt das Design des Deutschen Fenstershops. Farben,
+  Schriften, Radien und Schatten stammen 1:1 aus dem DFS-Design-System:
+  Dunkelblau (#003A66) für Marke und Oberfläche, Orange (#F47C26)
+  ausschließlich für die wichtigste Aktion — laut Styleguide wirkt Orange
+  als Flächenfarbe billig. Helvetica für Überschriften, Arial für Fließtext.
+- Die externe Schriftart (Inter über rsms.me) ist entfallen; Arial und
+  Helvetica sind systemeigen. Dadurch lädt das Dashboard nichts mehr von
+  fremden Servern nach, und die Sicherheitsrichtlinie (CSP) konnte den
+  fremden Host verlieren.
+- Die kurze Anleitung ist auf dem aktuellen Stand: Seiten-Eingrenzung,
+  „Einbau prüfen", das Zusammenspiel von Anzeige-Pause und Kampagnen-Deckel,
+  die sechs Auswertungs-Zeiträume und der Leads-Bereich mit CSV-Download.
+- Zwei Darstellungsfehler nebenbei behoben: Auf dem Handy stand „Einbau
+  prüfen" vor dem Produktnamen (dem Knopf fehlte eine Reihenfolge, wodurch
+  er nach vorn rutschte), und leere Hüllen rissen oben eine grundlose Lücke
+  in die Seite.
+
 ## 1.8.0 — 2026-08-11
 
 - Die „Anzeige-Pause" ist jetzt je Seite einstellbar (Feld in der Kopfzeile des

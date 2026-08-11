@@ -832,7 +832,9 @@ function createApp(options = {}) {
   // handler per prefix (unlike app.get/post, which support several via rest args).
   const dashboardStatic = express.static(path.join(rootDir, 'dashboard'));
   app.use('/dashboard', (req, res, next) => {
-    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://rsms.me; font-src https://rsms.me; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
+    // Seit dem DFS-Design nutzt das Dashboard nur noch systemeigene Schriften
+    // (Arial/Helvetica) — der externe Font-Host ist damit aus der Richtlinie raus.
+    setAdminSecurityHeaders(res, "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
     requireDashboardPage(req, res, () => dashboardStatic(req, res, next));
   });
   // Demo/test pages are for our test phase — a customer's production install
