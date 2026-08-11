@@ -40,7 +40,7 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.11.0';
+  var WHATS_NEW_VERSION = '1.11.1';
   var WHATS_NEW_ITEMS = [
     'Angebots-Popup: Besucher können optional eine Fensterliste hochladen; sie wird mit dem Lead ans CRM und per Mail weitergegeben.',
     'Neues Aussehen: Die Steuerung folgt jetzt dem Design des Deutschen Fenstershops — Dunkelblau für die Oberfläche, Orange nur für die wichtigste Aktion.',

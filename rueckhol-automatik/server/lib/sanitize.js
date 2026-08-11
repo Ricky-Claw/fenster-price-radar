@@ -176,7 +176,7 @@ function baseActionConfig(configInput = {}) {
   return {
     label: cleanText(configInput.label || '', 120),
     successMessage: cleanText(configInput.successMessage || '', 200),
-    reasonPrompt: cleanText(configInput.reasonPrompt || 'What is stopping you right now?', 180),
+    reasonPrompt: cleanText(configInput.reasonPrompt || 'Was hält Sie gerade noch ab?', 180),
     reasonOptions: cleanCsvList(
       Array.isArray(configInput.reasonOptions) ? configInput.reasonOptions.join(',') : configInput.reasonOptions || '',
       120,
@@ -205,39 +205,39 @@ function sanitizeAction(actionTypeInput, configInput = {}) {
     actionConfig = {
       ...common,
       pdfUrl: cleanUrl(config.pdfUrl || config.url, 600),
-      label: cleanText(config.label || 'Open PDF', 120),
+      label: cleanText(config.label || 'PDF öffnen', 120),
       newTab: config.newTab === undefined ? true : asBool(config.newTab),
     };
   } else if (actionType === 'coupon') {
     actionConfig = {
       ...common,
       code: cleanText(config.code, 80),
-      label: cleanText(config.label || 'Reveal code', 120),
+      label: cleanText(config.label || 'Code anzeigen', 120),
     };
   } else if (actionType === 'newsletter') {
     actionConfig = {
       ...common,
-      label: cleanText(config.label || 'Subscribe', 120),
+      label: cleanText(config.label || 'Anmelden', 120),
       placeholder: cleanText(config.placeholder || 'name@example.com', 120),
       downloadUrl: cleanDownloadUrl(config.downloadUrl),
       privacyUrl: cleanDownloadUrl(config.privacyUrl),
       consentLabel: cleanText(
-        config.consentLabel || 'I agree to receive updates related to this offer.',
+        config.consentLabel || 'Ich möchte Neuigkeiten zu diesem Angebot per E-Mail erhalten.',
         220,
       ),
-      successMessage: cleanText(config.successMessage || 'Thanks. You are on the list.', 200),
+      successMessage: cleanText(config.successMessage || 'Danke! Sie sind eingetragen.', 200),
     };
   } else {
     actionConfig = {
       ...common,
       allowUpload: asBool(config.allowUpload),
-      label: cleanText(config.label || 'Send request', 120),
+      label: cleanText(config.label || 'Anfrage senden', 120),
       privacyUrl: cleanDownloadUrl(config.privacyUrl),
       consentLabel: cleanText(
-        config.consentLabel || 'I agree that my details may be used to respond to this request.',
+        config.consentLabel || 'Ich bin einverstanden, dass meine Angaben zur Beantwortung dieser Anfrage verwendet werden.',
         220,
       ),
-      successMessage: cleanText(config.successMessage || 'Thanks. We will get back to you.', 200),
+      successMessage: cleanText(config.successMessage || 'Danke! Wir melden uns bei Ihnen.', 200),
     };
   }
 
@@ -341,9 +341,9 @@ function sanitizeCampaignInput(input = {}, existing = {}) {
     action_config: actionConfig,
     page_pattern: pagePattern || '*',
     page_exclude: pageExclude,
-    headline: cleanText(merged.headline || 'Wait before you leave', 180),
-    body: cleanText(merged.body || 'A well-timed offer can rescue the visit.', 700),
-    cta_label: cleanText(merged.cta_label || merged.ctaLabel || actionConfig.label || 'Continue', 120),
+    headline: cleanText(merged.headline || 'Einen Moment noch', 180),
+    body: cleanText(merged.body || 'Gern beraten wir Sie zu Ihrem Vorhaben.', 700),
+    cta_label: cleanText(merged.cta_label || merged.ctaLabel || actionConfig.label || 'Weiter', 120),
     theme: normalizeTheme(merged.theme),
     custom_css: cleanCustomCss(merged.custom_css || merged.customCss || ''),
     created_at: cleanText(existing.created_at || merged.created_at || merged.createdAt || nowIso(), 80),

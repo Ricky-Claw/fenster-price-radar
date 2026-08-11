@@ -3,6 +3,16 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.11.1 — 2026-08-11
+
+- Alle Standardtexte sind jetzt auf Deutsch. Bisher steckten englische
+  Vorgaben im Code — am sichtbarsten der Zustimmungstext an der Hakenbox
+  („I agree that my details may be used…"). Weil der Server diese Vorgaben
+  beim Speichern einsetzt, konnten sie bis zum Besucher durchschlagen,
+  sobald ein Feld leer blieb. Betroffen waren Zustimmungstexte,
+  Bestätigungsmeldungen, Button-Beschriftungen sowie Überschrift und Text
+  neuer Kampagnen.
+
 ## 1.11.0 — 2026-08-11
 
 - **Leads zeigen jetzt Herkunft:** In der Leads-Übersicht steht neben jedem
