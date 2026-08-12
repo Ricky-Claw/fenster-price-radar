@@ -52,6 +52,22 @@ assert.equal(altBodyOhneFragezeichen.windowCount, '3–5 Fenster');
 const missingBody = mapLeadToDfsMetaBody({ id: 'lead-leer', field_data: [] });
 assert.equal(missingBody.formName, undefined);
 assert.equal(missingBody.fullName, undefined);
+
+const b2bBody = mapLeadToDfsMetaBody({
+  id: 'lead-b2b',
+  form_id: '1537074027699146',
+  field_data: [
+    { name: 'first_name', values: ['Max'] },
+    { name: 'last_name', values: ['Müller'] },
+    { name: 'company_name', values: ['Müller Montage GmbH'] },
+    { name: 'sie_sind_…?', values: ['montage_fensterbau'] },
+    { name: 'wie_viele_fensterprojekte_betreuen_sie_pro_jahr?', values: ['p6_20'] },
+  ],
+});
+assert.equal(b2bBody.formName, 'Meta B2B Handwerker');
+assert.equal(b2bBody.fullName, 'Max Müller (Müller Montage GmbH)');
+assert.equal(b2bBody.hasFensterliste, 'B2B: Montage-/Fensterbaubetrieb');
+assert.equal(b2bBody.windowCount, '6–20 Projekte/Jahr');
 assert.equal(missingBody.email, undefined);
 assert.equal(missingBody.phone, undefined);
 assert.equal(missingBody.postCode, undefined);

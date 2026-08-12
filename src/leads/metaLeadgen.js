@@ -8,6 +8,7 @@ const FORM_LABELS = {
   '2255693698516004': 'Formular 1 (alt)',
   '1693914745167295': 'Formular 2 (alt)',
   '1767645384579656': 'Formular 3 (alt)',
+  '1537074027699146': 'Meta B2B Handwerker',
 };
 
 const ANTWORT_LABELS = {
@@ -19,6 +20,13 @@ const ANTWORT_LABELS = {
   '1_2': '1–2 Fenster',
   '3_5': '3–5 Fenster',
   mehr_als_5: 'Mehr als 5 Fenster',
+  montage_fensterbau: 'Montage-/Fensterbaubetrieb',
+  schreinerei_tischlerei: 'Schreinerei/Tischlerei',
+  bau_gu: 'Bauunternehmen/Generalunternehmer',
+  privatkunde: 'Privatkunde',
+  p1_5: '1–5 Projekte/Jahr',
+  p6_20: '6–20 Projekte/Jahr',
+  p20plus: 'Mehr als 20 Projekte/Jahr',
 };
 
 function antwortLabel(rohwert) {
@@ -61,7 +69,7 @@ export function fieldValues(lead) {
 
 export function mapLeadToDfsMetaBody(lead, formName) {
   const fields = fieldValues(lead);
-  const fullName =
+  let fullName =
     fields.full_name ||
     [fields.first_name, fields.last_name].filter(Boolean).join(' ') ||
     undefined;
@@ -74,6 +82,16 @@ export function mapLeadToDfsMetaBody(lead, formName) {
     fields['wie_viele_fenster_planen_sie_zu_tauschen'] ||
     fields['wie_viele_fenster_planen_sie_zu_tauschen?'] ||
     undefined;
+  // B2B-Form „Meta B2B Handwerker": Firma in den Namen, Betriebsart und
+  // Projektvolumen in die vorhandenen CRM-Textfelder (Endpoint-Schema ist fix).
+  const company = fields.company_name;
+  if (company && fullName) fullName = `${fullName} (${company})`;
+  else if (company) fullName = company;
+  const betriebsart = fields['sie_sind_…?'] || fields['sie_sind_...?'] || fields['sie_sind'] || undefined;
+  const projekteProJahr =
+    fields['wie_viele_fensterprojekte_betreuen_sie_pro_jahr?'] ||
+    fields['wie_viele_fensterprojekte_betreuen_sie_pro_jahr'] ||
+    undefined;
   return {
     metaLeadId: lead.id,
     formName: FORM_LABELS[String(lead.form_id)] || formName || undefined,
@@ -81,8 +99,8 @@ export function mapLeadToDfsMetaBody(lead, formName) {
     email: fields.email,
     phone: fields.phone_number,
     postCode: fields.post_code,
-    hasFensterliste: antwortLabel(hasFensterliste),
-    windowCount: antwortLabel(windowCount),
+    hasFensterliste: antwortLabel(hasFensterliste) || (betriebsart ? `B2B: ${antwortLabel(betriebsart)}` : undefined),
+    windowCount: antwortLabel(windowCount) || antwortLabel(projekteProJahr),
     submittedAt: lead.created_time,
   };
 }
