@@ -1,5 +1,5 @@
 /* Conversion Rescue — embeddable widget. Self-contained, no dependencies.
- * Version: 1.13.0 (keep in sync with package.json)
+ * Version: 1.14.0 (keep in sync with package.json)
  * Embed: <script async src="HOST/cre.js" data-cre-site="SITE" data-cre-api="HOST"></script>
  * Optional: data-cre-debug="1" logs why no popup appears (config errors, no campaigns).
  * Renders an exit-intent/idle rescue popup in a Shadow DOM (no CSS clash with host).
@@ -191,7 +191,7 @@
     }
   }
 
-  function bindActions(root, c) {
+  function bindActions(root, c, onConverted) {
     var actionConfig = c.action_config || {};
     function setStatus(msg, ok) {
       var el = root.querySelector('[data-cre-status]');
@@ -218,6 +218,7 @@
       // emit the canonical conversion event the analytics engine counts
       track(c.id, c.action_type === 'pdf' ? 'pdf_open' : 'url_open', { action: c.action_type });
       suppress(c);
+      onConverted();
     });
 
     var coupon = root.querySelector('[data-cre-action="coupon"]');
@@ -228,6 +229,7 @@
       coupon.textContent = 'Kopiert ✓';
       track(c.id, 'coupon_reveal', { action: 'coupon' });
       suppress(c);
+      onConverted();
     });
 
     ['newsletter', 'contact'].forEach(function (kind) {
@@ -275,6 +277,7 @@
           if (ok) {
             // conversion is recorded server-side (/api/submit -> newsletter_opt_in / contact_submit)
             suppress(c);
+            onConverted();
             var form = root.querySelector('[data-cre-form]');
             var okMsg = actionConfig.successMessage || 'Danke! Wir melden uns.';
             if (form) {
@@ -345,9 +348,12 @@
     shadow.innerHTML = innerHtml(c, t, false);
     var prevFocus = document.activeElement;
 
+    var hasConverted = false;
     function focusables() { return Array.prototype.slice.call(shadow.querySelectorAll('input,button,a,textarea,select,[tabindex]')); }
     function close(reason) {
-      track(c.id, 'close', { reason: reason || 'x', trigger: trigger });
+      // already converted (coupon/newsletter/contact success screen closed by the
+      // user) — don't also count this instance as a lost/dismissed popup
+      if (!hasConverted) track(c.id, 'close', { reason: reason || 'x', trigger: trigger });
       suppress(c);
       closeAll();
       try { prevFocus && prevFocus.focus && prevFocus.focus(); } catch (e) {}
@@ -366,7 +372,7 @@
     backEl.addEventListener('click', function (e) { if (e.target === backEl) close('backdrop'); });
     document.addEventListener('keydown', onKey);
     openCleanup = function () { document.removeEventListener('keydown', onKey); };
-    bindActions(shadow, c);
+    bindActions(shadow, c, function () { hasConverted = true; });
 
     document.body.appendChild(host);
     openHost = host;

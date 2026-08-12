@@ -3,6 +3,20 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.14.0 — 2026-08-12
+
+- **Fix: erfolgreiche Abschlüsse zählten teils auch als „weggeklickt".** Nach
+  einem Gutschein, einer Anmeldung oder einer Kontaktanfrage bleibt das
+  Popup offen (Dankeschön-Text) und der Besucher schließt es selbst — bisher
+  wurde dieses Schließen als verlorenes Popup mitgezählt, obwohl die
+  Kampagne schon erfolgreich war. Ein Popup, das bereits konvertiert hat,
+  zählt beim Schließen nicht mehr als „weggeklickt".
+- **Mouseover an allen Analytics-Zahlen:** Gezeigt, Klickrate, Abschlüsse,
+  Abschlussquote und Weggeklickt (KPI-Kacheln und je Kampagne) erklären beim
+  Draufhalten in einem Satz, was genau gezählt wird — „Interagiert" und
+  „Abgeschlossen" sind zwei unabhängige Zähler, kein Popup zählt doppelt in
+  einer Kategorie.
+
 ## 1.13.0 — 2026-08-11
 
 - **Angehängte Dateien im Leads-Bereich sichtbar.** Bisher wurde eine

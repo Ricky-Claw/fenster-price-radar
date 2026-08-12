@@ -307,6 +307,7 @@ input.invalid, textarea.invalid, select.invalid { border-color: var(--danger); o
 .kpi { padding: 16px 18px; }
 .kpi .n { font-size: 30px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .kpi .l { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.kpi .l[title], .step .top span[title], .rate[title] { cursor: help; border-bottom: 1px dotted var(--muted); }
 .kpi .sub { font-size: 12px; color: var(--faint); margin-top: 6px; }
 .funnels { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
 .funnel { padding: 16px 18px; }

@@ -40,13 +40,10 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.13.0';
+  var WHATS_NEW_VERSION = '1.14.0';
   var WHATS_NEW_ITEMS = [
-    'Angebots-Popup: Besucher können optional eine Fensterliste hochladen; sie wird mit dem Lead ans CRM und per Mail weitergegeben.',
-    'Neues Aussehen: Die Steuerung folgt jetzt dem Design des Deutschen Fenstershops — Dunkelblau für die Oberfläche, Orange nur für die wichtigste Aktion.',
-    'Anzeige-Pause ist einstellbar: Sie legen je Seite fest, wie lange nach einem gezeigten Popup Ruhe herrscht (0 Stunden = keine Pause). Testkampagnen können sie per Schalter ignorieren.',
-    'Wie oft eine einzelne Kampagne demselben Besucher erscheint, stellen Sie weiterhin direkt in der Kampagne ein.',
-    'Die kurze Anleitung oben ist auf dem neuesten Stand — inklusive Einbau-Prüfung, Seiten-Eingrenzung und Auswertungs-Zeiträumen.',
+    'Auswertung korrigiert: Ein Popup, das bereits zu einem Abschluss geführt hat (Gutschein, Anmeldung, Anfrage), zählte beim anschließenden Schließen fälschlich auch als „weggeklickt". Das ist jetzt korrekt.',
+    'Alle Zahlen in der Auswertung erklären sich jetzt selbst: Kurz mit der Maus draufhalten zeigt in einem Satz, was genau gezählt wird.',
   ];
   function initWhatsNew() {
     try {
@@ -491,11 +488,11 @@
       '<button class="chip" type="button" data-win="allTime" aria-pressed="' + (state.window === 'allTime') + '">Gesamt</button></div>';
 
     var kpis = '<div class="kpis">' +
-      kpi(shown, 'Popups gezeigt', 'Seite: ' + esc(wrap.site)) +
-      kpi(pct(inter, shown) + '%', 'Klickrate', inter + ' Klicks') +
-      kpi(conv, 'Abschlüsse', '') +
-      kpi(pct(conv, shown) + '%', 'Abschlussquote', shown ? '' : 'noch keine Daten') +
-      kpi(pct(dismiss, shown) + '%', 'Weggeklickt', dismiss + ' Mal') +
+      kpi(shown, 'Popups gezeigt', 'Seite: ' + esc(wrap.site), 'Wie oft dieses Popup einem Besucher angezeigt wurde.') +
+      kpi(pct(inter, shown) + '%', 'Klickrate', inter + ' Klicks', 'Anteil der gezeigten Popups, bei denen jemand auf den Button geklickt hat.') +
+      kpi(conv, 'Abschlüsse', '', 'Wie oft daraus eine Anfrage, Anmeldung oder ein Klick zum Ziel wurde.') +
+      kpi(pct(conv, shown) + '%', 'Abschlussquote', shown ? '' : 'noch keine Daten', 'Anteil der gezeigten Popups, die zu einem Abschluss geführt haben.') +
+      kpi(pct(dismiss, shown) + '%', 'Weggeklickt', dismiss + ' Mal', 'Wie oft das Popup geschlossen wurde, ohne dass zuvor ein Abschluss stattfand.') +
       '</div>';
 
     var compare = (Object.keys(a.byTrigger || {}).length || Object.keys(a.byAction || {}).length)
@@ -527,7 +524,7 @@
     }).join('');
   }
 
-  function kpi(n, l, sub) { return '<div class="panel kpi"><div class="n">' + esc(n) + '</div><div class="l">' + esc(l) + '</div>' + (sub ? '<div class="sub">' + esc(sub) + '</div>' : '') + '</div>'; }
+  function kpi(n, l, sub, tip) { return '<div class="panel kpi"><div class="n">' + esc(n) + '</div><div class="l"' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' + esc(l) + '</div>' + (sub ? '<div class="sub">' + esc(sub) + '</div>' : '') + '</div>'; }
   function funnelCard(c) {
     var shown = c.shown || 0, inter = c.interacted || 0, conv = c.converted || 0, dismiss = sumReasons(c.reasons);
     var max = Math.max(shown, 1);
@@ -537,16 +534,16 @@
     return '<div class="panel funnel"><h3>' + esc(c.name || c.campaignId) + '</h3>' +
       '<div class="meta"><span class="badge">' + esc(ACTION_LABELS[c.actionType] || c.actionType || '') + '</span>' +
       '<span class="badge">' + esc(TRIGGER_LABELS[c.trigger] || c.trigger || '') + '</span></div>' +
-      step('shown', 'Gezeigt', shown, max) +
-      step('interacted', 'Interagiert (' + pct(inter, shown) + '%)', inter, max) +
-      step('converted', 'Abgeschlossen', conv, max) +
-      '<span class="rate">' + (c.conversionRate != null ? c.conversionRate : pct(conv, shown)) + '% Abschlussquote</span>' +
-      (dismiss ? '<span class="rate dim">· ' + dismiss + '× weggeklickt</span>' : '') +
+      step('shown', 'Gezeigt', shown, max, 'Wie oft dieses Popup einem Besucher angezeigt wurde.') +
+      step('interacted', 'Interagiert (' + pct(inter, shown) + '%)', inter, max, 'Wie oft jemand auf den Button in diesem Popup geklickt hat — unabhängig davon, ob daraus ein Abschluss wurde.') +
+      step('converted', 'Abgeschlossen', conv, max, 'Wie oft daraus eine Anfrage, Anmeldung oder ein Klick zum Ziel wurde.') +
+      '<span class="rate" title="Anteil der gezeigten Popups, die zu einem Abschluss geführt haben.">' + (c.conversionRate != null ? c.conversionRate : pct(conv, shown)) + '% Abschlussquote</span>' +
+      (dismiss ? '<span class="rate dim" title="Wie oft das Popup geschlossen wurde, ohne dass zuvor ein Abschluss stattfand.">· ' + dismiss + '× weggeklickt</span>' : '') +
       reasons + '</div>';
   }
-  function step(cls, label, val, max) {
+  function step(cls, label, val, max, tip) {
     var pct = Math.round((val / max) * 100);
-    return '<div class="step ' + cls + '"><div class="top"><span>' + label + '</span><b>' + val + '</b></div>' +
+    return '<div class="step ' + cls + '"><div class="top"><span' + (tip ? ' title="' + esc(tip) + '"' : '') + '>' + label + '</span><b>' + val + '</b></div>' +
       '<div class="bar"><span style="width:' + pct + '%"></span></div></div>';
   }
 
