@@ -30,7 +30,7 @@ function forwardNewsletter({ email, name }, config, fetchImpl) {
   }, DEFAULT_TIMEOUT_MS));
 }
 
-function forwardContactLead({ name, email, message, extras, siteId, submissionId, createdAt, attachments, mailTo }, config, fetchImpl) {
+function forwardContactLead({ name, email, message, extras, siteId, submissionId, createdAt, attachments, mailTo, campaignName, page }, config, fetchImpl) {
   if (!config || !config.baseUrl || !config.token) return;
   const url = `${config.baseUrl.replace(/\/$/, '')}/api/leads/intake`;
   let phone;
@@ -57,12 +57,14 @@ function forwardContactLead({ name, email, message, extras, siteId, submissionId
       island: config.island,
       domain: config.domain || siteId,
       category: config.category || 'sonstiges',
+      page: page || undefined,
     },
     consent: { given: true, ts: createdAt, textVersion: 'v1' },
     contact: { name: name || undefined, email, ...(phone ? { phone } : {}) },
     ...(mailTo ? { mailTo } : {}),
     message: forwardedMessage || undefined,
     attachments: attachments && attachments.length ? attachments : undefined,
+    lead: campaignName ? { campaignName } : undefined,
   };
   const responsePromise = withTimeout(fetchImpl, url, {
     method: 'POST',

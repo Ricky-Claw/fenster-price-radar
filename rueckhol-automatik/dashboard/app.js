@@ -40,8 +40,9 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.14.0';
+  var WHATS_NEW_VERSION = '1.15.0';
   var WHATS_NEW_ITEMS = [
+    'Lead-Benachrichtigung per Mail: neue Leads lösen jetzt automatisch eine E-Mail aus, inklusive Kampagne und Seite.',
     'Auswertung korrigiert: Ein Popup, das bereits zu einem Abschluss geführt hat (Gutschein, Anmeldung, Anfrage), zählte beim anschließenden Schließen fälschlich auch als „weggeklickt". Das ist jetzt korrekt.',
     'Alle Zahlen in der Auswertung erklären sich jetzt selbst: Kurz mit der Maus draufhalten zeigt in einem Satz, was genau gezählt wird.',
   ];

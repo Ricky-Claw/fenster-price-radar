@@ -791,6 +791,7 @@ function createApp(options = {}) {
         outboundFetch,
       );
     } else if (submission.kind === 'contact' || submission.kind === 'lead') {
+      const campaign = db.getCampaign(cleanId(req.body.campaignId || req.body.campaign_id || '', ''));
       forwardContactLead(
         {
           name: submission.payload.name || '',
@@ -805,6 +806,8 @@ function createApp(options = {}) {
           createdAt,
           attachments,
           mailTo: db.getSiteLeadMailTo(siteId),
+          campaignName: campaign ? campaign.name : '',
+          page: submission.page,
         },
         {
           baseUrl: schwarzwaldBaseUrl,

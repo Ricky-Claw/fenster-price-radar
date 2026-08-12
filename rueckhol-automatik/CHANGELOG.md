@@ -3,6 +3,13 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.15.0 — 2026-08-12
+
+- **Kampagne und Seite werden jetzt an die Lead-Benachrichtigung mitgegeben.**
+  Bisher wusste man beim Erhalt einer Lead-Mail nicht, über welches Popup
+  (Kampagne) und auf welcher konkreten Seite ein Lead entstanden ist. Beides
+  wird jetzt mitgeschickt, sodass es in der Benachrichtigungsmail auftaucht.
+
 ## 1.14.0 — 2026-08-12
 
 - **Fix: erfolgreiche Abschlüsse zählten teils auch als „weggeklickt".** Nach

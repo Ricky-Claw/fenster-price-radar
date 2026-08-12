@@ -37,6 +37,19 @@ test('forwardContactLead includes mailTo only when configured and returns its re
   assert.equal(Object.hasOwn(bodies[1], 'mailTo'), false);
 });
 
+test('forwardContactLead includes campaign name and page only when provided', async () => {
+  const bodies = [];
+  const fetchImpl = async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true }; };
+  const input = { name: 'Max', email: 'max@example.com', siteId: 'demo', submissionId: 1, createdAt: '2026-08-11T12:00:00.000Z' };
+  const config = { baseUrl: 'https://schwarzwald-agent.de', token: 'secret', island: 'rueckhol' };
+  await forwardContactLead({ ...input, campaignName: 'Rückruf beim Verlassen', page: 'https://deutscher-fenstershop.de/foerdermittel-check' }, config, fetchImpl);
+  await forwardContactLead(input, config, fetchImpl);
+  assert.deepEqual(bodies[0].lead, { campaignName: 'Rückruf beim Verlassen' });
+  assert.equal(bodies[0].source.page, 'https://deutscher-fenstershop.de/foerdermittel-check');
+  assert.equal(Object.hasOwn(bodies[1], 'lead'), false);
+  assert.equal(Object.hasOwn(bodies[1].source, 'page'), false);
+});
+
 test('forwardContactLead maps the first phone extra and appends remaining extras to the message', async () => {
   const bodies = [];
   const fetchImpl = async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true }; };
