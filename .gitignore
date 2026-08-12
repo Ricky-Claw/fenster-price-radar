@@ -17,3 +17,6 @@ tools/banner-maker/motive/*
 # Lokales Bildmaterial aus dem DFS-Konfigurator (121 MB Arbeitsmaterial, gehoert nicht ins Repo)
 dfs-konfigurator-bilder/
 .env*
+tools/reels/*/renders/
+tools/reels/*/snapshots/
+tools/reels/*/node_modules/

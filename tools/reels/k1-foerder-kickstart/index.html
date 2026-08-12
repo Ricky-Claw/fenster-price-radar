@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>DFS Förderheld K1 Testreel</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        background: #0c2d57;
+        font-family: Montserrat, sans-serif;
+        color: #fff;
+      }
+      #root {
+        position: relative;
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: #0c2d57;
+      }
+      .clip {
+        position: absolute;
+        inset: 0;
+      }
+      /* ---- Backgrounds (Ken Burns plates) ---- */
+      .bg {
+        z-index: 1;
+      }
+      .bg img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        will-change: transform;
+      }
+      .bg .vignette {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          ellipse 120% 90% at 50% 45%,
+          rgba(6, 20, 40, 0) 42%,
+          rgba(6, 20, 40, 0.55) 100%
+        );
+      }
+      /* ---- Scene text layers ---- */
+      .scene {
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 280px 70px 340px;
+        box-sizing: border-box;
+        text-align: center;
+      }
+      .stage {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        will-change: transform;
+      }
+      .shadowed {
+        text-shadow: 0 6px 30px rgba(3, 10, 22, 0.85);
+      }
+      .num-xl {
+        font-weight: 900;
+        font-size: 185px;
+        line-height: 0.95;
+        letter-spacing: -0.03em;
+        color: #f47b20;
+        font-variant-numeric: tabular-nums;
+      }
+      .head-xl {
+        font-weight: 900;
+        font-size: 108px;
+        line-height: 1.02;
+        letter-spacing: -0.03em;
+        color: #fff;
+      }
+      .head-l {
+        font-weight: 900;
+        font-size: 92px;
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #fff;
+      }
+      .kicker {
+        font-weight: 900;
+        font-size: 56px;
+        letter-spacing: 0.12em;
+        color: #fff;
+      }
+      /* S2 counter */
+      #s2-counter-wrap {
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        width: 900px;
+      }
+      #s2-counter {
+        display: inline-block;
+        font-weight: 900;
+        font-size: 220px;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        color: #f47b20;
+        font-variant-numeric: tabular-nums;
+        transform-origin: center center;
+        will-change: transform;
+      }
+      #s2-suffix {
+        display: inline-block;
+        font-weight: 900;
+        font-size: 220px;
+        line-height: 1;
+        color: #f47b20;
+        margin-left: 22px;
+        opacity: 0;
+      }
+      .badge {
+        display: inline-block;
+        background: rgba(244, 123, 32, 0.16);
+        border: 3px solid #f47b20;
+        border-radius: 999px;
+        padding: 20px 46px;
+        font-weight: 900;
+        font-size: 48px;
+        color: #fff;
+        will-change: transform;
+      }
+      /* S3 checklist */
+      .check-row {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        font-weight: 700;
+        font-size: 60px;
+        color: #fff;
+        opacity: 0;
+      }
+      .check-row .tick {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 74px;
+        height: 74px;
+        border-radius: 50%;
+        background: #f47b20;
+        color: #fff;
+        font-weight: 900;
+        font-size: 46px;
+        flex: none;
+      }
+      .word {
+        display: inline-block;
+        opacity: 0;
+        will-change: transform;
+      }
+      /* S5 CTA card */
+      #s5-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 44px;
+        background: rgba(8, 24, 48, 0.82);
+        border: 2px solid rgba(255, 255, 255, 0.14);
+        border-radius: 32px;
+        padding: 80px 64px;
+        width: 860px;
+        box-sizing: border-box;
+        will-change: transform;
+      }
+      #s5-logo {
+        width: 400px;
+        height: auto;
+      }
+      #s5-btn {
+        display: block;
+        background: #f47b20;
+        border-radius: 20px;
+        padding: 38px 54px;
+        font-weight: 900;
+        font-size: 47px;
+        color: #fff;
+        white-space: nowrap;
+        box-shadow: 0 14px 40px rgba(244, 123, 32, 0.35);
+        will-change: transform;
+      }
+      #s5-sub {
+        font-weight: 700;
+        font-size: 33px;
+        white-space: nowrap;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      #s5-burst {
+        position: absolute;
+        width: 620px;
+        height: 220px;
+        border-radius: 999px;
+        background: radial-gradient(ellipse, rgba(244, 123, 32, 0.5) 0%, rgba(244, 123, 32, 0) 70%);
+        filter: blur(50px);
+        opacity: 0;
+        z-index: -1;
+      }
+      /* Subtitles */
+      .subtitle {
+        position: absolute;
+        left: 50%;
+        bottom: 360px;
+        transform: translateX(-50%);
+        max-width: 920px;
+        background: rgba(6, 20, 40, 0.66);
+        border-radius: 18px;
+        padding: 20px 38px;
+        font-weight: 700;
+        font-size: 42px;
+        line-height: 1.3;
+        color: #fff;
+        white-space: nowrap;
+        opacity: 0;
+      }
+      /* Logo overlay */
+      #logo-overlay {
+        z-index: 3;
+        pointer-events: none;
+      }
+      #logo-overlay img {
+        position: absolute;
+        top: 290px;
+        left: 50%;
+        margin-left: -130px;
+        width: 260px;
+        opacity: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-width="1080"
+      data-height="1920"
+      data-duration="15"
+    >
+      <!-- Backgrounds, Track 1 -->
+      <section id="bg-a" class="clip bg" data-start="0" data-duration="5.8" data-track-index="1">
+        <img id="bg-a-img" src="assets/plate-a.jpg" alt="" />
+        <div class="vignette"></div>
+      </section>
+      <section id="bg-b" class="clip bg" data-start="5.8" data-duration="6" data-track-index="1">
+        <img id="bg-b-img" src="assets/plate-b.jpg" alt="" />
+        <div class="vignette"></div>
+      </section>
+      <section id="bg-c" class="clip bg" data-start="11.8" data-duration="3.2" data-track-index="1">
+        <img id="bg-c-img" src="assets/plate-c.jpg" alt="" />
+        <div class="vignette"></div>
+      </section>
+
+      <!-- S1 Hook, 0–2.6 -->
+      <section id="s1" class="clip scene" data-start="0" data-duration="2.6" data-track-index="2">
+        <div class="stage" id="s1-stage">
+          <div id="s1-num" class="num-xl shadowed">20.000&nbsp;€</div>
+          <div id="s1-line" class="head-xl shadowed">Fensterprojekt?</div>
+        </div>
+        <div id="sub1" class="subtitle">Neue Fenster geplant?</div>
+      </section>
+
+      <!-- S2 Payoff Count-up, 2.6–5.8 -->
+      <section id="s2" class="clip scene" data-start="2.6" data-duration="3.2" data-track-index="2">
+        <div class="stage" id="s2-stage">
+          <div id="s2-top" class="kicker shadowed">BIS&nbsp;ZU</div>
+          <div id="s2-counter-wrap" class="shadowed">
+            <span id="s2-counter">0</span><span id="s2-suffix">€</span>
+          </div>
+          <div id="s2-bottom" class="head-l shadowed">Zuschuss zurück</div>
+          <div id="s2-badge" class="badge">bis zu 15&nbsp;% vom Staat</div>
+        </div>
+        <div id="sub2" class="subtitle">Der Staat gibt bis zu 15&nbsp;% Zuschuss dazu.</div>
+      </section>
+
+      <!-- S3 Mechanik, 5.8–9.0 -->
+      <section id="s3" class="clip scene" data-start="5.8" data-duration="3.2" data-track-index="2">
+        <div class="stage" id="s3-stage">
+          <div class="head-l shadowed" id="s3-head">
+            <span class="word" id="s3-w1">Antrag</span>
+            <span class="word" id="s3-w2">in</span>
+            <span class="word" id="s3-w3">5&nbsp;Minuten</span>
+          </div>
+          <div class="check-row" id="s3-c1">
+            <span class="tick">✓</span><span class="shadowed">ohne Papierkram</span>
+          </div>
+          <div class="check-row" id="s3-c2">
+            <span class="tick">✓</span><span class="shadowed">komplett digital</span>
+          </div>
+        </div>
+        <div id="sub3" class="subtitle">Ohne Papierkram, ohne Behördenstress.</div>
+      </section>
+
+      <!-- S4 Pflicht-Regel, 9.0–11.8 -->
+      <section id="s4" class="clip scene" data-start="9" data-duration="2.8" data-track-index="2">
+        <div class="stage" id="s4-stage">
+          <div id="s4-kicker" class="kicker shadowed" style="color: #f47b20">WICHTIG:</div>
+          <div id="s4-l1" class="head-xl shadowed">Erst Antrag,</div>
+          <div id="s4-l2" class="head-xl shadowed">dann bestellen.</div>
+        </div>
+        <div id="sub4" class="subtitle">Wichtig für Ihre Förderung.</div>
+      </section>
+
+      <!-- S5 CTA, 11.8–15 -->
+      <section id="s5" class="clip scene" data-start="11.8" data-duration="3.2" data-track-index="2">
+        <div class="stage">
+          <div id="s5-card">
+            <img id="s5-logo" src="assets/logo-weiss.png" alt="Deutscher Fenstershop" />
+            <div style="position: relative">
+              <div id="s5-burst"></div>
+              <div id="s5-btn">Jetzt Förderhöhe in 2 Min checken</div>
+            </div>
+            <div id="s5-sub">Antrag in 5 Min — Einreichung in 24&nbsp;h</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logo-Overlay ab Sekunde 2, Track 3 -->
+      <section
+        id="logo-overlay"
+        class="clip"
+        data-start="2"
+        data-duration="9.8"
+        data-track-index="3"
+      >
+        <img id="logo-ov-img" src="assets/logo-weiss.png" alt="" />
+      </section>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+
+      /* ================= Backgrounds — Ken Burns ================= */
+      tl.fromTo(
+        "#bg-a-img",
+        { scale: 1.06, y: 0 },
+        { scale: 1.18, y: -26, duration: 5.8, ease: "none" },
+        0,
+      );
+      tl.fromTo(
+        "#bg-b-img",
+        { scale: 1.2, y: -20 },
+        { scale: 1.06, y: 0, duration: 6, ease: "none", immediateRender: false },
+        5.8,
+      );
+      tl.fromTo(
+        "#bg-c-img",
+        { scale: 1.05, y: 0 },
+        { scale: 1.15, y: -18, duration: 3.2, ease: "none", immediateRender: false },
+        11.8,
+      );
+
+      /* ================= S1 Hook (kinetic-beat-slam) ================= */
+      tl.fromTo(
+        "#s1-num",
+        { scale: 1.55, filter: "blur(16px)", opacity: 0 },
+        { scale: 1, filter: "blur(0px)", opacity: 1, duration: 0.5, ease: "power4.out" },
+        0.12,
+      );
+      tl.fromTo(
+        "#s1-line",
+        { x: -300, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.45, ease: "expo.out" },
+        0.68,
+      );
+      tl.to("#s1-stage", { scale: 1.03, duration: 1.4, ease: "sine.inOut" }, 1.2);
+      tl.fromTo(
+        "#sub1",
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" },
+        1.0,
+      );
+
+      /* ================= S2 Count-up (counting-dynamic-scale) ================= */
+      const counterEl = document.getElementById("s2-counter");
+      const countState = { value: 0 };
+      const COUNT_AT = 2.85;
+      const COUNT_DUR = 1.5;
+      tl.fromTo(
+        "#s2-top",
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out", immediateRender: false },
+        2.7,
+      );
+      tl.to(
+        countState,
+        {
+          value: 3000,
+          duration: COUNT_DUR,
+          ease: "power3.out",
+          onUpdate: () => {
+            counterEl.textContent = Math.round(countState.value).toLocaleString("de-DE");
+          },
+        },
+        COUNT_AT,
+      );
+      tl.fromTo(
+        "#s2-counter",
+        { scale: 0.55 },
+        { scale: 1, duration: COUNT_DUR, ease: "power3.out", immediateRender: false },
+        COUNT_AT,
+      );
+      tl.to(
+        "#s2-suffix",
+        { opacity: 1, y: 0, duration: 0.4, ease: "back.out(1.6)" },
+        COUNT_AT + COUNT_DUR,
+      );
+      tl.fromTo(
+        "#s2-bottom",
+        { opacity: 0, y: 26 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out", immediateRender: false },
+        COUNT_AT + 0.5,
+      );
+      tl.fromTo(
+        "#s2-badge",
+        { scale: 0, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.55, ease: "power3.out", immediateRender: false },
+        4.55,
+      );
+      tl.fromTo(
+        "#sub2",
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", immediateRender: false },
+        3.1,
+      );
+
+      /* ================= S3 Mechanik (waterfall-entry) ================= */
+      const F = 1 / 30;
+      let t = 5.98;
+      tl.set("#s3-w1", { opacity: 1, y: 70 }, t);
+      tl.to("#s3-w1", { y: 0, duration: 0.18, ease: "power4.out" }, t);
+      t += 0.18 + F;
+      tl.set("#s3-w2", { opacity: 1, y: 45 }, t);
+      tl.to("#s3-w2", { y: 0, duration: 0.14, ease: "power4.out" }, t);
+      t += 0.14 - F;
+      tl.set("#s3-w3", { opacity: 1, y: 60 }, t);
+      tl.to("#s3-w3", { y: 0, duration: 0.16, ease: "power4.out" }, t);
+      tl.fromTo(
+        "#s3-c1",
+        { opacity: 0, y: 46 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", immediateRender: false },
+        6.75,
+      );
+      tl.fromTo(
+        "#s3-c2",
+        { opacity: 0, y: 46 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power4.out", immediateRender: false },
+        7.05,
+      );
+      tl.fromTo(
+        "#sub3",
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", immediateRender: false },
+        6.5,
+      );
+
+      /* ================= S4 Pflicht-Regel ================= */
+      tl.fromTo(
+        "#s4-kicker",
+        { opacity: 0, scale: 1.4 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "power4.out", immediateRender: false },
+        9.12,
+      );
+      tl.fromTo(
+        "#s4-l1",
+        { y: 90, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "circ.out", immediateRender: false },
+        9.42,
+      );
+      tl.fromTo(
+        "#s4-l2",
+        { y: 90, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: "circ.out", immediateRender: false },
+        9.72,
+      );
+      tl.to("#s4-stage", { scale: 1.02, duration: 1.5, ease: "sine.inOut" }, 10.3);
+      tl.fromTo(
+        "#sub4",
+        { opacity: 0, y: 22 },
+        { opacity: 1, y: 0, duration: 0.35, ease: "power2.out", immediateRender: false },
+        10.0,
+      );
+
+      /* ================= S5 CTA (spring-pop + press-release) ================= */
+      tl.fromTo(
+        "#s5-card",
+        { scale: 0, opacity: 0, y: 30 },
+        { scale: 1, opacity: 1, y: 0, duration: 0.6, ease: "power3.out", immediateRender: false },
+        11.95,
+      );
+      /* Button-Puls: linearer Press, Spring-Release, Burst dahinter */
+      const PRESS_AT = 13.35;
+      tl.to("#s5-btn", { scale: 0.93, duration: 0.12, ease: "power1.in" }, PRESS_AT);
+      tl.to("#s5-btn", { scale: 1, duration: 0.55, ease: "back.out(1.8)" }, PRESS_AT + 0.12);
+      tl.fromTo(
+        "#s5-burst",
+        { scale: 1, opacity: 0 },
+        { scale: 1.6, opacity: 0.75, duration: 0.45, ease: "power2.out", immediateRender: false },
+        PRESS_AT + 0.12,
+      );
+      tl.to("#s5-burst", { opacity: 0, duration: 0.5, ease: "power2.in" }, PRESS_AT + 0.62);
+
+      /* ================= Logo-Overlay ================= */
+      tl.fromTo(
+        "#logo-ov-img",
+        { opacity: 0 },
+        { opacity: 0.92, duration: 0.5, ease: "power2.out", immediateRender: false },
+        2.1,
+      );
+
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
