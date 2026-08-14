@@ -883,6 +883,7 @@ function createApp(options = {}) {
       return;
     }
     try {
+      const resendCampaign = db.getCampaign(submission.campaign_id);
       const response = await forwardContactLead(
         {
           name: submission.payload.name || '',
@@ -894,6 +895,8 @@ function createApp(options = {}) {
           createdAt: submission.created_at,
           attachments: resolveSubmissionAttachments(submission.payload, siteId, nowIso(), req),
           mailTo: db.getSiteLeadMailTo(siteId),
+          campaignName: resendCampaign ? resendCampaign.name : '',
+          page: submission.page,
         },
         {
           baseUrl: schwarzwaldBaseUrl,
@@ -914,6 +917,25 @@ function createApp(options = {}) {
       const timedOut = error && error.name === 'AbortError';
       res.status(timedOut ? 504 : 502).json({ ok: false, error: timedOut ? 'CRM-Übergabe hat länger als 8 Sekunden gedauert.' : `CRM-Übergabe fehlgeschlagen: ${error.message}` });
     }
+  });
+
+  app.delete('/api/leads', requireDashboardAuth, (req, res) => {
+    const siteId = cleanId(req.query.site || '', '');
+    if (!siteId) {
+      res.status(400).json({ ok: false, error: 'Site ist erforderlich.' });
+      return;
+    }
+    const id = Number(req.query.id);
+    if (!Number.isInteger(id)) {
+      res.status(400).json({ ok: false, error: 'Ungültige Lead-ID.' });
+      return;
+    }
+    const deleted = db.deleteSubmission(id, siteId);
+    if (!deleted) {
+      res.status(404).json({ ok: false, error: 'Lead wurde nicht gefunden.' });
+      return;
+    }
+    res.json({ ok: true });
   });
 
   app.get('/api/install-check', requireDashboardAuth, async (req, res) => {

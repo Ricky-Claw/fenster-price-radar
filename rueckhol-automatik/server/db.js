@@ -223,6 +223,8 @@ function createDatabase(options = {}) {
       WHERE site_id = @site_id
         AND id NOT IN (SELECT id FROM submissions WHERE site_id = @site_id ORDER BY created_at DESC, id DESC LIMIT @limit)
     `),
+    getSubmissionById: db.prepare('SELECT * FROM submissions WHERE id = @id AND site_id = @site_id LIMIT 1'),
+    deleteSubmission: db.prepare('DELETE FROM submissions WHERE id = @id AND site_id = @site_id'),
     insertUpload: db.prepare(`
       INSERT INTO uploads (id, site_id, mime, size, sha256, original_name, created_at, expires_at)
       VALUES (@id, @site_id, @mime, @size, @sha256, @original_name, @created_at, @expires_at)
@@ -230,6 +232,7 @@ function createDatabase(options = {}) {
     getUpload: db.prepare('SELECT * FROM uploads WHERE id = @id LIMIT 1'),
     listExpiredUploads: db.prepare('SELECT id FROM uploads WHERE expires_at < @now'),
     purgeExpiredUploads: db.prepare('DELETE FROM uploads WHERE expires_at < @now'),
+    deleteUploadRow: db.prepare('DELETE FROM uploads WHERE id = @id'),
   };
 
   function ensureSite(siteId, name) {
@@ -338,6 +341,18 @@ function createDatabase(options = {}) {
     },
     deleteCampaign(id) {
       return statements.deleteCampaign.run({ id }).changes > 0;
+    },
+    // Löscht den Lead und, falls eine Datei angehängt war, auch die Upload-Zeile
+    // + die gespeicherte Datei — sonst bliebe ein verwaistes Upload liegen.
+    deleteSubmission(id, siteId) {
+      const row = statements.getSubmissionById.get({ id, site_id: siteId });
+      if (!row) return false;
+      const payload = parseJson(row.payload, {});
+      if (payload.uploadId) {
+        options.deleteUpload?.(payload.uploadId);
+        statements.deleteUploadRow.run({ id: payload.uploadId });
+      }
+      return statements.deleteSubmission.run({ id, site_id: siteId }).changes > 0;
     },
     ensureSite,
     getSiteCooldownHours(siteId) {

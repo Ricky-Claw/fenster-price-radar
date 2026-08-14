@@ -107,6 +107,52 @@ test('manual CRM resend requires auth, reports missing leads and config, and reu
   } finally { configured.close(); }
 });
 
+test('manual CRM resend includes the campaign name and page like the original submit', async () => {
+  const headers = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
+  const bodies = [];
+  const ctx = createApp({
+    dbPath: ':memory:', adminToken: 'test-token',
+    schwarzwaldBaseUrl: 'https://schwarzwald-agent.de', schwarzwaldArchipelToken: 'secret',
+    fetch: async (_url, opts) => { bodies.push(JSON.parse(opts.body)); return { ok: true, status: 200 }; },
+    warnOnOpenAdmin: false,
+  });
+  try {
+    await ctx.app.inject({
+      method: 'POST', url: '/api/campaigns', headers,
+      body: { id: 'welcome', site_id: 'demo', name: 'Willkommens-Popup', action_type: 'contact', trigger: 'manual' },
+    });
+    await ctx.app.inject({
+      method: 'POST', url: '/api/submit', headers: { 'content-type': 'application/json' },
+      body: { siteId: 'demo', campaignId: 'welcome', kind: 'contact', page: 'https://example.com/seite', payload: { consent: true, email: 'max@example.com' } },
+    });
+    const lead = (await ctx.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers })).json().submissions[0];
+    await ctx.app.inject({ method: 'POST', url: '/api/leads/resend', headers, body: { site: 'demo', id: lead.id } });
+    assert.equal(bodies.length, 2);
+    assert.equal(bodies[1].lead.campaignName, 'Willkommens-Popup');
+    assert.equal(bodies[1].source.page, 'https://example.com/seite');
+  } finally { ctx.close(); }
+});
+
+test('deleting a lead removes it, cleans up its attachment, and is site-scoped', async () => {
+  const headers = { authorization: 'Bearer test-token', 'content-type': 'application/json' };
+  const ctx = createApp({ dbPath: ':memory:', adminToken: 'test-token', fetch: async () => ({ ok: true }), warnOnOpenAdmin: false });
+  try {
+    await submit(ctx, 'contact', { email: 'lead@example.com' }, 'demo');
+    const lead = (await ctx.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers })).json().submissions[0];
+
+    assert.equal((await ctx.app.inject({ method: 'DELETE', url: '/api/leads?site=demo&id=' + lead.id })).status, 401);
+    assert.equal((await ctx.app.inject({ method: 'DELETE', url: '/api/leads?site=demo&id=9999', headers })).status, 404);
+    assert.equal((await ctx.app.inject({ method: 'DELETE', url: '/api/leads?site=kunde1&id=' + lead.id, headers })).status, 404);
+
+    const deleted = await ctx.app.inject({ method: 'DELETE', url: '/api/leads?site=demo&id=' + lead.id, headers });
+    assert.equal(deleted.status, 200);
+    assert.deepEqual(deleted.json(), { ok: true });
+
+    const remaining = (await ctx.app.inject({ method: 'GET', url: '/api/submissions?site=demo', headers })).json().submissions;
+    assert.equal(remaining.length, 0);
+  } finally { ctx.close(); }
+});
+
 test('forwards newsletter submissions', async () => {
   const calls = [];
   const ctx = createApp({ dbPath: ':memory:', schwarzwaldBaseUrl: 'https://schwarzwald-agent.de/', schwarzwaldNlListId: 'list-1', fetch: async (url, opts) => { calls.push({ url: String(url), opts }); return { ok: true }; }, warnOnOpenAdmin: false });

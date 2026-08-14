@@ -40,11 +40,10 @@
   // Bump WHATS_NEW_VERSION + replace WHATS_NEW_ITEMS whenever there's something
   // worth telling Elvis about. Dismissing stores the version he's seen, so the
   // banner reappears only once there's something newer than that.
-  var WHATS_NEW_VERSION = '1.15.0';
+  var WHATS_NEW_VERSION = '1.16.0';
   var WHATS_NEW_ITEMS = [
-    'Lead-Benachrichtigung per Mail: neue Leads lösen jetzt automatisch eine E-Mail aus, inklusive Kampagne und Seite.',
-    'Auswertung korrigiert: Ein Popup, das bereits zu einem Abschluss geführt hat (Gutschein, Anmeldung, Anfrage), zählte beim anschließenden Schließen fälschlich auch als „weggeklickt". Das ist jetzt korrekt.',
-    'Alle Zahlen in der Auswertung erklären sich jetzt selbst: Kurz mit der Maus draufhalten zeigt in einem Satz, was genau gezählt wird.',
+    'Leads lassen sich im Dashboard jetzt löschen (inkl. angehängter Datei), nicht nur erneut senden.',
+    'Lead-Benachrichtigung per Mail: neue Leads lösen jetzt automatisch eine E-Mail aus, inklusive Kampagne und Seite — gilt jetzt auch beim manuellen "Erneut senden".',
   ];
   function initWhatsNew() {
     try {
@@ -681,6 +680,28 @@
         });
       });
       actionCell.appendChild(resend);
+
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'btn btn-sm btn-danger';
+      del.textContent = 'Löschen';
+      del.addEventListener('click', function () {
+        if (!window.confirm('Diesen Lead unwiderruflich löschen' + (att && !att.abgelaufen ? ' (inkl. angehängter Datei)' : '') + '?')) return;
+        del.disabled = true;
+        del.textContent = 'Löscht …';
+        apiCall('/api/leads?site=' + encodeURIComponent(site) + '&id=' + encodeURIComponent(lead.id), { method: 'DELETE' })
+          .then(function () {
+            toast('Lead gelöscht');
+            row.remove();
+          })
+          .catch(function (error) {
+            toast(error.message, true);
+            del.disabled = false;
+            del.textContent = 'Löschen';
+          });
+      });
+      actionCell.appendChild(del);
+
       row.appendChild(actionCell);
       tbody.appendChild(row);
     });

@@ -3,6 +3,16 @@
 Format: eine Sektion pro Version, neueste oben. Version auch in `package.json`
 und im Kopf-Kommentar von `widget/cre.js` pflegen (abfragbar via `GET /api/health`).
 
+## 1.16.0 — 2026-08-14
+
+- **Leads im Dashboard löschbar.** Bisher gab's neben "Erneut senden" keine
+  Möglichkeit, einen Lead wieder loszuwerden (z. B. Testeinträge). Neuer
+  "Löschen"-Knopf pro Zeile, mit Sicherheitsabfrage; hing eine Datei dran,
+  wird die mitgelöscht statt als Datenleiche liegen zu bleiben.
+- **Fix: "Erneut senden" verlor Kampagne und Seite.** Der in 1.15.0 gebaute
+  Versand von Kampagne/Seite an die Lead-Mail griff nur beim ersten Absenden
+  — ein manueller Resend schickte diese Felder leer mit. Jetzt konsistent.
+
 ## 1.15.0 — 2026-08-12
 
 - **Kampagne und Seite werden jetzt an die Lead-Benachrichtigung mitgegeben.**
