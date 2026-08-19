@@ -509,15 +509,22 @@ function App(){
   const verificationBadge = (() => {
     const checkedConfigCount = verifiedConfigCount + mismatchConfigCount;
     if(checkedConfigCount > 0){
+      const mismatchProviderNames = [...new Set(mismatchConfigs.flatMap(config => config.verification?.providers || []))]
+        .map(providerId => providers.find(([id]) => id === providerId)?.[1])
+        .filter(Boolean);
       const checkedConfigLabel = `${checkedConfigCount} ${checkedConfigCount === 1 ? 'Konfiguration' : 'Konfigurationen'} live gegengeprüft`;
-      const breakdown = `${verifiedConfigCount} bestätigt, ${mismatchConfigCount} mit Abweichung`;
+      const mismatchProviderLabel = mismatchProviderNames.length ? ` (${mismatchProviderNames.join(', ')})` : '';
+      const breakdown = `${verifiedConfigCount} bestätigt, ${mismatchConfigCount} mit Abweichung${mismatchProviderLabel}`;
       const latestCheckedConfigDate = latestVerifiedConfigTime >= latestMismatchConfigTime
         ? latestVerifiedConfigDate
         : latestMismatchConfigDate;
       const text = mismatchConfigCount > 0
         ? `⚠ ${checkedConfigLabel}: ${breakdown}`
         : `✓ ${checkedConfigLabel}`;
-      const title = [payload?.verification?.note, `${checkedConfigLabel}: ${breakdown}`].filter(Boolean).join(' · ');
+      const mismatchExplanation = mismatchConfigCount > 0
+        ? 'Abweichungen bedeuten, dass der Anbieter zwischen zwei Abrufen andere Preise liefert – nicht, dass die angezeigten Werte falsch berechnet sind.'
+        : '';
+      const title = [payload?.verification?.note, `${checkedConfigLabel}: ${breakdown}`, mismatchExplanation].filter(Boolean).join(' · ');
       return <span className={mismatchConfigCount > 0 ? 'verifyBadge mismatch' : 'verifyBadge'} title={title}>{text}{latestCheckedConfigDate ? ` · ${latestCheckedConfigDate}` : ''}</span>;
     }
     return payload?.verification?.samples > 0
