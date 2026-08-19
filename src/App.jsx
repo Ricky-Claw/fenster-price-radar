@@ -506,13 +506,24 @@ function App(){
     if(onlyVerified && !r.verification) return false;
     return true;
   }),[data,q,brand,profile,glazing,layout,onlyAction,onlyVerified]);
-  const verificationBadge = verifiedConfigCount > 0
-    ? <span className="verifyBadge" title={payload?.verification?.note || ''}>✓ {verifiedConfigCount} Konfigurationen live verifiziert · {latestVerifiedConfigDate}</span>
-    : mismatchConfigCount > 0
-      ? <span className="verifyBadge mismatch" title={payload?.verification?.note || ''}>⚠ Stichprobe: {mismatchConfigCount} Preisabweichungen festgestellt · {latestMismatchConfigDate}</span>
-      : payload?.verification?.samples > 0
-        ? <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>
-        : null;
+  const verificationBadge = (() => {
+    const checkedConfigCount = verifiedConfigCount + mismatchConfigCount;
+    if(checkedConfigCount > 0){
+      const checkedConfigLabel = `${checkedConfigCount} ${checkedConfigCount === 1 ? 'Konfiguration' : 'Konfigurationen'} live gegengeprüft`;
+      const breakdown = `${verifiedConfigCount} bestätigt, ${mismatchConfigCount} mit Abweichung`;
+      const latestCheckedConfigDate = latestVerifiedConfigTime >= latestMismatchConfigTime
+        ? latestVerifiedConfigDate
+        : latestMismatchConfigDate;
+      const text = mismatchConfigCount > 0
+        ? `⚠ ${checkedConfigLabel}: ${breakdown}`
+        : `✓ ${checkedConfigLabel}`;
+      const title = [payload?.verification?.note, `${checkedConfigLabel}: ${breakdown}`].filter(Boolean).join(' · ');
+      return <span className={mismatchConfigCount > 0 ? 'verifyBadge mismatch' : 'verifyBadge'} title={title}>{text}{latestCheckedConfigDate ? ` · ${latestCheckedConfigDate}` : ''}</span>;
+    }
+    return payload?.verification?.samples > 0
+      ? <span className="verifyBadge" title={payload.verification.note || ''}>✓ {payload.verification.samples} Stichproben verifiziert · {new Date(payload.verification.verifiedAt).toLocaleDateString('de-DE')}</span>
+      : null;
+  })();
 
   const stats=useMemo(()=>{
     const exact=data.filter(r=>r.dfsPrice && r.bestCompetitor);
