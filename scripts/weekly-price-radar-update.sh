@@ -30,7 +30,7 @@ npm run prices:update
 # Anbietern nachpruefen (inkl. aktuell laufender Rabatte/Aktionen), damit die
 # ANGEZEIGTEN Preise vertrauenswuerdig bleiben -- danach erneut syncen, damit
 # die frischen Verifikations-Ergebnisse im veroeffentlichten Datensatz landen.
-if npm run verify:sample -- --n=7; then
+if npm run verify:sample -- --n=5; then
   npm run data:sync
   npm run trend:build
 else
