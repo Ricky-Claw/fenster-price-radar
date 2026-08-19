@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { grossToNet } from '../src/pricing.js';
 import { configVerification } from '../src/verification.js';
 
 const dataPath = path.resolve('public', 'data', 'price-radar.json');
@@ -108,10 +109,46 @@ for (const config of payload.configs) {
     if (row.valid && typeof row.customerTotal !== 'number' && typeof row.listTotal !== 'number') {
       fail(`${config.key} ${provider} valid without numeric price`);
     }
+    const hasListTotal = typeof row.listTotal === 'number' && Number.isFinite(row.listTotal);
+    const hasCustomerTotal = typeof row.customerTotal === 'number' && Number.isFinite(row.customerTotal);
+    if (hasListTotal && hasCustomerTotal && row.customerTotal - row.listTotal > 0.01) {
+      fail(`customer price exceeds list price: ${config.key}/${provider} customer ${row.customerTotal.toFixed(2)} > list ${row.listTotal.toFixed(2)}`);
+    }
+    if (hasListTotal && row.listTotal > 0 && hasCustomerTotal && row.customerTotal > 0) {
+      const impliedDiscountPercent = 1 - row.customerTotal / row.listTotal;
+      const metadataDiscountPercent = typeof row.discountMetadata?.observedDiscountPercent === 'number'
+        ? row.discountMetadata.observedDiscountPercent
+        : 0;
+      if (Math.abs(impliedDiscountPercent - metadataDiscountPercent) > 0.001) {
+        fail(`discount mismatch: ${config.key}/${provider} implied ${(impliedDiscountPercent * 100).toFixed(2)}% != metadata ${(metadataDiscountPercent * 100).toFixed(2)}%`);
+      }
+      const impliedObserved = row.listTotal - row.customerTotal > 0.01;
+      if ((row.discountMetadata?.observed === true) !== impliedObserved) {
+        fail(`discount observed mismatch: ${config.key}/${provider} implied ${String(impliedObserved)} != metadata ${String(row.discountMetadata?.observed === true)}`);
+      }
+    }
     const validUntil = row.discountMetadata?.discountValidUntil;
     const validUntilStamp = parseDmyDateStamp(validUntil);
     if (validUntilStamp && validUntilStamp < currentStamp && typeof row.customerTotal === 'number' && typeof row.listTotal === 'number' && row.customerTotal < row.listTotal) {
       fail(`expired discount published: ${config.key}/${provider} validUntil ${validUntil} < generatedAt ${currentStamp}`);
+    }
+  }
+  const hasPurchasePrice = typeof config.purchasePrice === 'number' && Number.isFinite(config.purchasePrice);
+  const hasPurchaseMargin = typeof config.purchaseMargin === 'number' && Number.isFinite(config.purchaseMargin);
+  if (hasPurchasePrice && hasPurchaseMargin) {
+    if (config.purchaseMarginBasis !== 'netto') {
+      fail(`purchase margin basis mismatch: ${config.key} expected netto, got ${config.purchaseMarginBasis || 'missing'}`);
+    }
+    const expectedDfsCustomerNet = grossToNet(config.dfsCustomerPrice);
+    if (typeof expectedDfsCustomerNet !== 'number') {
+      fail(`purchase margin missing DFS customer price: ${config.key}`);
+    }
+    if (typeof config.dfsCustomerNet !== 'number' || Math.abs(config.dfsCustomerNet - expectedDfsCustomerNet) > 0.01) {
+      fail(`DFS customer net mismatch: ${config.key} expected ${expectedDfsCustomerNet.toFixed(2)}, got ${typeof config.dfsCustomerNet === 'number' ? config.dfsCustomerNet.toFixed(2) : 'missing'}`);
+    }
+    const expectedMargin = +(expectedDfsCustomerNet - config.purchasePrice).toFixed(2);
+    if (Math.abs(config.purchaseMargin - expectedMargin) > 0.01) {
+      fail(`purchase margin mismatch: ${config.key} expected ${expectedMargin.toFixed(2)} netto, got ${config.purchaseMargin.toFixed(2)}`);
     }
   }
   for (const [provider, change] of Object.entries(config.weeklyChange || {})) {

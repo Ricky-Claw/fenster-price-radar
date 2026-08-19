@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { buildRowKey, deriveCustomerTotal } from '../src/pricing.js';
+import { buildRowKey, deriveCustomerTotal, grossToNet } from '../src/pricing.js';
 import { configVerification } from '../src/verification.js';
 
 const root = path.resolve('results');
@@ -137,7 +137,7 @@ for (const [provider, dir] of Object.entries(sources)) {
       discountMetadata: {
         ...discountMeta,
         observed: discountObserved,
-        note: discountObserved ? 'live beobachteter Rabatt/Endpreis vom Anbieter' : 'kein Live-Rabatt beobachtet; Endpreis = Listenpreis'
+        note: discountMeta.note || (discountObserved ? 'live beobachteter Rabatt/Endpreis vom Anbieter' : 'kein Live-Rabatt beobachtet; Endpreis = Listenpreis')
       },
       equivalence: data?.equivalence || null,
       warnings: data?.warnings || [],
@@ -165,8 +165,10 @@ const configs = [...keys.values()].map(c => {
   const customerPrices = competitorRows.filter(p => p.valid && typeof p.customerTotal === 'number').map(p => p.customerTotal);
   const dfs = c.providers.dfs?.valid ? c.providers.dfs.listTotal : null;
   const dfsCustomer = c.providers.dfs?.valid ? c.providers.dfs.customerTotal : null;
+  const dfsCustomerNet = grossToNet(dfsCustomer);
   const purchaseRow = c.providers.eko4u;
   const purchasePrice = purchaseRow?.valid && typeof purchaseRow.listTotal === 'number' ? purchaseRow.listTotal : null;
+  const hasPurchaseMargin = typeof dfsCustomerNet === 'number' && dfsCustomerNet > 0 && typeof purchasePrice === 'number' && purchasePrice > 0;
   const comp = Object.entries(c.providers)
     .filter(([k, p]) => k !== 'dfs' && !PURCHASE_PROVIDERS.has(k) && p.valid && typeof p.customerTotal === 'number')
     .map(([k, p]) => ({ provider: k, price: p.customerTotal, listPrice: p.listTotal }))
@@ -176,9 +178,11 @@ const configs = [...keys.values()].map(c => {
     ...c,
     dfsPrice: dfs,
     dfsCustomerPrice: dfsCustomer,
+    dfsCustomerNet,
     purchasePrice,
-    purchaseMargin: dfsCustomer && purchasePrice ? +(dfsCustomer - purchasePrice).toFixed(2) : null,
-    purchaseMarginPct: dfsCustomer && purchasePrice ? +(((dfsCustomer - purchasePrice) / purchasePrice) * 100).toFixed(1) : null,
+    purchaseMarginBasis: 'netto',
+    purchaseMargin: hasPurchaseMargin ? +(dfsCustomerNet - purchasePrice).toFixed(2) : null,
+    purchaseMarginPct: hasPurchaseMargin ? +(((dfsCustomerNet - purchasePrice) / purchasePrice) * 100).toFixed(1) : null,
     bestCompetitor: best,
     delta: dfsCustomer && best ? +(dfsCustomer - best.price).toFixed(2) : null,
     deltaPct: dfsCustomer && best ? +(((dfsCustomer - best.price) / best.price) * 100).toFixed(1) : null,

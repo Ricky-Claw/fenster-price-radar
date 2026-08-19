@@ -46,7 +46,7 @@ Kampagnen-Felder: siehe `rueckhol-automatik/server/lib/sanitize.js` (`sanitizeCa
 ## Datenformat `price-radar.json` (Kurzreferenz)
 
 - `summary` — Zählstände inkl. `purchase` (Eko4u-EK-Lauf) und `weeklyBaselineGeneratedAt`
-- `configs[]` — je Konfiguration: `key`, `providers.{dfs,fensterblick,fensterversand,eko4u}`, `purchasePrice`, `purchaseMargin(Pct)`, `bestCompetitor`, `delta(Pct)`, `weeklyChange`, `verification`
+- `configs[]` — je Konfiguration: `key`, `providers.{dfs,fensterblick,fensterversand,eko4u}`, `purchasePrice`, `dfsCustomerNet`, `purchaseMarginBasis`, `purchaseMargin`, `purchaseMarginPct`, `bestCompetitor`, `delta(Pct)`, `weeklyChange`, `verification`; `purchaseMargin`/`purchaseMarginPct` sind der Aufschlag auf den Einkaufspreis, netto gegen netto gerechnet (`purchaseMarginBasis: "netto"`)
 - `filtered[]` — aktuell nicht vergleichbare Konfigurationen mit Grund
 - Eko4u (`providers.eko4u`) ist Einkaufspreis netto — nie als Wettbewerberpreis interpretieren (`PRICE_RADAR_QUALITY_RULES.md` 1b)
 

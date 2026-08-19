@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Search, SlidersHorizontal, TrendingDown, TrendingUp, AlertTriangle, CheckCircle2, Download, RefreshCw, Calculator, CalendarDays, Megaphone, Save, Trash2, ClipboardList } from 'lucide-react';
 import { ACTION_CALENDAR, createActionComment, currentActionCalendarVersion } from './actionCalendar.js';
 import { providerProfileLink, rowConfigLink } from './configLinks.js';
+import { netToGross, VAT_RATE } from './pricing.js';
 import TrendChart from './TrendChart.jsx';
 import './styles.css';
 
@@ -130,7 +131,7 @@ function purchaseCell(row){
   // zusaetzlich als Fallback fuer Tastatur/Screenreader erhalten.
   if(!p.valid) return <td className="purchase fastTip" data-tip={konfigTitle} title={konfigTitle}><span className="pill warn">{p.status==='unmatched'||p.reason==='nicht_im_angebot'?'kein EK-Preis':'prüfen'}</span>{p.note?<small className="purchaseNote">{p.note}</small>:null}</td>;
   const margin=typeof row.purchaseMargin==='number'?row.purchaseMargin:null;
-  return <td className="price purchase fastTip" data-tip={konfigTitle} title={konfigTitle}><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Marge ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
+  return <td className="price purchase fastTip" data-tip={konfigTitle} title={konfigTitle}><b>{eur(p.listTotal)}</b><small>netto Hersteller{margin!==null?` · Aufschlag auf EK (netto gegen netto): ${eur(margin)}${typeof row.purchaseMarginPct==='number'?` (${row.purchaseMarginPct}%)`:''}`:''}</small>{providerChangeLine(change)}</td>;
 }
 function providerCell(row, id, cheapestIds){
   const p=row.providers[id];
@@ -532,12 +533,12 @@ function App(){
   const marginGrossList = Number(margin.gross || 0);
   const marginDiscount = Math.min(Math.max(Number(margin.discount || 0),0),99);
   const marginCustomerGross = marginGrossList * (1 - marginDiscount / 100);
-  const marginNet = marginCustomerGross / 1.19;
+  const marginNet = marginCustomerGross / (1 + VAT_RATE);
   const marginContribution = marginNet - Number(margin.cost || 0);
   const marginPct = marginNet > 0 ? (marginContribution / marginNet) * 100 : 0;
   const target = Number(margin.target || 0);
   const minNet = target < 100 ? Number(margin.cost || 0) / (1 - target / 100) : 0;
-  const minGross = minNet * 1.19;
+  const minGross = netToGross(minNet);
   const maxDiscount = marginGrossList > 0 ? Math.max(0, (1 - minGross / marginGrossList) * 100) : 0;
   const marginState = marginPct >= target ? 'good' : marginPct >= target - 5 ? 'mid' : 'bad';
 
@@ -593,7 +594,7 @@ function App(){
     };
     const rows = [
       ['Fensterradar-Export','Stand:',stamp],
-      ['Marke','Profil','Größe','Glas','Öffnung','Farbe','Bauart','DFS Endpreis','DFS Liste','DFS Rabatt %','Fensterblick Endpreis','Fensterblick Liste','Fensterversand Endpreis','Fensterversand Liste','Einkauf Eko4u netto','Marge €','Marge %','Günstigster','Abstand DFS €','Abstand %','DFS Δ Woche','FB Δ Woche','FV Δ Woche','EK Δ Woche']
+      ['Marke','Profil','Größe','Glas','Öffnung','Farbe','Bauart','DFS Endpreis','DFS Liste','DFS Rabatt %','Fensterblick Endpreis','Fensterblick Liste','Fensterversand Endpreis','Fensterversand Liste','Einkauf Eko4u netto','Aufschlag auf EK € (netto gegen netto)','Aufschlag auf EK % (netto gegen netto)','Günstigster','Abstand DFS €','Abstand %','DFS Δ Woche','FB Δ Woche','FV Δ Woche','EK Δ Woche']
     ];
     configs.forEach(row => {
       const validProviders = providers
@@ -681,7 +682,7 @@ function App(){
       <nav id="view-menu" className={cls('viewMenu', menuOpen && 'open')} aria-label="Ansichten">
         <button type="button" className={activeView==='radar' ? 'active' : ''} onClick={()=>selectView('radar')}>Radar</button>
         <button type="button" className={activeView==='konfigurator' ? 'active' : ''} onClick={()=>selectView('konfigurator')}>Konfigurator</button>
-        <button type="button" className={activeView==='margenrechner' ? 'active' : ''} onClick={()=>selectView('margenrechner')}>Margenrechner</button>
+        <button type="button" className={activeView==='margenrechner' ? 'active' : ''} onClick={()=>selectView('margenrechner')}>Marge vom Umsatz</button>
         <button type="button" className={activeView==='entwicklung' ? 'active' : ''} onClick={()=>selectView('entwicklung')}>Preisentwicklung</button>
         <a href="#aktionskalender" className={activeView==='aktionskalender' ? 'active' : ''} onClick={event=>{event.preventDefault();selectView('aktionskalender');}}>Aktionskalender</a>
         <a href="/aufmass.html" target="_blank" rel="noopener" onClick={()=>setMenuOpen(false)}>Aufmaß per Sprache</a>
@@ -794,14 +795,14 @@ function App(){
 
       {activeView === 'margenrechner' && <section className="panel marginPanel" id="margenrechner">
         <div className="panelHead">
-          <div><h2>Margenrechner</h2><p>Direkt unter dem Konfigurator: Listenpreis, Rabatt und Kosten variieren, um Zielmarge und Mindestpreis zu prüfen.</p></div>
-          <span className={cls('marginStatus', marginState)}>{marginPct.toFixed(1)}% Marge</span>
+          <div><h2>Marge vom Umsatz</h2><p>Direkt unter dem Konfigurator: Listenpreis, Rabatt und Kosten variieren, um Zielmarge vom Umsatz und Mindestpreis zu prüfen.</p></div>
+          <span className={cls('marginStatus', marginState)}>{marginPct.toFixed(1)}% Marge vom Umsatz</span>
         </div>
         <div className="marginGrid">
           <label><span>Listenpreis brutto</span><input type="number" value={margin.gross} onChange={e=>setMargin({...margin,gross:e.target.value})}/></label>
           <label><span>Rabattierung %</span><input type="number" min="0" max="99" value={margin.discount} onChange={e=>setMargin({...margin,discount:e.target.value})}/></label>
           <label><span>Variable Kosten netto</span><input type="number" value={margin.cost} onChange={e=>setMargin({...margin,cost:e.target.value})}/></label>
-          <label><span>Zielmarge %</span><input type="number" value={margin.target} onChange={e=>setMargin({...margin,target:e.target.value})}/></label>
+          <label><span>Zielmarge vom Umsatz %</span><input type="number" value={margin.target} onChange={e=>setMargin({...margin,target:e.target.value})}/></label>
           <div className="marginResult"><small>Kunden-Endpreis</small><b>{eur(marginCustomerGross)}</b><span>nach {marginDiscount.toFixed(1)}% Rabatt</span></div>
           <div className="marginResult"><small>Netto-Verkauf</small><b>{eur(marginNet)}</b></div>
           <div className="marginResult"><small>Deckungsbeitrag</small><b>{eur(marginContribution)}</b></div>
@@ -835,7 +836,7 @@ function App(){
       Persönliches Werkzeug zur privaten Nutzung — reiner Preisvergleich. Steht in keiner Verbindung zu den genannten Anbietern oder Firmen und gehört zu keiner von ihnen. Alle Marken-, Produkt- und Firmennamen sind Eigentum ihrer jeweiligen Inhaber und dienen nur der Kennzeichnung.
     </footer>
 
-    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small>{providerChangeLine(active.weeklyChange?.[id])}<small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}{(()=>{const p=active.providers?.eko4u; if(!p) return null; return <section className="providerBox purchaseBox"><b>Einkauf Eko4u (Hersteller)</b>{p.valid?<><span>{eur(p.listTotal)}</span><small>netto · {active.purchaseMargin!==null&&active.purchaseMargin!==undefined?`Marge zu DFS-Endpreis: ${eur(active.purchaseMargin)} (${active.purchaseMarginPct}%)`:'keine Marge berechenbar'}</small>{providerChangeLine(active.weeklyChange?.eko4u)}{p.equivalence?.proof?<em>{p.equivalence.proof}</em>:null}</>:<small>{p.note?p.note:(p.reason==='nicht_im_angebot'?'Kein EK-Preis: System/Größe nicht im Eko4u-Standardprogramm.':'Kein EK-Preis verfügbar.')}</small>}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}</section>;})()}</div></aside>}
+    {active && <aside className="drawer" onClick={()=>setActive(null)}><div onClick={e=>e.stopPropagation()}><button className="x" onClick={()=>setActive(null)}>×</button><h3>{active.brand} · {active.profile}</h3><p>{active.size} · {active.sizeRole || 'Vergleichsgröße'} · {active.glazing} · {active.opening} · {active.color}</p>{providers.map(([id,name])=>{const p=active.providers[id]; return <section key={id} className="providerBox"><b>{name}</b>{p?<><span>{p.valid ? eur(p.customerTotal ?? p.listTotal) : eur(p.listTotal)}</span><small>Liste: {eur(p.listTotal)} · Rabatt: {discountText(p)}</small>{providerChangeLine(active.weeklyChange?.[id])}<small>Status: {p.status} · valid: {String(p.valid)}</small>{p.discountMetadata?.note?<em>{p.discountMetadata.note}</em>:null}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}{p.reason?<em>{p.reason === 'nicht_im_angebot' || p.reason === 'No equivalent PVC profile in Fensterversand mapping' || p.reason === 'No profile alias match' ? 'Dieses Profil wird von diesem Anbieter nicht angeboten.' : p.reason}</em>:null}</>:<small>nicht vorhanden</small>}</section>})}{(()=>{const p=active.providers?.eko4u; if(!p) return null; return <section className="providerBox purchaseBox"><b>Einkauf Eko4u (Hersteller)</b>{p.valid?<><span>{eur(p.listTotal)}</span><small>netto · {active.purchaseMargin!==null&&active.purchaseMargin!==undefined?`Aufschlag auf EK (netto gegen netto): ${eur(active.purchaseMargin)} (${active.purchaseMarginPct}%)`:'kein Aufschlag auf EK berechenbar'}</small>{providerChangeLine(active.weeklyChange?.eko4u)}{p.equivalence?.proof?<em>{p.equivalence.proof}</em>:null}</>:<small>{p.note?p.note:(p.reason==='nicht_im_angebot'?'Kein EK-Preis: System/Größe nicht im Eko4u-Standardprogramm.':'Kein EK-Preis verfügbar.')}</small>}{p.warnings?.length?<em>{p.warnings.join(', ')}</em>:null}</section>;})()}</div></aside>}
   </>;
 }
 

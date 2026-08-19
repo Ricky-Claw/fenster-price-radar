@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { netToGross } from '../../pricing.js';
 
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, 'results', `dfs-mapped-pvc-${new Date().toISOString().replace(/[:.]/g,'-')}`);
@@ -229,7 +230,7 @@ async function priceOne(c, profiles){
   const { myPricePercent } = await dfsConfiguratorValues();
   const percent=myPricePercent; // window.myPricePercent on DFS configurator
   net += net*percent/100;
-  const gross=+(net*1.19).toFixed(2);
+  const gross=+netToGross(net).toFixed(2);
   const discount = await dfsDiscount(profile);
   const discountPercent = discount?.active ? +discount.sum : 0;
   const customerTotal = discountPercent ? +(gross * (1 - discountPercent / 100)).toFixed(2) : gross;

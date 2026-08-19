@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { cookieValue, validSession } from '../src/auth/session.js';
 import { createRateLimiter } from '../src/aufmass/rateLimit.js';
+import { deriveDiscountFromTotals, netToGross } from '../src/pricing.js';
 
 const ROOT = process.cwd();
 const COOKIE = 'fenster_radar_session';
@@ -192,7 +193,7 @@ async function quoteDfs({profile,width,height,glazing,opening}){
   let net=base+glass.add;
   const { myPricePercent } = await dfsConfiguratorValues();
   net += net*(myPricePercent/100);
-  const listTotal=money(net*1.19);
+  const listTotal=money(netToGross(net));
   const discount = await dfsDiscount(p);
   const pct = discount ? Number(discount.sum) : 0;
   const customerTotal = pct ? money(listTotal * (1 - pct / 100)) : listTotal;
@@ -248,8 +249,16 @@ async function quoteFv({profile,width,height,glazing,opening,color}){
   if(!r.ok) throw new Error(`Fensterversand HTTP ${r.status}`);
   const j=await r.json(); const total=Number(j.price?.total); const warnings=total>0?[]:['zero_or_unavailable_price'];
   const percentages = j.price?.percentages || {};
-  const pct = Number(percentages[mapped.profileId] || 0);
+  const declaredDiscount = Number(percentages[mapped.profileId] || 0);
+  const listTotal = total;
   const customerTotal = money(Number(j.price?.discountedTotal) || total);
-  const listTotal = pct ? money(customerTotal / (1 - pct / 100)) : money(total);
-  return {status:'priced',valid:total>0,listTotal,customerTotal,currency:'EUR',warnings,discountMetadata:{observed:!!pct,observedDiscountPercent:pct/100,discountedTotalObserved:customerTotal,observedDiscount:pct,percentages,note:pct?`Fensterversand-Profilrabatt ${pct}% aus price.percentages`:'kein Profilrabatt in price.percentages'}};
+  const discount = deriveDiscountFromTotals(listTotal, customerTotal);
+  const discountNote = discount.observed
+    ? declaredDiscount > 0
+      ? `Fensterversand-Profilrabatt ${declaredDiscount}% laut price.percentages`
+      : 'Rabatt aus Endpreis abgeleitet (kein Profilrabatt-Eintrag in price.percentages)'
+    : declaredDiscount > 0
+      ? `kein Rabatt im Endpreis trotz Profilrabatt ${declaredDiscount}% laut price.percentages`
+      : 'kein Rabatt im Endpreis; kein Profilrabatt-Eintrag in price.percentages';
+  return {status:'priced',valid:total>0,listTotal,customerTotal,currency:'EUR',warnings,discountMetadata:{...discount,discountedTotalObserved:customerTotal,percentages,note:discountNote}};
 }

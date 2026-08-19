@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { deriveDiscountFromTotals } from '../../pricing.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '../../..');
@@ -35,15 +36,31 @@ for (const cfg of scope) {
   });
   const json = await res.json().catch(async()=>({raw:await res.text()}));
   const percentages = json.price?.percentages || {};
-  const profileDiscount = isAlu ? Number(json.price?.discount || 0) : Number(percentages[mapped.profileId] || 0);
-  const customerTotal = Number(json.price?.discountedTotal) || Number(json.price?.total);
-  const listTotal = profileDiscount ? Number((customerTotal / (1 - profileDiscount / 100)).toFixed(2)) : Number(json.price?.total);
+  const declaredDiscount = isAlu ? Number(json.price?.discount || 0) : Number(percentages[mapped.profileId] || 0);
+  const listTotal = Number(json.price?.total);
+  const customerTotal = Number(json.price?.discountedTotal) || listTotal;
+  const discount = deriveDiscountFromTotals(listTotal, customerTotal);
+  const discountNote = discount.observed
+    ? declaredDiscount > 0
+      ? isAlu
+        ? `Fensterversand-Rabatt ${declaredDiscount}% laut price.discount`
+        : `Fensterversand-Profilrabatt ${declaredDiscount}% laut price.percentages`
+      : isAlu
+        ? 'Rabatt aus Endpreis abgeleitet (kein Rabatt-Eintrag in price.discount)'
+        : 'Rabatt aus Endpreis abgeleitet (kein Profilrabatt-Eintrag in price.percentages)'
+    : declaredDiscount > 0
+      ? isAlu
+        ? `kein Rabatt im Endpreis trotz ${declaredDiscount}% laut price.discount`
+        : `kein Rabatt im Endpreis trotz Profilrabatt ${declaredDiscount}% laut price.percentages`
+      : isAlu
+        ? 'kein Rabatt im Endpreis; kein Eintrag in price.discount'
+        : 'kein Rabatt im Endpreis; kein Profilrabatt-Eintrag in price.percentages';
   results.push({
     provider:'Fensterversand', input:cfg, mappedProfile:mapped.name, status:res.status,
-    comparePrice:{ listTotal, currency:'EUR', discountApplied:!!profileDiscount, valid: Number(json.price?.total) > 0 && fensterversandEquivalent(cfg.layout || '1flg', json) },
+    comparePrice:{ listTotal, currency:'EUR', discountApplied:discount.observed, valid: Number(json.price?.total) > 0 && fensterversandEquivalent(cfg.layout || '1flg', json) },
     customerPrice:{ total: customerTotal, currency:'EUR' },
     equivalence:fensterversandEquivalence(cfg.layout || '1flg', json),
-    discountMetadata:{ observed:!!profileDiscount, observedDiscountPercent:profileDiscount/100, discountedTotalObserved: customerTotal, observedDiscount: profileDiscount, percentages, note:profileDiscount?`Fensterversand-Profilrabatt ${profileDiscount}% aus price.percentages`:'kein Profilrabatt in price.percentages' },
+    discountMetadata:{ ...discount, discountedTotalObserved:customerTotal, percentages, note:discountNote },
     warnings: Number(json.price?.total) > 0 ? (fensterversandEquivalent(cfg.layout || '1flg', json) ? [] : ['fensterversand_two_sash_equivalence_not_proven']) : ['zero_or_unavailable_price'],
     dimensions: json.dimensions ? { x: json.dimensions.x, y: json.dimensions.y, qm: json.dimensions.qm, rm: json.dimensions.rm } : null,
     requestConfig: payload.configuration
