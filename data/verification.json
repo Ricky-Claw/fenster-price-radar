@@ -1,102 +1,52 @@
 {
-  "verifiedAt": "2026-08-19",
-  "samples": 5,
-  "note": "5 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
+  "verifiedAt": "2026-08-24",
+  "samples": 1,
+  "note": "1 Konfigurationen live über die Anbieter-Konfiguratoren nachgeprüft.",
   "verifiedKeys": [
     {
       "key": "Aluplast|Ideal 4000, 3fach|1600x1500|3fach|Dreh-Kipp + Dreh|weiß|2flg_stulp_dk_dreh",
-      "verifiedAt": "2026-08-19T13:49:42.586Z",
-      "result": "verified",
+      "verifiedAt": "2026-08-24T03:32:14.598Z",
+      "result": "mismatch",
       "prices": {
         "dfs": 454.14,
-        "fensterblick": 570.46,
-        "fensterversand": 955.03
+        "fensterblick": 585.21,
+        "fensterversand": 802.22
       }
     },
     {
-      "key": "Aluplast|Ideal 5000, 3fach|2000x1900|3fach|Dreh-Kipp + Dreh|weiß|2flg_stulp_dk_dreh",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
+      "key": "Drutex|Iglo 5 Classic, 3fach|1600x1400|3fach|Dreh-Kipp + Dreh-Kipp|weiß|2flg_pfosten",
+      "verifiedAt": "2026-08-24T03:32:14.599Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 489.24,
+        "fensterblick": 527.58
+      }
+    },
+    {
+      "key": "Drutex|Iglo 5 Classic, 3fach|1600x1400|3fach|Dreh-Kipp + Dreh|weiß|2flg_stulp_dk_dreh",
+      "verifiedAt": "2026-08-24T03:32:14.599Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 399.65,
+        "fensterblick": 513.61
+      }
+    },
+    {
+      "key": "Drutex|Iglo Energy Classic, 2fach|1500x1866|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-24T03:32:14.599Z",
+      "result": "mismatch",
+      "prices": {
+        "dfs": 482.9,
+        "fensterblick": 500.5
+      }
+    },
+    {
+      "key": "Salamander|Salamander 82, 2fach|1100x1500|2fach|Dreh-Kipp|weiß|1flg",
+      "verifiedAt": "2026-08-24T03:32:14.599Z",
       "result": "verified",
       "prices": {
-        "dfs": 712.01,
-        "fensterblick": 959.01,
-        "fensterversand": 1778.01
-      }
-    },
-    {
-      "key": "Aluplast|Ideal 5000, 3fach|900x1300|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 286.31,
-        "fensterblick": 346.39,
-        "fensterversand": 411.24
-      }
-    },
-    {
-      "key": "Aluplast|Ideal 7000, 3fach|1800x1700|3fach|Dreh-Kipp + Dreh|weiß|2flg_stulp_dk_dreh",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "verified",
-      "prices": {
-        "dfs": 924.49,
-        "fensterblick": 790.2,
-        "fensterversand": 1338.31
-      }
-    },
-    {
-      "key": "Aluplast|Ideal 7000, 3fach|900x1300|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 313.71,
-        "fensterblick": 341.58,
-        "fensterversand": 411.24
-      }
-    },
-    {
-      "key": "Aluplast|Ideal 8000, 2fach|415x500|2fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "verified",
-      "prices": {
-        "dfs": 197.5,
-        "fensterversand": 391.27
-      }
-    },
-    {
-      "key": "Gealan|Gealan S8000, 3fach|900x1200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 292.08,
-        "fensterblick": 275.48
-      }
-    },
-    {
-      "key": "Salamander|Salamander 76MD, 3fach|1800x1700|3fach|Dreh-Kipp + Dreh-Kipp|weiß|2flg_pfosten",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 626.82,
-        "fensterblick": 635.63
-      }
-    },
-    {
-      "key": "Veka|Veka 82 MD, 3fach|1200x2200|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "verified",
-      "prices": {
-        "dfs": 774.74,
-        "fensterversand": 699.26
-      }
-    },
-    {
-      "key": "Veka|Veka 82 MD, 3fach|900x1300|3fach|Dreh-Kipp|weiß|1flg",
-      "verifiedAt": "2026-08-19T13:49:42.587Z",
-      "result": "mismatch",
-      "prices": {
-        "dfs": 301.14,
-        "fensterblick": 315.25,
-        "fensterversand": 416.89
+        "dfs": 331.15,
+        "fensterblick": 317.48
       }
     }
   ]
